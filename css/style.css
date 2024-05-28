@@ -10,7 +10,7 @@ body {
     font-weight: 900;
     font-size: 20vw;
     position: relative;
-    line-height: normal;
+    line-height: 10vh;
   }
   .sub-header{
     position: relative;
@@ -22,6 +22,7 @@ body {
     flex-direction: column;
     width: 100%;
     grid-column: 1 / 2;
+    margin-top: 2rem;
   }
   .front-page-container{
     display: grid;
