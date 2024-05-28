@@ -10,6 +10,7 @@ body {
     font-weight: 900;
     font-size: 20vw;
     position: relative;
+    line-height: normal;
   }
   .sub-header{
     position: relative;
@@ -31,12 +32,12 @@ body {
     height: 10vw;
   }
   .half-circle {
-    width: 60vw; /* Altura completa de la vista */
+    width: 30vw; /* Altura completa de la vista */
     height: 60vw;
-    border-radius: 50%;
+    border-radius: 50rem 0 0 50rem;
     background-color: #A53C36; /* Cambia este color según tus necesidades */
     position: absolute;
-    right: -30vw; /* Mueve el medio círculo a la mitad derecha */
+    right: 0vw; /* Mueve el medio círculo a la mitad derecha */
     top: 0;
     z-index: 1;
 }
