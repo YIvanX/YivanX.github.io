@@ -13,6 +13,7 @@ body {
   }
   .sub-header{
     position: relative;
+    font-size: 3vw;
   }
   .header-container {
     display: flex;
@@ -30,20 +31,20 @@ body {
     height: 10vw;
   }
   .half-circle {
-    width: 20rem; /* Altura completa de la vista */
-    height: 20rem;
+    width: 60vw; /* Altura completa de la vista */
+    height: 60vw;
     border-radius: 50%;
     background-color: #A53C36; /* Cambia este color según tus necesidades */
     position: absolute;
-    right: -10rem; /* Mueve el medio círculo a la mitad derecha */
+    right: -30vw; /* Mueve el medio círculo a la mitad derecha */
     top: 0;
     z-index: 1;
 }
   .ramen-img{
-    width: 6rem; /* Altura completa de la vista */
-    height: 6rem;
+    width: 30vw; /* Altura completa de la vista */
+    height: 30vw;
     position: absolute;
-    right: 1rem; /* Mueve el medio círculo a la mitad derecha */
+    right: 5vw; /* Mueve el medio círculo a la mitad derecha */
   }
   .middle {
     z-index: 2;
