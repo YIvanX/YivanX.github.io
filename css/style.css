@@ -17,8 +17,12 @@ body {
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
-  .ramen-info-container{
+  .box-info-container{
     background-color: #A53C36;
+    border-radius: 40px;
+    width: 95%;
+    height: 50%;
+    margin: auto;
   }
   .header{
     font-weight: 800;
@@ -59,6 +63,13 @@ body {
     height: 30vw;
     position: absolute;
     right: 5vw; /* Mueve el medio círculo a la mitad derecha */
+  }
+  .naruto-maki-img{
+    width: 10vw; /* Altura completa de la vista */
+    height: 10vw;
+    position: absolute;
+    left: 0vw; /* Mueve el medio círculo a la mitad derecha */
+    top: 65vi;
   }
   .middle {
     z-index: 2;
