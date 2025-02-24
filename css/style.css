@@ -1,5 +1,8 @@
+
 body {
-  background-color: #2F323A;
+  background-color: #2f323a;
+  background-image: url("https://www.transparenttextures.com/patterns/arches.png");
+  /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
   color: white;
   font-family: "Rubik", sans-serif;
   font-optical-sizing: auto;
@@ -7,22 +10,94 @@ body {
   font-style: normal;
   border: 0px;
   margin: 0px;
+  width: 100%;
   }
 
+
+nav{
+    background-color: #a53c36;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0,0.3);
+  }
+
+nav ul{
+  display: flex;
+  width: 100%;
+  list-style: none;
+  justify-content: flex-end;
+  align-items: center;
+  padding-left: 0;
+}
+nav li{
+  height: 50px;
+}
+
+nav a{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  padding-right: 2rem;
+}
+  .sidebar{
+    padding-left: 40px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    margin: 0;
+    height: 120vh;
+    width: 250px;
+    z-index: 999;
+    background-color: rgba(165, 60, 54,0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: -10px 0 10px rgba(0, 0, 0,0.1);
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .sidebar li{
+   width: 100%; 
+  }
+  .sidebar a{
+   width: 100%; 
+  }
   .main-container{
     display: grid;
-    grid-template-rows: 1fr 1fr;
+    width: 100%;
   }
   .front-page-container{
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: 100%;
   }
-  .box-info-container{
-    background-color: #A53C36;
-    border-radius: 40px;
-    width: 95%;
-    height: 50%;
+  .full-page{
+    height: 100vh;
+  }
+  .center{
     margin: auto;
+  }
+  .location-container{
+    width: 100%;
+    height: 30rem;
+    margin: auto;
+    margin-top: 10rem;
+  }
+  .banner-container{
+    width: 100%;
+    height: 17vh; /* Ajusta la altura según sea necesario */
+  }
+  .banner{
+    width: 100%;
+    height: 100%; /* Ajusta la altura según sea necesario */
+    background-image: url(../assets/images/wave.png);
+    background-size: 55vh;
+    background-repeat: round;
+  }
+  .red-banner{
+    background-color: #a53c36;
+    width: 100%;
+    height: 40rem;
   }
   .header{
     font-weight: 800;
@@ -31,29 +106,57 @@ body {
     line-height: 93%;
   }
   .sub-header{
+    font-weight: 700;
+    font-size: 15vw;
+    line-height: 95%;
+  }
+  .min-header{
     position: relative;
     font-size: 3vw;
+  }
+  .where-header{
+    padding-top: 8rem;
+    width: 100%;
   }
   .header-container {
     display: flex;
     align-items: center;
     flex-direction: column;
     width: 100%;
-    grid-column: 1 / 2;
-    margin-top: 2rem;
-    margin-bottom: 4rem;
-
+    grid-column: 1;
+    grid-row: 1;
+    margin:auto;
+    padding-top: 12rem;
   }
   .ramen-circle-container{
-    width: 10vw;
-    height: 10vw;
+    margin: auto;
+  }
+  .direction-page-container{
+    background-color: white;
+    color:#000;
+    display: flex;
+    flex-direction: column;
+  }
+  .location-maps{
+    width: 75%;
+    height: 100%;
+    border-radius: 10%;
+    display: block;
+    margin: auto;
+    position: relative;
+    top: -25rem;
+  }
+  .text-center{
+    display: table;
+    margin: 0 auto;
   }
   .half-circle {
     width: 30vw; /* Altura completa de la vista */
     height: 60vw;
     border-radius: 50rem 0 0 50rem;
-    background-color: #A53C36; /* Cambia este color según tus necesidades */
-    position: absolute;
+    background-color: #a53c36;
+background-image: url("https://www.transparenttextures.com/patterns/arches.png");
+/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
     right: 0vw; /* Mueve el medio círculo a la mitad derecha */
     top: 0;
     z-index: 1;
@@ -200,4 +303,17 @@ body {
   }
   .btn-slice:hover:before{
     width: 130%;
+  }
+  .hidden{
+    display: none;
+  }
+
+  @media(max-width: 400px){
+    .sidebar{
+      width: 100%;
+      justify-content: center;
+    }
+    .sidebar a{
+      justify-content: center;
+    }
   }

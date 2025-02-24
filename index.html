@@ -1,42 +1,64 @@
 <html>
+    <title>RESTAURANTE RAMEN OKAERI</title>
     <head>
         <link rel="stylesheet" href="css/style.css">
+        <script type="text/javascript" src="script.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Rubik:wght@300;400&display=swap" rel="stylesheet">
         <!-- NEED THIS for Safari Mac to render work -->
         <link href="https://fonts.googleapis.com/css2?family=Marmelad&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-        <script type="text/javascript">
-            // Specify the main script used to create a new PDF.JS web worker.  
-            // In production, change this to point to the combined `pdf.js` file.  
-            PDFJS.workerSrc = 'pdf.worker.js';  
-        </script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-    <div class="main-container">
-        <div class="front-page-container">
-            <div class="ramen-circle-container">        
-                <img class="middle ramen-img" src="assets/images/ramen.png" alt="ramen">
-                <div class="half-circle"></div>
+        <div class="main-container full-page">
+            <nav>
+                <ul class="sidebar">
+                    <li><a href="">Restaurantes</a></li>
+                    <li><a href="">Sobre Nostros</a></li>
+                    <li><a href="">Contacto</a></li>
+                    <li><a href="">Salir</a></li>
+                </ul>
+                <ul>
+                    <li onclick="showSidebar()"><a><svg xmlns="http://www.w3.org/2000/svg" height="50px" viewBox="0 -960 960 960" width="50px" fill="#e8eaed"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a></li>
+                </ul>
+            </nav>
+            <div class="front-page-container full-page">
+                <div class="ramen-circle-container">        
+                    <img class="middle ramen-img" src="assets/images/ramen.png" alt="ramen">
+                    <div class="half-circle"></div>
+                </div>
+                <div class="header-container middle">
+                    <span class="header">RAMEN OKAERI</span>
+                    <span class="min-header">ラーメンおかえり</span>
+                    <a class="btn-slice" href="menu.html">
+                        <div class="top"><span>MENU</span></div>
+                        <div class="bottom"><span>MENU</span></div>
+                      </a>
+                </div>
             </div>
-            <div class="header-container middle">
-                <span class="header">RAMEN OKAERI</span>
-                <span class="sub-header">ラーメンおかえり</span>
-                <a class="btn-slice" href="https://ramenokaeri.github.io/">
-                    <div class="top"><span>MENU</span></div>
-                    <div class="bottom"><span>MENU</span></div>
-                  </a>
+            <div class="banner-container">
+                <div class="banner"></div>
+            </div>
+            <div class="direction-page-container full-page">
+                <div class="where-header">
+                    <span class="sub-header">Donde estamos</span>
+                </div>
+                
+                <div class="location-container">
+                    
+                    <div class="text-center">
+                        <span class="sub-header">CORUÑA</span>
+                    </div>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2923.796580631725!2d-8.546625723400156!3d42.877137502276824!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd2eff2b2c689a41%3A0xfe3fe655f0f0cfec!2sRAMEN%20OKAERI!5e0!3m2!1ses!2ses!4v1717179562894!5m2!1ses!2ses" 
+                    class="location-maps" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
             </div>
         </div>
-
-        <div class="direction-container">
-            <div class="box-info-container">
-            </div>
-        </div>
-        <!-- If you would like to customize the button, remove or change the "class" attribute inside the <span> tag
-<span class="glf-button reservation" data-glf-cuid="356da3d8-38bf-44f6-aac1-e97cbaca4b01" data-glf-ruid="0aad684a-9a37-48b2-aab5-64ae1c885f76" data-glf-reservation="true" >Reservar Mesa</span>
-<script src="https://www.fbgcdn.com/embedder/js/ewm2.js" defer async ></script> -->
-
-    </div>
+            <!-- If you would like to customize the button, remove or change the "class" attribute inside the <span> tag
+    <span class="glf-button reservation" data-glf-cuid="356da3d8-38bf-44f6-aac1-e97cbaca4b01" data-glf-ruid="0aad684a-9a37-48b2-aab5-64ae1c885f76" data-glf-reservation="true" >Reservar Mesa</span>
+    <script src="https://www.fbgcdn.com/embedder/js/ewm2.js" defer async ></script> -->
+    
+        </div>    
     </body>
 </html> 
