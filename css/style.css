@@ -153,6 +153,7 @@ nav a{
   }
   .ramen-circle-container{
     margin-top: 10vh;
+    display: flex;
   }
   .direction-page-container{
     background-color: #a53c36;
@@ -180,7 +181,7 @@ nav a{
     border-radius: 50rem 0 0 50rem;
     background-color: #a53c36;
     background-image: url("https://www.transparenttextures.com/patterns/arches.png");
-    left: 12.5vw; /* Mueve el medio círculo a la mitad derecha */
+    margin-left: auto;
     top: 0;
     z-index: 1;
 }
