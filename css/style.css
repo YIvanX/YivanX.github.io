@@ -72,16 +72,14 @@ nav a{
     grid-template-rows: 100%;
   }
   .full-page{
-    height: 100vh;
+    height: 50vh;
   }
   .center{
     margin: auto;
   }
   .location-container{
     width: 100%;
-    height: 30rem;
-    margin: auto;
-    margin-top: 10rem;
+    height: 20rem;
   }
   .banner-container{
     width: 100%;
@@ -106,18 +104,44 @@ nav a{
     line-height: 93%;
   }
   .sub-header{
-    font-weight: 700;
-    font-size: 10vw;
+    font-weight: 600;
+    font-size: 3vw;
     line-height: 95%;
   }
   .min-header{
     position: relative;
     font-size: 3vw;
   }
-  .where-header{
-    padding-top: 8rem;
+  .where-container{
+    padding-top: 2rem;
+    padding-left: 2rem;
     width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    row-gap: 10px;
+
   }
+  .icon-text-container{
+    display: flex;
+    align-items: center;
+  }
+  .icon-text-container span{
+    padding-left: 5px;
+  }
+  .direction-container{    
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .call-container{
+    grid-column: 2;
+    grid-row: 3;
+  }
+  .time-container{
+    grid-column: 1;
+    grid-row: 3;
+  }
+
   .header-container {
     display: flex;
     align-items: center;
@@ -125,25 +149,25 @@ nav a{
     width: 100%;
     grid-column: 1;
     grid-row: 1;
-    padding-top: 12rem;
+    padding-top: 4rem;
   }
   .ramen-circle-container{
     margin-top: 10vh;
   }
   .direction-page-container{
-    background-color: white;
-    color:#000;
+    background-color: #a53c36;
+    color: white;
     display: flex;
     flex-direction: column;
+    background-image: url("https://www.transparenttextures.com/patterns/arches.png");
   }
   .location-maps{
     width: 75%;
     height: 100%;
     border-radius: 10%;
     display: block;
-    margin: auto;
     position: relative;
-    top: -25rem;
+    margin: auto;
   }
   .text-center{
     display: table;
@@ -173,7 +197,7 @@ nav a{
     z-index: 3;
   }
   .btn-slice {
-    scale: 1.8;
+    scale: 1;
     text-decoration: none;
     padding: 1.2rem 2.5rem;
     border: 2px solid #ffffff;
@@ -300,7 +324,7 @@ nav a{
     display: none;
   }
 
-  @media(max-width: 400px){
+  @media(max-width: 600px){
     .sidebar{
       width: 100%;
       justify-content: center;
