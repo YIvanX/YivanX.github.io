@@ -145,10 +145,11 @@ nav a{
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: 100%;
+    width: 90%;
     grid-column: 1;
     grid-row: 1;
     padding-top: 4rem;
+    padding-left: 1rem;
   }
   .ramen-circle-container{
     margin-top: 10vh;
