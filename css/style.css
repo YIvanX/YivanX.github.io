@@ -101,13 +101,13 @@ nav a{
   }
   .header{
     font-weight: 800;
-    font-size: 20vw;
+    font-size: 14vw;
     position: relative;
     line-height: 93%;
   }
   .sub-header{
     font-weight: 700;
-    font-size: 15vw;
+    font-size: 10vw;
     line-height: 95%;
   }
   .min-header{
@@ -151,13 +151,13 @@ nav a{
     margin: 0 auto;
   }
   .half-circle {
+    position: relative;
     width: 30vw; /* Altura completa de la vista */
     height: 60vw;
     border-radius: 50rem 0 0 50rem;
     background-color: #a53c36;
-background-image: url("https://www.transparenttextures.com/patterns/arches.png");
-/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
-    right: 0vw; /* Mueve el medio círculo a la mitad derecha */
+    background-image: url("https://www.transparenttextures.com/patterns/arches.png");
+    left: 8vw; /* Mueve el medio círculo a la mitad derecha */
     top: 0;
     z-index: 1;
 }
@@ -165,14 +165,7 @@ background-image: url("https://www.transparenttextures.com/patterns/arches.png")
     width: 30vw; /* Altura completa de la vista */
     height: 30vw;
     position: absolute;
-    right: 5vw; /* Mueve el medio círculo a la mitad derecha */
-  }
-  .naruto-maki-img{
-    width: 10vw; /* Altura completa de la vista */
-    height: 10vw;
-    position: absolute;
-    left: 0vw; /* Mueve el medio círculo a la mitad derecha */
-    top: 65vi;
+    right: 13vw; /* Mueve el medio círculo a la mitad derecha */
   }
   .middle {
     z-index: 2;
