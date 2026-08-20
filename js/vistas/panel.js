@@ -16,6 +16,13 @@ import {
 
 const minutosAhora = () => { const d = new Date(); return d.getHours() * 60 + d.getMinutes(); };
 
+/**
+ * Separador de miles a la española. A mano y no con `toLocaleString`, porque
+ * este depende de los datos de ICU que traiga el navegador y en algunas
+ * compilaciones devuelve el número pelado: «6717» en vez de «6.717».
+ */
+const miles = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
 // --- Distintivos de un bloque --------------------------------------------
 
 function chipsDeBloque(bloque, dia, moneda) {
@@ -226,7 +233,7 @@ export function pintarFicha(viaje, lugar, estado, { fecha } = {}) {
     const v = lugar.valoracion;
     const cifras = [
       v.nota !== undefined ? `${String(v.nota).replace('.', ',')} / 5` : null,
-      v.resenas !== undefined ? `${v.resenas.toLocaleString('es-ES')} reseñas` : null,
+      v.resenas !== undefined ? `${miles(v.resenas)} reseñas` : null,
     ].filter(Boolean).join(' · ');
     filas.push(['Valoración', html`<b>${cifras}</b>
       ${v.puesto ? crudo(`<span class="menudo" style="display:block">${esc(v.puesto)}</span>`) : ''}
