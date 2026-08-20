@@ -826,3 +826,56 @@ kbd {
 
 /* Marca de visitado dentro del título de un bloque. */
 .bloque__hecho { width: 13px; height: 13px; flex: 0 0 13px; color: var(--ok-t); align-self: center; }
+
+/* --- Qué mirar: lista que se va tachando estando delante del sitio ------- */
+.mirar { margin-top: var(--e6); }
+.mirar__cabecera { display: flex; align-items: baseline; justify-content: space-between; gap: var(--e3); }
+.mirar__cabecera .etiqueta { color: var(--tinta-suave); }
+.mirar__lista { margin-top: var(--e3); display: grid; gap: 2px; }
+
+.mirar__item {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: var(--e3);
+  width: 100%;
+  padding: 10px var(--e2);
+  border-radius: var(--r-m);
+  text-align: left;
+  transition: background-color var(--t-rapido) ease, transform var(--t-pulsar) var(--sal);
+  -webkit-tap-highlight-color: transparent;
+}
+.mirar__item:active { transform: scale(0.995); }
+@media (hover: hover) and (pointer: fine) { .mirar__item:hover { background: var(--superficie-2); } }
+
+.mirar__que { display: block; font-size: 0.875rem; font-weight: 600; line-height: 1.4; }
+.mirar__porque { display: block; margin-top: 3px; font-size: 0.8125rem; line-height: 1.5; color: var(--tinta-media); }
+
+.mirar__item[aria-checked="true"] .mirar__que {
+  color: var(--tinta-suave);
+  text-decoration: line-through;
+  text-decoration-color: var(--borde-fuerte);
+}
+.mirar__item[aria-checked="true"] .mirar__porque { color: var(--tinta-suave); }
+
+/* --- Datos curiosos: tarjetas, no párrafos enterrados -------------------- */
+.curiosidades { margin-top: var(--e6); display: grid; gap: var(--e2); }
+.curiosidades .etiqueta { color: var(--tinta-suave); margin-bottom: var(--e1); }
+
+.curiosidad {
+  position: relative;
+  padding: var(--e3) var(--e4) var(--e3) var(--e5);
+  border-radius: var(--r-m);
+  background: var(--superficie-2);
+}
+/* Una barra de acento en el canto: distingue la tarjeta sin encerrarla en una caja. */
+.curiosidad::before {
+  content: "";
+  position: absolute;
+  left: var(--e3); top: var(--e3); bottom: var(--e3);
+  width: 2px;
+  border-radius: var(--r-pill);
+  background: var(--acento);
+  opacity: 0.5;
+}
+.curiosidad__titulo { font-size: 0.875rem; font-weight: 700; line-height: 1.35; letter-spacing: -0.005em; }
+.curiosidad__texto { margin-top: 4px; font-size: 0.8125rem; line-height: 1.55; color: var(--tinta-media); }

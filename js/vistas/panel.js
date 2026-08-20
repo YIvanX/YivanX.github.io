@@ -8,6 +8,7 @@
 
 import { html, esc, icono, md, crudo, duracionTexto, duracionCorta, dinero } from '../ui/dom.js';
 import { CATEGORIAS, MODOS, INTENSIDADES } from '../datos.js';
+import { claveVisto } from '../estado.js';
 import { rutaDelDia, enlaceLugar, enlaceComoLlegar, enlaceTramo } from '../enlaces-mapa.js';
 import {
   fechaLarga, textoHorario, revisarBloque, estadoEn, aMinutos, aHora, aIso, claveDia, NOMBRE_DIA,
@@ -240,6 +241,40 @@ export function pintarFicha(viaje, lugar, estado, { fecha } = {}) {
       <p class="ficha__resumen">${lugar.resumen}</p>
 
       ${lugar.descripcion ? crudo(`<div class="prosa">${md(lugar.descripcion)}</div>`) : ''}
+
+      ${lugar.queMirar?.length ? crudo(`
+        <section class="mirar">
+          <div class="mirar__cabecera">
+            <h3 class="etiqueta">Qué mirar</h3>
+            <span class="menudo" data-cuenta-mirar>${lugar.queMirar.filter((q) => estado.vistos?.[claveVisto(lugar.id, q.que)]).length}/${lugar.queMirar.length}</span>
+          </div>
+          <p class="menudo">Ve marcándolo estando allí.</p>
+          <div class="mirar__lista">
+            ${lugar.queMirar.map((q) => {
+              const clave = claveVisto(lugar.id, q.que);
+              const hecho = Boolean(estado.vistos?.[clave]);
+              return `
+              <button type="button" class="mirar__item" role="checkbox"
+                      aria-checked="${String(hecho)}" data-visto="${esc(clave)}">
+                <span class="marca"><svg aria-hidden="true"><use href="#i-check"/></svg></span>
+                <span>
+                  <span class="mirar__que">${esc(q.que)}</span>
+                  ${q.porque ? `<span class="mirar__porque">${esc(q.porque)}</span>` : ''}
+                </span>
+              </button>`;
+            }).join('')}
+          </div>
+        </section>`) : ''}
+
+      ${lugar.curiosidades?.length ? crudo(`
+        <section class="curiosidades">
+          <h3 class="etiqueta">Para contarlo luego</h3>
+          ${lugar.curiosidades.map((cu) => `
+            <article class="curiosidad">
+              <h4 class="curiosidad__titulo">${esc(cu.titulo)}</h4>
+              <p class="curiosidad__texto">${esc(cu.texto)}</p>
+            </article>`).join('')}
+        </section>`) : ''}
 
       ${filas.length ? crudo(`<div class="datos">${filas.map(([k, v]) => `
         <div class="datos__fila"><div class="datos__clave">${esc(k)}</div><div class="datos__valor">${v}</div></div>`).join('')}</div>`) : ''}

@@ -273,6 +273,19 @@ export async function montarViaje(raiz, ruta, { alTema }) {
     brindis(ahora ? 'Marcado como visitado' : 'Ya no está marcado', { tipo: ahora ? 'ok' : 'info' });
   });
 
+  alPulsar(cuerpo, '[data-visto]', (b) => {
+    const visto = estado.alternarVisto(viaje.id, b.dataset.visto);
+    b.setAttribute('aria-checked', String(visto));
+    // Solo el contador: repintar la ficha entera perdería el sitio del scroll
+    // justo cuando estás de pie delante del sitio con el móvil en la mano.
+    const seccion = b.closest('.mirar');
+    const cuenta = $('[data-cuenta-mirar]', seccion);
+    if (cuenta) {
+      const total = $$('[data-visto]', seccion).length;
+      cuenta.textContent = `${$$('[data-visto][aria-checked="true"]', seccion).length}/${total}`;
+    }
+  });
+
   alPulsar(cuerpo, '[data-tarea]', (b) => {
     const hecha = estado.alternarTarea(viaje.id, b.dataset.tarea);
     b.setAttribute('aria-checked', String(hecha));

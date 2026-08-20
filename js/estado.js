@@ -40,7 +40,7 @@ function escribir(clave, valor) {
   }
 }
 
-const vacio = () => ({ visitados: {}, notas: {}, tareas: {} });
+const vacio = () => ({ visitados: {}, notas: {}, tareas: {}, vistos: {} });
 
 export function estadoDe(viajeId) {
   return { ...vacio(), ...leer(`viaje:${viajeId}`, {}) };
@@ -73,6 +73,22 @@ export function guardarNota(viajeId, lugarId, texto) {
 }
 
 export const tareaHecha = (viajeId, itemId) => Boolean(estadoDe(viajeId).tareas[itemId]);
+
+/**
+ * Lo tachado de «Qué mirar», que se va marcando estando delante del sitio.
+ *
+ * La clave es `<lugar>|<texto>` y no un índice: así reordenar la lista no borra
+ * lo ya visto. Cambiar el texto sí cuenta como cosa distinta, que es correcto.
+ */
+export const claveVisto = (lugarId, que) => `${lugarId}|${que}`;
+
+export function alternarVisto(viajeId, clave) {
+  const estado = estadoDe(viajeId);
+  if (estado.vistos[clave]) delete estado.vistos[clave];
+  else estado.vistos[clave] = new Date().toISOString();
+  guardarEstado(viajeId, estado);
+  return Boolean(estado.vistos[clave]);
+}
 
 export function alternarTarea(viajeId, itemId) {
   const estado = estadoDe(viajeId);

@@ -59,6 +59,13 @@
         "fuente": "https://commons.wikimedia.org/wiki/File:Ejemplo.jpg"
       },
       "_imagen": "La foto que se ve en la cronología, en el globo del mapa y en la cabecera de la ficha. Se GUARDA en el repositorio, no se enlaza fuera, o no funcionará sin conexión. credito es obligatorio: una foto ajena sin atribución no se puede publicar.",
+      "queMirar": [
+        { "que": "Qué buscar con los ojos, corto y concreto", "porque": "Por qué merece la pena. Aquí va el dato que lo hace interesante." }
+      ],
+      "_queMirar": "Se pinta como lista marcable: se va tachando estando allí. NO es lo mismo que consejos, que es logística. Aquí van cosas que se miran.",
+      "curiosidades": [
+        { "titulo": "El gancho, en pocas palabras", "texto": "El dato que se cuenta luego. Dos o tres frases como mucho: uno que hay que leer dos veces deja de ser curioso." }
+      ],
       "consejos": [
         "Lo que se aprende estando allí y no se lee en ninguna web."
       ],

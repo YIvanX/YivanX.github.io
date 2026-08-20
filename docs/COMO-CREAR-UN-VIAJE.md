@@ -127,6 +127,40 @@ Tres tipos de bloque:
 edificio del que solo se mira el exterior. El horario de taquilla no se le
 aplica, y en la cronología sale como «Por fuera» en vez de como cerrado.
 
+### Que se lea, no que se estudie
+
+Un lugar tiene cuatro piezas de texto y cada una hace algo distinto. Escribirlas
+todas como un párrafo largo es el error fácil.
+
+| Campo | Qué es | Cómo se ve |
+|---|---|---|
+| `resumen` | **El gancho.** Una línea que dé una razón para ir | En la cronología y en el globo del mapa |
+| `descripcion` | Qué es y por qué importa. Párrafos cortos | Prosa en la ficha |
+| `queMirar` | Lo concreto que buscar **con los ojos** | Lista marcable, se tacha allí mismo |
+| `curiosidades` | El dato que se cuenta luego | Tarjetas sueltas |
+
+```json
+"queMirar": [
+  { "que": "El rosetón oeste", "porque": "Por la mañana está apagado; al caer la tarde arde." }
+],
+"curiosidades": [
+  { "titulo": "Se cayó de verdad", "texto": "En 1631 se desplomó parte de la bóveda del crucero…" }
+]
+```
+
+Tres reglas que salieron de escribir los 24 lugares de León:
+
+- **`queMirar` no es `consejos`.** «Mira el pastor rascándose el pie» es qué
+  mirar; «lleva chaqueta, hay 7 °C» es un consejo. Mezclarlos convierte las dos
+  listas en ruido.
+- **Un dato curioso que hay que leer dos veces deja de serlo.** El validador
+  avisa por encima de 420 caracteres.
+- **El `resumen` es lo que más se lee y lo que menos se cuida.** Aparece en cada
+  fila del itinerario y en cada globo del mapa. Si es genérico, el día entero
+  parece genérico.
+
+---
+
 ### Una foto por lugar
 
 `imagen` es la foto que se ve en tres sitios: la fila del itinerario, el globo

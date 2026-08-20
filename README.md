@@ -21,6 +21,9 @@ destino escrito en el código, así que el siguiente viaje no toca ni una línea
 - **Funciona sin conexión.** Aplicación instalable, con un botón por día que
   descarga las teselas de ese recuadro. Verificado con la red cortada: la guía
   y el mapa siguen ahí.
+- **Cada sitio se lee, no se estudia**: un gancho de una línea, prosa corta,
+  una lista de **qué mirar** que se va marcando estando allí, y los datos
+  curiosos en tarjetas sueltas en vez de enterrados en un párrafo.
 - **Una foto por sitio**, en la fila del itinerario, en el globo del mapa y como
   cabecera de su ficha. Guardadas en el repositorio, así que **también se ven sin
   conexión**. De Wikimedia Commons, con su autor y su licencia a la vista.

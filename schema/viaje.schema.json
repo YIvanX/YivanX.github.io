@@ -209,6 +209,32 @@
             "nota": { "type": "string" }
           }
         },
+        "queMirar": {
+          "type": "array",
+          "description": "Lo concreto que hay que buscar con los ojos estando allí. Se pinta como lista marcable: se va tachando sobre el terreno. No es lo mismo que consejos, que es logística.",
+          "items": {
+            "type": "object",
+            "required": ["que"],
+            "additionalProperties": false,
+            "properties": {
+              "que": { "type": "string", "description": "Qué buscar. Corto y concreto." },
+              "porque": { "type": "string", "description": "Por qué merece la pena. Aquí va el dato que lo hace interesante." }
+            }
+          }
+        },
+        "curiosidades": {
+          "type": "array",
+          "description": "Datos que se cuentan luego. Van en tarjetas sueltas, no enterrados en un párrafo.",
+          "items": {
+            "type": "object",
+            "required": ["titulo", "texto"],
+            "additionalProperties": false,
+            "properties": {
+              "titulo": { "type": "string", "description": "El gancho, en pocas palabras." },
+              "texto": { "type": "string", "description": "El dato. Dos o tres frases como mucho." }
+            }
+          }
+        },
         "consejos": { "type": "array", "items": { "type": "string" } },
         "enlaces": {
           "type": "array",

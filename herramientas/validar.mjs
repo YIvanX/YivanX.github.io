@@ -135,6 +135,13 @@ function validarViaje(viaje, nombreArchivo) {
     for (const [j, enlace] of (lugar.enlaces || []).entries()) {
       if (!esTexto(enlace?.url) || !/^https?:\/\//.test(enlace.url)) inf.error(`${donde}.enlaces[${j}]`, 'url ausente o no absoluta');
     }
+    for (const [j, q] of (lugar.queMirar || []).entries()) {
+      if (!esObjeto(q) || !esTexto(q.que)) inf.error(`${donde}.queMirar[${j}]`, 'necesita { que, porque? }');
+    }
+    for (const [j, cu] of (lugar.curiosidades || []).entries()) {
+      if (!esObjeto(cu) || !esTexto(cu.titulo) || !esTexto(cu.texto)) inf.error(`${donde}.curiosidades[${j}]`, 'necesita { titulo, texto }');
+      else if (cu.texto.length > 420) inf.aviso(`${donde}.curiosidades[${j}]`, `${cu.texto.length} caracteres: un dato curioso que hay que leer dos veces deja de serlo`);
+    }
     if (lugar.imagen !== undefined) {
       const img = lugar.imagen;
       if (!esObjeto(img) || !esTexto(img.archivo)) inf.error(donde, 'imagen debe ser { archivo, credito, licencia?, fuente? }');
