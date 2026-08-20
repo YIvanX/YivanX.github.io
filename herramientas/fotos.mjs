@@ -54,6 +54,7 @@ const c = {
 const argv = process.argv.slice(2);
 const viajeId = argv.find((a) => !a.startsWith('--'));
 const titulos = new Map();
+const archivos = new Map();
 let solo = null;
 let rehacer = false;
 let escribir = true;
@@ -69,6 +70,9 @@ for (let i = 0; i < argv.length; i += 1) {
   else if (argv[i] === '--titulo') {
     const [id, ...resto] = argv[++i].split('=');
     titulos.set(id, resto.join('='));
+  } else if (argv[i] === '--archivo') {
+    const [id, ...resto] = argv[++i].split('=');
+    archivos.set(id, resto.join('=').replace(/^File:/, ''));
   }
 }
 
@@ -79,6 +83,7 @@ if (!viajeId) {
   node herramientas/fotos.mjs <viaje>
   node herramientas/fotos.mjs <viaje> --solo catedral-leon
   node herramientas/fotos.mjs <viaje> --titulo plaza="Astorga"
+  node herramientas/fotos.mjs <viaje> --archivo plaza="Plaza mayor de Astorga.jpg"
   node herramientas/fotos.mjs <viaje> --rehacer | --sin-escribir
 
   --incluir-alojamiento   por defecto se salta: es dato privado y el repo es público
@@ -105,6 +110,23 @@ async function json(url, intento = 0) {
 }
 
 const limpiar = (v) => (v ? String(v.value).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim() : null);
+
+/**
+ * Miniatura de un archivo concreto de Commons.
+ *
+ * Es la salida de emergencia para cuando la imagen principal del artículo no
+ * sirve: a la Plaza Mayor de Astorga le tocaba la bandera del municipio, y al
+ * cambiar de artículo le tocó la misma foto que al museo de al lado. A veces hay
+ * que elegir el archivo a mano y no hay más.
+ */
+async function miniaturaDeArchivo(nombreArchivo) {
+  const d = await json(`https://commons.wikimedia.org/w/api.php?action=query&format=json&formatversion=2`
+    + `&prop=imageinfo&iiprop=url&iiurlwidth=500&titles=${encodeURIComponent('File:' + nombreArchivo)}`);
+  const p = d.query?.pages?.[0];
+  const info = p?.imageinfo?.[0];
+  if (!info?.thumburl) return null;
+  return { articulo: `File:${nombreArchivo}`, url: info.thumburl.split('?')[0], archivo: nombreArchivo };
+}
 
 /** Miniatura de 480 → Commons devuelve el 500 px, que es el que tiene generado. */
 async function miniatura(titulo) {
@@ -193,7 +215,7 @@ const pendientes = [];
 for (const lugar of objetivo) {
   const consulta = titulos.get(lugar.id) || lugar.nombre;
   try {
-    let img = await miniatura(consulta);
+    let img = archivos.has(lugar.id) ? await miniaturaDeArchivo(archivos.get(lugar.id)) : await miniatura(consulta);
     await dormir(PAUSA);
 
     if (!img) {

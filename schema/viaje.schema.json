@@ -312,6 +312,10 @@
         "modo": { "$ref": "#/definitions/modo" },
         "desde": { "type": "string", "description": "Solo en traslados. Debe existir en lugares[]." },
         "hasta": { "type": "string", "description": "Solo en traslados. Debe existir en lugares[]." },
+        "opcional": {
+          "type": "boolean",
+          "description": "El bloque se puede saltar sin romper el día. Se marca en la cronología para poder decidirlo sobre la marcha, cansado y con el reloj encima."
+        },
         "exterior": {
           "type": "boolean",
           "description": "Se ve por fuera: fachada, mirador, edificio iluminado de noche. No se entra, así que el horario de taquilla no aplica y la validación no lo comprueba."

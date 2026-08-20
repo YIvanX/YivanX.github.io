@@ -24,6 +24,8 @@ function chipsDeBloque(bloque, dia, moneda) {
   const cat = CATEGORIAS[lugar.categoria] || CATEGORIAS.practico;
   chips.push(html`<span class="chip chip--${lugar.categoria}">${icono(cat.icono)}${cat.etiqueta}</span>`);
 
+  if (bloque.opcional) chips.push(html`<span class="chip chip--opcional">Opcional</span>`);
+
   if (bloque.exterior) {
     chips.push(html`<span class="chip">Por fuera</span>`);
   } else {
@@ -54,7 +56,7 @@ function pintarBloqueVisita(bloque, dia, viaje, estado) {
   const conNota = Boolean(estado.notas[lugar.id]);
 
   return html`
-    <div class="bloque bloque--visita ${lugar.imagen ? 'bloque--con-foto' : ''}"
+    <div class="bloque bloque--visita ${lugar.imagen ? 'bloque--con-foto' : ''} ${bloque.opcional ? 'bloque--opcional' : ''}"
          data-clave="${bloque.clave}" data-lugar="${lugar.id}"
          data-visitado="${String(visitado)}">
       <button type="button" class="bloque__principal">
@@ -96,7 +98,7 @@ function pintarBloqueTraslado(bloque) {
       </span>
       <span class="bloque__rail"></span>
       <span class="bloque__cuerpo">
-        <span class="bloque__linea">${icono(modo.icono)}<b>${modo.etiqueta}</b>${destino ? crudo(` &rarr; ${esc(destino)}`) : ''}</span>
+        <span class="bloque__linea">${icono(modo.icono)}<b>${modo.etiqueta}</b>${destino ? crudo(` &rarr; ${esc(destino)}`) : ''}${bloque.opcional ? crudo('<span class="chip chip--opcional">Opcional</span>') : ''}</span>
         ${bloque.detalle ? crudo(`<span class="menudo" style="display:block;margin-top:2px">${esc(bloque.detalle)}</span>`) : ''}
       </span>
       ${tramo ? crudo(`<a class="bloque__mapa bloque__mapa--tramo" href="${esc(tramo)}"

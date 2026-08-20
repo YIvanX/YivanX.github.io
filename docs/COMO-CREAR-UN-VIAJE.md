@@ -192,7 +192,22 @@ y trae puestos dos guardias que salieron de ejecutarla contra León:
 - **Se salta el alojamiento.** Es dato privado y el repositorio es público.
 - **Rechaza banderas y escudos.** Los artículos de municipios tienen como imagen
   principal la bandera, no una foto del sitio: a la estación de Matallana le puso
-  el pendón del ayuntamiento. Se arregla con `--titulo <id>="<artículo con foto>"`.
+  el pendón del ayuntamiento.
+
+Cuando la imagen principal del artículo no sirve hay dos escapes, en este orden:
+
+```bash
+node herramientas/fotos.mjs <viaje> --titulo <id>="<otro artículo>"
+node herramientas/fotos.mjs <viaje> --archivo <id>="Nombre exacto.jpg"
+```
+
+`--archivo` toma un archivo concreto de Commons y es la salida definitiva. Hizo
+falta con la Plaza Mayor de Astorga: por nombre salía la bandera, y al cambiar de
+artículo salía la misma foto que el museo de al lado. Para buscar el archivo:
+
+```
+https://commons.wikimedia.org/w/api.php?action=query&format=json&list=search&srnamespace=6&srsearch=<lo que sea>
+```
 
 A mano, si hace falta — **Wikimedia Commons**, que es libre y tiene casi cualquier
 monumento. La imagen principal del artículo de Wikipedia sale por API:
