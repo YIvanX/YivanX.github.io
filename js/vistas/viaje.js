@@ -9,15 +9,16 @@
  */
 
 import { html, esc, icono, crudo, $, $$, alPulsar } from '../ui/dom.js';
-import { cargarViaje, diaPorDefecto, recuadroDe, INTENSIDADES, recomponer, viajeBase } from '../datos.js';
+import { cargarViaje, diaPorDefecto, recuadroDe, INTENSIDADES, recomponer, viajeBase, versionNubeDe, fijarVersionNube, origenDe, fijarCapaSubida } from '../datos.js';
 import { Mapa } from '../mapa.js';
 import { crearHoja } from '../ui/hoja.js';
-import { brindis } from '../ui/brindis.js';
+import { brindis, actualizarBrindis } from '../ui/brindis.js';
 import * as buscador from '../ui/buscador.js';
 import * as buscarLugar from '../ui/buscar-lugar.js';
 import { lugarDesdeBusqueda, claveEstable, nuevoId, ocultosDelDia, comoJsonDelViaje } from '../personalizacion.js';
 import * as estado from '../estado.js';
 import * as nube from '../nube.js';
+import * as sincronizacion from '../sincronizacion.js';
 import { esOscuro, alCambiarTema } from '../ui/tema.js';
 import { aIso, aFecha, fechaLarga, CLAVES_DIA, NOMBRE_DIA } from '../horarios.js';
 import { pintarDia, pintarFicha, pintarTransporte, pintarListas, pintarInfo } from './panel.js';
@@ -30,7 +31,16 @@ const PESTANAS = [
 ];
 
 export async function montarViaje(raiz, ruta, { alTema }) {
-  let viaje = await cargarViaje(ruta.viajeId);
+  // Las dos lecturas de la nube van en paralelo y no en fila: cada una tiene su
+  // propio límite de espera, y encadenarlas duplicaría el peor caso al abrir la
+  // guía con el proyecto de Supabase recién despertando.
+  const [cargado, estadoRemoto] = await Promise.all([
+    cargarViaje(ruta.viajeId),
+    sincronizacion.bajarEstado(ruta.viajeId),
+  ]);
+  let viaje = cargado;
+  estado.fusionarRemoto(ruta.viajeId, estadoRemoto);
+
   const nubeLista = await nube.configurada();
   let actual = { ...ruta, fecha: ruta.fecha || diaPorDefecto(viaje) };
   let verTodo = false;
@@ -184,7 +194,13 @@ export async function montarViaje(raiz, ruta, { alTema }) {
       cuerpo.innerHTML = pintarInfo(viaje, {
         privados: estado.privadosDe(viaje.id),
         capa: estado.capaDe(viaje.id),
-        nube: { configurada: nubeLista, usuario: nube.usuario() },
+        nube: {
+          configurada: nubeLista,
+          usuario: nube.usuario(),
+          origen: origenDe(viaje.id),
+          version: versionNubeDe(viaje.id),
+          pendientes: viaje.pendientes,
+        },
       });
       if (nubeLista && nube.haySesion()) {
         nube.comprobar().then((r) => {
@@ -380,12 +396,40 @@ export async function montarViaje(raiz, ruta, { alTema }) {
 
   alPulsar(cuerpo, '[data-accion="sincronizar"]', async () => {
     try {
-      // Lo personal sube; el viaje se lee de la nube si está más adelantado.
+      // Ida y vuelta completa, en este orden a propósito: lo personal sube y
+      // baja —fundiendo, nunca pisando—, y el itinerario compartido sube al
+      // final para que salga con la capa ya fundida dentro.
       await nube.guardarEstado(viaje.id, estado.estadoDe(viaje.id));
-      const remoto = await nube.leerViaje(viaje.id);
-      brindis(remoto
-        ? `Sincronizado. El viaje está en la nube (versión ${remoto.versionNube}).`
-        : 'Tu estado ha subido. El viaje todavía no está en la nube.', { tipo: 'ok', duracion: 5000 });
+      estado.fusionarRemoto(viaje.id, await sincronizacion.bajarEstado(viaje.id));
+
+      if (versionNubeDe(viaje.id) === null) {
+        // No basta con que la carga no trajera versión: pudo rendirse por tiempo
+        // con el proyecto despertando, y entonces el viaje SÍ está en la nube.
+        // Preguntar antes de crear evita chocar contra la clave primaria y
+        // soltar un «duplicate key» que no le dice nada a nadie.
+        const yaEsta = await nube.leerViaje(viaje.id);
+        if (yaEsta) {
+          fijarVersionNube(viaje.id, yaEsta.versionNube);
+          fijarCapaSubida(viaje.id, sincronizacion.separar(yaEsta).capa || { version: 1, lugares: [], bloques: [], ocultos: [] });
+          trasGuardar();
+          await guardarEnNube();
+        } else {
+          // Publicar el viaje es un acto explícito, y este botón es dónde se hace.
+          const capa = estado.capaDe(viaje.id);
+          const creado = await nube.crearViaje(
+            sincronizacion.juntar({ ...viajeBase(viaje.id), id: viaje.id }, capa),
+          );
+          fijarVersionNube(viaje.id, creado.versionNube);
+          fijarCapaSubida(viaje.id, capa);
+          trasGuardar();
+          brindis('Viaje publicado en la nube. Ya se puede compartir.', { tipo: 'ok', duracion: 5000 });
+        }
+      } else if (viaje.pendientes) {
+        await guardarEnNube();
+      } else {
+        brindis(`Al día con la nube · versión ${versionNubeDe(viaje.id)}. No había nada que subir.`, { tipo: 'ok', duracion: 5000 });
+        trasGuardar();
+      }
     } catch (e) {
       brindis(`No se ha podido sincronizar: ${e.message}`, { tipo: 'error', duracion: 6000 });
     }
@@ -454,13 +498,77 @@ export async function montarViaje(raiz, ruta, { alTema }) {
    * Se recompone desde el JSON crudo que ya está en memoria: no se vuelve a
    * pedir nada a la red, así que añadir una parada funciona igual sin cobertura.
    */
+  /**
+   * ¿Hay a dónde subir ahora mismo? Todo síncrono a propósito: se consulta
+   * mientras se decide qué enseñar, y un `await` ahí dentro haría que la
+   * pantalla se pintara un instante antes de saberlo.
+   */
+  const puedeSubir = () => nubeLista && nube.haySesion() && versionNubeDe(viaje.id) !== null;
+
+  // Se avisa una vez por tanda de cambios, no en cada navegación: repetir el
+  // mismo aviso cada vez que tocas un día lo convierte en algo que se ignora.
+  let avisadoDePendientes = false;
+
   function trasCambiarCapa(mensaje) {
     const rehecho = recomponer(viaje.id, { archivo: null });
     if (rehecho) viaje = rehecho;
     modoPintado = null;
     pintar();
+    avisadoDePendientes = false;
+    // El cambio ya está guardado en este dispositivo, y eso es lo que dice el
+    // mensaje. Lo de la nube lo dice la barra de arriba, que no se va sola.
     if (mensaje) brindis(mensaje, { tipo: 'ok' });
   }
+
+  /**
+   * Sube a la nube todos los cambios del itinerario de una vez.
+   *
+   * **Se guarda cuando tú lo dices, no en cada toque.** Añadir tres paradas
+   * seguidas eran antes tres escrituras y tres versiones nuevas; ahora es una.
+   * Además, mientras editas, cada subida intermedia era una oportunidad de
+   * chocar con la otra persona por un estado que ni siquiera habías terminado.
+   *
+   * Solo **actualiza**: publicar un viaje que todavía no está en la nube es un
+   * acto aparte y se hace desde Viaje → Nube.
+   */
+  async function guardarEnNube() {
+    const version = versionNubeDe(viaje.id);
+    if (!(await sincronizacion.activa()) || version === null) {
+      brindis('No hay sesión en la nube. El itinerario sigue guardado en este dispositivo.', { tipo: 'info', duracion: 5000 });
+      return false;
+    }
+    const cuantos = viaje.pendientes;
+    const aviso = brindis('Subiendo a la nube…', { tipo: 'info', persistente: true });
+    try {
+      const capa = estado.capaDe(viaje.id);
+      const guardado = await sincronizacion.subirViaje(viaje.id, viajeBase(viaje.id), capa, version);
+      fijarVersionNube(viaje.id, guardado.versionNube);
+      // La foto de referencia se actualiza SOLO después de que la escritura haya
+      // ido bien. Si se moviera antes, un fallo de red dejaría los cambios
+      // marcados como subidos sin estarlo, que es la peor mentira posible aquí.
+      fijarCapaSubida(viaje.id, capa);
+      trasGuardar();
+      actualizarBrindis(aviso, `${cuantos} cambio${cuantos === 1 ? '' : 's'} en la nube · versión ${guardado.versionNube}`, { tipo: 'ok' });
+      return true;
+    } catch (e) {
+      actualizarBrindis(aviso, e.conflicto
+        ? 'Alguien ha cambiado este viaje desde otro sitio. Recarga antes de guardar, o le pisarás el cambio.'
+        : `No ha subido: ${e.message}. Tus cambios siguen aquí.`,
+      { tipo: 'error', duracion: 7000 });
+      return false;
+    }
+  }
+
+  /** Repinta con los estados de nube recalculados tras guardar. */
+  function trasGuardar() {
+    const rehecho = recomponer(viaje.id, { archivo: null });
+    if (rehecho) viaje = rehecho;
+    modoPintado = null;
+    avisadoDePendientes = false;
+    pintar();
+  }
+
+  alPulsar(cuerpo, '[data-accion="guardar-nube"]', guardarEnNube);
 
   function anadirParada({ resultado, fecha, inicio, fin, nota }) {
     const capa = estado.capaDe(viaje.id);
@@ -613,10 +721,37 @@ export async function montarViaje(raiz, ruta, { alTema }) {
 
   pintar();
 
+  // --- Qué pasó con la bajada --------------------------------------------
+  // Se dice solo cuando hay algo que decir. Sin nube configurada o sin sesión
+  // es el funcionamiento normal y callarse es lo correcto; lo que no se puede
+  // callar es que la nube estuviera y no contestara, porque entonces estás
+  // viendo una copia que puede estar vieja y no tienes forma de saberlo.
+  const origen = origenDe(viaje.id);
+  if (origen === 'nube') {
+    brindis(`Itinerario al día desde la nube · versión ${versionNubeDe(viaje.id)}`, { tipo: 'ok' });
+  } else if (origen === 'fallo') {
+    brindis('La nube no ha contestado. Estás viendo la copia del repositorio, que puede estar vieja.', { tipo: 'error', duracion: 7000 });
+  } else if (origen === 'sin-fila' && nube.haySesion()) {
+    brindis('Este viaje todavía no está en la nube. Publícalo desde Viaje → Nube.', { tipo: 'info', duracion: 5000 });
+  }
+
   return {
     viajeId: viaje.id,
     actualizar(nuevaRuta) {
+      const antes = actual;
       actual = { ...nuevaRuta, fecha: nuevaRuta.fecha || actual.fecha || diaPorDefecto(viaje) };
+
+      // Al cambiar de día o de pestaña, la barra de cambios sin guardar deja de
+      // estar delante: en Transporte o en Listas no se pinta, y en otro día no
+      // se ven las paradas que tocaste. Ese es justo el momento de decirlo, y
+      // **una sola vez por tanda**: repetirlo en cada navegación lo convierte en
+      // algo que se ignora, que es peor que no avisar.
+      const cambioDeSitio = antes.fecha !== actual.fecha || antes.vista !== actual.vista;
+      if (cambioDeSitio && viaje.pendientes && !avisadoDePendientes) {
+        avisadoDePendientes = true;
+        brindis(`Te dejas ${viaje.pendientes} cambio${viaje.pendientes === 1 ? '' : 's'} sin guardar en la nube. Están a salvo aquí; súbelos cuando quieras desde el itinerario.`,
+          { tipo: 'info', duracion: 6000 });
+      }
       pintar();
     },
     destruir() {

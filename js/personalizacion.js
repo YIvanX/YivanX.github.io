@@ -197,6 +197,11 @@ export function validarCapa(capa) {
   if (!Array.isArray(capa.lugares)) fallos.push('lugares debe ser una lista');
   if (!Array.isArray(capa.bloques)) fallos.push('bloques debe ser una lista');
   if (!Array.isArray(capa.ocultos)) fallos.push('ocultos debe ser una lista');
+  // Se sale aquí si la forma no es la que toca. Recorrer un campo que no es una
+  // lista lanza un TypeError, y esta función existe justo para lo contrario:
+  // para poder decir qué está mal sin reventar. La llama `importar` con un
+  // archivo que ha elegido una persona, y la carga con lo que venga de la nube.
+  if (fallos.length) return fallos;
 
   const ids = new Set();
   for (const [i, l] of (capa.lugares || []).entries()) {

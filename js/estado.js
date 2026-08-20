@@ -11,6 +11,7 @@
  */
 
 import { validarCapa } from './personalizacion.js';
+import { fusionarEstado } from './sincronizacion.js';
 
 const PREFIJO = 'bitacora:v1';
 const BD_NOMBRE = 'bitacora';
@@ -51,6 +52,20 @@ export function estadoDe(viajeId) {
 function guardarEstado(viajeId, estado) {
   escribir(`viaje:${viajeId}`, estado);
   avisar(viajeId);
+}
+
+/**
+ * Mete en este dispositivo el estado personal que había en la nube.
+ *
+ * Fusión y nunca reemplazo, con lo local ganando los choques: entrar en el móvil
+ * no puede borrar las notas que escribiste en el móvil. Devuelve lo fundido, o
+ * `null` si no había nada que bajar.
+ */
+export function fusionarRemoto(viajeId, remoto) {
+  if (!remoto) return null;
+  const fundido = fusionarEstado(estadoDe(viajeId), remoto);
+  guardarEstado(viajeId, fundido);
+  return fundido;
 }
 
 export function esVisitado(viajeId, lugarId) {

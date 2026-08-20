@@ -65,6 +65,25 @@ function chipsDeBloque(bloque, dia, moneda) {
 
 // --- Cronología -----------------------------------------------------------
 
+/**
+ * El icono de nube de una parada, si tiene estado. Con `title` y con texto para
+ * lector de pantalla: un color por sí solo no es información accesible, y aquí
+ * la diferencia entre los dos estados importa.
+ */
+function marcaDeNube(bloque) {
+  if (bloque.nube === 'pendiente') {
+    return crudo(`<span class="bloque__nube bloque__nube--pendiente" title="Sin subir a la nube">
+      <svg aria-hidden="true" style="width:100%;height:100%"><use href="#i-nube-sube"/></svg>
+      <span class="solo-lectores">Sin subir a la nube</span></span>`);
+  }
+  if (bloque.nube === 'en-nube') {
+    return crudo(`<span class="bloque__nube bloque__nube--en-nube" title="Guardado en la nube">
+      <svg aria-hidden="true" style="width:100%;height:100%"><use href="#i-nube"/></svg>
+      <span class="solo-lectores">Guardado en la nube</span></span>`);
+  }
+  return '';
+}
+
 function pintarBloqueVisita(bloque, dia, viaje, estado) {
   const lugar = bloque.lugar;
   const visitado = Boolean(estado.visitados[lugar.id]);
@@ -85,6 +104,7 @@ function pintarBloqueVisita(bloque, dia, viaje, estado) {
           <span class="bloque__orden">${bloque.orden}</span>
           <span class="titulo-3">${lugar.nombre}</span>
           ${visitado ? icono('check', 'bloque__hecho') : ''}
+          ${marcaDeNube(bloque)}
         </span>
         <span class="bloque__resumen secundario" style="display:block">${lugar.resumen}</span>
         <span class="bloque__chips">${chipsDeBloque(bloque, dia, viaje.moneda)}</span>
@@ -171,6 +191,24 @@ const lineaAhora = () => html`
     <span class="ahora__linea"></span>
   </div>`;
 
+/**
+ * La barra de cambios sin guardar.
+ *
+ * Se pinta dentro del día y pegada arriba, no como aviso efímero, porque un
+ * mensaje que se va no sirve para algo que sigue siendo verdad: mientras haya
+ * cambios sin subir, tiene que verse.
+ */
+function barraPendientes(cuantos) {
+  if (!cuantos) return '';
+  return crudo(`
+    <div class="pendientes" role="status">
+      <svg aria-hidden="true"><use href="#i-nube-sube"/></svg>
+      <span class="pendientes__texto"><b>${cuantos} cambio${cuantos === 1 ? '' : 's'} sin guardar</b> en la nube.
+        Están a salvo en este dispositivo, pero nadie más los ve.</span>
+      <button type="button" class="boton boton--principal" data-accion="guardar-nube">Guardar en la nube</button>
+    </div>`);
+}
+
 export function pintarDia(viaje, dia, estado, { ocultos = 0 } = {}) {
   const intensidad = INTENSIDADES[dia.intensidad] || INTENSIDADES.suave;
   const esHoy = dia.fecha === aIso(new Date());
@@ -194,6 +232,7 @@ export function pintarDia(viaje, dia, estado, { ocultos = 0 } = {}) {
   const cola = esHoy && !puestaLaLinea ? lineaAhora() : '';
 
   return html`
+    ${barraPendientes(viaje.pendientes)}
     <div class="dia-cabecera">
       <div class="dia-cabecera__meta">
         <span class="chip ${intensidad.clase}">${intensidad.etiqueta}</span>
@@ -422,6 +461,21 @@ export function pintarListas(viaje, estado) {
 
 // --- Información del viaje ------------------------------------------------
 
+/**
+ * De dónde ha salido el viaje que estás viendo.
+ *
+ * Se enseña en el panel y no solo como aviso al abrir, porque es la clase de
+ * dato que se quiere **poder consultar** y no solo ver pasar: «¿esto que tengo
+ * delante es lo mismo que ve la otra persona?» no se responde con un mensaje que
+ * ya se fue.
+ */
+const ORIGEN = {
+  nube: (v) => `<b>De la nube</b> · versión ${Number(v) || '?'}`,
+  'sin-fila': () => 'Solo en este dispositivo — todavía no está en la nube',
+  fallo: () => '<b>Del repositorio</b> — la nube no contestó, así que puede estar vieja',
+  'sin-nube': () => 'Del repositorio',
+};
+
 export function pintarInfo(viaje, { privados = { campos: [] }, capa = null, nube = null } = {}) {
   const niveles = { alto: 'aviso--alto', medio: 'aviso--medio', info: 'aviso--info' };
 
@@ -511,6 +565,10 @@ export function pintarInfo(viaje, { privados = { campos: [] }, capa = null, nube
               <div class="datos__fila">
                 <div class="datos__clave">Estado</div>
                 <div class="datos__valor" data-estado-nube>Comprobando…</div>
+              </div>
+              <div class="datos__fila">
+                <div class="datos__clave">Este viaje</div>
+                <div class="datos__valor">${ORIGEN[nube.origen]?.(nube.version) || ORIGEN['sin-nube']()}${nube.pendientes ? `<span class="chip chip--alerta" style="margin-left:6px">${nube.pendientes} sin guardar</span>` : ''}</div>
               </div>
               <div class="datos__fila">
                 <div class="datos__clave">Tu id</div>
