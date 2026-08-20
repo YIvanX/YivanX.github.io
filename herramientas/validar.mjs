@@ -18,6 +18,7 @@ import { revisarBloque, aMinutos, claveDia, diasEntre, NOMBRE_DIA } from '../js/
 const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
 const CATEGORIAS = ['patrimonio', 'naturaleza', 'comida', 'pueblo', 'transporte', 'alojamiento', 'practico'];
+const NIVELES = ['obligatorio', 'recomendable', 'opcional'];
 const MODOS = ['a-pie', 'tren', 'bus', 'taxi', 'coche', 'barco', 'avion', 'bici'];
 const ESTADOS = ['planificado', 'en-curso', 'completado'];
 const INTENSIDADES = ['llegada', 'suave', 'media', 'fuerte', 'salida'];
@@ -135,6 +136,16 @@ function validarViaje(viaje, nombreArchivo) {
     for (const [j, enlace] of (lugar.enlaces || []).entries()) {
       if (!esTexto(enlace?.url) || !/^https?:\/\//.test(enlace.url)) inf.error(`${donde}.enlaces[${j}]`, 'url ausente o no absoluta');
     }
+    if (lugar.nivel !== undefined && !NIVELES.includes(lugar.nivel)) {
+      inf.error(donde, `nivel "${lugar.nivel}" no válido (${NIVELES.join(' | ')})`);
+    }
+    // Un nivel sin la valoración que lo sostiene es una opinión disfrazada de dato.
+    if (lugar.nivel && !lugar.valoracion) inf.aviso(donde, 'tiene nivel pero no valoracion: nada respalda la clasificación');
+    if (lugar.valoracion && !esTexto(lugar.valoracion.fuente)) inf.error(donde, 'valoracion sin fuente');
+    if (lugar.valoracion?.nota !== undefined && (lugar.valoracion.nota < 0 || lugar.valoracion.nota > 5)) {
+      inf.error(donde, `nota fuera de 0-5: ${lugar.valoracion.nota}`);
+    }
+
     for (const [j, q] of (lugar.queMirar || []).entries()) {
       if (!esObjeto(q) || !esTexto(q.que)) inf.error(`${donde}.queMirar[${j}]`, 'necesita { que, porque? }');
     }

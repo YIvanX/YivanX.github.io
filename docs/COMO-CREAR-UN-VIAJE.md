@@ -161,6 +161,44 @@ Tres reglas que salieron de escribir los 24 lugares de León:
 
 ---
 
+### Cuánto duele saltárselo
+
+`nivel` clasifica cada sitio en **obligatorio**, **recomendable** u **opcional**,
+y se pinta el primero de todos los distintivos: es lo que decide si te lo saltas
+cuando el día se ha torcido y son las siete de la tarde.
+
+**No es criterio propio, y por eso `valoracion` no es opcional en la práctica:**
+un nivel sin las cifras que lo sostienen es una opinión disfrazada de dato. El
+validador avisa si falta.
+
+```json
+"nivel": "obligatorio",
+"valoracion": {
+  "nota": 4.7, "resenas": 5403,
+  "puesto": "N.º 1 de las cosas que hacer en León",
+  "fuente": "TripAdvisor, 20 de agosto de 2026"
+}
+```
+
+El criterio que se usó en León, escrito para poder repetirlo:
+
+| Nivel | Regla |
+|---|---|
+| **Obligatorio** | ≥ 4,5 y ≥ 800 reseñas, o cabeza del ranking de su localidad con mucho volumen |
+| **Recomendable** | ≥ 4,2 con ≥ 200 reseñas, o ≥ 4,5 con volumen medio |
+| **Opcional** | Por debajo, muy pocas reseñas, o no es un destino en sí |
+
+**El volumen importa tanto como la nota.** Un 4,8 con 12 reseñas no dice nada;
+un 4,2 con 1.588 sí. Y las notas bajas con mucho volumen son las que más
+información dan: el MUSAC sale 3,5 sobre 293 reseñas, y eso es un consenso, no
+un accidente.
+
+Las páginas de TripAdvisor se dejan leer con WebFetch. Lo más rentable es pedir
+la lista de atracciones de la localidad entera, que da nota, número de reseñas y
+puesto de todas de una vez, en vez de ir sitio por sitio.
+
+---
+
 ### Una foto por lugar
 
 `imagen` es la foto que se ve en tres sitios: la fila del itinerario, el globo

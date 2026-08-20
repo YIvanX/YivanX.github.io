@@ -140,6 +140,13 @@ export const INTENSIDADES = {
   salida:  { etiqueta: 'Salida',     clase: '',             puntos: 1 },
 };
 
+/** Cuánto duele saltarse un sitio. Sale de las reseñas, no de mi criterio. */
+export const NIVELES = {
+  obligatorio:  { etiqueta: 'Obligatorio',  clase: 'nivel--obligatorio',  orden: 0 },
+  recomendable: { etiqueta: 'Recomendable', clase: 'nivel--recomendable', orden: 1 },
+  opcional:     { etiqueta: 'Opcional',     clase: 'nivel--opcional',     orden: 2 },
+};
+
 export const ESTADOS_VIAJE = {
   planificado: { etiqueta: 'Planificado', clase: '' },
   'en-curso':  { etiqueta: 'En curso',    clase: 'chip--ok' },

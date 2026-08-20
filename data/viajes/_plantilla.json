@@ -59,6 +59,15 @@
         "fuente": "https://commons.wikimedia.org/wiki/File:Ejemplo.jpg"
       },
       "_imagen": "La foto que se ve en la cronología, en el globo del mapa y en la cabecera de la ficha. Se GUARDA en el repositorio, no se enlaza fuera, o no funcionará sin conexión. credito es obligatorio: una foto ajena sin atribución no se puede publicar.",
+      "nivel": "recomendable",
+      "_nivel": "obligatorio | recomendable | opcional. Cuánto duele saltárselo. NO es criterio propio: sale de las reseñas de valoracion. Se pinta el primero de los distintivos porque es lo que decide qué se salta cuando el día se tuerce.",
+      "valoracion": {
+        "nota": 4.5,
+        "resenas": 800,
+        "puesto": "N.º X de las cosas que hacer en <sitio>",
+        "fuente": "TripAdvisor, <fecha de consulta>"
+      },
+      "_valoracion": "La prueba detrás del nivel. Sin esto, el nivel es una opinión disfrazada de dato, y el validador lo avisa. El volumen importa tanto como la nota: un 4,8 con 12 reseñas no dice nada.",
       "queMirar": [
         { "que": "Qué buscar con los ojos, corto y concreto", "porque": "Por qué merece la pena. Aquí va el dato que lo hace interesante." }
       ],

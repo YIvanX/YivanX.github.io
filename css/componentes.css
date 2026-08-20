@@ -882,6 +882,17 @@ kbd {
 
 /* Un bloque opcional se puede saltar sin romper el día. Se atenúa, no se
    esconde: la decisión se toma sobre la marcha, cansado y con el reloj encima. */
-.chip--opcional { background: transparent; border: 1px dashed var(--borde-fuerte); color: var(--tinta-suave); }
+.chip--saltable { background: transparent; border: 1px dashed var(--borde-fuerte); color: var(--tinta-suave); }
 .bloque--opcional .bloque__punto { background: var(--lienzo); border-color: var(--borde-fuerte); box-shadow: inset 0 0 0 1.5px var(--borde-fuerte); }
 .bloque--opcional .bloque__cuerpo { opacity: 0.88; }
+
+/* --- Nivel: cuánto duele saltárselo -------------------------------------
+   Sale de las reseñas, no de un criterio propio, así que se pinta con peso
+   descendente: lo obligatorio pesa, lo opcional apenas se ve. */
+.nivel--obligatorio {
+  background: var(--acento);
+  color: var(--acento-tinta);
+  letter-spacing: 0.03em;
+}
+.nivel--recomendable { background: var(--superficie-3); color: var(--tinta-media); }
+.nivel--opcional     { background: transparent; border: 1px solid var(--borde); color: var(--tinta-suave); }

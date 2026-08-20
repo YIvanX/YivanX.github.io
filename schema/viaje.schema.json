@@ -209,6 +209,22 @@
             "nota": { "type": "string" }
           }
         },
+        "nivel": {
+          "enum": ["obligatorio", "recomendable", "opcional"],
+          "description": "Cuánto duele saltárselo. NO es opinión propia: sale de las reseñas declaradas en `valoracion`. Obligatorio = nota alta con mucho volumen o cabeza del ranking de su zona. Recomendable = buena nota con volumen medio. Opcional = nota o volumen bajos, o no es un destino en sí."
+        },
+        "valoracion": {
+          "type": "object",
+          "required": ["fuente"],
+          "additionalProperties": false,
+          "description": "La prueba detrás del nivel. Sin esto, el nivel es una opinión disfrazada de dato.",
+          "properties": {
+            "nota": { "type": "number", "minimum": 0, "maximum": 5 },
+            "resenas": { "type": "integer", "minimum": 0 },
+            "puesto": { "type": "string", "description": "Su puesto en el ranking de su localidad, tal cual lo da la fuente." },
+            "fuente": { "type": "string", "description": "De dónde salen los números y cuándo se consultaron." }
+          }
+        },
         "queMirar": {
           "type": "array",
           "description": "Lo concreto que hay que buscar con los ojos estando allí. Se pinta como lista marcable: se va tachando sobre el terreno. No es lo mismo que consejos, que es logística.",

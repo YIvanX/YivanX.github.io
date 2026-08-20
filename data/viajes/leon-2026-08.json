@@ -35,6 +35,11 @@
       "nivel": "medio",
       "titulo": "Valporquero: el recorrido largo se reserva",
       "texto": "El recorrido normal se saca en taquilla el mismo día, pero el largo —2,4 km y 486 escalones, que es el que merece la pena— hay que reservarlo. Con la recogida del coche a las 11:30, el pase seguro es el de las 16:30: el de las 13:00 obliga a que el papeleo del alquiler no se alargue ni un minuto."
+    },
+    {
+      "nivel": "info",
+      "titulo": "Cómo se ha clasificado cada sitio",
+      "texto": "Fuente principal: TripAdvisor, consultado el 20 de agosto de 2026. Obligatorio = nota >= 4,5 y >= 800 reseñas, o cabeza del ranking de su localidad con mucho volumen. Recomendable = nota >= 4,2 con >= 200 reseñas, o nota >= 4,5 con volumen medio. Opcional = por debajo de eso, muy pocas reseñas, o no es un destino en sí."
     }
   ],
   "lugares": [
@@ -47,6 +52,8 @@
       "resumen": "Un solo edificio para alta velocidad, media distancia y el ancho métrico de la montaña.",
       "descripcion": "León concentra en la misma estación los tres mundos ferroviarios que necesita este viaje: los trenes largos a Madrid, el Media Distancia que va a Astorga y Ponferrada, y el ancho métrico —la antigua FEVE— que sube a la montaña. **Eso es exactamente lo que hace viable un viaje sin coche desde una sola base.**\n\nEstá al otro lado del río Bernesga, a unos 20 minutos a pie del casco histórico cruzando por el puente de los Leones. El Convento de San Marcos queda a medio camino, lo que resulta útil el último día.",
       "duracionMin": 15,
+      "nivel": "opcional",
+      "valoracion": { "puesto": "No es un destino", "fuente": "Es el medio para llegar a los demás sitios, no una visita" },
       "queMirar": [
         {
           "que": "Los paneles antes de dar nada por hecho",
@@ -94,6 +101,13 @@
         "vie": [["12:00", "16:00"], ["19:30", "01:00"]],
         "sab": [["12:00", "16:30"], ["19:30", "01:00"]],
         "dom": [["12:00", "16:30"], ["19:30", "00:00"]]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "nota": 4.4,
+        "resenas": 417,
+        "puesto": "Plaza de San Martín, n.º 6 de las cosas que hacer en León",
+        "fuente": "TripAdvisor, 20 de agosto de 2026"
       },
       "queMirar": [
         {
@@ -158,6 +172,13 @@
         "vie": [["09:30", "13:30"], ["16:00", "20:00"]],
         "sab": [["09:30", "13:30"], ["16:00", "20:00"]],
         "dom": [["09:30", "11:30"], ["15:00", "20:00"]]
+      },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.7,
+        "resenas": 5403,
+        "puesto": "N.º 1 de las cosas que hacer en León",
+        "fuente": "TripAdvisor, 20 de agosto de 2026"
       },
       "queMirar": [
         {
@@ -228,6 +249,13 @@
         "sab": [["10:00", "14:00"], ["16:00", "19:00"]],
         "dom": [["10:00", "14:00"]]
       },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.6,
+        "resenas": 2218,
+        "puesto": "N.º 2 de las cosas que hacer en León",
+        "fuente": "TripAdvisor, 20 de agosto de 2026"
+      },
       "queMirar": [
         {
           "que": "El calendario agrícola",
@@ -283,6 +311,11 @@
       "descripcion": "Aquí acampó la **Legio VII Gemina** desde el año 74, y el casco histórico todavía tiene la planta rectangular del campamento militar. Cuando cruces el casco y notes que las calles hacen ángulos raros, es eso.\n\nLos **Cubos** son los torreones semicirculares de la muralla del siglo IV, y el mejor tramo corre justo detrás de San Isidoro. Se recorre en veinte minutos, no hay entrada ni horario: es calle.",
       "duracionMin": 30,
       "precio": { "importe": 0, "detalle": "Libre, es vía pública" },
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "No aparece entre las 15 primeras de León",
+        "fuente": "TripAdvisor, 20 de agosto de 2026. Se ve de paso entre San Isidoro y el casco, así que no cuesta nada"
+      },
       "queMirar": [
         {
           "que": "La base de la muralla",
@@ -338,6 +371,13 @@
         "sab": [["10:00", "20:00"]],
         "dom": [["10:00", "15:00"]]
       },
+      "nivel": "recomendable",
+      "valoracion": {
+        "nota": 4.3,
+        "resenas": 1198,
+        "puesto": "N.º 3 de las cosas que hacer en León",
+        "fuente": "TripAdvisor, 20 de agosto de 2026"
+      },
       "queMirar": [
         {
           "que": "San Jorge y el dragón",
@@ -388,6 +428,13 @@
       "descripcion": "La **Plaza Mayor** es del siglo XVII, porticada y con el Consistorio Viejo presidiéndola. Miércoles y sábados por la mañana se llena con el mercado, que sigue siendo un mercado de verdad y no una atracción.\n\nA dos minutos está la **Plaza del Grano**, y es la que sorprende: conserva el empedrado de cantos rodados del río Bernesga, irregular y desigual, con dos hileras de árboles y una fuente en medio. Es la plaza más fotografiada de León y la más difícil de cruzar con tacón.\n\nEntre las dos queda el **Palacio del Conde Luna**, del siglo XIV.",
       "duracionMin": 45,
       "precio": { "importe": 0, "detalle": "Libre" },
+      "nivel": "recomendable",
+      "valoracion": {
+        "nota": 4.5,
+        "resenas": 513,
+        "puesto": "Plaza del Grano, n.º 7 de León. La Plaza Mayor va aparte: 4,2 con 372 reseñas",
+        "fuente": "TripAdvisor, 20 de agosto de 2026"
+      },
       "queMirar": [
         {
           "que": "El empedrado de la Plaza del Grano",
@@ -442,6 +489,13 @@
         "sab": [["11:00", "14:00"], ["17:00", "20:00"]],
         "dom": [["11:00", "14:00"], ["17:00", "20:00"]]
       },
+      "nivel": "opcional",
+      "valoracion": {
+        "nota": 3.5,
+        "resenas": 293,
+        "puesto": "N.º 14 de las cosas que hacer en León",
+        "fuente": "TripAdvisor, 20 de agosto de 2026. La peor nota de todo el viaje"
+      },
       "queMirar": [
         {
           "que": "La fachada con luz de tarde",
@@ -489,6 +543,13 @@
       "descripcion": "Una de las fachadas más largas de España: **más de 100 metros de piedra tallada** con medallones de personajes históricos y mitológicos, hecha en el siglo XVI para la Orden de Santiago.\n\nSu historia es mucho más dura que su fachada. Nació como hospital de peregrinos del Camino, fue cárcel —**Quevedo estuvo preso aquí** entre 1639 y 1643— y durante la Guerra Civil funcionó como campo de concentración. Hoy es un Parador.\n\nPuedes entrar al vestíbulo y asomarte al claustro sin ser cliente. Nadie te va a decir nada.",
       "duracionMin": 45,
       "precio": { "importe": 0, "detalle": "Fachada, claustro e iglesia, libres. El museo se paga aparte" },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.5,
+        "resenas": 849,
+        "puesto": "N.º 5 de las cosas que hacer en León",
+        "fuente": "TripAdvisor, 20 de agosto de 2026"
+      },
       "queMirar": [
         {
           "que": "Los medallones de la fachada",
@@ -543,6 +604,12 @@
       "descripcion": "El río Torío ha cortado la caliza hasta dejar un cañón estrecho por el que la carretera pasa literalmente metida entre paredes. Está en la **Reserva de la Biosfera de los Argüellos** y se atraviesa de camino a Valporquero, así que sale gratis en el trayecto.\n\nHay un par de ensanches donde parar cinco minutos. Si el taxista es de la zona, pídeselo sin reparos: es lo normal.",
       "duracionMin": 30,
       "precio": { "importe": 0, "detalle": "Libre" },
+      "nivel": "opcional",
+      "valoracion": {
+        "resenas": 24,
+        "puesto": "24 opiniones muy repartidas: 14 excelentes y 6 pésimas",
+        "fuente": "TripAdvisor, 20 de agosto de 2026. Muy pocos datos, pero se pasa por delante camino de la cueva"
+      },
       "queMirar": [
         {
           "que": "Los buitres leonados",
@@ -602,6 +669,13 @@
         "necesaria": true,
         "nota": "Pases de compra anticipada a las 11:30, 13:00 y 16:30. El recorrido normal se puede sacar en taquilla el mismo día; para el resto, mejor reservar."
       },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.7,
+        "resenas": 960,
+        "puesto": "N.º 1 de Valporquero de Torío",
+        "fuente": "TripAdvisor, 20 de agosto de 2026"
+      },
       "queMirar": [
         {
           "que": "La Gran Rotonda",
@@ -658,6 +732,11 @@
       "descripcion": "Pueblo pequeño al pie de las Hoces, y el sitio natural para comer el día de Valporquero: está entre la cueva y la estación, así que no obliga a desviarse.\n\nSu producto es la **cecina de chivo**, distinta de la cecina de León habitual, que es de vacuno. La de chivo es más pequeña, mucho más intensa, y bastante difícil de encontrar fuera de aquí. El pueblo le dedica una feria en noviembre.\n\nEs un pueblo de comer, no de visitar: mesa larga y seguir.",
       "duracionMin": 90,
       "precio": { "importe": 20, "detalle": "Menú del día aproximado, por persona" },
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "Sin ficha propia de atracción",
+        "fuente": "TripAdvisor, 20 de agosto de 2026. Es sitio de comer, no de visitar"
+      },
       "queMirar": [
         {
           "que": "La cecina de chivo",
@@ -708,6 +787,13 @@
         "vie": [["10:00", "14:00"], ["16:00", "20:00"]],
         "sab": [["10:00", "14:00"], ["16:00", "20:00"]],
         "dom": [["10:00", "14:00"], ["16:00", "20:00"]]
+      },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.5,
+        "resenas": 1318,
+        "puesto": "Travellers' Choice de TripAdvisor entre las 10 mejores cosas que hacer del mundo",
+        "fuente": "TripAdvisor, 20 de agosto de 2026"
       },
       "queMirar": [
         {
@@ -776,6 +862,13 @@
         "sab": [["10:00", "14:00"], ["16:00", "20:00"]],
         "dom": [["10:00", "14:00"], ["16:00", "20:00"]]
       },
+      "nivel": "recomendable",
+      "valoracion": {
+        "nota": 4.2,
+        "resenas": 1010,
+        "puesto": "N.º 6 de las cosas que hacer en Astorga",
+        "fuente": "TripAdvisor, 20 de agosto de 2026"
+      },
       "queMirar": [
         {
           "que": "El retablo de Becerra",
@@ -834,6 +927,13 @@
         "sab": [["10:00", "14:00"], ["16:00", "18:00"]],
         "dom": [["10:00", "14:00"]]
       },
+      "nivel": "recomendable",
+      "valoracion": {
+        "nota": 4.3,
+        "resenas": 202,
+        "puesto": "N.º 8 de las cosas que hacer en Astorga",
+        "fuente": "TripAdvisor, 20 de agosto de 2026"
+      },
       "queMirar": [
         {
           "que": "La bóveda de la Ergástula",
@@ -884,6 +984,13 @@
       "descripcion": "Oficialmente Plaza de España, en la práctica la Plaza Mayor. La preside el **Ayuntamiento barroco del siglo XVII**, y en su torre hay un reloj con dos figuras autómatas vestidas de maragatos —Juan Zancuda y Colasa— que **golpean la campana a cada hora desde 1748**.\n\nEs un minuto de espectáculo y conviene cuadrar el paso por la plaza con una hora en punto.\n\nAquí también se compran las **mantecadas de Astorga**, con Indicación Geográfica Protegida, y el **chocolate**: la ciudad fue centro chocolatero desde el siglo XVIII, cuando los arrieros maragatos traían el cacao desde los puertos del sur.",
       "duracionMin": 45,
       "precio": { "importe": 0, "detalle": "Libre" },
+      "nivel": "recomendable",
+      "valoracion": {
+        "nota": 4.2,
+        "resenas": 264,
+        "puesto": "Ayuntamiento de Astorga, n.º 7 de la localidad",
+        "fuente": "TripAdvisor, 20 de agosto de 2026"
+      },
       "queMirar": [
         {
           "que": "Juan Zancuda y Colasa a la hora en punto",
@@ -931,6 +1038,13 @@
       "duracionMin": 180,
       "precio": { "importe": 25, "detalle": "Cocido maragato completo, por persona, aproximado" },
       "reserva": { "necesaria": true, "nota": "En agosto los mesones de cocido se llenan. Reservar mesa con antelación." },
+      "nivel": "recomendable",
+      "valoracion": {
+        "nota": 4.6,
+        "resenas": 214,
+        "puesto": "N.º 2 de 4 en Castrillo de los Polvazares",
+        "fuente": "TripAdvisor, 20 de agosto de 2026"
+      },
       "queMirar": [
         {
           "que": "Los portones anchos",
@@ -983,6 +1097,13 @@
       "descripcion": "Patrimonio de la Humanidad desde 1997, y el sitio más raro de este viaje: **lo que se ve no es una formación natural, es el hueco que dejó la mayor mina de oro a cielo abierto del Imperio Romano**.\n\nLa técnica se llamaba ***ruina montium***. Excavaban una red de galerías dentro de la montaña, traían agua por kilómetros de canales desde la sierra, y la soltaban de golpe dentro del macizo. La presión hacía **estallar la montaña desde dentro**.\n\nSe calcula que movieron unos 200 millones de metros cúbicos de tierra y sacaron 1.600 toneladas de oro en dos siglos. Lo que queda son las agujas de arcilla rojiza y las bocas de las galerías, con castaños centenarios encima.\n\nEl paisaje es libre y a cualquier hora. Lo que tiene horario son el aula arqueológica y las galerías de Orellán.",
       "duracionMin": 180,
       "precio": { "importe": 0, "detalle": "El paisaje y las sendas son libres. Galerías de Orellán, 3 €" },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.6,
+        "resenas": 978,
+        "puesto": "N.º 1 de Las Médulas",
+        "fuente": "TripAdvisor, 20 de agosto de 2026"
+      },
       "queMirar": [
         {
           "que": "La Cueva de la Encantada",
@@ -1047,6 +1168,13 @@
         "sab": [["11:00", "14:00"], ["16:00", "19:00"]],
         "dom": [["11:00", "14:00"], ["16:00", "19:00"]]
       },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.8,
+        "resenas": 6717,
+        "puesto": "El mejor valorado de todo el viaje",
+        "fuente": "Google Maps, 20 de agosto de 2026. En TripAdvisor rondan las 200 reseñas"
+      },
       "queMirar": [
         {
           "que": "La panorámica completa desde el filo",
@@ -1101,6 +1229,13 @@
         "vie": [["10:00", "14:00"], ["16:30", "20:30"]],
         "sab": [["10:00", "14:00"], ["16:30", "20:30"]],
         "dom": [["10:00", "14:00"], ["16:30", "20:30"]]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "nota": 4.2,
+        "resenas": 1588,
+        "puesto": "N.º 1 de las cosas que hacer en Ponferrada",
+        "fuente": "TripAdvisor, 20 de agosto de 2026. Muchísimo volumen y nota media: varias reseñas se quejan de que dentro hay poca explicación"
       },
       "queMirar": [
         {
@@ -1162,6 +1297,8 @@
       "resumen": "Base fija las cinco noches. Las coordenadas son aproximadas a propósito.",
       "descripcion": "Base del viaje del 29 de agosto al 3 de septiembre, ya reservada.\n\n**La dirección exacta y la referencia de reserva no están en este archivo a propósito**: el repositorio es público, y un itinerario dice exactamente qué días no hay nadie en casa. Esos datos van al panel de *Datos privados* de la aplicación, que vive solo en este navegador y no se sube a ninguna parte.",
       "duracionMin": 0,
+      "nivel": "opcional",
+      "valoracion": { "puesto": "No aplica", "fuente": "Es donde se duerme" },
       "queMirar": [
         {
           "que": "La hora límite de entrada",
@@ -1188,6 +1325,11 @@
       "descripcion": "Pueblo de piedra en la subida al puerto de Foncebadón, y una de las paradas clásicas del Camino Francés: aquí es donde los peregrinos duermen antes de afrontar el tramo más alto de toda la ruta.\n\nLo que lo hace distinto es la **iglesia de Santa María**, románica del siglo XII, atendida desde 2001 por **monjes benedictinos de la abadía de Sankt Ottilien**, en Baviera. Cantan **vísperas en gregoriano** a última hora de la tarde y cualquiera puede entrar.\n\nSe recorre en veinte minutos. Es una parada, no una visita.",
       "duracionMin": 40,
       "precio": { "importe": 0, "detalle": "Libre" },
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "Sin ficha de atracción con volumen propio",
+        "fuente": "TripAdvisor, 20 de agosto de 2026. Es parada de camino hacia la Cruz de Ferro, no un destino"
+      },
       "queMirar": [
         {
           "que": "La iglesia de Santa María",
@@ -1234,6 +1376,11 @@
       "descripcion": "Un pueblo a 1.430 metros que **se quedó vacío**: en los años noventa quedaban dos habitantes, una madre y su hijo, y las casas se iban cayendo solas. Paulo Coelho lo describió así en *El Peregrino*, y el libro dio la vuelta al mundo.\n\nEl auge del Camino lo ha resucitado a medias. Hoy hay albergues, un par de bares y gente en verano, pero **sigue habiendo ruinas sin techo al lado de casas rehabilitadas**, y ese contraste es exactamente lo que hay que ver.\n\nEstá a 2 km de la Cruz de Ferro, así que las dos paradas son la misma.",
       "duracionMin": 30,
       "precio": { "importe": 0, "detalle": "Libre" },
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "Sin ficha propia; la única atracción de la localidad con reseñas es la Cruz de Ferro",
+        "fuente": "TripAdvisor, 20 de agosto de 2026"
+      },
       "queMirar": [
         {
           "que": "Las casas sin techo junto a las rehabilitadas",
@@ -1284,6 +1431,13 @@
       "descripcion": "Un poste de madera de cinco metros con una cruz de hierro encima, clavado en **el punto más alto de todo el Camino Francés**: 1.504 metros.\n\nLo que impresiona no es la cruz: es **el montón de piedras que la rodea**. Cada peregrino trae una desde su casa y la deja aquí. Llevan haciéndolo desde antes de que existiera el Camino tal y como lo conocemos, y el montón sigue creciendo.\n\nEstá a pie de carretera, así que se para y se ve. Cinco minutos bastan, aunque casi nadie se va tan rápido.",
       "duracionMin": 30,
       "precio": { "importe": 0, "detalle": "Libre" },
+      "nivel": "recomendable",
+      "valoracion": {
+        "nota": 4.5,
+        "resenas": 124,
+        "puesto": "N.º 1 de las cosas que hacer en Foncebadón",
+        "fuente": "TripAdvisor, 20 de agosto de 2026"
+      },
       "queMirar": [
         {
           "que": "Lo que la gente deja además de piedras",
@@ -1335,6 +1489,13 @@
       "descripcion": "Conjunto Histórico-Artístico, y una de las villas con más peso del Camino: la fundaron peregrinos francos —de ahí *Villa Franca*— y llegó a tener seis monasterios.\n\nLo que hay que ver es la **iglesia de Santiago** y su **Puerta del Perdón**: el papa Calixto III concedió en 1486 que **el peregrino que llegara aquí enfermo y no pudiera continuar ganase el jubileo igualmente**. Quedaban 180 km hasta Santiago. Es el único sitio del Camino con ese privilegio.\n\nAñade también el castillo de los marqueses, la calle del Agua y el vino del Bierzo, que aquí es mencía.",
       "duracionMin": 75,
       "precio": { "importe": 0, "detalle": "Paseo libre. La iglesia de Santiago puede tener horario limitado" },
+      "nivel": "opcional",
+      "valoracion": {
+        "nota": 4.2,
+        "resenas": 61,
+        "puesto": "Ninguna de sus atracciones pasa de 4,2 ni de 61 reseñas",
+        "fuente": "TripAdvisor, 20 de agosto de 2026. Iglesia de Santiago 4,2 (45), Calle del Agua 4,0 (61), Colegiata 4,2 (32)"
+      },
       "queMirar": [
         {
           "que": "La Puerta del Perdón",

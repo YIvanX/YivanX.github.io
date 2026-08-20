@@ -7,7 +7,7 @@
  */
 
 import { html, esc, icono, md, crudo, duracionTexto, duracionCorta, dinero } from '../ui/dom.js';
-import { CATEGORIAS, MODOS, INTENSIDADES } from '../datos.js';
+import { CATEGORIAS, MODOS, INTENSIDADES, NIVELES } from '../datos.js';
 import { claveVisto } from '../estado.js';
 import { rutaDelDia, enlaceLugar, enlaceComoLlegar, enlaceTramo } from '../enlaces-mapa.js';
 import {
@@ -21,10 +21,16 @@ const minutosAhora = () => { const d = new Date(); return d.getHours() * 60 + d.
 function chipsDeBloque(bloque, dia, moneda) {
   const lugar = bloque.lugar;
   const chips = [];
+
+  // El nivel va primero a propósito: es lo que decide si te lo saltas cuando el
+  // día se ha torcido y son las siete de la tarde.
+  const nivel = NIVELES[lugar.nivel];
+  if (nivel) chips.push(html`<span class="chip ${nivel.clase}">${nivel.etiqueta}</span>`);
+
   const cat = CATEGORIAS[lugar.categoria] || CATEGORIAS.practico;
   chips.push(html`<span class="chip chip--${lugar.categoria}">${icono(cat.icono)}${cat.etiqueta}</span>`);
 
-  if (bloque.opcional) chips.push(html`<span class="chip chip--opcional">Opcional</span>`);
+  if (bloque.opcional) chips.push(html`<span class="chip chip--saltable">Se puede saltar</span>`);
 
   if (bloque.exterior) {
     chips.push(html`<span class="chip">Por fuera</span>`);
@@ -98,7 +104,7 @@ function pintarBloqueTraslado(bloque) {
       </span>
       <span class="bloque__rail"></span>
       <span class="bloque__cuerpo">
-        <span class="bloque__linea">${icono(modo.icono)}<b>${modo.etiqueta}</b>${destino ? crudo(` &rarr; ${esc(destino)}`) : ''}${bloque.opcional ? crudo('<span class="chip chip--opcional">Opcional</span>') : ''}</span>
+        <span class="bloque__linea">${icono(modo.icono)}<b>${modo.etiqueta}</b>${destino ? crudo(` &rarr; ${esc(destino)}`) : ''}${bloque.opcional ? crudo('<span class="chip chip--saltable">Se puede saltar</span>') : ''}</span>
         ${bloque.detalle ? crudo(`<span class="menudo" style="display:block;margin-top:2px">${esc(bloque.detalle)}</span>`) : ''}
       </span>
       ${tramo ? crudo(`<a class="bloque__mapa bloque__mapa--tramo" href="${esc(tramo)}"
@@ -216,6 +222,16 @@ export function pintarFicha(viaje, lugar, estado, { fecha } = {}) {
   }
   if (lugar.precio) filas.push(['Precio', html`${dinero(lugar.precio.importe, viaje.moneda)}${lugar.precio.detalle ? crudo(`<span class="menudo" style="display:block">${esc(lugar.precio.detalle)}</span>`) : ''}`]);
   if (lugar.duracionMin) filas.push(['Duración', duracionTexto(lugar.duracionMin)]);
+  if (lugar.valoracion) {
+    const v = lugar.valoracion;
+    const cifras = [
+      v.nota !== undefined ? `${String(v.nota).replace('.', ',')} / 5` : null,
+      v.resenas !== undefined ? `${v.resenas.toLocaleString('es-ES')} reseñas` : null,
+    ].filter(Boolean).join(' · ');
+    filas.push(['Valoración', html`<b>${cifras}</b>
+      ${v.puesto ? crudo(`<span class="menudo" style="display:block">${esc(v.puesto)}</span>`) : ''}
+      <span class="menudo" style="display:block">${esc(v.fuente)}</span>`]);
+  }
   if (lugar.zona) filas.push(['Zona', lugar.zona]);
   if (lugar.reserva?.necesaria) filas.push(['Reserva', html`<b>Hace falta.</b> ${lugar.reserva.nota || ''}`]);
   if (lugar.verificado) filas.push(['Verificado', html`${lugar.verificado.fecha} · <span class="menudo">${lugar.verificado.fuente}</span>`]);
@@ -236,6 +252,7 @@ export function pintarFicha(viaje, lugar, estado, { fecha } = {}) {
       </figure>`) : ''}
     <div class="ficha__cuerpo">
       <div class="ficha__meta">
+        ${NIVELES[lugar.nivel] ? crudo(`<span class="chip ${NIVELES[lugar.nivel].clase}">${esc(NIVELES[lugar.nivel].etiqueta)}</span>`) : ''}
         <span class="chip chip--${lugar.categoria}">${icono(cat.icono)}${cat.etiqueta}</span>
         ${visitado ? crudo('<span class="chip chip--ok">Visitado</span>') : ''}
       </div>
