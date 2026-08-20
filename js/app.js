@@ -17,6 +17,7 @@ import { montarRegistro } from './vistas/registro.js';
 import { montarViaje } from './vistas/viaje.js';
 import { alternarTema, preferenciaActual } from './ui/tema.js';
 import { brindis } from './ui/brindis.js';
+import { recogerSesionDeUrl } from './nube.js';
 
 const raiz = document.getElementById('app');
 let vistaActual = null;
@@ -91,6 +92,11 @@ async function enrutar() {
     fallo('No se ha podido abrir esto', e.message);
   }
 }
+
+// Al volver del enlace de acceso, Supabase deja la sesión en el fragmento de la
+// URL. Hay que recogerla ANTES de enrutar: si no, el enrutador ve un hash que no
+// entiende y se va a la portada perdiendo la sesión.
+if (recogerSesionDeUrl()) brindis('Sesión iniciada', { tipo: 'ok' });
 
 addEventListener('hashchange', enrutar);
 enrutar();

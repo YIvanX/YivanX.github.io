@@ -16,7 +16,7 @@
    de lo que se busca.
    ========================================================================= */
 
-const VERSION = 'v4';
+const VERSION = 'v5';
 const CACHE_APP = `bitacora-app-${VERSION}`;
 const CACHE_TESELAS = 'bitacora-teselas';
 const MAX_TESELAS = 3000;
@@ -32,6 +32,7 @@ const ESENCIALES = [
   'js/datos.js',
   'js/enlaces-mapa.js',
   'js/personalizacion.js',
+  'js/nube.js',
   'js/ui/buscar-lugar.js',
   'js/estado.js',
   'js/horarios.js',
@@ -50,10 +51,14 @@ const ESENCIALES = [
   'vendor/leaflet/images/marker-shadow.png',
   'iconos/icono.svg',
   'data/viajes.json',
+  'data/nube.json',
 ];
 
 const esTesela = (url) => url.hostname.endsWith('basemaps.cartocdn.com');
 const esPropio = (url) => url.origin === self.location.origin;
+// La configuración de la nube y sus llamadas nunca se cachean: una respuesta
+// guardada de la API o una sesión vieja darían un estado falso.
+const esNube = (url) => url.hostname.endsWith('.supabase.co') || url.pathname.endsWith('/data/nube.json');
 
 self.addEventListener('install', (evento) => {
   evento.waitUntil((async () => {
@@ -161,6 +166,7 @@ self.addEventListener('fetch', (evento) => {
   const url = new URL(request.url);
   if (request.mode === 'navigate') { evento.respondWith(navegacion(request)); return; }
   if (esTesela(url)) { evento.respondWith(desdeTeselas(request)); return; }
+  if (esNube(url)) return;                    // siempre a la red, sin caché
   if (esPropio(url)) { evento.respondWith(desdeApp(request)); return; }
   // Cualquier otro origen se deja pasar sin tocar.
 });

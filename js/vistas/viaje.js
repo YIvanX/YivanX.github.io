@@ -17,6 +17,7 @@ import * as buscador from '../ui/buscador.js';
 import * as buscarLugar from '../ui/buscar-lugar.js';
 import { lugarDesdeBusqueda, claveEstable, nuevoId, ocultosDelDia, comoJsonDelViaje } from '../personalizacion.js';
 import * as estado from '../estado.js';
+import * as nube from '../nube.js';
 import { esOscuro, alCambiarTema } from '../ui/tema.js';
 import { aIso, aFecha, fechaLarga, CLAVES_DIA, NOMBRE_DIA } from '../horarios.js';
 import { pintarDia, pintarFicha, pintarTransporte, pintarListas, pintarInfo } from './panel.js';
@@ -30,6 +31,7 @@ const PESTANAS = [
 
 export async function montarViaje(raiz, ruta, { alTema }) {
   let viaje = await cargarViaje(ruta.viajeId);
+  const nubeLista = await nube.configurada();
   let actual = { ...ruta, fecha: ruta.fecha || diaPorDefecto(viaje) };
   let verTodo = false;
   const urlsObjeto = new Set();
@@ -179,7 +181,17 @@ export async function montarViaje(raiz, ruta, { alTema }) {
       cuerpo.innerHTML = pintarListas(viaje, guardado);
       if (moverFoco) situarFoco('Listas');
     } else if (actual.vista === 'info') {
-      cuerpo.innerHTML = pintarInfo(viaje, { privados: estado.privadosDe(viaje.id), capa: estado.capaDe(viaje.id) });
+      cuerpo.innerHTML = pintarInfo(viaje, {
+        privados: estado.privadosDe(viaje.id),
+        capa: estado.capaDe(viaje.id),
+        nube: { configurada: nubeLista, usuario: nube.usuario() },
+      });
+      if (nubeLista && nube.haySesion()) {
+        nube.comprobar().then((r) => {
+          const n = $('[data-estado-nube]', cuerpo);
+          if (n) n.textContent = r.motivo;
+        });
+      }
       mostrarOcupacion();
       if (moverFoco) situarFoco(`Información de ${viaje.titulo}`);
     } else {
@@ -348,6 +360,36 @@ export async function montarViaje(raiz, ruta, { alTema }) {
     if (e.target.dataset?.campo !== 'nota') return;
     estado.guardarNota(viaje.id, actual.lugarId, e.target.value);
   }, true);
+
+  alPulsar(cuerpo, '[data-accion="entrar-nube"]', async () => {
+    const correo = $('[data-correo-nube]', cuerpo)?.value.trim();
+    if (!correo || !correo.includes('@')) { brindis('Escribe un correo válido', { tipo: 'error' }); return; }
+    try {
+      await nube.pedirAcceso(correo);
+      brindis('Enlace enviado. Ábrelo en este dispositivo.', { tipo: 'ok', duracion: 7000 });
+    } catch (e) {
+      brindis(e.message, { tipo: 'error', duracion: 5000 });
+    }
+  });
+
+  alPulsar(cuerpo, '[data-accion="salir-nube"]', async () => {
+    await nube.salir();
+    pintarPanel({ moverFoco: false });
+    brindis('Sesión cerrada. Tus datos siguen en este navegador.');
+  });
+
+  alPulsar(cuerpo, '[data-accion="sincronizar"]', async () => {
+    try {
+      // Lo personal sube; el viaje se lee de la nube si está más adelantado.
+      await nube.guardarEstado(viaje.id, estado.estadoDe(viaje.id));
+      const remoto = await nube.leerViaje(viaje.id);
+      brindis(remoto
+        ? `Sincronizado. El viaje está en la nube (versión ${remoto.versionNube}).`
+        : 'Tu estado ha subido. El viaje todavía no está en la nube.', { tipo: 'ok', duracion: 5000 });
+    } catch (e) {
+      brindis(`No se ha podido sincronizar: ${e.message}`, { tipo: 'error', duracion: 6000 });
+    }
+  });
 
   alPulsar(cuerpo, '[data-accion="copiar-capa"]', async () => {
     const texto = JSON.stringify(comoJsonDelViaje(estado.capaDe(viaje.id)), null, 2);

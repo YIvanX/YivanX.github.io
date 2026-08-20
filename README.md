@@ -40,6 +40,16 @@ destino escrito en el código, así que el siguiente viaje no toca ni una línea
   presupuesto, avisos de lo que puede romper el viaje, y buscador con `Ctrl+K`.
 - Tema claro y oscuro, incluido el mapa.
 
+## Nube, opcional
+
+Con Supabase configurado, el viaje y el estado personal se sincronizan entre
+dispositivos y se puede compartir con otra persona. **Sin configurar, o con
+Supabase caído, la aplicación funciona exactamente igual** leyendo el repositorio
+y guardando en el navegador: la nube es la fuente, el repositorio es el suelo.
+
+El esquema completo con sus políticas está versionado en
+`supabase/migraciones/`, y el paso a paso en **[supabase/LEEME.md](supabase/LEEME.md)**.
+
 ## Qué necesita
 
 Nada. Ni dependencias, ni `npm install`, ni compilación. Node solo hace falta
@@ -88,6 +98,7 @@ js/
   mapa.js               envoltorio de Leaflet
   enlaces-mapa.js       rutas y enlaces de Google Maps
   personalizacion.js    capa de paradas añadidas y quitadas (puro, con pruebas)
+  nube.js               Supabase por HTTP plano, sin SDK. Opcional
   vistas/               registro · viaje · panel
   ui/                   dom · hoja arrastrable · buscador · buscar-lugar · tema · avisos
 vendor/leaflet/         Leaflet 1.9.4, local
@@ -96,6 +107,7 @@ data/
   viajes/<id>.json      un viaje
   viajes/_plantilla.json
 schema/                 el contrato de un viaje
+supabase/migraciones/   el esquema SQL, versionado. Fuente de verdad
 herramientas/           validar · probar · servir
                         nuevo-viaje · coordenadas · fotos
 sw.js                   service worker

@@ -422,7 +422,7 @@ export function pintarListas(viaje, estado) {
 
 // --- Información del viaje ------------------------------------------------
 
-export function pintarInfo(viaje, { privados = { campos: [] }, capa = null } = {}) {
+export function pintarInfo(viaje, { privados = { campos: [] }, capa = null, nube = null } = {}) {
   const niveles = { alto: 'aviso--alto', medio: 'aviso--medio', info: 'aviso--info' };
 
   return html`
@@ -497,6 +497,51 @@ export function pintarInfo(viaje, { privados = { campos: [] }, capa = null } = {
           «Copiar como JSON» deja los cambios listos para pegarlos en
           <code>data/viajes/${esc(viaje.id)}.json</code> y hacerlos permanentes.
         </p>
+      </div>`) : ''}
+
+    ${nube ? crudo(`
+      <div class="panel__seccion">
+        <h2 class="titulo-2">Nube</h2>
+        ${nube.configurada ? `
+          ${nube.usuario ? `
+            <p class="secundario" style="margin-top:4px">
+              Sesión iniciada como <b>${esc(nube.usuario.correo)}</b>.
+            </p>
+            <div class="datos" style="margin-top:var(--e3)">
+              <div class="datos__fila">
+                <div class="datos__clave">Estado</div>
+                <div class="datos__valor" data-estado-nube>Comprobando…</div>
+              </div>
+              <div class="datos__fila">
+                <div class="datos__clave">Tu id</div>
+                <div class="datos__valor"><code class="menudo">${esc(nube.usuario.id)}</code>
+                  <span class="menudo" style="display:block">Pásaselo a quien quieras invitar al viaje.</span></div>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:var(--e3);flex-wrap:wrap">
+              <button type="button" class="boton" data-accion="sincronizar">
+                <svg aria-hidden="true"><use href="#i-importar"/></svg>Sincronizar ahora
+              </button>
+              <button type="button" class="boton boton--fantasma" data-accion="salir-nube">Cerrar sesión</button>
+            </div>
+          ` : `
+            <p class="secundario" style="margin-top:4px">
+              Entra con tu correo para sincronizar el viaje entre dispositivos. Se manda un enlace: no hay contraseña que recordar.
+            </p>
+            <div class="campo campo--ancho" style="margin-top:var(--e3)">
+              <label class="etiqueta" for="correo-nube">Correo</label>
+              <input id="correo-nube" type="email" data-correo-nube placeholder="tu@correo.com" autocomplete="email">
+            </div>
+            <button type="button" class="boton boton--principal boton--bloque" data-accion="entrar-nube" style="margin-top:var(--e2)">
+              Mandarme el enlace de acceso
+            </button>
+          `}
+        ` : `
+          <p class="menudo" style="margin-top:4px">
+            No configurada. La aplicación funciona igual: lee el viaje del repositorio y guarda en este navegador.
+            Para activarla hace falta <code>data/nube.json</code> — ver <code>supabase/LEEME.md</code>.
+          </p>
+        `}
       </div>`) : ''}
 
     <div class="panel__seccion">
