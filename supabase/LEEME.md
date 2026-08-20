@@ -1,53 +1,50 @@
 # Supabase como backend
 
-Estado: **el esquema y el cliente están escritos y probados; falta el proyecto.**
+Proyecto: **`kkzxwnmxksamclpphgmx`** · región y credenciales en el panel de Supabase.
 
-El conector MCP apunta a `znvvakpgesptwglxjdtn`, que ya no existe — su dominio
-devuelve NXDOMAIN. Hay que crear un proyecto nuevo. Son cuatro pasos.
+Estado: **esquema aplicado y cliente configurado. Falta la configuración de
+URLs de autenticación, que es del panel, y sembrar el viaje.**
 
----
+## Hecho el 20 de agosto de 2026
 
-## 1. Crear el proyecto
+**Esquema aplicado** con el conector MCP, desde este mismo archivo SQL. Comprobado
+con la consulta del final del archivo: `viajes` 4 políticas, `viaje_miembros` 2,
+`estado_personal` 1, y `rls = true` en las tres.
 
-En [supabase.com](https://supabase.com) → **New project**. Región **West EU
-(Ireland)** o **EU Central**, que es lo más cerca. Apunta la contraseña de la
-base de datos: no se vuelve a enseñar.
+**Y comprobado desde fuera, que es lo que cuenta:** con la clave publicable y sin
+sesión, las tres tablas devuelven `[]` y un `POST` a `viajes` se rechaza con
+**HTTP 401** y `new row violates row-level security policy`. RLS cierra la puerta
+de verdad, no solo en el catálogo.
 
-## 2. Aplicar el esquema
-
-Copia entero `supabase/migraciones/0001_esquema.sql` y pégalo en
-**SQL Editor → New query → Run**.
-
-Al final del archivo hay una consulta comentada que comprueba que ha quedado
-bien. Descoméntala y ejecútala: **cada tabla tiene que salir con `rls = true` y
-al menos una política.** Una tabla con RLS activado y cero políticas está cerrada
-a cal y canto; una tabla sin RLS está abierta de par en par. La segunda es la que
-no puede pasar.
-
-## 3. Configurar el cliente
-
-**Project Settings → API**, y copia la **URL** y la **clave publicable**
-(`sb_publishable_…`, o la `anon` si tu proyecto es antiguo). Después:
-
-```bash
-cd D:\Claude\viajes
-cat > data/nube.json <<EOF
-{ "url": "https://TU-REF.supabase.co", "clavePublicable": "sb_publishable_..." }
-EOF
-```
+**`data/nube.json` escrito** con la URL y la clave publicable. Medido en el
+navegador: la nube sale como configurada, el panel **Viaje → Nube** pinta el
+formulario de acceso, cero errores de consola y cero peticiones fallidas.
 
 **Esa clave es pública y está bien que lo sea.** Va dentro del JavaScript de un
 sitio público: cualquiera puede leerla. Lo que protege los datos es RLS, no la
-clave. Por eso el paso 2 no es opcional.
+clave. Por eso el esquema no es opcional.
 
 **La clave `service_role` NO se pone aquí ni en ningún archivo del repositorio.**
 Esa sí salta RLS y da acceso total.
 
-## 4. Reapuntar el conector MCP
+## Lo que queda, en orden
 
-En `D:\Claude\.mcp.json`, cambia `project_ref` por el del proyecto nuevo. **La
-configuración MCP se lee al arrancar**, así que hay que reiniciar Claude Code
-para que surta efecto.
+**1. Configurar las URLs de autenticación** — panel de Supabase, **Authentication
+→ URL Configuration**. Esto no se puede hacer desde el conector:
+
+- *Site URL*: `https://yivanx.github.io/`
+- *Redirect URLs*: añadir `http://localhost:8080/` para poder probar en local
+
+Un proyecto nuevo viene con `http://localhost:3000`, así que sin este paso el
+enlace del correo aterriza donde no hay nada.
+
+**2. Entrar una vez** desde la web → **Viaje → Nube** → correo → *Mandarme el
+enlace*, y abrirlo en el mismo dispositivo. Hasta que no exista el usuario no se
+puede sembrar nada: la fila de `viajes` necesita un propietario real de
+`auth.users`.
+
+**3. Sembrar el viaje de León** subiendo `data/viajes/leon-2026-08.json` como
+primera fila de `viajes`, y comprobar el circuito entero en el navegador.
 
 ---
 

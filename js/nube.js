@@ -77,10 +77,17 @@ async function tokenValido() {
 export async function pedirAcceso(correo) {
   const c = await configuracion();
   if (!c) throw new Error('La nube no está configurada');
-  const res = await fetch(`${c.url}/auth/v1/otp`, {
+  // El destino del enlace va como parámetro de CONSULTA, no en el cuerpo: la
+  // API de GoTrue lee `redirect_to` de la URL, y `options.emailRedirectTo` es
+  // una comodidad del SDK que por debajo hace exactamente esto. Puesto en el
+  // cuerpo se ignora en silencio y el enlace del correo aterriza en la Site URL
+  // del proyecto —que en uno recién creado es http://localhost:3000—.
+  // El destino además tiene que estar en la lista de Redirect URLs del panel.
+  const destino = encodeURIComponent(location.origin + location.pathname);
+  const res = await fetch(`${c.url}/auth/v1/otp?redirect_to=${destino}`, {
     method: 'POST',
     headers: { apikey: c.clavePublicable, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: correo, create_user: true, options: { email_redirect_to: location.origin + location.pathname } }),
+    body: JSON.stringify({ email: correo, create_user: true }),
   });
   if (!res.ok) throw new Error(`No se ha podido enviar el enlace (${res.status})`);
   return true;

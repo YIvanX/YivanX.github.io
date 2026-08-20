@@ -1,5 +1,5 @@
 {
-  "_lee_esto": "Configuración de Supabase. Con url y clavePublicable vacías, la nube queda desactivada y la aplicación funciona en local: lee el viaje del repositorio y guarda en el navegador. Para activarla, rellena los dos campos con lo que da Supabase en Project Settings → API. Esa clave es PÚBLICA y está bien que lo sea: lo que protege los datos es RLS, no la clave. La clave service_role NO se pone aquí nunca. Paso a paso en supabase/LEEME.md.",
-  "url": "",
-  "clavePublicable": ""
+  "_lee_esto": "Configuración de Supabase. Esta clave es PÚBLICA y está bien que lo sea: va dentro del JavaScript de un sitio público y lo que protege los datos es RLS, no la clave. La clave service_role NO se pone aquí nunca. Con url y clavePublicable vacías, la nube queda desactivada y la aplicación funciona en local: lee el viaje del repositorio y guarda en el navegador. Paso a paso en supabase/LEEME.md.",
+  "url": "https://kkzxwnmxksamclpphgmx.supabase.co",
+  "clavePublicable": "sb_publishable_TDTvPB30J7YfM5yeVidFfA_lMrslhe_"
 }

@@ -190,10 +190,19 @@ alter table public.viaje_miembros   enable row level security;
 alter table public.estado_personal  enable row level security;
 
 -- --- viajes ------------------------------------------------------------------
+-- El propietario va por delante de la pertenencia, y no es un atajo: es lo que
+-- hace que crear un viaje funcione. El cliente inserta con `return=representation`,
+-- o sea `INSERT ... RETURNING`, y con RLS el RETURNING obliga a que la fila recién
+-- creada pase también ESTA política. La fila de viaje_miembros la pone un trigger
+-- AFTER INSERT, que dispara al final de la sentencia — después de evaluarse el
+-- RETURNING. Solo con `es_miembro(id)`, quien crea un viaje recibe un 403 al
+-- crearlo, con un mensaje que además señala a la escritura y engaña.
+-- De propina: si algún día faltara la fila de miembro, el dueño no perdería su
+-- propio viaje.
 drop policy if exists viajes_leer on public.viajes;
 create policy viajes_leer on public.viajes
   for select to authenticated
-  using (public.es_miembro(id));
+  using (propietario = (select auth.uid()) or public.es_miembro(id));
 
 drop policy if exists viajes_crear on public.viajes;
 create policy viajes_crear on public.viajes
@@ -234,6 +243,27 @@ create policy estado_propio on public.estado_personal
   for all to authenticated
   using (usuario_id = (select auth.uid()))
   with check (usuario_id = (select auth.uid()) and public.es_miembro(viaje_id));
+
+-- =============================================================================
+-- Ninguna de las dos funciones se llama por RPC
+--
+-- Todo lo que vive en `public` queda expuesto como /rest/v1/rpc/<nombre>, y con
+-- `security definer` eso significa exponerlo con los permisos del dueño. Aquí no
+-- hace falta: nadie las llama desde el cliente.
+--
+--  · alta_propietario  es una función de trigger, y un trigger dispara aunque el
+--    rol no tenga EXECUTE — el privilegio se comprueba al CREAR el trigger, no
+--    al ejecutarlo. Medido en este proyecto antes de escribirlo.
+--  · es_miembro        la llaman las políticas de RLS, y esas se evalúan con los
+--    permisos de quien llama. Por eso `authenticated` SÍ conserva su EXECUTE:
+--    sin él, dejarían de leerse los viajes propios.
+-- =============================================================================
+-- Se revoca a los roles POR NOMBRE, no solo a `public`: Supabase concede EXECUTE
+-- directo a `anon` y `authenticated` por privilegios por defecto del esquema, así
+-- que quitarlo de `public` no quita nada. Comprobado con has_function_privilege.
+revoke execute on function public.alta_propietario()            from public, anon, authenticated;
+revoke execute on function public.es_miembro(text, text[])      from public, anon;
+grant  execute on function public.es_miembro(text, text[])      to authenticated;
 
 -- =============================================================================
 -- Índices de consulta
