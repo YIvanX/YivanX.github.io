@@ -42,6 +42,20 @@ export function enlaceComoLlegar(lugar, modo) {
 }
 
 /**
+ * Un tramo suelto: de un sitio al siguiente, con su modo.
+ *
+ * Es lo que se abre andando por una ciudad — no «cómo llego a San Isidoro desde
+ * donde estoy», sino «cómo se va de la catedral a San Isidoro», que es el dato
+ * que está en el itinerario.
+ */
+export function enlaceTramo(desde, hasta, modo) {
+  if (!desde?.coords || !hasta?.coords) return null;
+  const google = MODO_GOOGLE[modo];
+  return `${BASE}/dir/?api=1&origin=${aCoord(desde)}&destination=${aCoord(hasta)}`
+    + (google ? `&travelmode=${google}` : '');
+}
+
+/**
  * La cadena real de puntos de un día, en orden.
  *
  * Recorre los bloques tal y como están e incluye también los extremos de los

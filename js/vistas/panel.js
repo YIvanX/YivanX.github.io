@@ -8,7 +8,7 @@
 
 import { html, esc, icono, md, crudo, duracionTexto, duracionCorta, dinero } from '../ui/dom.js';
 import { CATEGORIAS, MODOS, INTENSIDADES } from '../datos.js';
-import { rutaDelDia, enlaceLugar, enlaceComoLlegar } from '../enlaces-mapa.js';
+import { rutaDelDia, enlaceLugar, enlaceComoLlegar, enlaceTramo } from '../enlaces-mapa.js';
 import {
   fechaLarga, textoHorario, revisarBloque, estadoEn, aMinutos, aHora, aIso, claveDia, NOMBRE_DIA,
 } from '../horarios.js';
@@ -86,6 +86,7 @@ function pintarBloqueTraslado(bloque) {
   const modo = MODOS[bloque.modo] || { etiqueta: 'Traslado', icono: 'adelante' };
   const minutos = (aMinutos(bloque.fin) - aMinutos(bloque.inicio)) || 0;
   const destino = bloque.lugarHasta?.nombre;
+  const tramo = enlaceTramo(bloque.lugarDesde, bloque.lugarHasta, bloque.modo);
 
   return html`
     <div class="bloque bloque--traslado">
@@ -97,6 +98,11 @@ function pintarBloqueTraslado(bloque) {
         <span class="bloque__linea">${icono(modo.icono)}<b>${modo.etiqueta}</b>${destino ? crudo(` &rarr; ${esc(destino)}`) : ''}</span>
         ${bloque.detalle ? crudo(`<span class="menudo" style="display:block;margin-top:2px">${esc(bloque.detalle)}</span>`) : ''}
       </span>
+      ${tramo ? crudo(`<a class="bloque__mapa bloque__mapa--tramo" href="${esc(tramo)}"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Cómo ir de ${esc(bloque.lugarDesde.nombre)} a ${esc(bloque.lugarHasta.nombre)} en Google Maps"
+           title="Cómo ir de ${esc(bloque.lugarDesde.nombre)} a ${esc(bloque.lugarHasta.nombre)}">
+           <svg aria-hidden="true"><use href="#i-adelante"/></svg></a>`) : ''}
     </div>`;
 }
 
@@ -176,7 +182,7 @@ export function pintarDia(viaje, dia, estado) {
         ${dia.totalParadas ? crudo(`<span class="chip">${dia.totalParadas} parada${dia.totalParadas === 1 ? '' : 's'}</span>`) : ''}
         ${esHoy ? crudo('<span class="chip chip--ok">Hoy</span>') : ''}
       </div>
-      <h2 class="titulo-1">${dia.titulo}</h2>
+      <h2 class="titulo-1" data-foco tabindex="-1">${dia.titulo}</h2>
       <p class="menudo" style="margin-top:4px">${fechaLarga(dia.fecha)}</p>
       ${dia.resumen ? crudo(`<p class="dia-cabecera__resumen secundario">${esc(dia.resumen)}</p>`) : ''}
       ${enlaceRuta(dia)}
@@ -214,7 +220,7 @@ export function pintarFicha(viaje, lugar, estado, { fecha } = {}) {
   return html`
     <div class="ficha__cabecera">
       <button type="button" class="icono-boton" data-accion="atras" aria-label="Volver">${icono('atras')}</button>
-      <span class="titulo-3">${lugar.nombre}</span>
+      <h2 class="titulo-3 ficha__nombre" data-foco tabindex="-1">${lugar.nombre}</h2>
       <button type="button" class="icono-boton" data-accion="centrar" style="margin-left:auto" aria-label="Centrar en el mapa">${icono('pin')}</button>
     </div>
     ${lugar.imagen ? crudo(`
@@ -282,7 +288,7 @@ export function pintarTransporte(viaje) {
   }
   return html`
     <div class="panel__seccion">
-      <h2 class="titulo-2">Transporte</h2>
+      <h2 class="titulo-2" data-foco tabindex="-1">Transporte</h2>
       <p class="secundario" style="margin-top:4px">Cada tramo, con su duración, su frecuencia y el descuento que aplica.</p>
       <div style="margin-top:var(--e3)">
         ${viaje.transporte.map((t) => {
@@ -310,12 +316,12 @@ export function pintarListas(viaje, estado) {
   if (!viaje.listas?.length) {
     return html`<div class="vacio"><p class="secundario">Este viaje no tiene listas.</p></div>`;
   }
-  return viaje.listas.map((lista) => {
+  return viaje.listas.map((lista, i) => {
     const hechas = lista.items.filter((i) => estado.tareas[i.id]).length;
     const pct = lista.items.length ? Math.round((hechas / lista.items.length) * 100) : 0;
     return html`
       <div class="panel__seccion">
-        <h2 class="titulo-2">${lista.titulo}</h2>
+        <h2 class="titulo-2" ${i === 0 ? 'data-foco tabindex="-1"' : ''}>${lista.titulo}</h2>
         <div class="progreso-lista">
           <span class="progreso-lista__pista"><span class="progreso-lista__valor" style="width:${pct}%"></span></span>
           <span class="menudo">${hechas}/${lista.items.length}</span>
@@ -342,7 +348,7 @@ export function pintarInfo(viaje, { privados = { campos: [] } } = {}) {
 
   return html`
     <div class="panel__seccion">
-      <h2 class="titulo-2">${viaje.titulo}</h2>
+      <h2 class="titulo-2" data-foco tabindex="-1">${viaje.titulo}</h2>
       ${viaje.subtitulo ? crudo(`<p class="secundario" style="margin-top:2px">${esc(viaje.subtitulo)}</p>`) : ''}
       ${viaje.resumen ? crudo(`<p class="cuerpo" style="margin-top:var(--e3)">${esc(viaje.resumen)}</p>`) : ''}
       <div class="ficha__meta" style="margin-top:var(--e4)">

@@ -436,8 +436,22 @@
 }
 .bloque--traslado .bloque__punto { display: none; }
 .bloque--traslado .bloque__cuerpo { padding-top: 7px; padding-bottom: 7px; }
-.bloque--traslado .bloque__linea { display: flex; align-items: center; gap: 7px; color: var(--tinta-media); font-size: 0.8125rem; }
+.bloque--traslado .bloque__linea {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px 7px;
+  color: var(--tinta-media);
+  font-size: 0.8125rem;
+}
+/* El modo no se parte nunca: «A pie» en dos líneas descuadra la fila entera.
+   Lo que sí puede pasar a la línea siguiente es el destino. */
+.bloque--traslado .bloque__linea b { white-space: nowrap; }
 .bloque--traslado .bloque__linea svg { width: 15px; height: 15px; flex: 0 0 15px; color: var(--tinta-suave); }
+.bloque--traslado .bloque__cuerpo { padding-right: 40px; }
+.bloque__mapa--tramo { top: 4px; right: 4px; width: 28px; height: 28px; }
+.bloque__mapa--tramo svg { width: 14px; height: 14px; }
+@media (pointer: coarse) { .bloque__mapa--tramo { width: 40px; height: 40px; top: 0; } }
 
 .bloque--hito .bloque__punto { width: 7px; height: 7px; margin-left: -3.5px; background: var(--acento); }
 
@@ -464,7 +478,7 @@
   backdrop-filter: blur(14px) saturate(150%);
   border-bottom: 1px solid var(--borde);
 }
-.ficha__cabecera .titulo-3 { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ficha__nombre { margin: 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .ficha__cuerpo { padding: var(--e4); }
 .ficha__meta { display: flex; flex-wrap: wrap; gap: var(--e1); margin: var(--e3) 0; }

@@ -15,6 +15,15 @@ node herramientas/nuevo-viaje.mjs <id> "<Título>" <AAAA-MM-DD> <AAAA-MM-DD>
 node herramientas/nuevo-viaje.mjs oporto-2027-05 "Oporto" 2027-05-14 2027-05-20
 ```
 
+Con `--desde <viaje>` arranca heredando lo que de verdad se repite: **las listas**
+—activar el bono de tren, la chaqueta, la batería externa— y **los conceptos del
+presupuesto**, sin importes. No hereda lugares, días ni transporte: eso es del
+destino, y copiarlo solo daría trabajo de borrado.
+
+```bash
+node herramientas/nuevo-viaje.mjs oporto-2027-05 "Oporto" 2027-05-14 2027-05-20 --desde leon-2026-08
+```
+
 Eso crea `data/viajes/oporto-2027-05.json` con un día por fecha, la carpeta de
 fotos, y **da de alta el viaje en `data/viajes.json`** — que es el paso que
 siempre se olvida cuando se hace a mano, y sin el cual el viaje existe pero no
@@ -54,7 +63,18 @@ Es la regla que más disgustos ahorra. Al montar el viaje a León, pedir
 «Estación de Ponferrada» devolvió **una estación de esquí**. Seis de veintiséis
 salieron mal a la primera.
 
-Cómo sacarlas bien:
+**Hay una herramienta que hace esto:**
+
+```bash
+node herramientas/coordenadas.mjs --area "León, España" "Catedral de León" "Casa Botines"
+node herramientas/coordenadas.mjs --area "Ponferrada" --tipo estacion "Ponferrada"
+```
+
+Acota por recuadro y **enseña varios candidatos con su etiqueta de OSM**, que es
+lo que deja ver de un vistazo que lo que te ha devuelto es un `leisure/pitch` y
+no la iglesia que buscabas. Añade `--json` para sacarlo pegable.
+
+A mano, si hace falta:
 
 - **Nominatim** acotando el área, que es lo que arregla la mayoría de los fallos:
   ```
@@ -125,7 +145,22 @@ del mapa y la cabecera de la ficha.
 único que la hace funcionar sin conexión, y además no depende de que nadie
 mantenga viva una URL. El service worker las precachea todas al instalar.
 
-De dónde sacarlas: **Wikimedia Commons**, que es libre y tiene casi cualquier
+**Hay una herramienta que hace esto:**
+
+```bash
+node herramientas/fotos.mjs oporto-2027-05
+node herramientas/fotos.mjs oporto-2027-05 --titulo museo="Museo Nacional Soares dos Reis"
+```
+
+Busca, descarga a 500 px, escribe crédito y licencia en el JSON sin reformatearlo,
+y trae puestos dos guardias que salieron de ejecutarla contra León:
+
+- **Se salta el alojamiento.** Es dato privado y el repositorio es público.
+- **Rechaza banderas y escudos.** Los artículos de municipios tienen como imagen
+  principal la bandera, no una foto del sitio: a la estación de Matallana le puso
+  el pendón del ayuntamiento. Se arregla con `--titulo <id>="<artículo con foto>"`.
+
+A mano, si hace falta — **Wikimedia Commons**, que es libre y tiene casi cualquier
 monumento. La imagen principal del artículo de Wikipedia sale por API:
 
 ```

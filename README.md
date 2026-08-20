@@ -43,10 +43,18 @@ para las herramientas de línea de comandos.
 ## Uso
 
 ```bash
-node herramientas/servir.mjs        # http://localhost:8080/
-node herramientas/validar.mjs       # revisa todos los viajes
-node herramientas/nuevo-viaje.mjs <id> "<Título>" <inicio> <fin>
+node herramientas/servir.mjs                 # http://localhost:8080/
+node herramientas/validar.mjs                # revisa todos los viajes
+node --test herramientas/horarios.test.mjs   # pruebas de la lógica de horarios
+
+node herramientas/nuevo-viaje.mjs <id> "<Título>" <inicio> <fin> [--desde <viaje>]
+node herramientas/coordenadas.mjs --area "<ciudad>" "<lugar>"…
+node herramientas/fotos.mjs <viaje>
 ```
+
+Las tres últimas son las que quitan el trabajo pesado de montar un viaje:
+coordenadas verificadas, una foto por lugar con su licencia, y arrancar
+heredando las listas del viaje anterior.
 
 Con `file://` no funciona: los módulos ES y el service worker necesitan un
 origen de verdad.
@@ -80,7 +88,8 @@ data/
   viajes/<id>.json      un viaje
   viajes/_plantilla.json
 schema/                 el contrato de un viaje
-herramientas/           validar · nuevo-viaje · servir
+herramientas/           validar · probar · servir
+                        nuevo-viaje · coordenadas · fotos
 sw.js                   service worker
 ```
 

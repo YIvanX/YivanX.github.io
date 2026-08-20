@@ -281,3 +281,8 @@ table { border-collapse: collapse; width: 100%; }
   :root { --borde: rgba(28, 25, 20, 0.35); --borde-fuerte: rgba(28, 25, 20, 0.6); }
   :root[data-tema="oscuro"] { --borde: rgba(245, 240, 232, 0.4); --borde-fuerte: rgba(245, 240, 232, 0.7); }
 }
+
+/* Un encabezado con tabindex="-1" recibe el foco al navegar, pero no debe
+   pintar el anillo: no es un control, solo el punto donde se aterriza. */
+[data-foco]:focus { outline: none; }
+[data-foco]:focus-visible { outline: 2px solid var(--acento); outline-offset: 3px; }

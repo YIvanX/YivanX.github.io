@@ -9,14 +9,14 @@
  */
 
 import { html, esc, icono, crudo, $, $$, alPulsar } from '../ui/dom.js';
-import { cargarViaje, diaPorDefecto, recuadroDe, ESTADOS_VIAJE } from '../datos.js';
+import { cargarViaje, diaPorDefecto, recuadroDe, INTENSIDADES } from '../datos.js';
 import { Mapa } from '../mapa.js';
 import { crearHoja } from '../ui/hoja.js';
 import { brindis } from '../ui/brindis.js';
 import * as buscador from '../ui/buscador.js';
 import * as estado from '../estado.js';
 import { esOscuro, alCambiarTema } from '../ui/tema.js';
-import { aIso, aFecha, CLAVES_DIA, NOMBRE_DIA } from '../horarios.js';
+import { aIso, aFecha, fechaLarga, CLAVES_DIA, NOMBRE_DIA } from '../horarios.js';
 import { pintarDia, pintarFicha, pintarTransporte, pintarListas, pintarInfo } from './panel.js';
 
 const PESTANAS = [
@@ -57,6 +57,7 @@ export async function montarViaje(raiz, ruta, { alTema }) {
               <button type="button" class="pestana" role="tab" data-pestana="${p.id}"
                       aria-selected="false">${p.etiqueta}</button>`)}
           </div>
+          <p class="solo-lectores" aria-live="polite" data-anuncio></p>
           <div class="panel__cuerpo scroll-y" data-cuerpo></div>
         </section>
 
@@ -78,6 +79,7 @@ export async function montarViaje(raiz, ruta, { alTema }) {
   const barraDias = $('.barra-dias', raiz);
   const panel = $('.panel', raiz);
   const cuerpo = $('[data-cuerpo]', raiz);
+  const anuncio = $('[data-anuncio]', raiz);
   const nodoMapa = $('[data-mapa]', raiz);
 
   // --- Mapa ---------------------------------------------------------------
@@ -116,8 +118,7 @@ export async function montarViaje(raiz, ruta, { alTema }) {
     const hoy = aIso(new Date());
     barraDias.innerHTML = viaje.dias.map((d) => {
       const f = aFecha(d.fecha);
-      const intensidades = { llegada: 1, suave: 1, media: 2, fuerte: 3, salida: 1 };
-      const puntos = intensidades[d.intensidad] || 1;
+      const puntos = (INTENSIDADES[d.intensidad] || INTENSIDADES.suave).puntos;
       return html`
         <button type="button" role="tab" class="dia-tab ${d.fecha === hoy ? 'dia-tab--hoy' : ''}"
                 data-dia="${d.fecha}" aria-selected="${String(d.fecha === actual.fecha)}">
@@ -141,7 +142,22 @@ export async function montarViaje(raiz, ruta, { alTema }) {
     urlsObjeto.clear();
   }
 
-  function pintarPanel() {
+  let primeraPintada = true;
+
+  /**
+   * Lleva el foco al encabezado de lo que se acaba de abrir y lo anuncia.
+   *
+   * Solo al navegar: en la primera pintada se deja donde está, porque robarle el
+   * foco a quien acaba de abrir la página es peor que no moverlo.
+   */
+  function situarFoco(texto) {
+    if (anuncio) anuncio.textContent = texto;
+    if (primeraPintada) { primeraPintada = false; return; }
+    const destino = $('[data-foco]', cuerpo);
+    if (destino) destino.focus({ preventScroll: true });
+  }
+
+  function pintarPanel({ moverFoco = true } = {}) {
     limpiarUrls();
     const guardado = estado.estadoDe(viaje.id);
 
@@ -150,16 +166,21 @@ export async function montarViaje(raiz, ruta, { alTema }) {
       if (!lugar) { ir(`#/v/${viaje.id}`); return; }
       cuerpo.innerHTML = pintarFicha(viaje, lugar, guardado, { fecha: actual.fecha });
       hidratarGaleria(lugar);
+      if (moverFoco) situarFoco(lugar.nombre);
     } else if (actual.vista === 'transporte') {
       cuerpo.innerHTML = pintarTransporte(viaje);
+      if (moverFoco) situarFoco('Transporte');
     } else if (actual.vista === 'listas') {
       cuerpo.innerHTML = pintarListas(viaje, guardado);
+      if (moverFoco) situarFoco('Listas');
     } else if (actual.vista === 'info') {
       cuerpo.innerHTML = pintarInfo(viaje, { privados: estado.privadosDe(viaje.id) });
       mostrarOcupacion();
+      if (moverFoco) situarFoco(`Información de ${viaje.titulo}`);
     } else {
       const dia = viaje.dias.find((d) => d.fecha === actual.fecha) || viaje.dias[0];
       cuerpo.innerHTML = pintarDia(viaje, dia, guardado);
+      if (moverFoco) situarFoco(`${dia.titulo}, ${fechaLarga(dia.fecha)}`);
     }
     cuerpo.scrollTop = 0;
   }
@@ -247,7 +268,7 @@ export async function montarViaje(raiz, ruta, { alTema }) {
   alPulsar(cuerpo, '[data-accion="visitado"]', () => {
     const ahora = estado.alternarVisitado(viaje.id, actual.lugarId);
     mapa.marcarVisitado(actual.lugarId, ahora);
-    pintarPanel();
+    pintarPanel({ moverFoco: false });
     hidratarGaleria(viaje.porId.get(actual.lugarId));
     brindis(ahora ? 'Marcado como visitado' : 'Ya no está marcado', { tipo: ahora ? 'ok' : 'info' });
   });

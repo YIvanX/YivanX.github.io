@@ -42,7 +42,6 @@ function normalizar(viaje, entrada) {
   // el archivo: un viaje no se queda «planificado» tres semanas después de volver
   // porque a nadie se le ocurriera editar el JSON.
   viaje.estadoReal = estadoPorFecha(viaje.fechas);
-  viaje.acento = entrada?.acento;
   viaje.porId = porId;
 
   viaje.dias = (viaje.dias || []).map((dia) => {
@@ -128,12 +127,17 @@ export const MODOS = {
   bici:    { etiqueta: 'Bici',    icono: 'bici' },
 };
 
+/**
+ * `puntos` alimenta los puntitos de la barra de días. Vive aquí y no en la
+ * vista: estaba duplicado en viaje.js, y una intensidad nueva habría salido
+ * bien en un sitio y mal en el otro sin que nadie se enterase.
+ */
 export const INTENSIDADES = {
-  llegada: { etiqueta: 'Llegada',  clase: '' },
-  suave:   { etiqueta: 'Suave',    clase: 'chip--ok' },
-  media:   { etiqueta: 'Media',    clase: 'chip--alerta' },
-  fuerte:  { etiqueta: 'Día fuerte', clase: 'chip--error' },
-  salida:  { etiqueta: 'Salida',   clase: '' },
+  llegada: { etiqueta: 'Llegada',    clase: '',             puntos: 1 },
+  suave:   { etiqueta: 'Suave',      clase: 'chip--ok',     puntos: 1 },
+  media:   { etiqueta: 'Media',      clase: 'chip--alerta', puntos: 2 },
+  fuerte:  { etiqueta: 'Día fuerte', clase: 'chip--error',  puntos: 3 },
+  salida:  { etiqueta: 'Salida',     clase: '',             puntos: 1 },
 };
 
 export const ESTADOS_VIAJE = {
