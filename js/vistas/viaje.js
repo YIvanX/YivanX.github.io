@@ -231,9 +231,11 @@ export async function montarViaje(raiz, ruta, { alTema }) {
     ir(p === 'dia' ? `#/v/${viaje.id}/d/${actual.fecha}` : `#/v/${viaje.id}/${p}`);
   });
 
-  alPulsar(cuerpo, '.bloque--visita', (b) => {
+  alPulsar(cuerpo, '.bloque__principal', (b) => {
+    const bloque = b.closest('.bloque--visita');
+    if (!bloque) return;
     hoja.asomar();
-    ir(`#/v/${viaje.id}/l/${b.dataset.lugar}?d=${actual.fecha}`);
+    ir(`#/v/${viaje.id}/l/${bloque.dataset.lugar}?d=${actual.fecha}`);
   });
 
   alPulsar(cuerpo, '[data-accion="atras"]', () => ir(`#/v/${viaje.id}/d/${actual.fecha}`));

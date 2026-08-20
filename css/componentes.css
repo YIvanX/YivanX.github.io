@@ -79,6 +79,10 @@
   min-height: 38px;
 }
 
+/* Sin esto el SVG no tiene tamaño propio —solo viewBox— y se estira a todo el
+   hueco del botón. Salía un icono de 120 px dentro de un botón de 40. */
+.boton svg { width: 15px; height: 15px; flex: 0 0 15px; }
+
 .icono-boton {
   width: 38px;
   height: 38px;
@@ -252,6 +256,45 @@
   color: inherit;
   -webkit-tap-highlight-color: transparent;
 }
+
+/* Una visita lleva dos cosas pulsables: el cuerpo, que abre la ficha, y el
+   enlace a Google Maps. Un <a> dentro de un <button> no es HTML válido, así que
+   el bloque pasa a ser contenedor y la retícula se muda al botón interior. */
+.bloque--visita { display: block; }
+
+.bloque__principal {
+  display: grid;
+  grid-template-columns: 46px 15px 1fr;
+  gap: 0 var(--e2);
+  align-items: start;
+  width: 100%;
+  text-align: left;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bloque--visita .bloque__cuerpo { padding-right: 42px; }
+
+.bloque__mapa {
+  position: absolute;
+  top: 8px;
+  right: 4px;
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  border-radius: var(--r-m);
+  color: var(--tinta-suave);
+  transition: color var(--t-rapido) ease,
+              background-color var(--t-rapido) ease,
+              transform var(--t-pulsar) var(--sal);
+}
+.bloque__mapa svg { width: 16px; height: 16px; }
+.bloque__mapa:active { transform: scale(0.92); }
+@media (hover: hover) and (pointer: fine) {
+  .bloque__mapa:hover { color: var(--acento); background: var(--acento-velo); }
+}
+@media (pointer: coarse) { .bloque__mapa { width: 40px; height: 40px; top: 4px; } }
+
+.dia-cabecera__ruta { margin-top: var(--e4); }
 
 .bloque__tiempo { padding-top: 11px; }
 .bloque__hora { font-family: var(--mono); font-size: 0.75rem; font-variant-numeric: tabular-nums; color: var(--tinta); font-weight: 600; }

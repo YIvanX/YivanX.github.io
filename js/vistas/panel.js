@@ -8,6 +8,7 @@
 
 import { html, esc, icono, md, crudo, duracionTexto, duracionCorta, dinero } from '../ui/dom.js';
 import { CATEGORIAS, MODOS, INTENSIDADES } from '../datos.js';
+import { rutaDelDia, enlaceLugar, enlaceComoLlegar } from '../enlaces-mapa.js';
 import {
   fechaLarga, textoHorario, revisarBloque, estadoEn, aMinutos, aHora, aIso, claveDia, NOMBRE_DIA,
 } from '../horarios.js';
@@ -52,9 +53,10 @@ function pintarBloqueVisita(bloque, dia, viaje, estado) {
   const conNota = Boolean(estado.notas[lugar.id]);
 
   return html`
-    <button type="button" class="bloque bloque--visita"
-            data-clave="${bloque.clave}" data-lugar="${lugar.id}"
-            data-visitado="${String(visitado)}">
+    <div class="bloque bloque--visita"
+         data-clave="${bloque.clave}" data-lugar="${lugar.id}"
+         data-visitado="${String(visitado)}">
+      <button type="button" class="bloque__principal">
       <span class="bloque__tiempo">
         ${bloque.inicio ? crudo(`<span class="bloque__hora">${esc(bloque.inicio)}</span>`) : ''}
         ${lugar.duracionMin ? crudo(`<span class="bloque__dur" style="display:block">${esc(duracionCorta(lugar.duracionMin))}</span>`) : ''}
@@ -71,7 +73,10 @@ function pintarBloqueVisita(bloque, dia, viaje, estado) {
         ${bloque.nota ? crudo(`<span class="bloque__nota" style="display:block">${esc(bloque.nota)}</span>`) : ''}
         ${conNota ? crudo(`<span class="bloque__nota" style="display:block">${esc(estado.notas[lugar.id])}</span>`) : ''}
       </span>
-    </button>`;
+      </button>
+      <a class="bloque__mapa" href="${enlaceLugar(lugar)}" target="_blank" rel="noopener noreferrer"
+         aria-label="Ver ${lugar.nombre} en Google Maps" title="Ver en Google Maps">${icono('pin')}</a>
+    </div>`;
 }
 
 function pintarBloqueTraslado(bloque) {
@@ -103,6 +108,32 @@ function pintarBloqueHito(bloque) {
         <span class="titulo-3">${bloque.titulo}</span>
         ${bloque.detalle ? crudo(`<span class="menudo" style="display:block;margin-top:2px">${esc(bloque.detalle)}</span>`) : ''}
       </span>
+    </div>`;
+}
+
+/**
+ * El día entero en Google Maps, con las paradas en orden.
+ *
+ * Se avisa cuando sale en modo coche y no lo es: Google no admite paradas
+ * intermedias en transporte público, así que un día de tren cae a `driving`.
+ * Decirlo evita que alguien lo siga creyendo que son las indicaciones reales.
+ */
+function enlaceRuta(dia) {
+  const ruta = rutaDelDia(dia);
+  if (!ruta) return '';
+
+  const hayPublico = dia.bloques.some((b) => b.tipo === 'traslado' && (b.modo === 'tren' || b.modo === 'bus'));
+  const aclaracion = ruta.modo === 'driving' && hayPublico
+    ? 'Google no admite paradas intermedias en transporte público, así que la ruta sale en coche. Sirve para ver el día sobre el mapa, no para seguirla conduciendo.'
+    : '';
+
+  return html`
+    <div class="dia-cabecera__ruta">
+      <a class="boton boton--bloque" href="${ruta.url}" target="_blank" rel="noopener noreferrer">
+        ${icono('mapa')}Ver el día en Google Maps
+        <span class="menudo" style="margin-left:auto">${ruta.paradas} paradas</span>
+      </a>
+      ${aclaracion ? crudo(`<p class="menudo" style="margin-top:6px">${esc(aclaracion)}</p>`) : ''}
     </div>`;
 }
 
@@ -145,6 +176,7 @@ export function pintarDia(viaje, dia, estado) {
       <h2 class="titulo-1">${dia.titulo}</h2>
       <p class="menudo" style="margin-top:4px">${fechaLarga(dia.fecha)}</p>
       ${dia.resumen ? crudo(`<p class="dia-cabecera__resumen secundario">${esc(dia.resumen)}</p>`) : ''}
+      ${enlaceRuta(dia)}
     </div>
     ${dia.bloques.length
       ? crudo(`<div class="cronologia">${cuerpo}${cola}</div>`)
@@ -176,8 +208,6 @@ export function pintarFicha(viaje, lugar, estado, { fecha } = {}) {
   if (lugar.reserva?.necesaria) filas.push(['Reserva', html`<b>Hace falta.</b> ${lugar.reserva.nota || ''}`]);
   if (lugar.verificado) filas.push(['Verificado', html`${lugar.verificado.fecha} · <span class="menudo">${lugar.verificado.fuente}</span>`]);
 
-  const [lat, lon] = lugar.coords;
-
   return html`
     <div class="ficha__cabecera">
       <button type="button" class="icono-boton" data-accion="atras" aria-label="Volver">${icono('atras')}</button>
@@ -204,7 +234,9 @@ export function pintarFicha(viaje, lugar, estado, { fecha } = {}) {
         <button type="button" class="boton ${visitado ? '' : 'boton--principal'}" data-accion="visitado" aria-pressed="${String(visitado)}">
           ${icono('check')}${visitado ? 'Visitado' : 'Marcar visitado'}
         </button>
-        <a class="boton" href="https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}"
+        <a class="boton" href="${enlaceLugar(lugar)}"
+           target="_blank" rel="noopener noreferrer">${icono('pin')}Ver en Google Maps</a>
+        <a class="boton" href="${enlaceComoLlegar(lugar)}"
            target="_blank" rel="noopener noreferrer">${icono('adelante')}Cómo llegar</a>
         ${lugar.enlaces?.map((e) => html`<a class="boton" href="${e.url}" target="_blank" rel="noopener noreferrer">${icono('enlace')}${e.texto}</a>`)}
       </div>

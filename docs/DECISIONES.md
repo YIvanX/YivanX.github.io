@@ -61,6 +61,22 @@ Las teselas sobreviven a los cambios de versión de la aplicación a propósito
 (caché aparte, con expulsión de las más viejas al llegar a 3.000). Volver a
 descargar el mapa de un viaje ya preparado sería lo contrario de lo que se busca.
 
+## Los enlaces de Google Maps salen de las coordenadas
+
+Nunca del nombre. Buscar «Catedral de León» por texto devuelve la catedral de
+Burgos, y «Estación de Ponferrada» devuelve una estación de esquí: pasó de
+verdad al geocodificar este viaje. Con `?api=1&query=lat,lng` no hay ambigüedad.
+
+La ruta de un día incluye **los extremos de los traslados**, no solo las
+paradas: sin las estaciones, el miércoles parecería que se va de León a Las
+Médulas de un salto.
+
+**Limitación de Google, dicha en pantalla:** las paradas intermedias solo
+existen en a pie, coche y bici — en transporte público no—. Un día con tren cae
+a modo coche, y la interfaz lo explica en vez de dejar que parezca una
+indicación real. Por encima de nueve paradas intermedias, la forma `?api=1` deja
+de admitirlas y se usa la forma por segmentos (`/dir/a/b/c/`).
+
 ## Rutas por hash
 
 `#/v/leon-2026-08/d/2026-08-30`. GitHub Pages no reescribe rutas, así que

@@ -109,6 +109,29 @@ aplica, y en la cronología sale como «Por fuera» en vez de como cerrado.
 
 ---
 
+## Los enlaces de Google Maps se generan solos
+
+No hay nada que configurar: salen de las coordenadas.
+
+- **Por sitio** — un icono de chincheta en su fila del itinerario, y dos botones
+  en su ficha: «Ver en Google Maps» y «Cómo llegar».
+- **Por día** — un botón en la cabecera con **todas las paradas en el orden real
+  del recorrido**, estaciones incluidas, porque sin ellas la ruta no se entiende.
+
+Dos cosas que conviene saber:
+
+- **Siempre por `lat,lng`, nunca por nombre.** Buscar «Catedral de León» por
+  texto es exactamente lo que devuelve la catedral de Burgos.
+- **Google no admite paradas intermedias en transporte público.** Un día con
+  tren o bus sale en modo coche, y la aplicación lo dice en pantalla en vez de
+  dejar que parezca una indicación real. Un día íntegramente a pie sale como tal.
+
+Por encima de nueve paradas intermedias, la forma `?api=1` deja de admitirlas y
+se cambia sola a la forma de ruta por segmentos (`/dir/a/b/c/`), que no tiene
+ese tope.
+
+---
+
 ## 4. Validar
 
 ```bash

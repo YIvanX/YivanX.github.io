@@ -21,6 +21,9 @@ destino escrito en el código, así que el siguiente viaje no toca ni una línea
 - **Funciona sin conexión.** Aplicación instalable, con un botón por día que
   descarga las teselas de ese recuadro. Verificado con la red cortada: la guía
   y el mapa siguen ahí.
+- **Enlaces a Google Maps**: cada día tiene su ruta completa con las paradas en
+  orden, y cada sitio el suyo propio, tanto en la fila del itinerario como en su
+  ficha. Todo por coordenadas, nunca por nombre.
 - **Marcar visitado, tomar notas y adjuntar fotos**, que se quedan en el
   dispositivo y se pueden exportar a un archivo.
 - Transporte tramo a tramo, listas de reservas y equipaje con su progreso,
@@ -65,6 +68,7 @@ js/
   estado.js             localStorage + IndexedDB (visitados, notas, fotos)
   horarios.js           ¿está abierto? — compartido con el validador
   mapa.js               envoltorio de Leaflet
+  enlaces-mapa.js       rutas y enlaces de Google Maps
   vistas/               registro · viaje · panel
   ui/                   dom · hoja arrastrable · buscador · tema · avisos
 vendor/leaflet/         Leaflet 1.9.4, local
