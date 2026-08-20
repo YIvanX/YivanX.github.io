@@ -335,6 +335,21 @@ GitHub Pages reconstruye solo. Un par de minutos.
 
 ---
 
+## Editar el itinerario desde la aplicación
+
+No hace falta tocar el JSON para probar un cambio. En la cabecera de cada día
+hay **«Añadir una parada»**: busca el sitio sobre el mapa —o tócalo directamente
+en el mapa, que funciona sin conexión— y lo mete en su hora. Desde la ficha de
+cualquier parada se puede **quitar del día**, que la oculta sin borrarla.
+
+Todo eso vive en el navegador. Cuando un cambio merezca ser permanente,
+**Viaje → Copiar como JSON** lo deja listo para pegar en el archivo del viaje.
+
+Ese es el flujo recomendado para montar un viaje nuevo: bosquejarlo en la
+aplicación con el mapa delante, y volcar al JSON cuando esté.
+
+---
+
 ## Qué NO se pone en el JSON
 
 **El repositorio es público.** Todo lo que se escriba en `data/` lo puede leer

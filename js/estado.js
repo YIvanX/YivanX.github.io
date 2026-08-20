@@ -10,6 +10,8 @@
  * ronda los 5 MB y una sola foto de móvil ya se los come.
  */
 
+import { validarCapa } from './personalizacion.js';
+
 const PREFIJO = 'bitacora:v1';
 const BD_NOMBRE = 'bitacora';
 const BD_VERSION = 1;
@@ -96,6 +98,17 @@ export function alternarTarea(viajeId, itemId) {
   else estado.tareas[itemId] = new Date().toISOString();
   guardarEstado(viajeId, estado);
   return Boolean(estado.tareas[itemId]);
+}
+
+// --- Capa personal del itinerario -----------------------------------------
+// Paradas añadidas y paradas ocultadas. Va aparte del resto del estado porque
+// tiene su propio formato, su propia validación y su propia versión.
+
+export const capaDe = (viajeId) => leer(`capa:${viajeId}`, { version: 1, lugares: [], bloques: [], ocultos: [] });
+
+export function guardarCapa(viajeId, capa) {
+  escribir(`capa:${viajeId}`, capa);
+  avisar(viajeId);
 }
 
 // --- Datos privados -------------------------------------------------------
@@ -219,6 +232,7 @@ export async function exportar(viajeId) {
     viaje: viajeId,
     exportado: new Date().toISOString(),
     estado: estadoDe(viajeId),
+    capa: capaDe(viajeId),
     privados: privadosDe(viajeId),
     fotos: await Promise.all(fotos.map(async (f) => ({
       id: f.id, lugar: f.lugar, creado: f.creado, datos: await aBase64(f.blob),
@@ -243,6 +257,16 @@ export async function importar(paquete) {
   });
   if (paquete.privados?.campos?.length) guardarPrivados(viajeId, paquete.privados);
 
+  // La capa se reemplaza entera y no se fusiona: mezclar dos itinerarios
+  // editados a mano daría un tercero que no quiso nadie.
+  let paradas = 0;
+  if (paquete.capa) {
+    const fallos = validarCapa(paquete.capa);
+    if (fallos.length) throw new Error(`La capa del itinerario tiene errores: ${fallos[0]}`);
+    guardarCapa(viajeId, paquete.capa);
+    paradas = (paquete.capa.bloques || []).length;
+  }
+
   let fotos = 0;
   const existentes = new Set((await fotosDelViaje(viajeId)).map((f) => f.id));
   for (const foto of paquete.fotos || []) {
@@ -260,7 +284,7 @@ export async function importar(paquete) {
     }
   }
   avisar(viajeId);
-  return { fotos, notas: Object.keys(paquete.estado?.notas || {}).length };
+  return { fotos, notas: Object.keys(paquete.estado?.notas || {}).length, paradas };
 }
 
 /** Cuánto ocupa lo guardado, para poder decirlo en vez de suponerlo. */

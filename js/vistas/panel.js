@@ -31,6 +31,8 @@ function chipsDeBloque(bloque, dia, moneda) {
 
   // El nivel va primero a propósito: es lo que decide si te lo saltas cuando el
   // día se ha torcido y son las siete de la tarde.
+  if (bloque.propio) chips.push(html`<span class="chip chip--propio">${icono('mas')}Añadida por ti</span>`);
+
   const nivel = NIVELES[lugar.nivel];
   if (nivel) chips.push(html`<span class="chip ${nivel.clase}">${nivel.etiqueta}</span>`);
 
@@ -169,7 +171,7 @@ const lineaAhora = () => html`
     <span class="ahora__linea"></span>
   </div>`;
 
-export function pintarDia(viaje, dia, estado) {
+export function pintarDia(viaje, dia, estado, { ocultos = 0 } = {}) {
   const intensidad = INTENSIDADES[dia.intensidad] || INTENSIDADES.suave;
   const esHoy = dia.fecha === aIso(new Date());
   const ahora = minutosAhora();
@@ -202,6 +204,11 @@ export function pintarDia(viaje, dia, estado) {
       <p class="menudo" style="margin-top:4px">${fechaLarga(dia.fecha)}</p>
       ${dia.resumen ? crudo(`<p class="dia-cabecera__resumen secundario">${esc(dia.resumen)}</p>`) : ''}
       ${enlaceRuta(dia)}
+      <div class="dia-cabecera__editar">
+        <button type="button" class="boton" data-accion="anadir-parada">${icono('mas')}Añadir una parada</button>
+        ${ocultos ? crudo(`<button type="button" class="boton boton--fantasma" data-accion="restaurar">
+          ${esc(ocultos)} quitada${ocultos === 1 ? '' : 's'} · restaurar</button>`) : ''}
+      </div>
     </div>
     ${dia.bloques.length
       ? crudo(`<div class="cronologia">${cuerpo}${cola}</div>`)
@@ -211,7 +218,7 @@ export function pintarDia(viaje, dia, estado) {
 
 // --- Ficha de lugar -------------------------------------------------------
 
-export function pintarFicha(viaje, lugar, estado, { fecha } = {}) {
+export function pintarFicha(viaje, lugar, estado, { fecha, bloqueActual = null } = {}) {
   const cat = CATEGORIAS[lugar.categoria] || CATEGORIAS.practico;
   const visitado = Boolean(estado.visitados[lugar.id]);
   const dia = fecha || aIso(new Date());
@@ -319,6 +326,17 @@ export function pintarFicha(viaje, lugar, estado, { fecha } = {}) {
         ${lugar.enlaces?.map((e) => html`<a class="boton" href="${e.url}" target="_blank" rel="noopener noreferrer">${icono('enlace')}${e.texto}</a>`)}
       </div>
 
+      ${bloqueActual ? crudo(`
+        <div class="acciones-lugar" style="margin-top:var(--e3)">
+          <button type="button" class="boton boton--peligro" data-accion="quitar-parada" data-clave="${esc(bloqueActual.clave)}">
+            <svg aria-hidden="true"><use href="#i-papelera"/></svg>
+            ${bloqueActual.propio ? 'Borrar esta parada' : 'Quitar de este día'}
+          </button>
+          <span class="menudo" style="align-self:center">
+            ${bloqueActual.propio ? 'La añadiste tú: se borra del todo.' : 'Se oculta, no se borra. Se puede restaurar.'}
+          </span>
+        </div>`) : ''}
+
       <div style="margin-top:var(--e6)">
         <h3 class="etiqueta" style="color:var(--tinta-suave)">Tu nota</h3>
         <textarea class="nota-campo" data-campo="nota" placeholder="Qué te ha parecido, qué comisteis, qué te llevas…">${estado.notas[lugar.id] || ''}</textarea>
@@ -404,7 +422,7 @@ export function pintarListas(viaje, estado) {
 
 // --- Información del viaje ------------------------------------------------
 
-export function pintarInfo(viaje, { privados = { campos: [] } } = {}) {
+export function pintarInfo(viaje, { privados = { campos: [] }, capa = null } = {}) {
   const niveles = { alto: 'aviso--alto', medio: 'aviso--medio', info: 'aviso--info' };
 
   return html`
@@ -459,6 +477,27 @@ export function pintarInfo(viaje, { privados = { campos: [] } } = {}) {
       </div>
       <button type="button" class="boton boton--bloque" data-accion="anadir-privado">${icono('mas')}Añadir un dato</button>
     </div>
+
+    ${capa && (capa.lugares.length || capa.bloques.length || capa.ocultos.length) ? crudo(`
+      <div class="panel__seccion">
+        <h2 class="titulo-2">Tus cambios en el itinerario</h2>
+        <p class="menudo" style="margin-top:4px">
+          ${capa.lugares.length} parada(s) añadida(s) y ${capa.ocultos.length} quitada(s).
+          Viven en este navegador; el archivo del viaje no se toca.
+        </p>
+        <div style="display:flex;gap:8px;margin-top:var(--e3);flex-wrap:wrap">
+          <button type="button" class="boton" data-accion="copiar-capa">
+            <svg aria-hidden="true"><use href="#i-nota"/></svg>Copiar como JSON del viaje
+          </button>
+          <button type="button" class="boton boton--peligro" data-accion="vaciar-capa">
+            <svg aria-hidden="true"><use href="#i-papelera"/></svg>Deshacer todos
+          </button>
+        </div>
+        <p class="menudo" style="margin-top:var(--e2)">
+          «Copiar como JSON» deja los cambios listos para pegarlos en
+          <code>data/viajes/${esc(viaje.id)}.json</code> y hacerlos permanentes.
+        </p>
+      </div>`) : ''}
 
     <div class="panel__seccion">
       <h2 class="titulo-2">Recuerdos</h2>

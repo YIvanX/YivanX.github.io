@@ -16,7 +16,7 @@
    de lo que se busca.
    ========================================================================= */
 
-const VERSION = 'v3';
+const VERSION = 'v4';
 const CACHE_APP = `bitacora-app-${VERSION}`;
 const CACHE_TESELAS = 'bitacora-teselas';
 const MAX_TESELAS = 3000;
@@ -31,6 +31,8 @@ const ESENCIALES = [
   'js/app.js',
   'js/datos.js',
   'js/enlaces-mapa.js',
+  'js/personalizacion.js',
+  'js/ui/buscar-lugar.js',
   'js/estado.js',
   'js/horarios.js',
   'js/mapa.js',

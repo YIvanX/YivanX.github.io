@@ -9,11 +9,13 @@
  */
 
 import { html, esc, icono, crudo, $, $$, alPulsar } from '../ui/dom.js';
-import { cargarViaje, diaPorDefecto, recuadroDe, INTENSIDADES } from '../datos.js';
+import { cargarViaje, diaPorDefecto, recuadroDe, INTENSIDADES, recomponer, viajeBase } from '../datos.js';
 import { Mapa } from '../mapa.js';
 import { crearHoja } from '../ui/hoja.js';
 import { brindis } from '../ui/brindis.js';
 import * as buscador from '../ui/buscador.js';
+import * as buscarLugar from '../ui/buscar-lugar.js';
+import { lugarDesdeBusqueda, claveEstable, nuevoId, ocultosDelDia, comoJsonDelViaje } from '../personalizacion.js';
 import * as estado from '../estado.js';
 import { esOscuro, alCambiarTema } from '../ui/tema.js';
 import { aIso, aFecha, fechaLarga, CLAVES_DIA, NOMBRE_DIA } from '../horarios.js';
@@ -27,7 +29,7 @@ const PESTANAS = [
 ];
 
 export async function montarViaje(raiz, ruta, { alTema }) {
-  const viaje = await cargarViaje(ruta.viajeId);
+  let viaje = await cargarViaje(ruta.viajeId);
   let actual = { ...ruta, fecha: ruta.fecha || diaPorDefecto(viaje) };
   let verTodo = false;
   const urlsObjeto = new Set();
@@ -164,7 +166,10 @@ export async function montarViaje(raiz, ruta, { alTema }) {
     if (actual.vista === 'lugar') {
       const lugar = viaje.porId.get(actual.lugarId);
       if (!lugar) { ir(`#/v/${viaje.id}`); return; }
-      cuerpo.innerHTML = pintarFicha(viaje, lugar, guardado, { fecha: actual.fecha });
+      // El bloque concreto de este día, para poder quitarlo desde su ficha.
+      const diaActual = viaje.dias.find((d) => d.fecha === actual.fecha);
+      const bloqueActual = diaActual?.bloques.find((b) => b.tipo === 'visita' && b.lugar?.id === lugar.id) || null;
+      cuerpo.innerHTML = pintarFicha(viaje, lugar, guardado, { fecha: actual.fecha, bloqueActual });
       hidratarGaleria(lugar);
       if (moverFoco) situarFoco(lugar.nombre);
     } else if (actual.vista === 'transporte') {
@@ -174,12 +179,14 @@ export async function montarViaje(raiz, ruta, { alTema }) {
       cuerpo.innerHTML = pintarListas(viaje, guardado);
       if (moverFoco) situarFoco('Listas');
     } else if (actual.vista === 'info') {
-      cuerpo.innerHTML = pintarInfo(viaje, { privados: estado.privadosDe(viaje.id) });
+      cuerpo.innerHTML = pintarInfo(viaje, { privados: estado.privadosDe(viaje.id), capa: estado.capaDe(viaje.id) });
       mostrarOcupacion();
       if (moverFoco) situarFoco(`Información de ${viaje.titulo}`);
     } else {
       const dia = viaje.dias.find((d) => d.fecha === actual.fecha) || viaje.dias[0];
-      cuerpo.innerHTML = pintarDia(viaje, dia, guardado);
+      const base = viajeBase(viaje.id);
+      const ocultos = base ? ocultosDelDia(base, estado.capaDe(viaje.id), dia.fecha).length : 0;
+      cuerpo.innerHTML = pintarDia(viaje, dia, guardado, { ocultos });
       if (moverFoco) situarFoco(`${dia.titulo}, ${fechaLarga(dia.fecha)}`);
     }
     cuerpo.scrollTop = 0;
@@ -326,9 +333,8 @@ export async function montarViaje(raiz, ruta, { alTema }) {
       if (!archivo) return;
       try {
         const resultado = await estado.importar(JSON.parse(await archivo.text()));
-        brindis(`Importado: ${resultado.notas} nota(s) y ${resultado.fotos} foto(s)`, { tipo: 'ok' });
-        pintarPanel();
-        refrescarMapa();
+        brindis(`Importado: ${resultado.notas} nota(s), ${resultado.fotos} foto(s) y ${resultado.paradas} parada(s) propias`, { tipo: 'ok', duracion: 5000 });
+        trasCambiarCapa();
       } catch (err) {
         brindis(err.message, { tipo: 'error', duracion: 5000 });
       }
@@ -342,6 +348,31 @@ export async function montarViaje(raiz, ruta, { alTema }) {
     if (e.target.dataset?.campo !== 'nota') return;
     estado.guardarNota(viaje.id, actual.lugarId, e.target.value);
   }, true);
+
+  alPulsar(cuerpo, '[data-accion="copiar-capa"]', async () => {
+    const texto = JSON.stringify(comoJsonDelViaje(estado.capaDe(viaje.id)), null, 2);
+    try {
+      await navigator.clipboard.writeText(texto);
+      brindis('Copiado. Pégalo en el JSON del viaje.', { tipo: 'ok', duracion: 5000 });
+    } catch {
+      // Sin permiso de portapapeles, se descarga: peor, pero no se pierde.
+      const url = URL.createObjectURL(new Blob([texto], { type: 'application/json' }));
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `cambios-${viaje.id}.json`;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      brindis('Descargado como archivo', { tipo: 'ok' });
+    }
+  });
+
+  alPulsar(cuerpo, '[data-accion="vaciar-capa"]', () => {
+    const capa = estado.capaDe(viaje.id);
+    const total = capa.bloques.length + capa.ocultos.length;
+    if (!confirm(`Se van a deshacer ${total} cambio(s) del itinerario. Las notas, las fotos y lo visitado no se tocan.`)) return;
+    estado.guardarCapa(viaje.id, { version: 1, lugares: [], bloques: [], ocultos: [] });
+    trasCambiarCapa('Itinerario devuelto a como estaba');
+  });
 
   alPulsar(cuerpo, '[data-accion="exportar"]', async () => {
     const paquete = await estado.exportar(viaje.id);
@@ -372,6 +403,94 @@ export async function montarViaje(raiz, ruta, { alTema }) {
     datos.campos.splice(Number(b.dataset.quitarPrivado), 1);
     estado.guardarPrivados(viaje.id, datos);
     pintarPanel();
+  });
+
+  // --- Añadir y quitar paradas del itinerario -----------------------------
+  /**
+   * Rehace el viaje con la capa nueva y repinta.
+   *
+   * Se recompone desde el JSON crudo que ya está en memoria: no se vuelve a
+   * pedir nada a la red, así que añadir una parada funciona igual sin cobertura.
+   */
+  function trasCambiarCapa(mensaje) {
+    const rehecho = recomponer(viaje.id, { archivo: null });
+    if (rehecho) viaje = rehecho;
+    modoPintado = null;
+    pintar();
+    if (mensaje) brindis(mensaje, { tipo: 'ok' });
+  }
+
+  function anadirParada({ resultado, fecha, inicio, fin, nota }) {
+    const capa = estado.capaDe(viaje.id);
+    const usados = new Set([...viaje.porId.keys(), ...capa.lugares.map((l) => l.id)]);
+    let lugar;
+    try {
+      lugar = lugarDesdeBusqueda(resultado, usados);
+    } catch (e) {
+      brindis(e.message, { tipo: 'error' });
+      return;
+    }
+    capa.lugares.push(lugar);
+    capa.bloques.push({ id: nuevoId('bloque'), fecha, lugar: lugar.id, inicio, ...(fin ? { fin } : {}), ...(nota ? { nota } : {}) });
+    estado.guardarCapa(viaje.id, capa);
+    trasCambiarCapa(`${lugar.nombre} añadido al día`);
+  }
+
+  function abrirAnadir() {
+    const dia = viaje.dias.find((d) => d.fecha === actual.fecha) || viaje.dias[0];
+    const centro = dia.paradas[0]?.lugar.coords || viaje.mapa?.centro || [40, -4];
+
+    const dialogo = buscarLugar.abrirAnadir({
+      dia,
+      centro,
+      alGuardar: anadirParada,
+      alElegirEnMapa() {
+        brindis('Toca un punto del mapa. Escape para cancelar.', { duracion: 6000 });
+        if (hoja.activa) hoja.ir('colapsada');
+        mapa.elegirPunto((coords) => {
+          const nuevo = buscarLugar.abrirAnadir({
+            dia, centro, alGuardar: anadirParada, alElegirEnMapa: () => {},
+          });
+          nuevo.conPunto(coords);
+          hoja.asomar();
+        });
+      },
+    });
+    return dialogo;
+  }
+
+  alPulsar(cuerpo, '[data-accion="anadir-parada"]', abrirAnadir);
+
+  alPulsar(cuerpo, '[data-accion="quitar-parada"]', (b) => {
+    const capa = estado.capaDe(viaje.id);
+    const bloque = viaje.dias.flatMap((d) => d.bloques).find((x) => x.clave === b.dataset.clave);
+    if (!bloque) return;
+
+    if (bloque.propio) {
+      // Lo añadido se borra de verdad; lo del JSON solo se oculta.
+      capa.bloques = capa.bloques.filter((x) => x.id !== bloque.idPropio);
+      const sigueUsado = capa.bloques.some((x) => x.lugar === bloque.lugar?.id);
+      if (!sigueUsado) capa.lugares = capa.lugares.filter((l) => l.id !== bloque.lugar?.id);
+    } else {
+      const clave = claveEstable(actual.fecha, {
+        lugar: bloque.lugar?.id, desde: bloque.desde, hasta: bloque.hasta,
+        titulo: bloque.titulo, inicio: bloque.inicio, tipo: bloque.tipo,
+      });
+      if (!capa.ocultos.includes(clave)) capa.ocultos.push(clave);
+    }
+    estado.guardarCapa(viaje.id, capa);
+    ir(`#/v/${viaje.id}/d/${actual.fecha}`);
+    trasCambiarCapa('Quitado del itinerario');
+  });
+
+  alPulsar(cuerpo, '[data-accion="restaurar"]', () => {
+    const capa = estado.capaDe(viaje.id);
+    const base = viajeBase(viaje.id);
+    const delDia = new Set(ocultosDelDia(base, capa, actual.fecha)
+      .map((b) => claveEstable(actual.fecha, b)));
+    capa.ocultos = capa.ocultos.filter((c) => !delDia.has(c));
+    estado.guardarCapa(viaje.id, capa);
+    trasCambiarCapa(`${delDia.size} parada(s) restaurada(s)`);
   });
 
   // --- Sincronía cronología ↔ mapa (escritorio) ---------------------------
@@ -462,6 +581,7 @@ export async function montarViaje(raiz, ruta, { alTema }) {
       removeEventListener('keydown', alTeclado);
       quitarOyenteTema();
       buscador.cerrar();
+      buscarLugar.cerrar();
       limpiarUrls();
       mapa.destruir();
     },

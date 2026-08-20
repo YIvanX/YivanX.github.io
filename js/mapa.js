@@ -358,6 +358,33 @@ export class Mapa {
     return { descargadas: hechas, total: todas.length };
   }
 
+  /**
+   * Pone el mapa en modo «el siguiente toque elige un punto».
+   * Es la vía que funciona sin conexión y la que sirve cuando no sabes cómo se
+   * llama el sitio: el mirador ese de la carretera no está en ningún buscador.
+   */
+  elegirPunto(alElegir) {
+    if (!this.mapa) return () => {};
+    const contenedor = this.mapa.getContainer();
+    contenedor.classList.add('mapa--eligiendo');
+
+    const alTocar = (e) => {
+      cancelar();
+      alElegir([Number(e.latlng.lat.toFixed(5)), Number(e.latlng.lng.toFixed(5))]);
+    };
+    const alEscape = (e) => { if (e.key === 'Escape') cancelar(); };
+
+    const cancelar = () => {
+      contenedor.classList.remove('mapa--eligiendo');
+      this.mapa.off('click', alTocar);
+      removeEventListener('keydown', alEscape);
+    };
+
+    this.mapa.on('click', alTocar);
+    addEventListener('keydown', alEscape);
+    return cancelar;
+  }
+
   destruir() {
     this.mapa?.remove();
     this.mapa = null;

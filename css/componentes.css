@@ -896,3 +896,56 @@ kbd {
 }
 .nivel--recomendable { background: var(--superficie-3); color: var(--tinta-media); }
 .nivel--opcional     { background: transparent; border: 1px solid var(--borde); color: var(--tinta-suave); }
+
+/* --- Editar el itinerario sobre la marcha -------------------------------- */
+.dia-cabecera__editar { display: flex; flex-wrap: wrap; gap: var(--e2); margin-top: var(--e3); }
+.chip--propio { background: var(--acento-velo); color: var(--acento); }
+
+.anadir {
+  width: min(560px, 100%);
+  max-height: 82dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--r-l);
+  box-shadow: var(--sombra-3);
+  overflow: hidden;
+}
+.anadir__cabecera { display: flex; align-items: center; gap: var(--e3); padding: var(--e4) var(--e4) var(--e3); }
+.anadir__cabecera .titulo-2 { flex: 1; }
+.anadir__resultados { flex: 1 1 auto; min-height: 90px; padding: var(--e2); }
+.anadir__pista { padding: var(--e4); text-align: center; }
+
+.anadir__resultado {
+  display: grid; grid-template-columns: 22px 1fr; gap: var(--e3);
+  width: 100%; padding: 10px var(--e2);
+  border-radius: var(--r-m); text-align: left;
+  transition: background-color var(--t-rapido) ease, transform var(--t-pulsar) var(--sal);
+}
+.anadir__resultado svg { width: 16px; height: 16px; margin-top: 3px; color: var(--tinta-suave); }
+.anadir__resultado:active { transform: scale(0.99); }
+@media (hover: hover) and (pointer: fine) { .anadir__resultado:hover { background: var(--superficie-2); } }
+
+.anadir__forma { border-top: 1px solid var(--borde); padding: var(--e3) var(--e4); background: var(--superficie-2); }
+.anadir__elegido { margin-bottom: var(--e3); }
+.anadir__elegido .menudo { display: block; }
+.anadir__campos { display: grid; grid-template-columns: 1fr 1fr; gap: var(--e2) var(--e3); }
+.campo--ancho { grid-column: 1 / -1; }
+.campo { display: grid; gap: 4px; }
+.campo .etiqueta { color: var(--tinta-suave); }
+.campo input, .campo select {
+  padding: 8px 10px;
+  border: 1px solid var(--borde);
+  border-radius: var(--r-m);
+  background: var(--superficie);
+  font-size: 0.875rem;
+  min-height: 38px;
+}
+.campo input:focus, .campo select:focus { outline: none; border-color: var(--acento); }
+
+.anadir__pie { display: flex; gap: var(--e2); padding: var(--e3) var(--e4) var(--e4); border-top: 1px solid var(--borde); }
+.anadir__pie .boton--principal { margin-left: auto; }
+
+/* Mientras se elige un punto, el mapa lo dice con el cursor y un borde. */
+.mapa--eligiendo { cursor: crosshair; box-shadow: inset 0 0 0 3px var(--acento); }

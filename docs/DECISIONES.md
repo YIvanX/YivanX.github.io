@@ -77,6 +77,47 @@ despacio y reintentar.
 **`credito` es obligatorio y el validador lo comprueba.** Las licencias CC
 exigen atribución: va bajo cada foto y, completa, en la sección de créditos.
 
+## Editar el itinerario sin backend: una capa, no una edición
+
+Añadir y quitar paradas ocurre en el navegador, en una **capa** que se superpone
+al JSON al cargar. **El archivo del viaje no se modifica nunca.**
+
+- Es un sitio estático: no hay nada que pueda escribir en el repositorio.
+- **Quitar es ocultar, no borrar.** Se restaura con un botón, y una edición
+  futura del JSON no entra en conflicto con lo que hiciste sobre la marcha.
+- Funciona sin conexión, igual que las notas y las fotos.
+
+Lo ocultado se identifica por **fecha + hora + a qué apunta**, nunca por índice:
+en cuanto añades una parada a mitad del día los índices se corren y lo ocultado
+saltaría a otro bloque. Hay una prueba dedicada a eso.
+
+Toda la lógica vive en `js/personalizacion.js`, que es **puro** —ni DOM ni
+localStorage— y por eso se prueba entero en Node. Es lo que decide qué aparece
+en el itinerario: un fallo ahí no da error, hace desaparecer una parada.
+
+Cuando un cambio merezca ser permanente, «Copiar como JSON» lo deja listo para
+pegar en `data/viajes/<id>.json`. Ese es el puente entre lo efímero y el
+repositorio.
+
+## Photon para buscar sitios, no Google Places
+
+**Google Places queda descartado por una razón concreta:** exige clave de API y
+facturación, y una clave metida en un sitio estático y público es una clave
+regalada.
+
+**Photon** (komoot) es un geocodificador sobre datos de OpenStreetMap, hecho para
+autocompletar, con sesgo por coordenadas y `Access-Control-Allow-Origin: *`. Sin
+clave y sin intermediario. **Nominatim** queda de reserva si Photon no responde.
+
+**El sesgo de ubicación no es un adorno.** Buscando «catedral» sin él, el primer
+resultado es la catedral de León de México. Con el centro del día como sesgo,
+sale la de León y después la de Astorga. Comprobado antes de escribir la
+interfaz.
+
+Y hay una segunda vía que no depende de la red: **tocar el mapa**. Es la que
+sirve sin cobertura y la que resuelve el mirador de la carretera que no está en
+ningún buscador.
+
 ## Los enlaces de Google Maps salen de las coordenadas
 
 Nunca del nombre. Buscar «Catedral de León» por texto devuelve la catedral de

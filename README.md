@@ -21,6 +21,10 @@ destino escrito en el código, así que el siguiente viaje no toca ni una línea
 - **Funciona sin conexión.** Aplicación instalable, con un botón por día que
   descarga las teselas de ese recuadro. Verificado con la red cortada: la guía
   y el mapa siguen ahí.
+- **El itinerario se edita sobre la marcha**: buscador de sitios sobre el mapa
+  para añadir paradas, y quitarlas de un día sin perderlas. Lo añadido vive en el
+  navegador; el JSON del viaje no se toca, y hay un botón para llevarlo al
+  archivo cuando merezca ser permanente.
 - **Cada sitio se lee, no se estudia**: un gancho de una línea, prosa corta,
   una lista de **qué mirar** que se va marcando estando allí, y los datos
   curiosos en tarjetas sueltas en vez de enterrados en un párrafo.
@@ -48,7 +52,7 @@ para las herramientas de línea de comandos.
 ```bash
 node herramientas/servir.mjs                 # http://localhost:8080/
 node herramientas/validar.mjs                # revisa todos los viajes
-node --test herramientas/horarios.test.mjs   # pruebas de la lógica de horarios
+node --test herramientas/*.test.mjs          # 46 pruebas: horarios y capa del itinerario
 
 node herramientas/nuevo-viaje.mjs <id> "<Título>" <inicio> <fin> [--desde <viaje>]
 node herramientas/coordenadas.mjs --area "<ciudad>" "<lugar>"…
@@ -83,8 +87,9 @@ js/
   horarios.js           ¿está abierto? — compartido con el validador
   mapa.js               envoltorio de Leaflet
   enlaces-mapa.js       rutas y enlaces de Google Maps
+  personalizacion.js    capa de paradas añadidas y quitadas (puro, con pruebas)
   vistas/               registro · viaje · panel
-  ui/                   dom · hoja arrastrable · buscador · tema · avisos
+  ui/                   dom · hoja arrastrable · buscador · buscar-lugar · tema · avisos
 vendor/leaflet/         Leaflet 1.9.4, local
 data/
   viajes.json           el registro

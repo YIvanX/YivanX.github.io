@@ -4,6 +4,8 @@
  */
 
 import { estadoPorFecha, diasEntre, aIso } from './horarios.js';
+import { aplicarCapa } from './personalizacion.js';
+import { capaDe } from './estado.js';
 
 const cache = new Map();
 
@@ -30,7 +32,34 @@ export async function cargarViaje(id) {
   const entrada = registro.viajes.find((v) => v.id === id);
   if (!entrada) throw new Error(`No hay ningún viaje con el identificador "${id}"`);
 
-  const viaje = normalizar(await traer(entrada.archivo || `data/viajes/${id}.json`), entrada);
+  // El JSON crudo se guarda aparte: la capa se aplica siempre sobre él y nunca
+  // sobre un viaje que ya tenía otra capa encima.
+  const bruto = await traer(entrada.archivo || `data/viajes/${id}.json`);
+  cache.set(`bruto:${id}`, bruto);
+
+  const viaje = montar(bruto, entrada, id);
+  cache.set(`viaje:${id}`, viaje);
+  return viaje;
+}
+
+function montar(bruto, entrada, id) {
+  const { viaje: conCapa, resumen } = aplicarCapa(bruto, capaDe(id));
+  const viaje = normalizar(structuredClone(conCapa), entrada);
+  viaje.capa = resumen;
+  return viaje;
+}
+
+/** El JSON tal y como está en el repositorio, sin capa. */
+export const viajeBase = (id) => cache.get(`bruto:${id}`);
+
+/**
+ * Vuelve a montar el viaje tras cambiar la capa. Devuelve el viaje nuevo.
+ * No se recarga el JSON: ya está en memoria, y así funciona sin conexión.
+ */
+export function recomponer(id, entrada) {
+  const bruto = cache.get(`bruto:${id}`);
+  if (!bruto) return null;
+  const viaje = montar(bruto, entrada, id);
   cache.set(`viaje:${id}`, viaje);
   return viaje;
 }
