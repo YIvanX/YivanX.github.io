@@ -61,6 +61,22 @@ Las teselas sobreviven a los cambios de versión de la aplicación a propósito
 (caché aparte, con expulsión de las más viejas al llegar a 3.000). Volver a
 descargar el mapa de un viaje ya preparado sería lo contrario de lo que se busca.
 
+## Las fotos se guardan, no se enlazan
+
+Una foto por lugar, de Wikimedia Commons y con licencia libre, **descargada al
+repositorio**. Enlazar a `upload.wikimedia.org` habría sido gratis en espacio y
+habría roto lo mismo que rompería un CDN: sin conexión no hay fotos, y encima
+depende de que una URL ajena siga viva. 21 imágenes a 500 px son 1,5 MB, y el
+service worker las precachea al instalar.
+
+**Detalle de Commons que cuesta una tarde:** solo sirve los tamaños que ya
+tiene generados. Pedir 640 px devuelve **HTTP 400**; pedir 480 por la API
+devuelve un 500 px que sí existe. Y limita el ritmo con 429, así que hay que ir
+despacio y reintentar.
+
+**`credito` es obligatorio y el validador lo comprueba.** Las licencias CC
+exigen atribución: va bajo cada foto y, completa, en la sección de créditos.
+
 ## Los enlaces de Google Maps salen de las coordenadas
 
 Nunca del nombre. Buscar «Catedral de León» por texto devuelve la catedral de

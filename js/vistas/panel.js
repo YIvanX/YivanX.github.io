@@ -53,7 +53,7 @@ function pintarBloqueVisita(bloque, dia, viaje, estado) {
   const conNota = Boolean(estado.notas[lugar.id]);
 
   return html`
-    <div class="bloque bloque--visita"
+    <div class="bloque bloque--visita ${lugar.imagen ? 'bloque--con-foto' : ''}"
          data-clave="${bloque.clave}" data-lugar="${lugar.id}"
          data-visitado="${String(visitado)}">
       <button type="button" class="bloque__principal">
@@ -74,6 +74,9 @@ function pintarBloqueVisita(bloque, dia, viaje, estado) {
         ${conNota ? crudo(`<span class="bloque__nota" style="display:block">${esc(estado.notas[lugar.id])}</span>`) : ''}
       </span>
       </button>
+      ${lugar.imagen ? crudo(`<img class="bloque__foto" src="${esc(lugar.imagen.archivo)}" alt=""
+           loading="lazy" decoding="async" width="60" height="60"
+           title="${esc(lugar.imagen.credito)}${lugar.imagen.licencia ? ' · ' + esc(lugar.imagen.licencia) : ''}">`) : ''}
       <a class="bloque__mapa" href="${enlaceLugar(lugar)}" target="_blank" rel="noopener noreferrer"
          aria-label="Ver ${lugar.nombre} en Google Maps" title="Ver en Google Maps">${icono('pin')}</a>
     </div>`;
@@ -214,6 +217,14 @@ export function pintarFicha(viaje, lugar, estado, { fecha } = {}) {
       <span class="titulo-3">${lugar.nombre}</span>
       <button type="button" class="icono-boton" data-accion="centrar" style="margin-left:auto" aria-label="Centrar en el mapa">${icono('pin')}</button>
     </div>
+    ${lugar.imagen ? crudo(`
+      <figure class="ficha__foto">
+        <img src="${esc(lugar.imagen.archivo)}" alt="${esc(lugar.nombre)}" loading="lazy" decoding="async">
+        <figcaption class="menudo">
+          ${esc(lugar.imagen.credito)}${lugar.imagen.licencia ? ` · ${esc(lugar.imagen.licencia)}` : ''}
+          ${lugar.imagen.fuente ? `· <a href="${esc(lugar.imagen.fuente)}" target="_blank" rel="noopener noreferrer">Commons</a>` : ''}
+        </figcaption>
+      </figure>`) : ''}
     <div class="ficha__cuerpo">
       <div class="ficha__meta">
         <span class="chip chip--${lugar.categoria}">${icono(cat.icono)}${cat.etiqueta}</span>
@@ -396,6 +407,33 @@ export function pintarInfo(viaje, { privados = { campos: [] } } = {}) {
       </div>
       <p class="menudo" data-ocupacion style="margin-top:var(--e2)"></p>
     </div>
+
+    ${(() => {
+      const conFoto = viaje.lugares.filter((l) => l.imagen);
+      if (!conFoto.length) return '';
+      // Las licencias CC exigen atribución. Va aquí entera, además de bajo cada foto.
+      return crudo(`
+        <div class="panel__seccion">
+          <h2 class="titulo-2">Créditos de las fotos</h2>
+          <p class="menudo" style="margin-top:4px">
+            Imágenes de Wikimedia Commons con licencia libre, guardadas en el repositorio
+            para que se vean sin conexión. Cada una con su autor y su licencia.
+          </p>
+          <div style="margin-top:var(--e3)">
+            ${conFoto.map((l) => `
+              <div class="credito-foto">
+                <img src="${esc(l.imagen.archivo)}" alt="" loading="lazy" decoding="async">
+                <div>
+                  <div class="titulo-3">${esc(l.nombre)}</div>
+                  <div class="menudo">
+                    ${esc(l.imagen.credito)}${l.imagen.licencia ? ` · ${esc(l.imagen.licencia)}` : ''}
+                    ${l.imagen.fuente ? `· <a href="${esc(l.imagen.fuente)}" target="_blank" rel="noopener noreferrer">Commons</a>` : ''}
+                  </div>
+                </div>
+              </div>`).join('')}
+          </div>
+        </div>`);
+    })()}
 
     ${viaje.fuentes?.length ? crudo(`
       <div class="panel__seccion">

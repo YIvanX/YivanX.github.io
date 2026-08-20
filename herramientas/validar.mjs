@@ -135,6 +135,15 @@ function validarViaje(viaje, nombreArchivo) {
     for (const [j, enlace] of (lugar.enlaces || []).entries()) {
       if (!esTexto(enlace?.url) || !/^https?:\/\//.test(enlace.url)) inf.error(`${donde}.enlaces[${j}]`, 'url ausente o no absoluta');
     }
+    if (lugar.imagen !== undefined) {
+      const img = lugar.imagen;
+      if (!esObjeto(img) || !esTexto(img.archivo)) inf.error(donde, 'imagen debe ser { archivo, credito, licencia?, fuente? }');
+      else {
+        if (!existsSync(join(RAIZ, img.archivo))) inf.error(donde, `la imagen no existe: ${img.archivo}`);
+        if (!esTexto(img.credito)) inf.error(donde, 'imagen sin credito: una foto de un tercero sin atribución no se puede publicar');
+        if (!esTexto(img.licencia)) inf.aviso(donde, 'imagen sin licencia declarada');
+      }
+    }
     for (const [j, foto] of (lugar.fotos || []).entries()) {
       if (!esTexto(foto?.archivo)) { inf.error(`${donde}.fotos[${j}]`, 'falta archivo'); continue; }
       if (!existsSync(join(RAIZ, foto.archivo))) inf.error(`${donde}.fotos[${j}]`, `el archivo no existe: ${foto.archivo}`);

@@ -21,6 +21,9 @@ destino escrito en el código, así que el siguiente viaje no toca ni una línea
 - **Funciona sin conexión.** Aplicación instalable, con un botón por día que
   descarga las teselas de ese recuadro. Verificado con la red cortada: la guía
   y el mapa siguen ahí.
+- **Una foto por sitio**, en la fila del itinerario, en el globo del mapa y como
+  cabecera de su ficha. Guardadas en el repositorio, así que **también se ven sin
+  conexión**. De Wikimedia Commons, con su autor y su licencia a la vista.
 - **Enlaces a Google Maps**: cada día tiene su ruta completa con las paradas en
   orden, y cada sitio el suyo propio, tanto en la fila del itinerario como en su
   ficha. Todo por coordenadas, nunca por nombre.

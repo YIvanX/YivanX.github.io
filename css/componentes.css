@@ -274,12 +274,30 @@
 }
 
 .bloque--visita .bloque__cuerpo { padding-right: 42px; }
+/* Con foto hace falta hueco para ella; el enlace al mapa se apoya en su esquina. */
+.bloque--con-foto .bloque__cuerpo { padding-right: 78px; }
+
+.bloque__foto {
+  position: absolute;
+  top: 10px; right: 8px;
+  width: 60px; height: 60px;
+  object-fit: cover;
+  border-radius: var(--r-m);
+  border: 1px solid var(--borde);
+  background: var(--superficie-2);
+  transition: transform var(--t-medio) var(--sal);
+}
+@media (hover: hover) and (pointer: fine) {
+  .bloque--visita:hover .bloque__foto { transform: scale(1.04); }
+}
+.bloque[data-visitado="true"] .bloque__foto { opacity: 0.62; }
 
 .bloque__mapa {
   position: absolute;
   top: 8px;
   right: 4px;
   width: 32px; height: 32px;
+  z-index: 1;
   display: grid; place-items: center;
   border-radius: var(--r-m);
   color: var(--tinta-suave);
@@ -293,6 +311,51 @@
   .bloque__mapa:hover { color: var(--acento); background: var(--acento-velo); }
 }
 @media (pointer: coarse) { .bloque__mapa { width: 40px; height: 40px; top: 4px; } }
+
+/* Cuando hay foto, el enlace se monta sobre su esquina inferior derecha en vez
+   de robarle sitio al texto. */
+.bloque--con-foto .bloque__mapa {
+  /* Posición explícita, no `auto`: con top/bottom en auto el elemento cae a su
+     posición estática —debajo de todo el bloque— y aterrizaba sobre el bloque
+     siguiente. La miniatura ocupa de 10 a 70 px, así que 54 lo deja montado en
+     su esquina inferior. */
+  top: 54px;
+  right: 4px;
+  width: 26px; height: 26px;
+  background: var(--velo);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--borde);
+  box-shadow: var(--sombra-1);
+  color: var(--tinta-media);
+}
+.bloque--con-foto .bloque__mapa svg { width: 13px; height: 13px; }
+.bloque--con-foto .bloque__mapa:active { transform: scale(0.9); }
+
+/* --- Foto de cabecera de la ficha --------------------------------------- */
+.ficha__foto { margin: 0; }
+.ficha__foto img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  background: var(--superficie-2);
+}
+.ficha__foto figcaption {
+  padding: 6px var(--e4) 0;
+  color: var(--tinta-suave);
+}
+.ficha__foto figcaption a { color: var(--tinta-media); }
+
+/* --- Créditos de las imágenes ------------------------------------------- */
+.credito-foto {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: var(--e3);
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--borde);
+}
+.credito-foto:last-child { border-bottom: 0; }
+.credito-foto img { width: 40px; height: 40px; object-fit: cover; border-radius: var(--r-s); border: 1px solid var(--borde); }
 
 .dia-cabecera__ruta { margin-top: var(--e4); }
 

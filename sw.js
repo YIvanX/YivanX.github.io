@@ -16,7 +16,7 @@
    de lo que se busca.
    ========================================================================= */
 
-const VERSION = 'v2';
+const VERSION = 'v3';
 const CACHE_APP = `bitacora-app-${VERSION}`;
 const CACHE_TESELAS = 'bitacora-teselas';
 const MAX_TESELAS = 3000;
@@ -62,12 +62,24 @@ self.addEventListener('install', (evento) => {
       try { await cache.add(new Request(ruta, { cache: 'reload' })); }
       catch (e) { console.warn('[sw] no precacheado:', ruta, e.message); }
     }));
-    // Los viajes se descubren del registro, así no hay que tocar esta lista
-    // cada vez que se añade uno.
+    // Los viajes y sus fotos se descubren del registro, así no hay que tocar
+    // esta lista cada vez que se añade uno. Las fotos van en el precacheado a
+    // propósito: si solo se cachearan al verlas, el día sin cobertura saldría
+    // justo el sitio que no se había abierto todavía.
     try {
       const registro = await (await fetch('data/viajes.json', { cache: 'reload' })).json();
-      await Promise.all((registro.viajes || []).map((v) =>
-        cache.add(new Request(v.archivo || `data/viajes/${v.id}.json`, { cache: 'reload' })).catch(() => {})));
+      for (const v of registro.viajes || []) {
+        const ruta = v.archivo || `data/viajes/${v.id}.json`;
+        try {
+          const res = await fetch(ruta, { cache: 'reload' });
+          await cache.put(ruta, res.clone());
+          const viaje = await res.json();
+          const fotos = (viaje.lugares || [])
+            .flatMap((l) => [l.imagen?.archivo, ...(l.fotos || []).map((f) => f.archivo)])
+            .filter(Boolean);
+          await Promise.all([...new Set(fotos)].map((f) => cache.add(f).catch(() => {})));
+        } catch (e) { console.warn('[sw] viaje no precacheado:', ruta, e.message); }
+      }
     } catch { /* sin registro se sigue: el resto de la aplicación funciona */ }
     self.skipWaiting();
   })());

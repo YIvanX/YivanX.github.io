@@ -107,6 +107,44 @@ Tres tipos de bloque:
 edificio del que solo se mira el exterior. El horario de taquilla no se le
 aplica, y en la cronología sale como «Por fuera» en vez de como cerrado.
 
+### Una foto por lugar
+
+`imagen` es la foto que se ve en tres sitios: la fila del itinerario, el globo
+del mapa y la cabecera de la ficha.
+
+```json
+"imagen": {
+  "archivo": "data/viajes/leon-2026-08/fotos/catedral-leon.jpg",
+  "credito": "David Jiménez Llanes",
+  "licencia": "CC BY-SA 3.0",
+  "fuente": "https://commons.wikimedia.org/wiki/File:Catedral_G%C3%B3tica_de_Le%C3%B3n.jpg"
+}
+```
+
+**La foto se guarda en el repositorio, no se enlaza a un servidor ajeno.** Es lo
+único que la hace funcionar sin conexión, y además no depende de que nadie
+mantenga viva una URL. El service worker las precachea todas al instalar.
+
+De dónde sacarlas: **Wikimedia Commons**, que es libre y tiene casi cualquier
+monumento. La imagen principal del artículo de Wikipedia sale por API:
+
+```
+https://es.wikipedia.org/w/api.php?action=query&format=json&formatversion=2
+  &prop=pageimages&piprop=thumbnail&pithumbsize=480&titles=<artículo>
+```
+
+Dos cosas aprendidas peleándose con eso:
+
+- **Pide `pithumbsize=480`.** Commons solo sirve tamaños ya generados; pedir uno
+  raro devuelve **HTTP 400**. 480 se resuelve a 500 px, que pesa unos 50-90 KB y
+  sobra para un móvil. Las 21 imágenes de León ocupan 1,5 MB en total.
+- **Va con límite de ritmo.** Deja un par de segundos entre peticiones y
+  reintenta con espera creciente, o la mitad de las respuestas serán 429.
+
+**`credito` es obligatorio** y el validador lo exige: una foto ajena sin
+atribución no se puede publicar. Se muestra bajo la foto en la ficha y, entera,
+en la sección «Créditos de las fotos» de la pestaña *Viaje*.
+
 ---
 
 ## Los enlaces de Google Maps se generan solos

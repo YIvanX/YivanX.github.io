@@ -47,6 +47,12 @@
         "El ancho métrico sale del mismo edificio pero por vías propias: mirar los paneles, no dar por hecho el andén."
       ],
       "enlaces": [{ "texto": "Renfe", "url": "https://www.renfe.com" }],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/estacion-leon.jpg",
+        "credito": "Rodelar",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Estacion_provisional_Leon.jpg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "OpenStreetMap, nodo railway=station" }
     },
     {
@@ -73,6 +79,12 @@
         "La tapa cambia según lo que pidas de beber en algunos sitios: si te importa, pregunta antes.",
         "Sábado noche a las 21:30 está lleno. Cenar pronto o entrar sin prisa."
       ],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/barrio-humedo.jpg",
+        "credito": "Alberto Martín Editors, Barcelona",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Plano_de_Le%C3%B3n_y_su_ensanche_1.jpg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "OpenStreetMap, Plaza de San Martín" }
     },
     {
@@ -100,6 +112,12 @@
         "De noche está iluminada por fuera y la fachada se ve muy distinta. Está a cinco minutos del Barrio Húmedo."
       ],
       "enlaces": [{ "texto": "Web oficial · horarios y precios", "url": "https://www.catedraldeleon.org/index.php/visitas-turiticas-horarios-y-precios" }],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/catedral-leon.jpg",
+        "credito": "David Jiménez Llanes",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Catedral_G%C3%B3tica_de_Le%C3%B3n.jpg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "catedraldeleon.org e iloveleon.es" }
     },
     {
@@ -125,6 +143,12 @@
         "La entrada a la basílica es gratis; lo que se paga es el Panteón y el museo. Merece la pena pagarlo: la basílica sola no es lo que se viene a ver.",
         "Cerrado los lunes. Si se cae el domingo, ya no hay otra ocasión en este viaje."
       ],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/san-isidoro.jpg",
+        "credito": "Wikimedia Commons",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:20060626-Le%C3%B3n_San_Isidoro.jpg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "iloveleon.es, guía de horarios y precios de monumentos 2026" }
     },
     {
@@ -141,6 +165,12 @@
         "El tramo bueno es el que va desde San Isidoro hacia la Puerta Castillo.",
         "Fíjate en la base: las hiladas romanas y las medievales son distintas a simple vista."
       ],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/muralla-cubos.jpg",
+        "credito": "Pablox",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:ArcoCastilloLeon1.jpg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "OpenStreetMap, muralla romana de León" }
     },
     {
@@ -166,6 +196,12 @@
         "El interior cuesta 12-15 € por cabeza. Si el presupuesto aprieta, la fachada y el Palacio de los Guzmanes al lado —que es gratis— dan buena parte del valor.",
         "La mejor vista de la fachada es desde el otro lado de la Plaza de San Marcelo, con algo de distancia."
       ],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/casa-botines.jpg",
+        "credito": "Wikimedia Commons",
+        "licencia": "CC BY-SA 2.5",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Le%C3%B3n_Casa_Botines_JMM.JPG"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "iloveleon.es, guía de horarios y precios de monumentos 2026" }
     },
     {
@@ -182,6 +218,12 @@
         "El mercado de la Plaza Mayor es miércoles y sábado por la mañana. En este viaje cae el miércoles 2, que está ocupado por El Bierzo.",
         "La Plaza del Grano al atardecer, con la luz rasante sobre los cantos, es el mejor rato del día."
       ],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/plaza-mayor-leon.jpg",
+        "credito": "Fernando",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Plaza_Mayor_de_Le%C3%B3n%2C_2021.jpg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "OpenStreetMap" }
     },
     {
@@ -207,6 +249,12 @@
         "Son 25 minutos a pie desde la catedral. Si el domingo se hace largo, es lo primero que se cae sin remordimiento.",
         "Aunque no entres, la fachada de vidrio de color merece el paseo con luz de tarde."
       ],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/musac.jpg",
+        "credito": "Ion Jaureguialzo Sarasola from Vitoria-Gasteiz, España",
+        "licencia": "CC BY 2.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:FachadaMusac.jpg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "iloveleon.es, guía de horarios y precios de monumentos 2026" }
     },
     {
@@ -223,6 +271,12 @@
         "Es la parada perfecta del último día: está de camino a la estación, no cuesta nada y no hay que reservar hora.",
         "Se puede entrar al hall del Parador y asomarse al claustro sin ser huésped. Nadie te va a decir nada."
       ],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/san-marcos.jpg",
+        "credito": "José Luis Filpo Cabana",
+        "licencia": "CC BY 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Convento_de_San_Marcos_(Le%C3%B3n)._Portada.jpg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "OpenStreetMap" }
     },
     {
@@ -254,6 +308,12 @@
         "Pedir al taxista una parada de cinco minutos en el desfiladero, a la bajada. Es la mejor foto del día y no cuesta nada.",
         "En agosto la carretera tiene tráfico; no es sitio para caminar por el arcén."
       ],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/hoces-vegacervera.jpg",
+        "credito": "Yago AB",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Hoces_Vegacervera.JPG"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "OpenStreetMap" }
     },
     {
@@ -282,6 +342,12 @@
         "Cobertura móvil nula dentro y mala en el aparcamiento. Cerrar la hora del taxi de vuelta antes de entrar."
       ],
       "enlaces": [{ "texto": "Web oficial", "url": "https://www.cuevadevalporquero.es/" }],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/cueva-valporquero.jpg",
+        "credito": "LuMag00 from Madison, USA",
+        "licencia": "CC BY 2.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Valporqueroentrada.jpg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "cuevadevalporquero.es, apertura y tarifas 2026" }
     },
     {
@@ -298,6 +364,12 @@
         "Reservar mesa en agosto, aunque parezca un pueblo tranquilo: el día de cueva llena los restaurantes de golpe a las 14:00.",
         "Si solo se prueba una cosa, que sea la cecina de chivo. La de vaca ya la vas a comer en León."
       ],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/vegacervera.jpg",
+        "credito": "Gabriel González from Boliñas-Aguasantas-Cotobade, España",
+        "licencia": "CC BY 2.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Vegacervera_-_Le%C3%B3n_2.jpg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "OpenStreetMap" }
     },
     {
@@ -313,6 +385,12 @@
         "El último tren de vuelta a León sale sobre las 19:07. Confirmarlo el mismo día y no jugársela.",
         "Cuesta arriba con calor: en agosto a las 14:00 no es un paseo agradable."
       ],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/estacion-astorga.jpg",
+        "credito": "Rodelar",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Fachada_estaci%C3%B3n_de_Astorga.jpg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "OpenStreetMap, nodo railway=station, operador Adif" }
     },
     {
@@ -340,6 +418,12 @@
         "Subir a la planta noble por la escalera principal y mirar hacia arriba: las nervaduras son lo mejor del edificio."
       ],
       "enlaces": [{ "texto": "Turismo de Astorga · horarios", "url": "https://turismoastorga.es/horarios-catedral-y-palacio-de-gaudi/" }],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/palacio-gaudi.jpg",
+        "credito": "Fernando",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Palacio_Episcopal_Astorga_2021_-_exterior.jpg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "palaciodegaudi.es y turismoastorga.es" }
     },
     {
@@ -365,6 +449,12 @@
         "Comprar la entrada conjunta con el Palacio de Gaudí en la primera de las dos taquillas.",
         "El retablo de Becerra está en el altar mayor: pedir que enciendan la luz si está apagada."
       ],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/catedral-astorga.jpg",
+        "credito": "Fernando",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Astorga_Cathedral_Fa%C3%A7ade.jpg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "turismoastorga.es" }
     },
     {
@@ -389,6 +479,12 @@
         "Verlo antes que Las Médulas ordena mentalmente el viaje: aquí se administraba el oro que allí se extraía.",
         "Cerrado los lunes. Confirmar el horario de tarde, que varía por temporada."
       ],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/museo-romano-astorga.jpg",
+        "credito": "Museo Romano Astorga",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Erg%C3%A1stula_en_1903.jpg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "OpenStreetMap y turismoastorga.es" }
     },
     {
@@ -405,6 +501,12 @@
         "Cuadrar el paso con una hora en punto para ver a los autómatas. Es literalmente lo que hace todo el mundo en la plaza.",
         "Las mantecadas con IGP se venden en obradores de la plaza y alrededores. Aguantan bien el viaje de vuelta."
       ],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/plaza-mayor-astorga.png",
+        "credito": "Nethunter(Taller de Heráldica y Vexilología in the Spanish Wikipedia )",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Flag_of_Astorga_Spain.svg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "OpenStreetMap, Plaza de España / Ayuntamiento de Astorga" }
     },
     {
@@ -424,6 +526,12 @@
         "Del centro de Astorga son 9 minutos en taxi y 8-11 € por trayecto. Acordar la vuelta con el mismo taxista.",
         "El empedrado es irregular: calzado cómodo."
       ],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/castrillo-polvazares.jpg",
+        "credito": "Anual",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Castrillo_de_los_polvazares_2018004.jpg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "OpenStreetMap; tarifa de taxi vía Rome2Rio, agosto 2026" }
     },
     {
@@ -439,6 +547,12 @@
         "Comprar ida y vuelta el mismo día y comprobar la hora exacta del último regreso antes de salir de León.",
         "Verificar que el servicio es Media Distancia convencional para que aplique el 90% del Verano Joven."
       ],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/estacion-ponferrada.jpg",
+        "credito": "Vivir el tren",
+        "licencia": "CC BY 2.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:120_Renfe_Intercity_-_Ponferrada_-_2013-05-12_-_vivireltren.jpg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "OpenStreetMap, nodo railway=station, operador Adif" }
     },
     {
@@ -457,6 +571,12 @@
         "Ver antes el Museo Romano de Astorga —el martes— hace que esto se entienda mucho mejor: allí se administraba este oro."
       ],
       "enlaces": [{ "texto": "Visit Las Médulas", "url": "https://visitlasmedulas.com/" }],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/las-medulas.jpg",
+        "credito": "Anual",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Medulas_2018006.jpg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "OpenStreetMap; visitlasmedulas.com" }
     },
     {
@@ -482,6 +602,12 @@
         "Desde el pueblo de Las Médulas hay unos 4,5 km de carretera hasta arriba. A pie por la senda se sube en algo menos de una hora, con desnivel; con el taxi concertado, se sube en coche.",
         "La luz de tarde, con el sol bajando, es cuando el rojo de las agujas está más encendido."
       ],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/las-medulas.jpg",
+        "credito": "Anual",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Medulas_2018006.jpg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "OpenStreetMap, nodo tourism=viewpoint «Mirador de Orellán»" }
     },
     {
@@ -508,6 +634,12 @@
         "Está a unos 12 minutos a pie de la estación, cuesta arriba."
       ],
       "enlaces": [{ "texto": "Horarios y tarifas", "url": "https://castillodelostemplarios.com/consultas/horarios-y-tarifas/" }],
+      "imagen": {
+        "archivo": "data/viajes/leon-2026-08/fotos/castillo-templarios.jpg",
+        "credito": "Fogar Mozárabe",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Castillo_de_los_Templarios_de_Ponferrada.jpg"
+      },
       "verificado": { "fecha": "2026-08-20", "fuente": "castillodelostemplarios.com, horarios y tarifas 2026" }
     },
     {

@@ -222,6 +222,18 @@
             }
           }
         },
+        "imagen": {
+          "type": "object",
+          "required": ["archivo", "credito"],
+          "additionalProperties": false,
+          "description": "Foto representativa del lugar: se ve en la cronología, en el globo del mapa y como cabecera de la ficha. Vive en el repositorio para que siga estando sin conexión. Si viene de un tercero, credito y licencia son obligatorios y se muestran en pantalla.",
+          "properties": {
+            "archivo": { "type": "string", "description": "Ruta relativa a la raíz del sitio." },
+            "credito": { "type": "string", "description": "Autor. Se muestra bajo la foto." },
+            "licencia": { "type": ["string", "null"], "description": "CC BY-SA 4.0, Public domain… Obligatoria si la foto no es propia." },
+            "fuente": { "type": "string", "description": "URL del original, para poder comprobar la licencia." }
+          }
+        },
         "fotos": {
           "type": "array",
           "description": "Fotos publicadas en el repositorio, relativas a la raíz del sitio. Las fotos privadas viven en IndexedDB y no aparecen aquí.",

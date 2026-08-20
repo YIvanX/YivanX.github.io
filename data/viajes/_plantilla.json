@@ -52,6 +52,13 @@
         "dom": [["09:30", "11:30"]]
       },
       "reserva": { "necesaria": false, "nota": "Cómo y con cuánta antelación" },
+      "imagen": {
+        "archivo": "data/viajes/destino-2027-05/fotos/un-lugar.jpg",
+        "credito": "Nombre del autor",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Ejemplo.jpg"
+      },
+      "_imagen": "La foto que se ve en la cronología, en el globo del mapa y en la cabecera de la ficha. Se GUARDA en el repositorio, no se enlaza fuera, o no funcionará sin conexión. credito es obligatorio: una foto ajena sin atribución no se puede publicar.",
       "consejos": [
         "Lo que se aprende estando allí y no se lee en ninguna web."
       ],

@@ -142,7 +142,11 @@ export class Mapa {
 
   _globo(lugar) {
     const cat = CATEGORIAS[lugar.categoria] || CATEGORIAS.practico;
-    return `<div class="globo__titulo">${esc(lugar.nombre)}</div>
+    const foto = lugar.imagen
+      ? `<img class="globo__foto" src="${esc(lugar.imagen.archivo)}" alt="" loading="lazy" decoding="async"
+              title="${esc(lugar.imagen.credito)}">`
+      : '';
+    return `${foto}<div class="globo__titulo">${esc(lugar.nombre)}</div>
       <div class="globo__resumen">${esc(lugar.resumen)}</div>
       <div class="globo__pie"><span class="chip chip--${esc(lugar.categoria)}">${esc(cat.etiqueta)}</span></div>`;
   }
