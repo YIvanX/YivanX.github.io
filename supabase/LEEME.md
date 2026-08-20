@@ -2,49 +2,56 @@
 
 Proyecto: **`kkzxwnmxksamclpphgmx`** · región y credenciales en el panel de Supabase.
 
-Estado: **esquema aplicado y cliente configurado. Falta la configuración de
-URLs de autenticación, que es del panel, y sembrar el viaje.**
+Estado: **en marcha y en uso.** Esquema aplicado, cliente configurado, viaje
+sembrado y el circuito cerrado en las dos direcciones.
 
-## Hecho el 20 de agosto de 2026
+## Cómo quedó, el 20 de agosto de 2026
 
-**Esquema aplicado** con el conector MCP, desde este mismo archivo SQL. Comprobado
-con la consulta del final del archivo: `viajes` 4 políticas, `viaje_miembros` 2,
-`estado_personal` 1, y `rls = true` en las tres.
+**Esquema aplicado** con el conector MCP, desde este mismo archivo SQL. Las tres
+tablas con RLS y 4 / 2 / 1 políticas. Comprobado **desde fuera**, que es lo que
+cuenta: con la clave publicable y sin sesión, las tres devuelven `[]` y un
+`POST` a `viajes` responde **HTTP 401** con `new row violates row-level
+security policy`.
 
-**Y comprobado desde fuera, que es lo que cuenta:** con la clave publicable y sin
-sesión, las tres tablas devuelven `[]` y un `POST` a `viajes` se rechaza con
-**HTTP 401** y `new row violates row-level security policy`. RLS cierra la puerta
-de verdad, no solo en el catálogo.
+**URLs de autenticación** configuradas en el panel — *Site URL*
+`https://yivanx.github.io/` y `http://localhost:8080/` en las *Redirect URLs*.
+Es lo único de todo esto que no se puede hacer desde el conector. Un proyecto
+nuevo viene con `http://localhost:3000`, así que sin ese paso el enlace del
+correo aterriza donde no hay nada.
 
-**`data/nube.json` escrito** con la URL y la clave publicable. Medido en el
-navegador: la nube sale como configurada, el panel **Viaje → Nube** pinta el
-formulario de acceso, cero errores de consola y cero peticiones fallidas.
+**Viaje de León sembrado** desde el navegador y con la sesión de Yixuan, **no
+desde el conector**: el conector escribe como `service_role` y salta RLS, así
+que la fila habría entrado igual con las políticas mal y no habríamos demostrado
+nada. Pasándolo por la sesión real se ejercitó el camino entero — `viajes_crear`,
+el trigger `alta_propietario` y después `viajes_leer`.
 
-**Esa clave es pública y está bien que lo sea.** Va dentro del JavaScript de un
-sitio público: cualquiera puede leerla. Lo que protege los datos es RLS, no la
-clave. Por eso el esquema no es opcional.
+**La bajada, probada borrando la copia local y recargando.** Que la parada se
+viera en pantalla no demostraba nada: podía estar pintándose de `localStorage`.
+Con la clave local borrada, el itinerario volvió de la nube.
 
-**La clave `service_role` NO se pone aquí ni en ningún archivo del repositorio.**
-Esa sí salta RLS y da acceso total.
+## Cómo se usa ahora
 
-## Lo que queda, en orden
+- **Se guarda cuando tú lo dices.** Al cambiar el itinerario aparece una barra
+  con cuántos cambios hay sin subir y un botón para subirlos todos de una vez.
+  Nada sale solo hacia la nube.
+- **Cada parada que has tocado enseña su estado**: nube con flecha si está sin
+  subir, nube lisa si ya está. Las paradas del archivo no llevan icono porque no
+  tienen ese ciclo de vida: están en el archivo.
+- **Al cambiar de día o de pestaña se avisa** si te dejas cambios sin guardar,
+  una vez por tanda.
 
-**1. Configurar las URLs de autenticación** — panel de Supabase, **Authentication
-→ URL Configuration**. Esto no se puede hacer desde el conector:
+## Lo que hay que saber para mantenerlo
 
-- *Site URL*: `https://yivanx.github.io/`
-- *Redirect URLs*: añadir `http://localhost:8080/` para poder probar en local
-
-Un proyecto nuevo viene con `http://localhost:3000`, así que sin este paso el
-enlace del correo aterriza donde no hay nada.
-
-**2. Entrar una vez** desde la web → **Viaje → Nube** → correo → *Mandarme el
-enlace*, y abrirlo en el mismo dispositivo. Hasta que no exista el usuario no se
-puede sembrar nada: la fila de `viajes` necesita un propietario real de
-`auth.users`.
-
-**3. Sembrar el viaje de León** subiendo `data/viajes/leon-2026-08.json` como
-primera fila de `viajes`, y comprobar el circuito entero en el navegador.
+- **El esquema se edita aquí y se aplica**, nunca al revés. Este `.sql` rehace el
+  proyecto entero desde cero, incluidos los `revoke` y la política de lectura.
+- **La política de lectura de `viajes` lleva `propietario = auth.uid()` por una
+  razón concreta**, no por comodidad: el cliente inserta con `RETURNING`, y con
+  RLS eso obliga a que la fila recién creada pase la política de `SELECT` — antes
+  de que dispare el trigger `AFTER INSERT` que da de alta al miembro. Sin esa
+  condición, crear un viaje devuelve 403 con un mensaje que señala a la escritura
+  y engaña.
+- **La clave `service_role` no se pone en ningún archivo del repositorio.** La
+  publicable sí, y está bien: lo que protege los datos es RLS.
 
 ---
 
