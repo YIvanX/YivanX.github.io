@@ -1,0 +1,137 @@
+{
+  "_lee_esto": "Plantilla comentada de un viaje. Copia este archivo a data/viajes/<id>.json (o usa `node herramientas/nuevo-viaje.mjs`), borra las claves que empiezan por _ y rellena el resto. Después: `node herramientas/validar.mjs <id>`. El contrato completo está en schema/viaje.schema.json y el paso a paso en docs/COMO-CREAR-UN-VIAJE.md.",
+
+  "id": "destino-2027-05",
+  "_id": "kebab-case. Tiene que coincidir con el nombre del archivo y con la entrada de data/viajes.json.",
+
+  "version": 1,
+  "titulo": "Destino",
+  "subtitulo": "Una línea que diga de qué va este viaje",
+  "estado": "planificado",
+  "_estado": "planificado | en-curso | completado. La web enseña el estado que sale de las fechas, así que esto es solo la declaración del autor.",
+
+  "fechas": { "inicio": "2027-05-14", "fin": "2027-05-20" },
+  "viajeros": ["Yixuan"],
+  "moneda": "EUR",
+  "base": "Dónde se duerme, en pocas palabras",
+  "resumen": "Dos o tres frases: qué clase de viaje es y sobre qué se sostiene.",
+
+  "mapa": { "centro": [40.4168, -3.7038], "zoom": 11 },
+  "_mapa": "Encuadre de reserva. En la práctica la web encuadra sobre las paradas del día, así que esto casi nunca se ve.",
+
+  "avisos": [
+    {
+      "nivel": "alto",
+      "titulo": "Lo que puede romper el viaje",
+      "texto": "Un tren con dos frecuencias al día, un museo que cierra los lunes, una reserva sin la que un día entero no existe. Aquí va lo que hay que saber antes de nada, no lo que estaría bien saber."
+    }
+  ],
+  "_avisos": "nivel: alto | medio | info. Si no hay nada que pueda romper el viaje, borra el bloque entero.",
+
+  "lugares": [
+    {
+      "id": "un-lugar",
+      "nombre": "Nombre del lugar",
+      "categoria": "patrimonio",
+      "_categoria": "patrimonio | naturaleza | comida | pueblo | transporte | alojamiento | practico. Decide el color y el icono.",
+      "zona": "Ciudad o comarca",
+      "coords": [40.4168, -3.7038],
+      "_coords": "[latitud, longitud]. NO las pongas de memoria: sácalas de OpenStreetMap. El validador avisa si un lugar cae a más de 150 km del resto, que es como se cazan las equivocadas.",
+      "resumen": "Una línea. Es lo que se lee en la cronología y en el globo del mapa.",
+      "descripcion": "El texto largo. Markdown ligero: párrafos separados por línea en blanco, **negrita**, *cursiva* y listas con guion.\n\nEscribe qué es y **qué mirar**, no lo que ya dice cualquier folleto.",
+      "duracionMin": 90,
+      "precio": { "importe": 7, "detalle": "Qué incluye" },
+      "horarios": {
+        "_": "Un día ausente = cerrado ese día. Si el objeto horarios no existe, el lugar se considera siempre accesible (una plaza, un mirador). Franjas [\"HH:MM\",\"HH:MM\"]; para cerrar a medianoche, \"24:00\".",
+        "lun": [["09:30", "13:30"], ["16:00", "20:00"]],
+        "mar": [["09:30", "13:30"], ["16:00", "20:00"]],
+        "mie": [["09:30", "13:30"], ["16:00", "20:00"]],
+        "jue": [["09:30", "13:30"], ["16:00", "20:00"]],
+        "vie": [["09:30", "13:30"], ["16:00", "20:00"]],
+        "sab": [["09:30", "13:30"], ["16:00", "20:00"]],
+        "dom": [["09:30", "11:30"]]
+      },
+      "reserva": { "necesaria": false, "nota": "Cómo y con cuánta antelación" },
+      "consejos": [
+        "Lo que se aprende estando allí y no se lee en ninguna web."
+      ],
+      "enlaces": [{ "texto": "Web oficial", "url": "https://ejemplo.es" }],
+      "verificado": { "fecha": "2027-04-30", "fuente": "https://ejemplo.es/horarios" },
+      "_verificado": "Cuándo se comprobó y contra qué. Sin esto, un horario es un rumor. El validador lo avisa."
+    }
+  ],
+
+  "dias": [
+    {
+      "fecha": "2027-05-14",
+      "titulo": "Título corto del día",
+      "intensidad": "suave",
+      "_intensidad": "llegada | suave | media | fuerte | salida. Alimenta el distintivo y los puntos de la barra de días.",
+      "resumen": "Qué se hace hoy y por qué en este orden.",
+      "bloques": [
+        {
+          "_": "VISITA — es el tipo por defecto. `lugar` tiene que existir en lugares[].",
+          "inicio": "09:30",
+          "fin": "11:00",
+          "lugar": "un-lugar",
+          "nota": "Lo que hay que tener en cuenta hoy en concreto.",
+          "exterior": false,
+          "_exterior": "true = se ve por fuera (fachada, mirador, edificio de noche). No se entra, así que el horario de taquilla no se comprueba."
+        },
+        {
+          "_": "TRASLADO — `desde` y `hasta` también tienen que existir en lugares[].",
+          "tipo": "traslado",
+          "inicio": "11:00",
+          "fin": "11:20",
+          "modo": "a-pie",
+          "_modo": "a-pie | tren | bus | taxi | coche | barco | avion | bici",
+          "desde": "un-lugar",
+          "hasta": "un-lugar",
+          "detalle": "Distancia, servicio, precio, lo que haga falta."
+        },
+        {
+          "_": "HITO — algo que pasa y no es un sitio: llegar, salir, hacer el check-out.",
+          "tipo": "hito",
+          "inicio": "21:00",
+          "titulo": "Llegada",
+          "detalle": "Contexto"
+        }
+      ]
+    }
+  ],
+
+  "transporte": [
+    {
+      "tramo": "A → B",
+      "modo": "tren",
+      "servicio": "Operador y tipo de servicio",
+      "duracion": "1 h 38",
+      "frecuencia": "5 al día",
+      "precio": "11 €",
+      "descuento": "Si hay alguno que aplique",
+      "nota": "La letra pequeña que decide si el plan funciona."
+    }
+  ],
+
+  "listas": [
+    {
+      "titulo": "Antes de salir",
+      "items": [
+        { "id": "una-tarea", "texto": "Qué hay que hacer", "detalle": "Cuándo y cómo" }
+      ],
+      "_items": "Los id son claves de guardado en el navegador: tienen que ser únicos en todo el viaje, no solo dentro de su lista."
+    }
+  ],
+
+  "presupuesto": {
+    "nota": "Qué incluye y qué no. Si es una estimación y no un precio consultado, dilo.",
+    "partidas": [
+      { "concepto": "Un concepto", "importe": "100-130 €" },
+      { "concepto": "Total estimado", "importe": "470-600 €", "destacado": true }
+    ]
+  },
+
+  "fuentes": [
+    { "texto": "De dónde salen los horarios y los precios", "url": "https://ejemplo.es" }
+  ]
+}

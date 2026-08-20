@@ -1,0 +1,166 @@
+/* =========================================================================
+   Bitácora · mapa
+   Leaflet vestido para que no parezca Leaflet, y marcadores propios.
+   ========================================================================= */
+
+.mapa-zona { position: relative; min-height: 0; background: var(--superficie-2); }
+.mapa { position: absolute; inset: 0; z-index: 1; }
+
+.leaflet-container {
+  background: var(--superficie-2);
+  font-family: var(--sans);
+  outline: none;
+}
+
+/* --- Controles ---------------------------------------------------------- */
+.leaflet-control-container .leaflet-control-zoom { display: none; }
+
+.mapa-controles {
+  position: absolute;
+  right: var(--e3);
+  top: var(--e3);
+  z-index: 10;
+  display: grid;
+  gap: var(--e2);
+  justify-items: end;
+}
+
+.mapa-boton {
+  width: 38px; height: 38px;
+  display: grid; place-items: center;
+  border-radius: var(--r-m);
+  border: 1px solid var(--borde);
+  background: var(--velo);
+  backdrop-filter: blur(14px) saturate(150%);
+  color: var(--tinta-media);
+  box-shadow: var(--sombra-2);
+  transition: transform var(--t-pulsar) var(--sal), color var(--t-rapido) ease, background-color var(--t-rapido) ease;
+}
+.mapa-boton svg { width: 18px; height: 18px; }
+.mapa-boton:active { transform: scale(0.94); }
+.mapa-boton[aria-pressed="true"] { color: var(--acento); border-color: var(--acento); }
+@media (hover: hover) and (pointer: fine) { .mapa-boton:hover { color: var(--tinta); background: var(--superficie); } }
+@media (pointer: coarse) { .mapa-boton { width: 44px; height: 44px; } }
+
+.mapa-zoom { display: grid; border-radius: var(--r-m); overflow: hidden; border: 1px solid var(--borde); box-shadow: var(--sombra-2); }
+.mapa-zoom .mapa-boton { border: 0; border-radius: 0; box-shadow: none; }
+.mapa-zoom .mapa-boton + .mapa-boton { border-top: 1px solid var(--borde); }
+
+/* --- Atribución (obligatoria, y no se esconde) -------------------------- */
+.leaflet-control-attribution {
+  background: var(--velo) !important;
+  backdrop-filter: blur(10px);
+  color: var(--tinta-suave) !important;
+  font-size: 10px !important;
+  padding: 2px 7px !important;
+  border-radius: var(--r-s) 0 0 0;
+  border: 0;
+}
+.leaflet-control-attribution a { color: var(--tinta-media) !important; }
+
+/* --- Marcadores --------------------------------------------------------- */
+.marcador { background: none !important; border: 0 !important; }
+
+.pin {
+  position: relative;
+  width: 26px; height: 26px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--superficie);
+  border: 1.5px solid var(--borde-fuerte);
+  color: var(--tinta);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  box-shadow: var(--sombra-2);
+  /* Se puede interrumpir a media animación: el usuario mueve el dedo rápido. */
+  transition: transform var(--t-medio) var(--sal),
+              background-color var(--t-rapido) ease,
+              border-color var(--t-rapido) ease,
+              color var(--t-rapido) ease;
+  transform-origin: 50% 100%;
+}
+.pin svg { width: 14px; height: 14px; }
+
+.pin[data-cat="patrimonio"]  { background: var(--cat-patrimonio-f);  color: var(--cat-patrimonio-t);  border-color: var(--cat-patrimonio-t); }
+.pin[data-cat="naturaleza"]  { background: var(--cat-naturaleza-f);  color: var(--cat-naturaleza-t);  border-color: var(--cat-naturaleza-t); }
+.pin[data-cat="comida"]      { background: var(--cat-comida-f);      color: var(--cat-comida-t);      border-color: var(--cat-comida-t); }
+.pin[data-cat="pueblo"]      { background: var(--cat-pueblo-f);      color: var(--cat-pueblo-t);      border-color: var(--cat-pueblo-t); }
+.pin[data-cat="transporte"]  { background: var(--cat-transporte-f);  color: var(--cat-transporte-t);  border-color: var(--cat-transporte-t); }
+.pin[data-cat="alojamiento"] { background: var(--cat-alojamiento-f); color: var(--cat-alojamiento-t); border-color: var(--cat-alojamiento-t); }
+.pin[data-cat="practico"]    { background: var(--cat-practico-f);    color: var(--cat-practico-t);    border-color: var(--cat-practico-t); }
+
+/* Solo cambia el tamaño: el color sigue siendo el de la categoría, que es lo
+   que deja leer de un vistazo si la parada es monumento, monte o mesa. */
+.pin--numerado { width: 28px; height: 28px; padding: 0 2px; }
+.pin--secundario { width: 15px; height: 15px; border-width: 1.5px; box-shadow: var(--sombra-1); }
+.pin--secundario svg { width: 8px; height: 8px; }
+
+.pin[data-visitado="true"]::after {
+  content: "";
+  position: absolute;
+  right: -2px; bottom: -2px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--ok-t);
+  border: 2px solid var(--superficie);
+  box-sizing: content-box;
+}
+
+/* Destacado: crece desde su base, como si se levantara del mapa. */
+.pin[data-activo="true"] {
+  transform: scale(1.32) translateY(-3px);
+  border-color: var(--acento);
+  background: var(--acento);
+  color: var(--acento-tinta);
+  z-index: 1000;
+}
+
+.leaflet-marker-icon:focus-visible .pin { outline: 2px solid var(--acento); outline-offset: 2px; }
+
+/* --- Trazo del día ------------------------------------------------------ */
+.ruta-dia { stroke: var(--acento); stroke-width: 2.5; stroke-opacity: 0.55; stroke-dasharray: 2 7; stroke-linecap: round; fill: none; }
+
+/* --- Posición del usuario ----------------------------------------------- */
+.yo { width: 16px; height: 16px; border-radius: 50%; background: #2E7CF6; border: 2.5px solid #fff; box-shadow: 0 0 0 6px rgba(46, 124, 246, 0.18), var(--sombra-2); }
+
+/* --- Globo -------------------------------------------------------------- */
+.leaflet-popup-content-wrapper {
+  background: var(--superficie);
+  color: var(--tinta);
+  border: 1px solid var(--borde);
+  border-radius: var(--r-m);
+  box-shadow: var(--sombra-3);
+  padding: 0;
+}
+.leaflet-popup-content { margin: 0; padding: var(--e3); width: 232px !important; font-size: 0.8125rem; line-height: 1.45; }
+.leaflet-popup-tip { background: var(--superficie); border: 1px solid var(--borde); box-shadow: none; }
+.leaflet-popup-close-button { display: none; }
+.globo__titulo { font-weight: 650; font-size: 0.875rem; margin-bottom: 3px; }
+.globo__resumen { color: var(--tinta-media); font-size: 0.75rem; line-height: 1.45; }
+.globo__pie { margin-top: var(--e2); display: flex; gap: var(--e1); flex-wrap: wrap; }
+
+/* --- Aviso de preparación sin conexión ---------------------------------- */
+.mapa-progreso {
+  position: absolute;
+  left: 50%; bottom: var(--e4);
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex; align-items: center; gap: var(--e2);
+  padding: 8px var(--e4);
+  border-radius: var(--r-pill);
+  background: var(--velo);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--borde);
+  box-shadow: var(--sombra-2);
+  font-size: 0.75rem;
+  color: var(--tinta-media);
+  white-space: nowrap;
+}
+
+@media (max-width: 899px) {
+  .mapa-controles { top: var(--e2); right: var(--e2); }
+  /* Deja aire para que la hoja no tape los controles ni la atribución. */
+  .leaflet-control-attribution { margin-bottom: 96px !important; }
+  .mapa-progreso { bottom: 108px; }
+}

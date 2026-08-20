@@ -1,0 +1,285 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://yivanx.github.io/schema/viaje.schema.json",
+  "title": "Viaje",
+  "description": "Un viaje completo de Bitácora. La aplicación no sabe nada de ningún destino concreto: todo lo que se ve en pantalla sale de un archivo con esta forma.",
+  "type": "object",
+  "required": ["id", "titulo", "estado", "fechas", "lugares", "dias"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Identificador en kebab-case. Debe coincidir con el nombre del archivo y con la entrada de data/viajes.json."
+    },
+    "version": { "type": "integer", "minimum": 1 },
+    "titulo": { "type": "string", "minLength": 1 },
+    "subtitulo": { "type": "string" },
+    "estado": {
+      "enum": ["planificado", "en-curso", "completado"],
+      "description": "El estado se calcula solo a partir de las fechas si no se toca, pero se puede fijar a mano."
+    },
+    "fechas": {
+      "type": "object",
+      "required": ["inicio", "fin"],
+      "additionalProperties": false,
+      "properties": {
+        "inicio": { "type": "string", "format": "date", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "fin": { "type": "string", "format": "date", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" }
+      }
+    },
+    "viajeros": { "type": "array", "items": { "type": "string" } },
+    "moneda": { "type": "string", "description": "Código ISO 4217. EUR, USD, JPY…" },
+    "base": { "type": "string", "description": "Dónde se duerme, en una línea." },
+    "resumen": { "type": "string" },
+    "mapa": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "centro": { "$ref": "#/definitions/coords" },
+        "zoom": { "type": "number", "minimum": 1, "maximum": 19 }
+      },
+      "description": "Encuadre inicial de la vista general. Si se omite, se calcula del conjunto de lugares."
+    },
+    "avisos": {
+      "type": "array",
+      "description": "Lo que puede romper el viaje. Se muestra arriba del todo, antes que ningún día.",
+      "items": {
+        "type": "object",
+        "required": ["titulo", "texto"],
+        "additionalProperties": false,
+        "properties": {
+          "nivel": { "enum": ["alto", "medio", "info"], "default": "info" },
+          "titulo": { "type": "string" },
+          "texto": { "type": "string" }
+        }
+      }
+    },
+    "lugares": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Catálogo plano. Un lugar se define una vez y se referencia desde los días por su id.",
+      "items": { "$ref": "#/definitions/lugar" }
+    },
+    "dias": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/dia" }
+    },
+    "transporte": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["tramo", "modo"],
+        "additionalProperties": false,
+        "properties": {
+          "tramo": { "type": "string" },
+          "modo": { "$ref": "#/definitions/modo" },
+          "servicio": { "type": "string" },
+          "duracion": { "type": "string" },
+          "frecuencia": { "type": "string" },
+          "precio": { "type": "string" },
+          "descuento": { "type": "string" },
+          "nota": { "type": "string" }
+        }
+      }
+    },
+    "listas": {
+      "type": "array",
+      "description": "Checklists persistentes. El marcado se guarda en el navegador, nunca en el repositorio.",
+      "items": {
+        "type": "object",
+        "required": ["titulo", "items"],
+        "additionalProperties": false,
+        "properties": {
+          "titulo": { "type": "string" },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "texto"],
+              "additionalProperties": false,
+              "properties": {
+                "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+                "texto": { "type": "string" },
+                "detalle": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "presupuesto": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nota": { "type": "string" },
+        "partidas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["concepto", "importe"],
+            "additionalProperties": false,
+            "properties": {
+              "concepto": { "type": "string" },
+              "importe": { "type": "string" },
+              "destacado": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+    "fuentes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["texto", "url"],
+        "additionalProperties": false,
+        "properties": {
+          "texto": { "type": "string" },
+          "url": { "type": "string", "format": "uri" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "coords": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": { "type": "number" },
+      "description": "[latitud, longitud] en grados decimales. Latitud −90..90, longitud −180..180."
+    },
+    "categoria": {
+      "enum": ["patrimonio", "naturaleza", "comida", "pueblo", "transporte", "alojamiento", "practico"],
+      "description": "Determina el color y el icono. El color solo significa categoría: nunca se usa para decorar."
+    },
+    "modo": {
+      "enum": ["a-pie", "tren", "bus", "taxi", "coche", "barco", "avion", "bici"]
+    },
+    "franja": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": { "type": "string", "pattern": "^([01]\\d|2[0-4]):[0-5]\\d$" },
+      "description": "[\"HH:MM\", \"HH:MM\"]. Una franja de apertura. 24:00 vale como cierre a medianoche."
+    },
+    "lugar": {
+      "type": "object",
+      "required": ["id", "nombre", "categoria", "coords", "resumen"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "nombre": { "type": "string" },
+        "categoria": { "$ref": "#/definitions/categoria" },
+        "zona": { "type": "string", "description": "Agrupa lugares en el buscador y en la vista general." },
+        "coords": { "$ref": "#/definitions/coords" },
+        "resumen": { "type": "string", "description": "Una línea. Es lo que se ve en la lista y en el globo del mapa." },
+        "descripcion": { "type": "string", "description": "Markdown ligero: párrafos, **negrita**, *cursiva* y listas con guion." },
+        "duracionMin": { "type": "integer", "minimum": 0 },
+        "precio": {
+          "type": "object",
+          "required": ["importe"],
+          "additionalProperties": false,
+          "properties": {
+            "importe": { "type": "number", "minimum": 0 },
+            "detalle": { "type": "string" }
+          }
+        },
+        "horarios": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Por día de la semana. Un día ausente significa cerrado. Sin objeto horarios, el lugar se considera siempre accesible.",
+          "properties": {
+            "lun": { "type": "array", "items": { "$ref": "#/definitions/franja" } },
+            "mar": { "type": "array", "items": { "$ref": "#/definitions/franja" } },
+            "mie": { "type": "array", "items": { "$ref": "#/definitions/franja" } },
+            "jue": { "type": "array", "items": { "$ref": "#/definitions/franja" } },
+            "vie": { "type": "array", "items": { "$ref": "#/definitions/franja" } },
+            "sab": { "type": "array", "items": { "$ref": "#/definitions/franja" } },
+            "dom": { "type": "array", "items": { "$ref": "#/definitions/franja" } }
+          }
+        },
+        "reserva": {
+          "type": "object",
+          "required": ["necesaria"],
+          "additionalProperties": false,
+          "properties": {
+            "necesaria": { "type": "boolean" },
+            "nota": { "type": "string" }
+          }
+        },
+        "consejos": { "type": "array", "items": { "type": "string" } },
+        "enlaces": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["texto", "url"],
+            "additionalProperties": false,
+            "properties": {
+              "texto": { "type": "string" },
+              "url": { "type": "string", "format": "uri" }
+            }
+          }
+        },
+        "fotos": {
+          "type": "array",
+          "description": "Fotos publicadas en el repositorio, relativas a la raíz del sitio. Las fotos privadas viven en IndexedDB y no aparecen aquí.",
+          "items": {
+            "type": "object",
+            "required": ["archivo"],
+            "additionalProperties": false,
+            "properties": {
+              "archivo": { "type": "string" },
+              "pie": { "type": "string" }
+            }
+          }
+        },
+        "verificado": {
+          "type": "object",
+          "required": ["fecha", "fuente"],
+          "additionalProperties": false,
+          "description": "Cuándo se comprobó este dato y contra qué. Sin esto, un horario es un rumor.",
+          "properties": {
+            "fecha": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+            "fuente": { "type": "string" }
+          }
+        }
+      }
+    },
+    "dia": {
+      "type": "object",
+      "required": ["fecha", "titulo", "bloques"],
+      "additionalProperties": false,
+      "properties": {
+        "fecha": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "titulo": { "type": "string" },
+        "intensidad": { "enum": ["llegada", "suave", "media", "fuerte", "salida"] },
+        "resumen": { "type": "string" },
+        "bloques": { "type": "array", "items": { "$ref": "#/definitions/bloque" } }
+      }
+    },
+    "bloque": {
+      "type": "object",
+      "description": "Tres formas: visita (lleva lugar), traslado (tipo traslado, lleva modo/desde/hasta) e hito (tipo hito, lleva titulo).",
+      "additionalProperties": false,
+      "properties": {
+        "tipo": { "enum": ["visita", "traslado", "hito"], "default": "visita" },
+        "inicio": { "type": "string", "pattern": "^([01]\\d|2[0-4]):[0-5]\\d$" },
+        "fin": { "type": "string", "pattern": "^([01]\\d|2[0-4]):[0-5]\\d$" },
+        "lugar": { "type": "string", "description": "Solo en bloques de visita. Debe existir en lugares[]." },
+        "nota": { "type": "string" },
+        "titulo": { "type": "string", "description": "Solo en bloques de hito." },
+        "detalle": { "type": "string" },
+        "modo": { "$ref": "#/definitions/modo" },
+        "desde": { "type": "string", "description": "Solo en traslados. Debe existir en lugares[]." },
+        "hasta": { "type": "string", "description": "Solo en traslados. Debe existir en lugares[]." },
+        "opcional": { "type": "boolean" },
+        "exterior": {
+          "type": "boolean",
+          "description": "Se ve por fuera: fachada, mirador, edificio iluminado de noche. No se entra, así que el horario de taquilla no aplica y la validación no lo comprueba."
+        }
+      }
+    }
+  }
+}

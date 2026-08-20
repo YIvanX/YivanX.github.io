@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Bitácora">
+  <rect width="512" height="512" rx="115" fill="#96551F"/>
+  <g fill="#FBFAF8">
+    <path d="M200.5 233 256 386.6 311.5 233Z"/>
+    <circle cx="256" cy="233" r="29.7"/>
+  </g>
+  <circle cx="256" cy="233" r="73.75" fill="none" stroke="#FBFAF8" stroke-width="31.7"/>
+</svg>

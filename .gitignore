@@ -1,0 +1,13 @@
+# Node solo se usa para las herramientas: aquí no hay dependencias.
+node_modules/
+npm-debug.log*
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporales de edición
+*.swp
+*~
+.qa-temporal.mjs

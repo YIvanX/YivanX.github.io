@@ -1,0 +1,283 @@
+/* =========================================================================
+   Bitácora · base
+   Tokens, reset y tipografía.
+
+   Dirección visual: monocromo cálido y editorial. El color no decora nunca —
+   solo significa dos cosas, categoría de lugar y estado (abierto / cerrado /
+   visitado). Esto es una herramienta que se usa andando, con una mano y a
+   veces sin cobertura, así que manda la densidad y la legibilidad, no el aire.
+
+   Tipografía del sistema a propósito: una fuente web rompería el modo sin
+   conexión y añadiría una dependencia externa a algo pensado para durar años.
+   ========================================================================= */
+
+/* --- Paleta clara (la definición completa vive aquí) --------------------- */
+:root {
+  --lienzo:        #FBFAF8;
+  --superficie:    #FFFFFF;
+  --superficie-2:  #F4F2EE;
+  --superficie-3:  #EBE8E2;
+  --velo:          rgba(251, 250, 248, 0.72);
+
+  --borde:         rgba(28, 25, 20, 0.10);
+  --borde-fuerte:  rgba(28, 25, 20, 0.20);
+
+  --tinta:         #1C1917;
+  --tinta-media:   #57534E;
+  --tinta-suave:   #8A8279;
+
+  --acento:        #96551F;
+  --acento-tinta:  #FFFFFF;
+  --acento-velo:   #F4E7D8;
+
+  --sombra-1: 0 1px 2px rgba(28, 25, 20, 0.04);
+  --sombra-2: 0 2px 8px rgba(28, 25, 20, 0.05);
+  --sombra-3: 0 8px 28px rgba(28, 25, 20, 0.08);
+
+  /* Categorías. Fondo lavado + texto de alto contraste sobre él. */
+  --cat-patrimonio-f:   #E3F1FC;  --cat-patrimonio-t:   #1B5F8C;
+  --cat-naturaleza-f:   #E8F1E7;  --cat-naturaleza-t:   #2E5B33;
+  --cat-comida-f:       #FAF0D8;  --cat-comida-t:       #855700;
+  --cat-pueblo-f:       #FBE9E7;  --cat-pueblo-t:       #93332B;
+  --cat-transporte-f:   #ECEAE6;  --cat-transporte-t:   #55504A;
+  --cat-alojamiento-f:  #EFE9F6;  --cat-alojamiento-t:  #553783;
+  --cat-practico-f:     #ECEAE6;  --cat-practico-t:     #55504A;
+
+  --ok-f:      #E8F1E7;  --ok-t:      #2E5B33;
+  --alerta-f:  #FAF0D8;  --alerta-t:  #855700;
+  --error-f:   #FBE9E7;  --error-t:   #93332B;
+
+  --mapa-filtro: none;
+
+  /* --- Movimiento -------------------------------------------------------
+     Curvas propias: las de serie de CSS son demasiado flojas y hacen que
+     todo parezca dubitativo. Nunca ease-in en interfaz: retrasa el arranque
+     justo en el instante que el ojo está mirando. */
+  --sal:       cubic-bezier(0.23, 1, 0.32, 1);
+  --ent-sal:   cubic-bezier(0.77, 0, 0.175, 1);
+  --cajon:     cubic-bezier(0.32, 0.72, 0, 1);
+
+  --t-pulsar:  120ms;
+  --t-rapido:  160ms;
+  --t-medio:   220ms;
+  --t-panel:   320ms;
+
+  /* --- Escala ----------------------------------------------------------- */
+  --e1: 4px;  --e2: 8px;  --e3: 12px; --e4: 16px;
+  --e5: 20px; --e6: 28px; --e7: 40px; --e8: 56px;
+
+  --r-s: 6px; --r-m: 10px; --r-l: 14px; --r-xl: 20px; --r-pill: 999px;
+
+  --alto-cabecera: 52px;
+  --ancho-panel: 400px;
+
+  --sans:  ui-sans-serif, system-ui, -apple-system, "Segoe UI Variable Text", "Segoe UI", "Noto Sans", sans-serif;
+  --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --mono:  ui-monospace, "Cascadia Mono", "Segoe UI Mono", "SF Mono", Menlo, monospace;
+}
+
+/* --- Paleta oscura ------------------------------------------------------
+   Solo se redefinen los tokens. Ninguna propiedad tiene aquí su única
+   definición: si esto no se cargara, el sitio seguiría siendo correcto. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="claro"]) {
+    --lienzo:       #141210;
+    --superficie:   #1C1A17;
+    --superficie-2: #24211D;
+    --superficie-3: #2E2A25;
+    --velo:         rgba(20, 18, 16, 0.74);
+
+    --borde:        rgba(245, 240, 232, 0.12);
+    --borde-fuerte: rgba(245, 240, 232, 0.24);
+
+    --tinta:        #EDE8E1;
+    --tinta-media:  #ABA49B;
+    --tinta-suave:  #7B746B;
+
+    --acento:       #D49B63;
+    --acento-tinta: #201A13;
+    --acento-velo:  #382B1E;
+
+    --sombra-1: 0 1px 2px rgba(0, 0, 0, 0.30);
+    --sombra-2: 0 2px 10px rgba(0, 0, 0, 0.36);
+    --sombra-3: 0 10px 34px rgba(0, 0, 0, 0.48);
+
+    --cat-patrimonio-f:  #17303F;  --cat-patrimonio-t:  #92C9EC;
+    --cat-naturaleza-f:  #1B2A1C;  --cat-naturaleza-t:  #9CC79F;
+    --cat-comida-f:      #33280F;  --cat-comida-t:      #E3BC72;
+    --cat-pueblo-f:      #35201D;  --cat-pueblo-t:      #E5A199;
+    --cat-transporte-f:  #29251F;  --cat-transporte-t:  #B3ABA1;
+    --cat-alojamiento-f: #251C33;  --cat-alojamiento-t: #B79FDC;
+    --cat-practico-f:    #29251F;  --cat-practico-t:    #B3ABA1;
+
+    --ok-f:     #1B2A1C;  --ok-t:     #9CC79F;
+    --alerta-f: #33280F;  --alerta-t: #E3BC72;
+    --error-f:  #35201D;  --error-t:  #E5A199;
+
+    --mapa-filtro: none;
+  }
+}
+
+:root[data-tema="oscuro"] {
+  --lienzo:       #141210;
+  --superficie:   #1C1A17;
+  --superficie-2: #24211D;
+  --superficie-3: #2E2A25;
+  --velo:         rgba(20, 18, 16, 0.74);
+
+  --borde:        rgba(245, 240, 232, 0.12);
+  --borde-fuerte: rgba(245, 240, 232, 0.24);
+
+  --tinta:        #EDE8E1;
+  --tinta-media:  #ABA49B;
+  --tinta-suave:  #7B746B;
+
+  --acento:       #D49B63;
+  --acento-tinta: #201A13;
+  --acento-velo:  #382B1E;
+
+  --sombra-1: 0 1px 2px rgba(0, 0, 0, 0.30);
+  --sombra-2: 0 2px 10px rgba(0, 0, 0, 0.36);
+  --sombra-3: 0 10px 34px rgba(0, 0, 0, 0.48);
+
+  --cat-patrimonio-f:  #17303F;  --cat-patrimonio-t:  #92C9EC;
+  --cat-naturaleza-f:  #1B2A1C;  --cat-naturaleza-t:  #9CC79F;
+  --cat-comida-f:      #33280F;  --cat-comida-t:      #E3BC72;
+  --cat-pueblo-f:      #35201D;  --cat-pueblo-t:      #E5A199;
+  --cat-transporte-f:  #29251F;  --cat-transporte-t:  #B3ABA1;
+  --cat-alojamiento-f: #251C33;  --cat-alojamiento-t: #B79FDC;
+  --cat-practico-f:    #29251F;  --cat-practico-t:    #B3ABA1;
+
+  --ok-f:     #1B2A1C;  --ok-t:     #9CC79F;
+  --alerta-f: #33280F;  --alerta-t: #E3BC72;
+  --error-f:  #35201D;  --error-t:  #E5A199;
+}
+
+/* --- Reset -------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--lienzo);
+  color: var(--tinta);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.55;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+h1, h2, h3, h4, p, figure, blockquote, ul, ol, dl { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+button, input, textarea, select { font: inherit; color: inherit; }
+button { background: none; border: 0; padding: 0; cursor: pointer; }
+a { color: inherit; text-decoration-color: var(--borde-fuerte); text-underline-offset: 2px; }
+img, svg { display: block; max-width: 100%; }
+svg { fill: none; }
+table { border-collapse: collapse; width: 100%; }
+
+/* --- Tipografía ---------------------------------------------------------
+   El tracking es específico del tamaño, nunca un valor único: el texto grande
+   se lee demasiado suelto si no se aprieta, y el pequeño demasiado junto si no
+   se abre. El interlineado va al revés que el tamaño. */
+.display {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.75rem, 4.5vw, 2.6rem);
+  line-height: 1.06;
+  letter-spacing: -0.021em;
+}
+
+.titulo-1 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.16;
+  letter-spacing: -0.015em;
+}
+
+.titulo-2 {
+  font-weight: 600;
+  font-size: 1.0625rem;
+  line-height: 1.3;
+  letter-spacing: -0.011em;
+}
+
+.titulo-3 {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+}
+
+.cuerpo    { font-size: 0.9375rem; line-height: 1.62; }
+.secundario{ font-size: 0.8125rem; line-height: 1.5; color: var(--tinta-media); letter-spacing: 0.003em; }
+.menudo    { font-size: 0.75rem;   line-height: 1.45; color: var(--tinta-suave); letter-spacing: 0.012em; }
+
+.etiqueta {
+  font-size: 0.625rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.reloj {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+
+/* --- Utilidades --------------------------------------------------------- */
+.oculto { display: none !important; }
+
+.solo-lectores {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+:where(button, a, [tabindex]):focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 2px;
+  border-radius: var(--r-s);
+}
+
+/* Barras de scroll discretas, pero visibles: en una lista larga hacen falta. */
+.scroll-y { overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--borde-fuerte) transparent; }
+.scroll-y::-webkit-scrollbar { width: 8px; height: 8px; }
+.scroll-y::-webkit-scrollbar-thumb { background: var(--borde-fuerte); border-radius: var(--r-pill); }
+.scroll-y::-webkit-scrollbar-track { background: transparent; }
+
+/* --- Accesibilidad ------------------------------------------------------
+   Movimiento reducido no es «sin movimiento»: se conservan opacidad y color,
+   que ayudan a entender, y se quita el desplazamiento, que es lo que marea. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :root { --velo: var(--superficie); }
+  .desenfoca { backdrop-filter: none !important; }
+}
+
+@media (prefers-contrast: more) {
+  :root { --borde: rgba(28, 25, 20, 0.35); --borde-fuerte: rgba(28, 25, 20, 0.6); }
+  :root[data-tema="oscuro"] { --borde: rgba(245, 240, 232, 0.4); --borde-fuerte: rgba(245, 240, 232, 0.7); }
+}

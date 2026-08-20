@@ -1,0 +1,18 @@
+{
+  "titulo": "Bitácora",
+  "descripcion": "Guía interactiva durante el viaje y registro de viajes después.",
+  "viajes": [
+    {
+      "id": "leon-2026-08",
+      "archivo": "data/viajes/leon-2026-08.json",
+      "titulo": "León",
+      "subtitulo": "Seis días por la provincia, sin coche",
+      "fechas": {
+        "inicio": "2026-08-29",
+        "fin": "2026-09-03"
+      },
+      "estado": "planificado",
+      "acento": "ocre"
+    }
+  ]
+}

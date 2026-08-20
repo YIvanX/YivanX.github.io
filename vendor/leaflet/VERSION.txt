@@ -1,0 +1,1 @@
+1.9.4 · https://unpkg.com/leaflet@1.9.4/dist/ · BSD-2-Clause · descargado 2026-08-20
