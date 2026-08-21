@@ -318,19 +318,48 @@ export async function montarViaje(raiz, ruta) {
     });
   }
 
+  /**
+   * Donde queda el panel al pintar.
+   *
+   * Arriba, salvo en el dia de hoy, que empieza en la linea de «ahora». A las
+   * seis de la tarde del cuarto dia, abrir por la manana obliga a recorrer el
+   * dia entero para ver que toca — y esto se abre veinte veces al dia justo
+   * para eso.
+   *
+   * Se mide con rectangulos y no con `offsetTop` porque este depende del
+   * ancestro posicionado, y aqui el cuerpo del panel no lo es: `offsetTop`
+   * devolveria la distancia al `body` y mandaria el scroll a cualquier sitio.
+   */
+  function situarScroll() {
+    cuerpo.scrollTop = 0;
+    const ahora = $('.ahora', cuerpo);
+    if (!ahora) return;
+    // Un tercio de la altura por encima: la linea no se pega al borde y se ve
+    // de donde vienes, que es lo que dice si vas con retraso.
+    const margen = Math.round(cuerpo.clientHeight / 3);
+    const desde = ahora.getBoundingClientRect().top - cuerpo.getBoundingClientRect().top;
+    cuerpo.scrollTop = Math.max(0, desde - margen);
+  }
+
   function pintarPanel({ moverFoco = true } = {}) {
     const tipo = tipoDeTransicion();
+    // Si no has cambiado de sitio, el panel se queda donde estaba. Marcar un
+    // lugar como visitado repinta su ficha, y mandarla arriba en ese momento te
+    // saca de donde estabas leyendo.
+    const navegando = vistaPintada === null
+      || actual.vista !== vistaPintada
+      || actual.fecha !== fechaPintada;
     const conTransicion = Boolean(tipo && document.startViewTransition);
     // Escalonar solo al **llegar** a un día desde otra vista. Entre día y día
     // manda el desplazamiento lateral, y las dos cosas a la vez se pisan.
     const escalonar = actual.vista === 'dia' && vistaPintada !== 'dia';
-    const aplicar = () => pintarPanelYa({ moverFoco, conTransicion, escalonar });
+    const aplicar = () => pintarPanelYa({ moverFoco, conTransicion, escalonar, navegando });
 
     if (conTransicion) transicion(aplicar, tipo);
     else aplicar();
   }
 
-  function pintarPanelYa({ moverFoco, conTransicion, escalonar }) {
+  function pintarPanelYa({ moverFoco, conTransicion, escalonar, navegando }) {
     limpiarUrls();
     const guardado = estado.estadoDe(viaje.id);
 
@@ -376,7 +405,7 @@ export async function montarViaje(raiz, ruta) {
       cuerpo.innerHTML = pintarDia(viaje, dia, guardado, { ocultos });
       if (moverFoco) situarFoco(`${dia.titulo}, ${fechaLarga(dia.fecha)}`);
     }
-    cuerpo.scrollTop = 0;
+    if (navegando) situarScroll();
     if (celebrarNube) {
       celebrarNube = false;
       $$('.bloque__nube--en-nube', cuerpo).forEach((n, i) => {
