@@ -97,13 +97,27 @@ export async function pedirAcceso(correo) {
  * Recoge la sesión que Supabase deja en el fragmento de la URL al volver del
  * correo. Hay que llamarla en el arranque, **antes** de enrutar: si no, el
  * enrutador ve un hash que no entiende y se va a la portada.
+ *
+ * Devuelve `{ ok: true }` si la sesión ha entrado, `{ error, codigo }` si
+ * Supabase ha devuelto un fallo, y `null` si el fragmento no traía nada de
+ * esto. **La rama de error no es decorativa.** Un enlace muerto vuelve como
+ * `#error=access_denied&error_code=otp_expired`, y devolviendo `false` para
+ * todo lo que no fuera un token la aplicación aterrizaba en la portada sin
+ * sesión y **sin decir una palabra** — indistinguible de no haber hecho nada.
+ * Pasó de verdad el 21 de agosto de 2026 y costó media hora de diagnóstico.
  */
 export function recogerSesionDeUrl() {
   const bruto = location.hash.startsWith('#') ? location.hash.slice(1) : '';
-  if (!bruto.includes('access_token=')) return false;
   const p = new URLSearchParams(bruto);
   const token = p.get('access_token');
-  if (!token) return false;
+
+  if (!token) {
+    const codigo = p.get('error_code') || p.get('error');
+    if (!codigo) return null;
+    // Se limpia la URL también en el error: si no, recargar lo repite.
+    limpiarUrl();
+    return { error: p.get('error_description') || codigo, codigo };
+  }
 
   escribirSesion({
     access_token: token,
@@ -111,8 +125,12 @@ export function recogerSesionDeUrl() {
     expires_at: Math.floor(Date.now() / 1000) + Number(p.get('expires_in') || 3600),
     user: leerUsuarioDeToken(token),
   });
+  limpiarUrl();
+  return { ok: true };
+}
+
+function limpiarUrl() {
   history.replaceState(null, '', location.pathname + location.search);
-  return true;
 }
 
 /** El payload del JWT, sin verificar firma: solo se usa para pintar el correo. */
@@ -156,7 +174,24 @@ async function api(ruta, opciones = {}) {
     const cuerpo = await res.text().catch(() => '');
     throw new Error(`Supabase ${res.status}: ${cuerpo.slice(0, 160)}`);
   }
-  return res.status === 204 ? null : res.json();
+  return leerCuerpo(res);
+}
+
+/**
+ * El cuerpo de una respuesta de PostgREST, o `null` si no trae ninguno.
+ *
+ * **Mirar el 204 no basta, y creerlo costó un fallo de los malos.** Con
+ * `Prefer: return=minimal` un upsert que va bien contesta **200 y el cuerpo
+ * vacío**, no 204, y `res.json()` sobre la nada lanza `Unexpected end of JSON
+ * input`. El error saltaba **después** de que la escritura hubiera funcionado:
+ * decía que había fallado algo que estaba hecho y empujaba a repetirlo. Se lee
+ * como texto y se parsea solo si hay algo que parsear.
+ *
+ * Exportada a propósito: es pura y sin red, así que se prueba en Node.
+ */
+export async function leerCuerpo(res) {
+  const texto = await res.text();
+  return texto ? JSON.parse(texto) : null;
 }
 
 // --- Conversión entre el documento y la fila ------------------------------

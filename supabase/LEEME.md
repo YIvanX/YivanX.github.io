@@ -13,11 +13,37 @@ cuenta: con la clave publicable y sin sesión, las tres devuelven `[]` y un
 `POST` a `viajes` responde **HTTP 401** con `new row violates row-level
 security policy`.
 
-**URLs de autenticación** configuradas en el panel — *Site URL*
-`https://yivanx.github.io/` y `http://localhost:8080/` en las *Redirect URLs*.
-Es lo único de todo esto que no se puede hacer desde el conector. Un proyecto
-nuevo viene con `http://localhost:3000`, así que sin ese paso el enlace del
-correo aterriza donde no hay nada.
+**URLs de autenticación** configuradas en el panel el **21 de agosto de 2026**
+— y hasta ese día no, aunque este archivo lo diera por hecho desde el 20. El
+proyecto seguía con la *Site URL* de fábrica, `http://localhost:3000`, así que
+desde la web publicada el enlace del correo aterrizaba ahí. Ahora: *Site URL*
+`https://yivanx.github.io/`, y en las *Redirect URLs*
+`https://yivanx.github.io/**` y `http://localhost:8080/**`. Es lo único de todo
+esto que no se puede hacer desde el conector.
+
+**La entrada de `localhost:8080` no es un extra, es obligatoria** — y explica por
+qué el fallo se escondió una jornada entera. GoTrue acepta sin preguntar
+cualquier destino con el **mismo hostname que la Site URL**, así que mientras la
+Site URL fue `localhost:3000` valía cualquier puerto de `localhost`: el enlace
+funcionaba en local *con la configuración rota*, y solo fallaba desde
+`yivanx.github.io`. En cuanto la Site URL deja de ser `localhost`, el servidor de
+`herramientas/servir.mjs` se queda fuera si no está en la lista.
+
+**Cómo se comprueba sin gastar correos.** El plan gratuito manda dos por hora, y
+pedir un enlace real para ver a dónde apunta es caro. El endpoint de verificación
+resuelve el destino con las mismas reglas que el enlace del correo y lo devuelve
+en la cabecera `Location`, sin mandar nada:
+
+```
+curl -s -o /dev/null -D -   "https://kkzxwnmxksamclpphgmx.supabase.co/auth/v1/verify?token=x&type=magiclink&redirect_to=<destino>"   | grep -i "^location"
+```
+
+Si el `Location` devuelve el destino, está permitido. Si devuelve otra cosa, esa
+otra cosa es la *Site URL* y el destino está **rechazado**. Sin `redirect_to`,
+revela la *Site URL* directamente. Medido así el 21 de agosto de 2026:
+`https://yivanx.github.io/` y `http://localhost:8080/` pasan;
+`http://localhost:9999/` y un dominio inventado caen a la *Site URL*, que es lo
+que demuestra que la lista está puesta de verdad y no colando por hostname.
 
 **Viaje de León sembrado** desde el navegador y con la sesión de Yixuan, **no
 desde el conector**: el conector escribe como `service_role` y salta RLS, así

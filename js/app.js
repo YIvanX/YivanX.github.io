@@ -96,7 +96,23 @@ async function enrutar() {
 // Al volver del enlace de acceso, Supabase deja la sesión en el fragmento de la
 // URL. Hay que recogerla ANTES de enrutar: si no, el enrutador ve un hash que no
 // entiende y se va a la portada perdiendo la sesión.
-if (recogerSesionDeUrl()) brindis('Sesión iniciada', { tipo: 'ok' });
+//
+// Y el fragmento puede traer un error en vez de un token, que es lo que pasa con
+// un enlace muerto. Se traduce aquí y no se enseña el texto de Supabase tal cual:
+// viene en inglés y no dice qué hacer, que es lo único que le importa a quien
+// está mirando el móvil.
+const MENSAJES_DE_ACCESO = {
+  otp_expired: 'Ese enlace ya no vale. Pide uno nuevo y abre el correo más reciente: cada enlace que pides anula el anterior.',
+  access_denied: 'Supabase ha rechazado el acceso con ese enlace. Pide uno nuevo.',
+};
+
+const vuelta = recogerSesionDeUrl();
+if (vuelta?.ok) {
+  brindis('Sesión iniciada', { tipo: 'ok' });
+} else if (vuelta?.error) {
+  brindis(MENSAJES_DE_ACCESO[vuelta.codigo] || `No se ha podido entrar: ${vuelta.error}`,
+    { tipo: 'error', duracion: 9000 });
+}
 
 addEventListener('hashchange', enrutar);
 enrutar();

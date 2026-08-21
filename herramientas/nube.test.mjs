@@ -22,7 +22,7 @@ globalThis.localStorage ??= {
 };
 globalThis.location ??= { origin: 'https://ejemplo', pathname: '/', hash: '', search: '' };
 
-const { aFila, aDocumento } = await import('../js/nube.js');
+const { aFila, aDocumento, leerCuerpo } = await import('../js/nube.js');
 
 const viaje = () => ({
   id: 'leon-2026-08',
@@ -86,4 +86,26 @@ test('el id de la fila manda sobre el del documento', () => {
   // Si alguna vez no coinciden, la verdad es la clave primaria de la tabla.
   const d = aDocumento({ id: 'el-bueno', version: 1, datos: { id: 'el-viejo', titulo: 'X' } });
   assert.equal(d.id, 'el-bueno');
+});
+
+// --- El cuerpo de la respuesta -------------------------------------------
+// PostgREST no siempre contesta con JSON, y esto no es un caso raro: es lo que
+// devuelven `guardarEstado` e `invitar` cada vez que funcionan. Mirar solo el
+// 204 hacía que una escritura correcta reventara al parsear un cuerpo vacío, y
+// el error salía **después** de que el dato ya estuviera guardado en la nube.
+
+test('un 200 con el cuerpo vacío no revienta: es lo que contesta un upsert con return=minimal', async () => {
+  assert.equal(await leerCuerpo(new Response('', { status: 200 })), null);
+});
+
+test('un 201 con el cuerpo vacío tampoco', async () => {
+  assert.equal(await leerCuerpo(new Response('', { status: 201 })), null);
+});
+
+test('un 204 sigue devolviendo nada', async () => {
+  assert.equal(await leerCuerpo(new Response(null, { status: 204 })), null);
+});
+
+test('y cuando sí trae JSON, se devuelve parseado', async () => {
+  assert.deepEqual(await leerCuerpo(new Response('[{"id":"x"}]', { status: 200 })), [{ id: 'x' }]);
 });
