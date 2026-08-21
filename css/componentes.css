@@ -14,7 +14,9 @@
   display: flex;
   align-items: center;
   gap: var(--e3);
-  padding: 0 var(--e3) 0 var(--e4);
+  /* En apaisado, la muesca y las esquinas redondeadas se comen los bordes: el
+     `max()` respeta el margen normal y solo crece cuando el recorte lo exige. */
+  padding: 0 max(var(--e3), env(safe-area-inset-right)) 0 max(var(--e4), env(safe-area-inset-left));
   border-bottom: 1px solid var(--borde);
   background: var(--velo);
   backdrop-filter: blur(14px) saturate(150%);
@@ -48,6 +50,11 @@
   display: grid;
   grid-template-columns: var(--ancho-panel) 1fr;
   min-height: 0;
+  /* `min-width: auto` es el valor de fábrica de un elemento de rejilla, y hace
+     que NO baje de su contenido mínimo. Con el panel ancho y en flujo, a 320 px
+     empujaba la cabecera a 389 px y `.app`, que recorta, se comía el trozo de la
+     derecha sin dejar ni barra de scroll. Medido antes de arreglarlo. */
+  min-width: 0;
 }
 
 /* --- Botones ------------------------------------------------------------
@@ -55,6 +62,7 @@
    llega en el momento en que se presiona, no al soltar. */
 .boton,
 .icono-boton {
+  text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -115,7 +123,6 @@
 @media (pointer: coarse) {
   .icono-boton { width: 44px; height: 44px; flex-basis: 44px; }
   .boton { min-height: 44px; }
-  .pestana { padding: 12px 13px 13px; }
   .dia-tab { min-height: 52px; }
 }
 
@@ -152,7 +159,7 @@
 .barra-dias {
   display: flex;
   gap: var(--e1);
-  padding: var(--e2) var(--e3);
+  padding: var(--e2) max(var(--e3), env(safe-area-inset-right)) var(--e2) max(var(--e3), env(safe-area-inset-left));
   border-bottom: 1px solid var(--borde);
   background: var(--superficie);
   overflow-x: auto;
@@ -162,6 +169,7 @@
 .barra-dias::-webkit-scrollbar { display: none; }
 
 .dia-tab {
+  text-decoration: none;
   display: flex;
   flex-direction: column;
   gap: 3px;
@@ -185,7 +193,7 @@
 .dia-tab__pulso i { width: 4px; height: 4px; border-radius: 50%; background: currentColor; opacity: 0.3; }
 .dia-tab__pulso i.on { opacity: 1; }
 
-.dia-tab[aria-selected="true"] {
+.dia-tab[aria-current="page"] {
   background: var(--acento-velo);
   border-color: var(--acento);
   color: var(--acento);
@@ -201,7 +209,7 @@
 }
 @media (hover: hover) and (pointer: fine) {
   .dia-tab:hover { background: var(--superficie-2); color: var(--tinta); }
-  .dia-tab[aria-selected="true"]:hover { background: var(--acento-velo); color: var(--acento); }
+  .dia-tab[aria-current="page"]:hover { background: var(--acento-velo); color: var(--acento); }
 }
 
 /* --- Panel -------------------------------------------------------------- */
@@ -209,29 +217,11 @@
   display: flex;
   flex-direction: column;
   min-height: 0;
+  min-width: 0;
   background: var(--lienzo);
   border-right: 1px solid var(--borde);
   z-index: 20;
 }
-
-.panel__pestanas {
-  display: flex;
-  gap: 2px;
-  padding: var(--e2) var(--e3) 0;
-  border-bottom: 1px solid var(--borde);
-  flex: 0 0 auto;
-}
-.pestana {
-  padding: 7px 11px 9px;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--tinta-suave);
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  transition: color var(--t-rapido) ease, border-color var(--t-rapido) ease;
-}
-.pestana[aria-selected="true"] { color: var(--tinta); border-bottom-color: var(--acento); }
-@media (hover: hover) and (pointer: fine) { .pestana:hover { color: var(--tinta); } }
 
 .panel__cuerpo { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
 .panel__seccion { padding: var(--e4); }
@@ -634,7 +624,11 @@
 
 /* --- Portada: registro de viajes ---------------------------------------- */
 .registro { height: 100dvh; overflow-y: auto; }
-.registro__interior { max-width: 940px; margin: 0 auto; padding: var(--e8) var(--e5) var(--e8); }
+.registro__interior {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: var(--e8) max(var(--e5), env(safe-area-inset-right)) calc(var(--e8) + env(safe-area-inset-bottom)) max(var(--e5), env(safe-area-inset-left));
+}
 .registro__intro { margin-bottom: var(--e7); max-width: 46ch; }
 .registro__rejilla { display: grid; gap: var(--e4); grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
 
@@ -771,7 +765,12 @@ kbd {
 /* --- Móvil: el panel pasa a ser una hoja arrastrable -------------------- */
 .tirador { display: none; }
 
-@media (max-width: 899px) {
+/* La hoja inferior pide **alto**, no estrechez. Un móvil apaisado mide 844x390:
+   ancho de sobra para dos columnas y casi nada de alto para una hoja. Medido
+   antes del cambio: 118 px de los 390 se iban en cabecera y barra de días.
+   `hoja.js` comparte esta misma consulta —la exporta él— para que el CSS y el
+   JS no puedan discrepar sobre si hay hoja o no. */
+@media (max-width: 899px) and (min-height: 500px) {
   .escenario { grid-template-columns: 1fr; }
 
   .panel {
@@ -816,8 +815,37 @@ kbd {
   .panel[data-arrastrando="true"] .panel__cuerpo { overflow: hidden; }
 
   .barra-dias { background: var(--velo); backdrop-filter: blur(14px) saturate(150%); }
-  .registro__interior { padding: var(--e6) var(--e4) var(--e8); }
+}
+
+/* Esto depende del ancho y no del alto: en una pantalla estrecha no cabe el
+   subtítulo del viaje al lado del título, haya hoja o no. */
+@media (max-width: 899px) {
+  .registro__interior {
+    padding: var(--e6) max(var(--e4), env(safe-area-inset-right)) calc(var(--e8) + env(safe-area-inset-bottom)) max(var(--e4), env(safe-area-inset-left));
+  }
   .cabecera__contexto { display: none; }
+}
+
+/* Pantalla baja: sin hoja, el panel es una columna de verdad y se estrecha para
+   dejarle sitio al mapa. La barra de días también se aprieta — 66 px de alto
+   sobre 390 de pantalla eran demasiados. */
+@media (max-height: 499px) {
+  :root { --ancho-panel: 320px; }
+  /* Cada píxel de cromo cuesta el doble aquí: en apaisado hay 390 px de alto en
+     total, y la cabecera ya se lleva 52. La barra de días pasa a una sola línea
+     con el día y el número al lado, sin los puntos de intensidad. */
+  .barra-dias { padding: 4px var(--e3); }
+  .dia-tab {
+    min-height: 0;
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--e2);
+    min-width: 0;
+    padding: 5px 10px;
+  }
+  .dia-tab__pulso { display: none; }
+  .dia-tab--atencion::after { top: 3px; right: 3px; }
+  .dia-tab--pseudo .dia-tab__num { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -979,3 +1007,318 @@ kbd {
 
 /* Mientras se elige un punto, el mapa lo dice con el cursor y un borde. */
 .mapa--eligiendo { cursor: crosshair; box-shadow: inset 0 0 0 3px var(--acento); }
+
+/* =========================================================================
+   Jerarquía: portada del viaje, bandas del día y vistas sin mapa
+   ========================================================================= */
+
+/* --- La cabecera sube a la portada -------------------------------------- */
+/* El título dejó de ser texto y pasó a ser el botón de subir un nivel. Se nota
+   al pulsar y con el foco, pero no se disfraza de botón: en una cabecera, el
+   nombre de lo que estás mirando es el sitio donde todo el mundo toca. */
+a.cabecera__marca { color: inherit; text-decoration: none; border-radius: var(--r-s); transition: opacity var(--t-rapido) ease; }
+a.cabecera__marca:active { opacity: 0.6; }
+@media (hover: hover) and (pointer: fine) { a.cabecera__marca:hover .cabecera__logo { color: var(--acento); } }
+
+/* --- Vistas sin mapa ----------------------------------------------------- */
+/* La portada, Transporte y Listas no usan el mapa. No se desmonta —costaría
+   reconstruirlo al volver— sino que se esconde y el panel toma todo el ancho.
+   El contenido se acota a una medida de lectura en vez de estirarse a 1600 px. */
+.escenario--ancho { grid-template-columns: 1fr; }
+.escenario--ancho .mapa-zona { display: none; }
+.panel--ancho { border-right: 0; }
+.panel--ancho .panel__cuerpo > * { max-width: 720px; margin-left: auto; margin-right: auto; }
+.panel--ancho .panel__cuerpo {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* --- Bandas del día ------------------------------------------------------ */
+/* Lo que aplica a ESTE día: sus avisos, sus traslados y su lista. Cerradas por
+   defecto, todas: en el móvil la hoja asoma 132 px y una banda que se abre sola
+   se los come enteros. El resumen ya dice cuántas hay y de qué color. */
+.bandas {
+  margin-top: var(--e4);
+  border: 1px solid var(--borde);
+  border-radius: var(--r-m);
+  overflow: hidden;
+  background: var(--superficie);
+}
+.banda + .banda { border-top: 1px solid var(--borde); }
+
+.banda__resumen {
+  display: flex;
+  align-items: center;
+  gap: var(--e2);
+  padding: 10px var(--e3);
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.8125rem;
+  transition: background-color var(--t-rapido) ease,
+              transform var(--t-pulsar) var(--sal);
+}
+/* El triángulo de serie no se puede alinear ni teñir: se sustituye por la
+   flecha del juego de iconos, que gira al abrir. */
+.banda__resumen::-webkit-details-marker { display: none; }
+.banda__resumen::marker { content: ""; }
+.banda__resumen:active { background: var(--superficie-2); transform: scale(0.995); }
+@media (hover: hover) and (pointer: fine) { .banda__resumen:hover { background: var(--superficie-2); } }
+@media (pointer: coarse) { .banda__resumen { padding: 13px var(--e3); } }
+
+.banda__icono { width: 16px; height: 16px; flex: 0 0 16px; color: var(--tinta-suave); }
+.banda__titulo { font-weight: 600; color: var(--tinta); min-width: 0; }
+.banda__pista {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.banda__flecha {
+  width: 14px; height: 14px; flex: 0 0 14px;
+  margin-left: auto;
+  color: var(--tinta-suave);
+  transform: rotate(90deg);
+  transition: transform var(--t-rapido) var(--sal);
+}
+.banda__pista + .banda__flecha { margin-left: 0; }
+.banda[open] .banda__flecha { transform: rotate(-90deg); }
+
+.banda__cuerpo { padding: 0 var(--e3) var(--e3); }
+
+/* Abrir una banda desplazaba de golpe toda la cronología de debajo. Con la
+   transición, el contenido de abajo se aparta en vez de teletransportarse.
+   `::details-content` es reciente a propósito: donde no exista, la banda se abre
+   como se abría antes, que ya funcionaba. */
+@supports selector(::details-content) {
+  .banda::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition: block-size var(--t-medio) var(--sal),
+                content-visibility var(--t-medio) allow-discrete;
+  }
+  .banda[open]::details-content { block-size: auto; }
+  @media (prefers-reduced-motion: reduce) {
+    .banda::details-content { transition: none; }
+  }
+}
+.banda__cuerpo .tramo:first-child { padding-top: 0; }
+.banda__cuerpo .tramo:last-child { border-bottom: 0; padding-bottom: 0; }
+
+/* Un aviso de nivel alto tiñe el resumen: la diferencia entre «hay dos avisos»
+   y «hay dos avisos y uno te rompe el día» tiene que verse sin desplegar. */
+.banda--grave .banda__icono { color: var(--error-t); }
+.banda--grave .banda__titulo { color: var(--error-t); }
+
+@media (prefers-reduced-motion: reduce) { .banda__flecha { transition: none; } }
+
+/* --- Filas de la portada -------------------------------------------------- */
+.fila-dia {
+  display: flex;
+  align-items: center;
+  gap: var(--e3);
+  padding: 10px var(--e2);
+  border-radius: var(--r-m);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color var(--t-rapido) ease, transform var(--t-pulsar) var(--sal);
+}
+.fila-dia + .fila-dia { border-top: 1px solid var(--borde); border-radius: 0; }
+.fila-dia:active { transform: scale(0.995); background: var(--superficie-2); }
+@media (hover: hover) and (pointer: fine) { .fila-dia:hover { background: var(--superficie-2); } }
+
+.fila-dia__fecha {
+  display: grid;
+  place-items: center;
+  flex: 0 0 44px;
+  padding: 4px 0;
+  border-radius: var(--r-s);
+  background: var(--superficie-2);
+  color: var(--tinta-media);
+}
+.fila-dia__fecha svg { width: 18px; height: 18px; }
+.fila-dia__dia { font-size: 0.625rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.fila-dia__num { font-family: var(--serif); font-size: 1.125rem; font-weight: 500; line-height: 1.1; }
+
+.fila-dia__cuerpo { flex: 1; min-width: 0; }
+.fila-dia__titulo { display: flex; align-items: center; gap: var(--e2); }
+.fila-dia__titulo .titulo-3 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fila-dia__meta { display: block; margin-top: 2px; }
+.fila-dia__flecha { width: 14px; height: 14px; flex: 0 0 14px; color: var(--tinta-suave); }
+
+.fila-dia--hoy .fila-dia__fecha { background: var(--acento-velo); color: var(--acento); }
+.fila-dia--seccion .fila-dia__fecha { background: transparent; border: 1px dashed var(--borde-fuerte); color: var(--tinta-suave); }
+
+/* El punto de «esto pide algo». No lleva color de categoría: no es una
+   categoría, es una alerta, y aquí el color solo significa estado. */
+.fila-dia__punto {
+  width: 6px; height: 6px; flex: 0 0 6px;
+  border-radius: 50%;
+  background: var(--alerta-t);
+}
+
+/* --- Transporte agrupado por día ---------------------------------------- */
+.tramos-dia { margin-top: var(--e4); }
+.tramos-dia__cabecera {
+  display: flex;
+  align-items: baseline;
+  gap: var(--e2);
+  padding-bottom: var(--e2);
+  border-bottom: 1px solid var(--borde-fuerte);
+  color: inherit;
+  text-decoration: none;
+}
+.tramos-dia__cabecera .etiqueta { color: var(--tinta-suave); flex: 0 0 auto; }
+.tramos-dia__cabecera .titulo-3 { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--tinta-media); }
+.tramos-dia__cabecera svg { width: 13px; height: 13px; margin-left: auto; flex: 0 0 13px; color: var(--tinta-suave); align-self: center; }
+@media (hover: hover) and (pointer: fine) { .tramos-dia__cabecera:hover .etiqueta { color: var(--acento); } }
+
+/* --- Preparativos y vuelta en la barra de días -------------------------- */
+.dia-tab--pseudo { color: var(--tinta-suave); }
+.dia-tab--pseudo .dia-tab__num { display: grid; place-items: center; }
+.dia-tab--pseudo svg { width: 17px; height: 17px; }
+
+/* Un día con aviso propio o lista sin terminar. Va arriba a la derecha del
+   número, donde no compite con los puntitos de intensidad de abajo. */
+.dia-tab { position: relative; }
+.dia-tab--atencion::after {
+  content: "";
+  position: absolute;
+  top: 6px; right: 7px;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--alerta-t);
+}
+
+/* --- Móvil: las vistas sin mapa no son una hoja ------------------------- */
+@media (max-width: 899px) and (min-height: 500px) {
+  /* La hoja escribe `transform` en el elemento durante el arrastre, así que
+     ganarle exige `!important`. Sin esto, en Transporte se podía arrastrar la
+     hoja hacia abajo y descubrir un hueco vacío donde estaba el mapa. */
+  .panel--ancho {
+    position: static;
+    height: auto;
+    min-height: 0;
+    transform: none !important;
+    border-radius: 0;
+    border-top: 0;
+    box-shadow: none;
+    background: var(--lienzo);
+    backdrop-filter: none;
+  }
+  .panel--ancho .tirador { display: none; }
+  .escenario--ancho { min-height: 0; }
+  .panel--ancho .panel__cuerpo > * { max-width: none; }
+}
+
+/* =========================================================================
+   Tus datos, y una cabecera que se puede tocar
+   ========================================================================= */
+
+/* --- Cabecera: el viaje deja de ser un enlace de 37 px ------------------- */
+/* Medido antes: el título del viaje era el único acceso a su portada y ocupaba
+   37 × 26 px en móvil, la mitad del mínimo táctil. Ahora tiene su propio icono
+   en las acciones, y el título además es un objetivo de 44 px de alto. */
+a.cabecera__marca {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--e2);
+  margin-left: calc(var(--e2) * -1);
+}
+.cabecera__marca .cabecera__logo,
+.cabecera__marca .cabecera__contexto { align-self: baseline; }
+
+/* El icono de la sección en la que ya estás no invita a ir a ninguna parte. */
+.icono-boton[aria-current="page"] {
+  background: var(--acento-velo);
+  color: var(--acento);
+}
+
+/* --- Tus datos ----------------------------------------------------------- */
+.perfil__cabecera {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--e3);
+  margin-bottom: var(--e6);
+}
+.perfil__cabecera .icono-boton { margin-top: 2px; flex: 0 0 auto; }
+
+.tarjeta-datos {
+  padding: var(--e5);
+  border: 1px solid var(--borde);
+  border-radius: var(--r-l);
+  background: var(--superficie);
+}
+.tarjeta-datos + .tarjeta-datos { margin-top: var(--e4); }
+.tarjeta-datos__cabecera { display: flex; align-items: start; gap: var(--e3); }
+.tarjeta-datos__cabecera a.titulo-3 { text-decoration: none; }
+@media (hover: hover) and (pointer: fine) {
+  .tarjeta-datos__cabecera a.titulo-3:hover { color: var(--acento); }
+}
+
+.dato-privado {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px var(--e2);
+  padding: var(--e2) var(--e3);
+  border: 1px solid var(--borde);
+  border-radius: var(--r-m);
+  background: var(--lienzo);
+}
+.dato-privado + .dato-privado { margin-top: 6px; }
+.dato-privado__clave { grid-column: 1; font-size: 0.75rem; font-weight: 600; color: var(--tinta-suave); }
+.dato-privado__valor { grid-column: 1; font-size: 0.875rem; line-height: 1.45; overflow-wrap: anywhere; }
+.dato-privado .icono-boton { grid-column: 2; grid-row: 1 / 3; align-self: center; }
+
+/* --- Elegir entre opciones con nombre ------------------------------------ */
+/* Tres botones con su nombre escrito en vez de un icono que cicla: con el icono
+   había que **deducir** en cuál de los tres estados estabas. */
+.opciones { display: grid; gap: 6px; margin-top: var(--e4); }
+.opcion {
+  display: flex;
+  align-items: center;
+  gap: var(--e3);
+  width: 100%;
+  min-height: 48px;
+  padding: var(--e2) var(--e3);
+  text-align: left;
+  border: 1px solid var(--borde);
+  border-radius: var(--r-m);
+  color: var(--tinta-media);
+  transition: background-color var(--t-rapido) ease, border-color var(--t-rapido) ease,
+              color var(--t-rapido) ease, transform var(--t-pulsar) var(--sal);
+}
+.opcion svg { width: 17px; height: 17px; flex: 0 0 17px; }
+.opcion__nombre { display: block; font-size: 0.875rem; font-weight: 600; }
+.opcion__pista { display: block; margin-top: 1px; }
+.opcion:active { transform: scale(0.99); }
+@media (hover: hover) and (pointer: fine) { .opcion:hover { background: var(--superficie-2); } }
+.opcion[aria-checked="true"] {
+  border-color: var(--acento);
+  background: var(--acento-velo);
+  color: var(--acento);
+}
+.opcion[aria-checked="true"] .opcion__pista { color: inherit; opacity: 0.8; }
+
+/* En cuanto hay sitio, las opciones se reparten en fila. */
+@media (min-width: 560px) {
+  .opciones { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* --- Deslizar entre días ------------------------------------------------- */
+/* Mientras el dedo arrastra en horizontal, el panel acompaña. Sin ese
+   acompañamiento el gesto no se siente como un gesto: se siente como que la
+   pantalla cambia sola un rato después de soltar. */
+/* Sin transición: el `transform` lo lleva un muelle en rAF, y una transición de
+   CSS encima pelearía con él en cada fotograma. La razón de que sea un muelle y
+   no una transición es que una transición no se puede agarrar a mitad — lo mismo
+   que ya pasaba con la hoja arrastrable. */
+.panel__cuerpo[data-deslizando="true"] {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* El nombre del viaje en Tus datos lleva su flecha: sin ella, en táctil no hay
+   nada que diga que se puede entrar ahí. */
+.tarjeta-datos__nombre { display: inline-flex; align-items: center; gap: 6px; }
+.tarjeta-datos__nombre svg { width: 13px; height: 13px; color: var(--tinta-suave); }

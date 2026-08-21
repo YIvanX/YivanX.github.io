@@ -103,6 +103,19 @@ export function duracionCorta(min) {
   return m ? `${h}h${String(m).padStart(2, '0')}` : `${h}h`;
 }
 
+/**
+ * "1 nota", "3 notas", "0 notas".
+ *
+ * En español el plural es regular casi siempre, así que basta con la forma en
+ * singular y una `s`. Cuando no lo sea —«mes» / «meses»— se pasa el plural
+ * entero como tercer argumento.
+ *
+ * Existe porque «3 nota(s)» es lo que escribe un programa, no lo que escribe
+ * alguien, y esto lo lee Yixuan de pie en una plaza.
+ */
+export const plural = (n, singular, muchos = `${singular}s`) =>
+  `${n} ${n === 1 ? singular : muchos}`;
+
 /** Importe con la moneda del viaje. */
 export function dinero(importe, moneda = 'EUR') {
   if (importe === 0) return 'Gratis';

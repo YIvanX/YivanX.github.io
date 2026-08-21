@@ -258,10 +258,41 @@ function validarViaje(viaje, nombreArchivo) {
     if (!usados.has(id)) inf.aviso(`lugares ${id}`, 'no aparece en ningún día: no se verá en ninguna línea de tiempo');
   }
 
+  // --- Reparto: a qué día o a qué momento pertenece algo -----------------
+  // Una fecha fuera del viaje no da error en el navegador: simplemente no
+  // coincide con ningún día y el aviso o la lista **desaparecen**. Por eso se
+  // comprueba aquí, que es el único sitio donde se puede llegar a saber.
+  //
+  // El rango sale de `fechas`, no de los días declarados: la aplicación rellena
+  // los huecos con días «Sin plan» (ver datos.js), así que una fecha del rango
+  // sin entrada propia sí existe en pantalla y no puede dar error aquí.
+  const fechasDelViaje = new Set(
+    viaje.fechas?.inicio && viaje.fechas?.fin ? diasEntre(viaje.fechas.inicio, viaje.fechas.fin) : [],
+  );
+  const MOMENTOS = ['pre', 'post'];
+
+  function validarReparto(donde, x) {
+    if (x?.momento !== undefined && !MOMENTOS.includes(x.momento)) {
+      inf.error(donde, `momento "${x.momento}" no válido — solo "pre" o "post"`);
+    }
+    if (x?.dias === undefined) return;
+    if (!Array.isArray(x.dias) || !x.dias.length) {
+      inf.error(donde, 'dias tiene que ser una lista de fechas con al menos una');
+      return;
+    }
+    for (const fecha of x.dias) {
+      if (!ISO.test(String(fecha))) { inf.error(donde, `dias: "${fecha}" no es una fecha AAAA-MM-DD`); continue; }
+      if (!fechasDelViaje.has(fecha)) {
+        inf.error(donde, `dias: ${fecha} no es un día de este viaje — no se vería en ninguna parte`);
+      }
+    }
+  }
+
   // --- Listas (las claves persisten en el navegador: no pueden chocar) ---
   const idsLista = new Set();
   for (const [i, lista] of (viaje.listas || []).entries()) {
     if (!esTexto(lista?.titulo)) inf.error(`listas[${i}]`, 'falta titulo');
+    validarReparto(`listas[${i}]`, lista);
     for (const [j, item] of (lista?.items || []).entries()) {
       const donde = `listas[${i}].items[${j}]`;
       if (!esTexto(item?.id) || !KEBAB.test(item.id)) { inf.error(donde, 'id ausente o no está en kebab-case'); continue; }
@@ -279,6 +310,7 @@ function validarViaje(viaje, nombreArchivo) {
   for (const [i, a] of (viaje.avisos || []).entries()) {
     if (!esTexto(a?.titulo) || !esTexto(a?.texto)) inf.error(`avisos[${i}]`, 'necesita titulo y texto');
     if (a?.nivel && !['alto', 'medio', 'info'].includes(a.nivel)) inf.error(`avisos[${i}]`, `nivel "${a.nivel}" no válido`);
+    validarReparto(`avisos[${i}]`, a);
   }
 
   return { informe: inf, lugares: lugares.size, dias: (viaje.dias || []).length };

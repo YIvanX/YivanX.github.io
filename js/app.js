@@ -6,16 +6,25 @@
  * la URL sigue siendo compartible y recargable sin servidor que colabore.
  *
  *   #/                              el registro de viajes
+ *   #/perfil                        la cuenta: sesión y almacenamiento
  *   #/v/<viaje>                     el viaje, día por defecto
+ *   #/v/<viaje>/portada             el viaje entero: de aquí cuelga lo demás
  *   #/v/<viaje>/d/<AAAA-MM-DD>      un día
+ *   #/v/<viaje>/d/pre               preparativos, antes de salir
+ *   #/v/<viaje>/d/post              al volver
  *   #/v/<viaje>/l/<lugar>?d=<día>   la ficha de un lugar
- *   #/v/<viaje>/transporte|listas|info
+ *   #/v/<viaje>/transporte|listas
+ *
+ * Se entra a un viaje por su **día**, no por su portada. La jerarquía dice que
+ * el viaje contiene al día, pero durante el viaje se abre esto veinte veces al
+ * día para ver qué toca ahora, y ese gesto no puede costar un toque más. A la
+ * portada se sube con el icono de la maleta en la cabecera, o tocando el título.
  */
 
 import { html, icono, $ } from './ui/dom.js';
 import { montarRegistro } from './vistas/registro.js';
+import { montarPerfil } from './vistas/perfil.js';
 import { montarViaje } from './vistas/viaje.js';
-import { alternarTema, preferenciaActual } from './ui/tema.js';
 import { brindis } from './ui/brindis.js';
 import { recogerSesionDeUrl } from './nube.js';
 
@@ -27,31 +36,25 @@ function analizar(hash) {
   const params = new URLSearchParams(consulta || '');
   const partes = camino.split('/').filter(Boolean);
 
+  if (partes[0] === 'perfil') return { nombre: 'perfil' };
   if (partes[0] !== 'v' || !partes[1]) return { nombre: 'registro' };
 
   const viajeId = partes[1];
   const seccion = partes[2];
 
-  if (seccion === 'd' && partes[3]) return { nombre: 'viaje', viajeId, vista: 'dia', fecha: partes[3] };
-  if (seccion === 'l' && partes[3]) return { nombre: 'viaje', viajeId, vista: 'lugar', lugarId: partes[3], fecha: params.get('d') || null };
-  if (['transporte', 'listas', 'info'].includes(seccion)) return { nombre: 'viaje', viajeId, vista: seccion, fecha: params.get('d') || null };
-  return { nombre: 'viaje', viajeId, vista: 'dia', fecha: null };
-}
-
-function alCambiarTema() {
-  const preferencia = alternarTema();
-  const nombres = { auto: 'automático', claro: 'claro', oscuro: 'oscuro' };
-  actualizarIconoTema();
-  brindis(`Tema ${nombres[preferencia]}`);
-}
-
-function actualizarIconoTema() {
-  const p = preferenciaActual();
-  const nombre = p === 'oscuro' ? 'luna' : p === 'claro' ? 'sol' : 'capas';
-  for (const boton of document.querySelectorAll('[data-accion="tema"]')) {
-    boton.innerHTML = `<svg aria-hidden="true"><use href="#i-${nombre}"/></svg>`;
-    boton.setAttribute('title', `Tema: ${p}`);
+  if (seccion === 'd' && partes[3]) {
+    // 'pre' y 'post' son pestañas de la barra de días que no son fechas. Van por
+    // la misma ruta a propósito: se seleccionan en la misma barra y se recorren
+    // con el mismo gesto, así que compartir prefijo es lo coherente.
+    const vista = partes[3] === 'pre' || partes[3] === 'post' ? partes[3] : 'dia';
+    return { nombre: 'viaje', viajeId, vista, fecha: partes[3] };
   }
+  if (seccion === 'l' && partes[3]) return { nombre: 'viaje', viajeId, vista: 'lugar', lugarId: partes[3], fecha: params.get('d') || null };
+  // `info` era el nombre viejo de la portada. Se mantiene para no dejar muerto
+  // ningún enlace ya compartido.
+  if (seccion === 'info') return { nombre: 'viaje', viajeId, vista: 'portada', fecha: null };
+  if (['transporte', 'listas', 'portada'].includes(seccion)) return { nombre: 'viaje', viajeId, vista: seccion, fecha: params.get('d') || null };
+  return { nombre: 'viaje', viajeId, vista: 'dia', fecha: null };
 }
 
 function fallo(mensaje, detalle) {
@@ -71,9 +74,13 @@ async function enrutar() {
 
   try {
     if (ruta.nombre === 'registro') {
-      if (vistaActual?.viajeId) { vistaActual.destruir(); vistaActual = null; }
-      if (!vistaActual) vistaActual = await montarRegistro(raiz, { alTema: alCambiarTema });
+      if (vistaActual?.viajeId || vistaActual?.nombre === 'perfil') { vistaActual.destruir(); vistaActual = null; }
+      if (!vistaActual) vistaActual = await montarRegistro(raiz);
       document.title = 'Bitácora';
+    } else if (ruta.nombre === 'perfil') {
+      vistaActual?.destruir?.();
+      vistaActual = await montarPerfil(raiz);
+      document.title = 'Tu perfil · Bitácora';
     } else {
       // Cambiar de día o abrir una ficha no vuelve a montar el mapa.
       if (vistaActual?.viajeId === ruta.viajeId) {
@@ -83,10 +90,13 @@ async function enrutar() {
         vistaActual = null;
         raiz.className = 'cargando';
         raiz.innerHTML = '<span class="girador" role="status" aria-label="Cargando"></span>';
-        vistaActual = await montarViaje(raiz, ruta, { alTema: alCambiarTema });
+        vistaActual = await montarViaje(raiz, ruta);
       }
+      // El título se fija en cada vuelta, no solo al montar: si no, el de la
+      // pantalla anterior —«Tu perfil»— se quedaba pegado en la pestaña del
+      // navegador mientras estabas mirando un día del viaje.
+      document.title = `${vistaActual.titulo || 'Bitácora'} · Bitácora`;
     }
-    actualizarIconoTema();
   } catch (e) {
     console.error(e);
     fallo('No se ha podido abrir esto', e.message);

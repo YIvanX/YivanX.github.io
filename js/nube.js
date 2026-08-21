@@ -317,7 +317,7 @@ export async function miembros(viajeId) {
 /**
  * Invitar exige el id del usuario, no su correo: `auth.users` no es consultable
  * desde el cliente y está bien que no lo sea. El invitado entra una vez con su
- * correo y comparte su identificador, que se ve en Viaje → Nube.
+ * correo y comparte su identificador, que se ve en su perfil.
  */
 export async function invitar(viajeId, usuarioId, rol = 'editor') {
   await api('viaje_miembros', {
@@ -334,7 +334,7 @@ export async function comprobar() {
   if (!haySesion()) return { ok: false, motivo: 'Configurada, pero sin sesión iniciada' };
   try {
     const v = await listarViajes();
-    return { ok: true, motivo: `Conectado · ${v.length} viaje(s) en la nube`, viajes: v.length };
+    return { ok: true, motivo: `Conectado · ${v.length} ${v.length === 1 ? 'viaje' : 'viajes'} en la nube`, viajes: v.length };
   } catch (e) {
     return { ok: false, motivo: e.message };
   }

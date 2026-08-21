@@ -127,6 +127,38 @@ Tres tipos de bloque:
 edificio del que solo se mira el exterior. El horario de taquilla no se le
 aplica, y en la cronología sale como «Por fuera» en vez de como cerrado.
 
+**Los traslados no se escriben dos veces.** La vista Transporte se calcula de
+estos bloques: fecha, hora, modo, origen, destino, duración y enlace a Maps salen
+de aquí. No hace falta repetirlos en `transporte[]`, y repetirlos es peor que no
+hacerlo, porque en cuanto cambias uno el otro miente. Lo que sí va en
+`transporte[]` es lo que **no** es un tramo de un día: el alquiler del coche, un
+abono, un billete de avión con su localizador.
+
+### Decir a qué día pertenece un aviso o una lista
+
+Un aviso sin más sale en la portada del viaje, y ahí se lee una vez y ya. Con
+`dias` sube **dentro de ese día del itinerario**, que es donde de verdad hace
+falta: el peaje de la AP-71 importa el día que se va a Astorga, no el día que
+montas el JSON.
+
+```json
+{ "nivel": "medio", "titulo": "La AP-71 es de peaje", "texto": "…", "dias": ["2026-09-01"] }
+{ "titulo": "Qué llevar", "momento": "pre", "items": [ … ] }
+{ "titulo": "Lo de la excursión", "dias": ["2026-09-02"], "items": [ … ] }
+```
+
+| Qué pones | Dónde se lee |
+|---|---|
+| nada | la portada del viaje, o la pestaña Listas |
+| `"dias": ["…"]` | dentro de cada uno de esos días, en una banda plegable |
+| `"momento": "pre"` | Preparativos, la pestaña de antes del primer día |
+| `"momento": "post"` | Al volver, la pestaña de después del último |
+| los dos | en los dos sitios, a propósito |
+
+Los dos campos valen igual para `avisos[]` y para `listas[]`. **Cada fecha tiene
+que caer dentro del viaje**: el validador rechaza una que no, porque en pantalla
+no daría error — haría desaparecer el aviso sin que nadie se enterase.
+
 ### Que se lea, no que se estudie
 
 Un lugar tiene cuatro piezas de texto y cada una hace algo distinto. Escribirlas
@@ -308,6 +340,9 @@ No es un linter de estilo: comprueba lo que de verdad rompe un viaje.
 - Coordenadas fuera de rango, en `[0,0]`, o descolocadas respecto al resto.
 - Fechas desordenadas, duplicadas o fuera del rango del viaje.
 - Ids de tarea repetidos entre listas (se pisarían al guardarse).
+- **Un `dias` de un aviso o de una lista que apunta fuera del viaje.** No daría
+  error en pantalla: haría desaparecer el aviso, que es peor.
+- Un `momento` que no sea `pre` ni `post`.
 - Que el registro y los archivos de viaje dicen lo mismo.
 
 ---
@@ -343,7 +378,7 @@ en el mapa, que funciona sin conexión— y lo mete en su hora. Desde la ficha d
 cualquier parada se puede **quitar del día**, que la oculta sin borrarla.
 
 Todo eso vive en el navegador. Cuando un cambio merezca ser permanente,
-**Viaje → Copiar como JSON** lo deja listo para pegar en el archivo del viaje.
+**la portada del viaje → Copiar como JSON** lo deja listo para pegar en el archivo del viaje.
 
 Ese es el flujo recomendado para montar un viaje nuevo: bosquejarlo en la
 aplicación con el mapa delante, y volcar al JSON cuando esté.
@@ -361,7 +396,7 @@ Fuera del JSON:
 - Referencias de reserva, localizadores, números de billete.
 - Teléfonos y correos.
 
-Eso va al panel **Viaje → Datos privados** de la aplicación, que guarda en el
+Eso va al panel **la portada del viaje → Datos privados** de la aplicación, que guarda en el
 navegador y no sube a ninguna parte. En el JSON, el alojamiento lleva
 coordenadas aproximadas del barrio y nada más.
 

@@ -23,10 +23,13 @@
     {
       "nivel": "alto",
       "titulo": "Lo que puede romper el viaje",
-      "texto": "Un tren con dos frecuencias al día, un museo que cierra los lunes, una reserva sin la que un día entero no existe. Aquí va lo que hay que saber antes de nada, no lo que estaría bien saber."
+      "texto": "Un tren con dos frecuencias al día, un museo que cierra los lunes, una reserva sin la que un día entero no existe. Aquí va lo que hay que saber antes de nada, no lo que estaría bien saber.",
+      "dias": ["2026-01-01"],
+      "momento": "pre"
     }
   ],
   "_avisos": "nivel: alto | medio | info. Si no hay nada que pueda romper el viaje, borra el bloque entero.",
+  "_avisos_reparto": "dias y momento deciden DÓNDE se lee. Sin ninguno de los dos, el aviso sale en la portada del viaje. Con dias, sube dentro de esos días del itinerario, que es donde de verdad hace falta. Con momento pre o post, va a Preparativos o a Al volver. Se pueden poner los dos: lo que se reserva antes de salir y además importa el día que toca sale en los dos sitios, a propósito. Cada fecha de dias tiene que caer dentro de fechas.inicio..fin o el validador la rechaza: una fecha fuera del viaje no daría error en pantalla, haría desaparecer el aviso.",
 
   "lugares": [
     {
@@ -139,10 +142,12 @@
   "listas": [
     {
       "titulo": "Antes de salir",
+      "momento": "pre",
       "items": [
         { "id": "una-tarea", "texto": "Qué hay que hacer", "detalle": "Cuándo y cómo" }
       ],
-      "_items": "Los id son claves de guardado en el navegador: tienen que ser únicos en todo el viaje, no solo dentro de su lista."
+      "_items": "Los id son claves de guardado en el navegador: tienen que ser únicos en todo el viaje, no solo dentro de su lista.",
+      "_reparto": "Igual que en los avisos: momento pre o post la lleva a Preparativos o a Al volver, y dias la mete dentro de esos días del itinerario. Sin ninguno de los dos es una lista del viaje entero y solo sale en la pestaña Listas."
     }
   ],
 

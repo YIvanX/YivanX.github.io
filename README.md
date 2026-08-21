@@ -36,14 +36,32 @@ destino escrito en el código, así que el siguiente viaje no toca ni una línea
   ficha. Todo por coordenadas, nunca por nombre.
 - **Marcar visitado, tomar notas y adjuntar fotos**, que se quedan en el
   dispositivo y se pueden exportar a un archivo.
-- Transporte tramo a tramo, listas de reservas y equipaje con su progreso,
-  presupuesto, avisos de lo que puede romper el viaje, y buscador con `Ctrl+K`.
+- **Cada cosa en su nivel.** El viaje tiene su portada —con su icono en la
+  cabecera—, de ella cuelga el itinerario, y **cada día lleva encima lo suyo**:
+  sus avisos, los traslados de ese día y su lista, en bandas que se despliegan
+  sin salir del plan. Antes del primer día hay **Preparativos** y después del
+  último, **Al volver**.
+- **Se pasa de día deslizando**, además de con las pestañas y las flechas. El
+  gesto decide por la velocidad y no por la distancia, así que un golpe seco
+  corto basta, y el panel acompaña al dedo mientras arrastras.
+- **El transporte se calcula del itinerario**, no se escribe aparte: fecha, hora,
+  modo, origen, destino, duración y enlace a Maps salen de los propios traslados,
+  así que no pueden decir algo distinto del día. Lo que se contrata o se reserva
+  —el coche de alquiler, un abono— va aparte, en Preparativos.
+- Listas de reservas y equipaje con su progreso, presupuesto, avisos de lo que
+  puede romper el viaje, y buscador con `Ctrl+K`.
 - Tema claro y oscuro, incluido el mapa.
 
 ## Nube, opcional
 
 Con Supabase configurado, el viaje y el estado personal se sincronizan entre
-dispositivos y se puede compartir con otra persona. **Sin configurar, o con
+dispositivos y se puede compartir con otra persona.
+
+**`#/perfil` — «Tus datos» — es todo lo que es tuyo y no del viaje**: la cuenta,
+el tema, lo que ocupa el navegador y, por cada viaje, sus datos privados y sus
+recuerdos. El viaje es lo público, que sale del repositorio; Tus datos es lo
+privado, que no sale del navegador. Si **este** viaje está sincronizado y en qué
+versión, eso sí está en la portada del viaje. **Sin configurar, o con
 Supabase caído, la aplicación funciona exactamente igual** leyendo el repositorio
 y guardando en el navegador: la nube es la fuente, el repositorio es el suelo.
 
@@ -62,7 +80,7 @@ para las herramientas de línea de comandos.
 ```bash
 node herramientas/servir.mjs                 # http://localhost:8080/
 node herramientas/validar.mjs                # revisa todos los viajes
-node --test herramientas/*.test.mjs          # 46 pruebas: horarios y capa del itinerario
+npm run probar                               # 101 pruebas: horarios, capa, nube, sincronización, agenda
 
 node herramientas/nuevo-viaje.mjs <id> "<Título>" <inicio> <fin> [--desde <viaje>]
 node herramientas/coordenadas.mjs --area "<ciudad>" "<lugar>"…
@@ -93,14 +111,17 @@ css/                    base (tokens y tipografía) · componentes · mapa
 js/
   app.js                enrutado por hash y arranque
   datos.js              carga y normaliza los JSON
+  agenda.js             qué aviso, lista o tramo va en qué día (puro, con pruebas)
   estado.js             localStorage + IndexedDB (visitados, notas, fotos)
   horarios.js           ¿está abierto? — compartido con el validador
   mapa.js               envoltorio de Leaflet
   enlaces-mapa.js       rutas y enlaces de Google Maps
   personalizacion.js    capa de paradas añadidas y quitadas (puro, con pruebas)
   nube.js               Supabase por HTTP plano, sin SDK. Opcional
-  vistas/               registro · viaje · panel
+  vistas/               registro · perfil · viaje · panel
   ui/                   dom · hoja arrastrable · buscador · buscar-lugar · tema · avisos
+                        (dom.js exporta el muelle, la proyección de inercia y la
+                         goma elástica que usan la hoja y el gesto de cambiar de día)
 vendor/leaflet/         Leaflet 1.9.4, local
 data/
   viajes.json           el registro
@@ -121,7 +142,7 @@ sw.js                   service worker
 cualquiera, y un itinerario dice qué días no hay nadie en casa.
 
 Direcciones exactas, referencias de reserva y teléfonos van al panel
-**Viaje → Datos privados**, que guarda solo en el navegador. Las fotos viven en
+**Tus datos** (el icono de persona), que guarda solo en el navegador. Las fotos viven en
 IndexedDB y publicar una es una decisión explícita.
 
 ---

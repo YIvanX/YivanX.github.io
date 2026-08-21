@@ -1,15 +1,24 @@
 /**
- * Contenido del panel: cronología del día, ficha de lugar, transporte, listas
- * e información del viaje.
+ * Contenido del panel, por niveles: portada del viaje, un día del itinerario,
+ * ficha de un lugar, preparativos, vuelta, transporte y listas.
  *
  * Cada función devuelve HTML. El montaje y los eventos van en viaje.js, para
  * que aquí solo haya decisiones de qué se enseña y en qué orden.
+ *
+ * **El orden dentro de un día no es estético.** En el móvil el panel es una hoja
+ * que asoma 132 px sobre el mapa (`ui/hoja.js`), y eso es lo único que se ve
+ * andando por la calle: por ahí van el título, la fecha y las bandas de hoy, y
+ * los botones de editar bajan por debajo de ellas.
  */
 
-import { html, esc, icono, md, crudo, duracionTexto, duracionCorta, dinero } from '../ui/dom.js';
-import { CATEGORIAS, MODOS, INTENSIDADES, NIVELES } from '../datos.js';
+import { html, esc, icono, md, crudo, plural, duracionTexto, duracionCorta, dinero } from '../ui/dom.js';
+import { CATEGORIAS, MODOS, INTENSIDADES, NIVELES, ESTADOS_VIAJE } from '../datos.js';
 import { claveVisto } from '../estado.js';
 import { rutaDelDia, enlaceLugar, enlaceComoLlegar, enlaceTramo } from '../enlaces-mapa.js';
+import {
+  avisosDelDia, avisosDelViaje, avisosDeMomento, listasDe, progresoDeListas,
+  tramosDelDia, tramosDelViaje, resumenDeTramos, hayPreViaje, hayPostViaje,
+} from '../agenda.js';
 import {
   fechaLarga, textoHorario, revisarBloque, estadoEn, aMinutos, aHora, aIso, claveDia, NOMBRE_DIA,
 } from '../horarios.js';
@@ -209,6 +218,148 @@ function barraPendientes(cuantos) {
     </div>`);
 }
 
+// --- Piezas que se repiten en varios niveles ------------------------------
+// Una sola marca para cada cosa, usada desde el día, la portada, los
+// preparativos y la vuelta. Si hubiera una copia por sitio, un arreglo saldría
+// bien en uno y mal en los otros tres sin que nadie se enterase.
+
+const CLASE_AVISO = { alto: 'aviso--alto', medio: 'aviso--medio', info: 'aviso--info' };
+
+function pintarAviso(a) {
+  return html`
+    <div class="aviso ${CLASE_AVISO[a.nivel] || 'aviso--info'}">
+      ${icono('aviso')}
+      <div><div class="aviso__titulo">${a.titulo}</div><div class="aviso__texto">${a.texto}</div></div>
+    </div>`;
+}
+
+/**
+ * Una lista marcable.
+ *
+ * `data-lista` es el ancla: el manejador de `[data-tarea]` de viaje.js sube por
+ * ahí para repintar el progreso. Antes subía hasta `.panel__seccion`, que dentro
+ * de una banda del día no existe — y ese `closest` habría devuelto `null` justo
+ * al marcar la primera tarea desde el día.
+ */
+function pintarLista(lista, estado, { foco = false } = {}) {
+  const hechas = lista.items.filter((i) => estado.tareas[i.id]).length;
+  const pct = lista.items.length ? Math.round((hechas / lista.items.length) * 100) : 0;
+  return html`
+    <div data-lista>
+      <h3 class="titulo-3" ${foco ? crudo('data-foco tabindex="-1"') : ''}>${lista.titulo}</h3>
+      <div class="progreso-lista">
+        <span class="progreso-lista__pista"><span class="progreso-lista__valor" style="width:${pct}%"></span></span>
+        <span class="menudo">${hechas}/${lista.items.length}</span>
+      </div>
+      <div style="margin-top:var(--e3)">
+        ${lista.items.map((item) => html`
+          <button type="button" class="tarea" role="checkbox"
+                  aria-checked="${String(Boolean(estado.tareas[item.id]))}" data-tarea="${item.id}">
+            <span class="marca">${icono('check')}</span>
+            <span>
+              <span class="tarea__texto" style="display:block">${item.texto}</span>
+              ${item.detalle ? crudo(`<span class="tarea__detalle" style="display:block">${esc(item.detalle)}</span>`) : ''}
+            </span>
+          </button>`)}
+      </div>
+    </div>`;
+}
+
+/** Un tramo calculado del itinerario, con su enlace a Google Maps si lo tiene. */
+function pintarTramo(t) {
+  const modo = MODOS[t.modo] || { etiqueta: t.modo || 'Traslado', icono: 'adelante' };
+  const url = t.desde && t.hasta ? enlaceTramo(t.desde, t.hasta, t.modo) : '';
+  const ruta = [t.desde?.nombre, t.hasta?.nombre].filter(Boolean).join(' → ');
+  return html`
+    <div class="tramo">
+      <div class="tramo__cabecera">
+        ${icono(modo.icono)}
+        <span class="titulo-3">${ruta || modo.etiqueta}</span>
+        ${url ? crudo(`<a class="bloque__mapa bloque__mapa--tramo" style="position:static;margin-left:auto"
+             href="${esc(url)}" target="_blank" rel="noopener noreferrer"
+             aria-label="Cómo ir de ${esc(t.desde.nombre)} a ${esc(t.hasta.nombre)} en Google Maps"
+             title="Cómo llegar"><svg aria-hidden="true"><use href="#i-adelante"/></svg></a>`) : ''}
+      </div>
+      <div class="tramo__datos">
+        ${t.inicio ? crudo(`<span class="tramo__dato"><b>${esc(t.inicio)}${t.fin ? ' – ' + esc(t.fin) : ''}</b></span>`) : ''}
+        <span class="tramo__dato">${modo.etiqueta}</span>
+        ${t.minutos ? crudo(`<span class="tramo__dato">${esc(duracionTexto(t.minutos))}</span>`) : ''}
+        ${t.opcional ? crudo('<span class="chip chip--saltable">Se puede saltar</span>') : ''}
+      </div>
+      ${t.detalle ? crudo(`<p class="tramo__nota">${esc(t.detalle)}</p>`) : ''}
+    </div>`;
+}
+
+/**
+ * Una banda plegable del día.
+ *
+ * `<details>` nativo a propósito: sin estado en JS, funciona con teclado y no
+ * compite con la delegación de eventos que ya hay en el panel. **Todas nacen
+ * cerradas**, incluso las de nivel alto: lo que asoma en el móvil son 132 px, y
+ * una banda que se abre sola se los come. El resumen ya dice cuántas hay y de
+ * qué color; el detalle está a un toque.
+ */
+function banda(nombre, { icono: nombreIcono, titulo, pista = '', clase = '', cuerpo }) {
+  return html`
+    <details class="banda ${clase}" data-banda="${nombre}">
+      <summary class="banda__resumen">
+        ${icono(nombreIcono, 'banda__icono')}
+        <span class="banda__titulo">${titulo}</span>
+        ${pista ? crudo(`<span class="banda__pista menudo">${esc(pista)}</span>`) : ''}
+        ${icono('adelante', 'banda__flecha')}
+      </summary>
+      <div class="banda__cuerpo">${cuerpo}</div>
+    </details>`;
+}
+
+/**
+ * Lo que aplica a este día y no al viaje entero: sus avisos, sus traslados y su
+ * lista. **Lo que no tiene contenido no se pinta**, así que un día pelado se ve
+ * exactamente igual que antes de que estas bandas existieran.
+ */
+function bandasDelDia(viaje, dia, estado) {
+  const avisos = avisosDelDia(viaje, dia.fecha);
+  const tramos = tramosDelDia(dia);
+  const listas = listasDe(viaje, dia.fecha);
+  if (!avisos.length && !tramos.length && !listas.length) return '';
+
+  const bandas = [];
+
+  if (avisos.length) {
+    const grave = avisos.some((a) => a.nivel === 'alto');
+    bandas.push(banda('avisos', {
+      icono: 'aviso',
+      clase: grave ? 'banda--grave' : '',
+      titulo: `${avisos.length} aviso${avisos.length === 1 ? '' : 's'} de este día`,
+      cuerpo: html`${avisos.map(pintarAviso)}`,
+    }));
+  }
+
+  if (tramos.length) {
+    const r = resumenDeTramos(tramos);
+    const modos = r.modos.map((m) => (MODOS[m] || { etiqueta: m }).etiqueta).join(' y ');
+    bandas.push(banda('transporte', {
+      icono: r.modos.length === 1 ? (MODOS[r.modos[0]]?.icono || 'transporte') : 'transporte',
+      titulo: modos || 'Traslados',
+      pista: [`${r.cuantos} tramo${r.cuantos === 1 ? '' : 's'}`, r.minutos ? duracionCorta(r.minutos) : '']
+        .filter(Boolean).join(' · '),
+      cuerpo: html`${tramos.map(pintarTramo)}`,
+    }));
+  }
+
+  if (listas.length) {
+    const { hechas, total } = progresoDeListas(listas, estado.tareas);
+    bandas.push(banda('lista', {
+      icono: 'lista',
+      titulo: listas.length === 1 ? listas[0].titulo : 'Listas de este día',
+      pista: `${hechas}/${total}`,
+      cuerpo: html`${listas.map((l) => pintarLista(l, estado))}`,
+    }));
+  }
+
+  return html`<div class="bandas">${bandas}</div>`;
+}
+
 export function pintarDia(viaje, dia, estado, { ocultos = 0 } = {}) {
   const intensidad = INTENSIDADES[dia.intensidad] || INTENSIDADES.suave;
   const esHoy = dia.fecha === aIso(new Date());
@@ -239,9 +390,10 @@ export function pintarDia(viaje, dia, estado, { ocultos = 0 } = {}) {
         ${dia.totalParadas ? crudo(`<span class="chip">${dia.totalParadas} parada${dia.totalParadas === 1 ? '' : 's'}</span>`) : ''}
         ${esHoy ? crudo('<span class="chip chip--ok">Hoy</span>') : ''}
       </div>
-      <h2 class="titulo-1" data-foco tabindex="-1">${dia.titulo}</h2>
+      <h1 class="titulo-1" data-foco tabindex="-1">${dia.titulo}</h1>
       <p class="menudo" style="margin-top:4px">${fechaLarga(dia.fecha)}</p>
       ${dia.resumen ? crudo(`<p class="dia-cabecera__resumen secundario">${esc(dia.resumen)}</p>`) : ''}
+      ${bandasDelDia(viaje, dia, estado)}
       ${enlaceRuta(dia)}
       <div class="dia-cabecera__editar">
         <button type="button" class="boton" data-accion="anadir-parada">${icono('mas')}Añadir una parada</button>
@@ -292,7 +444,7 @@ export function pintarFicha(viaje, lugar, estado, { fecha, bloqueActual = null }
   return html`
     <div class="ficha__cabecera">
       <button type="button" class="icono-boton" data-accion="atras" aria-label="Volver">${icono('atras')}</button>
-      <h2 class="titulo-3 ficha__nombre" data-foco tabindex="-1">${lugar.nombre}</h2>
+      <h1 class="titulo-3 ficha__nombre" data-foco tabindex="-1">${lugar.nombre}</h1>
       <button type="button" class="icono-boton" data-accion="centrar" style="margin-left:auto" aria-label="Centrar en el mapa">${icono('pin')}</button>
     </div>
     ${lugar.imagen ? crudo(`
@@ -400,14 +552,17 @@ export function pintarFicha(viaje, lugar, estado, { fecha, bloqueActual = null }
 
 // --- Transporte -----------------------------------------------------------
 
-export function pintarTransporte(viaje) {
-  if (!viaje.transporte?.length) {
-    return html`<div class="vacio"><p class="secundario">Este viaje no tiene transporte declarado.</p></div>`;
-  }
+/** Los contratos y reservas escritos a mano en `transporte[]`. */
+function pintarContratos(viaje, { foco = false } = {}) {
+  if (!viaje.transporte?.length) return '';
   return html`
     <div class="panel__seccion">
-      <h2 class="titulo-2" data-foco tabindex="-1">Transporte</h2>
-      <p class="secundario" style="margin-top:4px">Cada tramo, con su duración, su frecuencia y el descuento que aplica.</p>
+      ${crudo(foco ? '<h1 class="titulo-2" data-foco tabindex="-1">Contratos y reservas</h1>'
+                   : '<h2 class="titulo-2">Contratos y reservas</h2>')}
+      <p class="menudo" style="margin-top:4px">
+        Lo que se contrata o se reserva, con su servicio, su precio y su descuento.
+        Los tramos concretos de cada día salen del itinerario.
+      </p>
       <div style="margin-top:var(--e3)">
         ${viaje.transporte.map((t) => {
           const modo = MODOS[t.modo] || { etiqueta: t.modo, icono: 'adelante' };
@@ -428,38 +583,144 @@ export function pintarTransporte(viaje) {
     </div>`;
 }
 
+/**
+ * Todo el transporte del viaje.
+ *
+ * Los tramos **se calculan** de los bloques de traslado de cada día, no se leen
+ * de `transporte[]`. Escritos a mano en dos sitios acaban discrepando: en este
+ * viaje ya pasó, con una entrada que decía «Ponferrada → León» cuando el bloque
+ * real de ese día salía de Villafranca. Calculado, no puede desviarse.
+ */
+export function pintarTransporte(viaje) {
+  const grupos = tramosDelViaje(viaje);
+  if (!grupos.length && !viaje.transporte?.length) {
+    return html`<div class="vacio"><p class="secundario">Este viaje no tiene transporte declarado.</p></div>`;
+  }
+
+  const total = grupos.reduce((s, g) => s + resumenDeTramos(g.tramos).minutos, 0);
+  const cuantos = grupos.reduce((s, g) => s + g.tramos.length, 0);
+
+  return html`
+    ${grupos.length ? html`
+      <div class="panel__seccion">
+        <h1 class="titulo-2" data-foco tabindex="-1">Transporte</h1>
+        <p class="secundario" style="margin-top:4px">
+          ${cuantos} tramo${cuantos === 1 ? '' : 's'} en ${grupos.length} día${grupos.length === 1 ? '' : 's'}${total ? `, ${duracionTexto(total)} en total` : ''}.
+          Salen del itinerario, así que no pueden decir algo distinto de él.
+        </p>
+        ${grupos.map((g) => html`
+          <div class="tramos-dia">
+            <a class="tramos-dia__cabecera" href="#/v/${viaje.id}/d/${g.dia.fecha}">
+              <span class="etiqueta">${fechaLarga(g.dia.fecha)}</span>
+              <span class="titulo-3">${g.dia.titulo || ''}</span>
+              ${icono('adelante')}
+            </a>
+            ${g.tramos.map(pintarTramo)}
+          </div>`)}
+      </div>` : ''}
+    ${pintarContratos(viaje, { foco: !grupos.length })}`;
+}
+
 // --- Listas ---------------------------------------------------------------
 
+/**
+ * Todas las listas del viaje, agrupadas por dónde viven.
+ *
+ * Una lista de un día concreto también sale aquí, con su fecha delante: esta es
+ * la vista de «enséñamelo todo junto», y esconder algo en ella obligaría a
+ * recorrer los seis días para encontrarlo.
+ */
 export function pintarListas(viaje, estado) {
   if (!viaje.listas?.length) {
     return html`<div class="vacio"><p class="secundario">Este viaje no tiene listas.</p></div>`;
   }
-  return viaje.listas.map((lista, i) => {
-    const hechas = lista.items.filter((i) => estado.tareas[i.id]).length;
-    const pct = lista.items.length ? Math.round((hechas / lista.items.length) * 100) : 0;
-    return html`
+
+  const grupos = [
+    { titulo: 'Antes de salir', listas: listasDe(viaje, 'pre') },
+    { titulo: 'Del viaje', listas: listasDe(viaje, 'viaje') },
+    ...viaje.dias
+      .map((d) => ({ titulo: fechaLarga(d.fecha), listas: listasDe(viaje, d.fecha) }))
+      .filter((g) => g.listas.length),
+    { titulo: 'Al volver', listas: listasDe(viaje, 'post') },
+  ].filter((g) => g.listas.length);
+
+  const { hechas, total } = progresoDeListas(viaje.listas, estado.tareas);
+
+  return html`
+    <div class="panel__seccion">
+      <h1 class="titulo-2" data-foco tabindex="-1">Listas</h1>
+      <p class="secundario" style="margin-top:4px">${hechas} de ${total} marcadas.</p>
+    </div>
+    ${grupos.map((g) => html`
       <div class="panel__seccion">
-        <h2 class="titulo-2" ${i === 0 ? 'data-foco tabindex="-1"' : ''}>${lista.titulo}</h2>
-        <div class="progreso-lista">
-          <span class="progreso-lista__pista"><span class="progreso-lista__valor" style="width:${pct}%"></span></span>
-          <span class="menudo">${hechas}/${lista.items.length}</span>
-        </div>
-        <div style="margin-top:var(--e3)">
-          ${lista.items.map((item) => html`
-            <button type="button" class="tarea" role="checkbox"
-                    aria-checked="${String(Boolean(estado.tareas[item.id]))}" data-tarea="${item.id}">
-              <span class="marca">${icono('check')}</span>
-              <span>
-                <span class="tarea__texto" style="display:block">${item.texto}</span>
-                ${item.detalle ? crudo(`<span class="tarea__detalle" style="display:block">${esc(item.detalle)}</span>`) : ''}
-              </span>
-            </button>`)}
-        </div>
-      </div>`;
-  }).join('');
+        <h2 class="titulo-2">${g.titulo}</h2>
+        ${g.listas.map((lista) => html`<div style="margin-top:var(--e4)">${pintarLista(lista, estado)}</div>`)}
+      </div>`)}`;
 }
 
-// --- Información del viaje ------------------------------------------------
+// --- Preparativos y vuelta ------------------------------------------------
+
+export function pintarPreparativos(viaje, estado) {
+  const avisos = avisosDeMomento(viaje, 'pre');
+  const listas = listasDe(viaje, 'pre');
+  const { hechas, total } = progresoDeListas(listas, estado.tareas);
+
+  return html`
+    <div class="panel__seccion">
+      <h1 class="titulo-2" data-foco tabindex="-1">Preparativos</h1>
+      <p class="secundario" style="margin-top:4px">
+        Lo que hay que dejar resuelto antes de salir${total ? `. Van ${hechas} de ${total}` : ''}.
+      </p>
+    </div>
+
+    ${avisos.length ? html`
+      <div class="panel__seccion">
+        <h2 class="titulo-2" style="margin-bottom:var(--e3)">Resolver antes de salir</h2>
+        ${avisos.map(pintarAviso)}
+      </div>` : ''}
+
+    ${listas.map((lista) => html`
+      <div class="panel__seccion">${pintarLista(lista, estado)}</div>`)}
+
+    ${pintarContratos(viaje)}
+
+    ${!avisos.length && !listas.length && !viaje.transporte?.length ? html`
+      <div class="vacio">
+        ${icono('lista')}
+        <p class="secundario">Todavía no hay nada marcado como preparativo.</p>
+        <p class="menudo" style="margin-top:8px">
+          Se marca poniendo <code>"momento": "pre"</code> en una lista o en un aviso del archivo del viaje.
+        </p>
+      </div>` : ''}`;
+}
+
+export function pintarAlVolver(viaje, estado) {
+  const avisos = avisosDeMomento(viaje, 'post');
+  const listas = listasDe(viaje, 'post');
+
+  return html`
+    <div class="panel__seccion">
+      <h1 class="titulo-2" data-foco tabindex="-1">Al volver</h1>
+      <p class="secundario" style="margin-top:4px">Lo que queda por hacer cuando el viaje ya ha terminado.</p>
+    </div>
+
+    ${avisos.length ? html`<div class="panel__seccion">${avisos.map(pintarAviso)}</div>` : ''}
+    ${listas.map((lista) => html`<div class="panel__seccion">${pintarLista(lista, estado)}</div>`)}
+
+    <div class="panel__seccion">
+      <h2 class="titulo-2">Guardar los recuerdos</h2>
+      <p class="menudo" style="margin-top:4px">
+        Lo visitado, las notas y las fotos viven en este navegador. Si se limpia, se
+        pierden, y el archivo exportado es la única copia.
+      </p>
+      <a class="boton boton--principal boton--bloque" href="#/perfil" style="margin-top:var(--e3)">
+        ${icono('descarga')}Exportar desde Tus datos
+      </a>
+    </div>`;
+}
+
+
+// --- Portada del viaje ----------------------------------------------------
 
 /**
  * De dónde ha salido el viaje que estás viendo.
@@ -476,30 +737,121 @@ const ORIGEN = {
   'sin-nube': () => 'Del repositorio',
 };
 
-export function pintarInfo(viaje, { privados = { campos: [] }, capa = null, nube = null } = {}) {
-  const niveles = { alto: 'aviso--alto', medio: 'aviso--medio', info: 'aviso--info' };
+/** Una fila de la lista de días de la portada. */
+function filaDeDia(viaje, dia, { hoy, atencion }) {
+  const intensidad = INTENSIDADES[dia.intensidad] || INTENSIDADES.suave;
+  return html`
+    <a class="fila-dia ${dia.fecha === hoy ? 'fila-dia--hoy' : ''}" href="#/v/${viaje.id}/d/${dia.fecha}">
+      <span class="fila-dia__fecha">
+        <span class="fila-dia__dia">${NOMBRE_DIA[claveDia(dia.fecha)].slice(0, 3)}</span>
+        <span class="fila-dia__num">${Number(dia.fecha.slice(8, 10))}</span>
+      </span>
+      <span class="fila-dia__cuerpo">
+        <span class="fila-dia__titulo">
+          <span class="titulo-3">${dia.titulo}</span>
+          ${atencion ? crudo('<span class="fila-dia__punto" title="Tiene avisos o lista sin terminar"></span>') : ''}
+        </span>
+        <span class="fila-dia__meta menudo">
+          ${dia.fecha === hoy ? crudo('<b>Hoy</b> · ') : ''}${intensidad.etiqueta}${dia.totalParadas ? ` · ${dia.totalParadas} parada${dia.totalParadas === 1 ? '' : 's'}` : ''}
+        </span>
+      </span>
+      ${icono('adelante', 'fila-dia__flecha')}
+    </a>`;
+}
+
+/** Una fila de acceso a algo que no es un día: preparativos, transporte, listas. */
+function filaDeSeccion({ url, nombreIcono, titulo, pista = '' }) {
+  return html`
+    <a class="fila-dia fila-dia--seccion" href="${url}">
+      <span class="fila-dia__fecha">${icono(nombreIcono)}</span>
+      <span class="fila-dia__cuerpo">
+        <span class="fila-dia__titulo"><span class="titulo-3">${titulo}</span></span>
+        ${pista ? crudo(`<span class="fila-dia__meta menudo">${esc(pista)}</span>`) : ''}
+      </span>
+      ${icono('adelante', 'fila-dia__flecha')}
+    </a>`;
+}
+
+/**
+ * La portada del viaje: el nivel del que cuelga todo lo demás.
+ *
+ * Lo que **no** está aquí es la cuenta —correo, sesión, id, almacenamiento—,
+ * que se ha ido a `#/perfil`. El corte es el motivo de todo el cambio: «¿he
+ * iniciado sesión?» es una pregunta sobre ti y «¿está este viaje sincronizado?»
+ * es una pregunta sobre el viaje. Compartiendo caja, ninguna de las dos se leía.
+ */
+export function pintarPortada(viaje, {
+  capa = null, nube = null, tareas = {}, atencion = () => false,
+} = {}) {
+  const hoy = aIso(new Date());
+  const estadoViaje = ESTADOS_VIAJE[viaje.estadoReal] || ESTADOS_VIAJE.planificado;
+  const avisos = avisosDelViaje(viaje);
+  const tramos = tramosDelViaje(viaje).reduce((s, g) => s + g.tramos.length, 0);
+  const listas = progresoDeListas(viaje.listas || [], tareas);
 
   return html`
     <div class="panel__seccion">
-      <h2 class="titulo-2" data-foco tabindex="-1">${viaje.titulo}</h2>
-      ${viaje.subtitulo ? crudo(`<p class="secundario" style="margin-top:2px">${esc(viaje.subtitulo)}</p>`) : ''}
-      ${viaje.resumen ? crudo(`<p class="cuerpo" style="margin-top:var(--e3)">${esc(viaje.resumen)}</p>`) : ''}
-      <div class="ficha__meta" style="margin-top:var(--e4)">
+      <div class="ficha__meta" style="margin:0 0 var(--e3)">
+        <span class="chip ${estadoViaje.clase}">${estadoViaje.etiqueta}</span>
         ${viaje.base ? crudo(`<span class="chip">${esc(viaje.base)}</span>`) : ''}
         ${viaje.viajeros?.length ? crudo(`<span class="chip">${esc(viaje.viajeros.join(' y '))}</span>`) : ''}
-        <span class="chip">${viaje.dias.length} días</span>
+      </div>
+      <h1 class="display" data-foco tabindex="-1">${viaje.titulo}</h1>
+      ${viaje.subtitulo ? crudo(`<p class="secundario" style="margin-top:var(--e2)">${esc(viaje.subtitulo)}</p>`) : ''}
+      <p class="menudo" style="margin-top:var(--e3)">
+        ${fechaLarga(viaje.fechas.inicio)} – ${fechaLarga(viaje.fechas.fin)} · ${viaje.dias.length} días
+      </p>
+      ${viaje.resumen ? crudo(`<p class="cuerpo" style="margin-top:var(--e4)">${esc(viaje.resumen)}</p>`) : ''}
+    </div>
+
+    <div class="panel__seccion">
+      <h2 class="titulo-2">El itinerario</h2>
+      <div class="pulso-dias" aria-hidden="true">
+        ${viaje.dias.map((d) => crudo(`<i data-i="${esc(d.intensidad || 'suave')}"></i>`))}
+      </div>
+      <div style="margin-top:var(--e4)">
+        ${hayPreViaje(viaje) ? filaDeSeccion({
+          url: `#/v/${viaje.id}/d/pre`,
+          nombreIcono: 'lista',
+          titulo: 'Preparativos',
+          pista: 'Antes de salir',
+        }) : ''}
+        ${viaje.dias.map((d) => filaDeDia(viaje, d, { hoy, atencion: atencion(d.fecha) }))}
+        ${hayPostViaje(viaje) ? filaDeSeccion({
+          url: `#/v/${viaje.id}/d/post`,
+          nombreIcono: 'descarga',
+          titulo: 'Al volver',
+          pista: 'Cuando el viaje termine',
+        }) : ''}
       </div>
     </div>
 
-    ${viaje.avisos?.length ? crudo(`
+    <div class="panel__seccion">
+      <h2 class="titulo-2">Del viaje entero</h2>
+      <div style="margin-top:var(--e3)">
+        ${filaDeSeccion({
+          url: `#/v/${viaje.id}/transporte`,
+          nombreIcono: 'transporte',
+          titulo: 'Transporte',
+          pista: tramos ? `${tramos} tramos, calculados del itinerario` : 'Contratos y reservas',
+        })}
+        ${viaje.listas?.length ? filaDeSeccion({
+          url: `#/v/${viaje.id}/listas`,
+          nombreIcono: 'lista',
+          titulo: 'Listas',
+          pista: `${listas.hechas}/${listas.total} marcadas`,
+        }) : ''}
+      </div>
+    </div>
+
+    ${avisos.length ? html`
       <div class="panel__seccion">
         <h2 class="titulo-2" style="margin-bottom:var(--e3)">Lo que puede romper el viaje</h2>
-        ${viaje.avisos.map((a) => `
-          <div class="aviso ${niveles[a.nivel] || 'aviso--info'}">
-            <svg aria-hidden="true"><use href="#i-aviso"/></svg>
-            <div><div class="aviso__titulo">${esc(a.titulo)}</div><div class="aviso__texto">${esc(a.texto)}</div></div>
-          </div>`).join('')}
-      </div>`) : ''}
+        <p class="menudo" style="margin:-6px 0 var(--e3)">
+          Los que son de un día concreto salen dentro de ese día, no aquí.
+        </p>
+        ${avisos.map(pintarAviso)}
+      </div>` : ''}
 
     ${viaje.presupuesto ? crudo(`
       <div class="panel__seccion">
@@ -513,30 +865,11 @@ export function pintarInfo(viaje, { privados = { campos: [] }, capa = null, nube
         </div>
       </div>`) : ''}
 
-    <div class="panel__seccion">
-      <h2 class="titulo-2">Datos privados</h2>
-      <p class="menudo" style="margin-top:4px">
-        Dirección del alojamiento, referencias de reserva, teléfonos. Se guardan
-        <b>solo en este navegador</b> y nunca en el repositorio, que es público.
-      </p>
-      <div data-privados style="margin-top:var(--e3)">
-        ${privados.campos.map((c, i) => html`
-          <div class="datos__fila" style="border:1px solid var(--borde);border-radius:var(--r-m);margin-bottom:6px">
-            <div class="datos__clave">${c.clave}</div>
-            <div class="datos__valor" style="display:flex;gap:8px;align-items:start">
-              <span style="flex:1">${c.valor}</span>
-              <button type="button" class="icono-boton" data-quitar-privado="${i}" aria-label="Quitar">${icono('papelera')}</button>
-            </div>
-          </div>`)}
-      </div>
-      <button type="button" class="boton boton--bloque" data-accion="anadir-privado">${icono('mas')}Añadir un dato</button>
-    </div>
-
     ${capa && (capa.lugares.length || capa.bloques.length || capa.ocultos.length) ? crudo(`
       <div class="panel__seccion">
         <h2 class="titulo-2">Tus cambios en el itinerario</h2>
         <p class="menudo" style="margin-top:4px">
-          ${capa.lugares.length} parada(s) añadida(s) y ${capa.ocultos.length} quitada(s).
+          ${esc(plural(capa.lugares.length, 'parada añadida', 'paradas añadidas'))} y ${esc(plural(capa.ocultos.length, 'quitada', 'quitadas'))}.
           Viven en este navegador; el archivo del viaje no se toca.
         </p>
         <div style="display:flex;gap:8px;margin-top:var(--e3);flex-wrap:wrap">
@@ -553,68 +886,27 @@ export function pintarInfo(viaje, { privados = { campos: [] }, capa = null, nube
         </p>
       </div>`) : ''}
 
-    ${nube ? crudo(`
-      <div class="panel__seccion">
-        <h2 class="titulo-2">Nube</h2>
-        ${nube.configurada ? `
-          ${nube.usuario ? `
-            <p class="secundario" style="margin-top:4px">
-              Sesión iniciada como <b>${esc(nube.usuario.correo)}</b>.
-            </p>
-            <div class="datos" style="margin-top:var(--e3)">
-              <div class="datos__fila">
-                <div class="datos__clave">Estado</div>
-                <div class="datos__valor" data-estado-nube>Comprobando…</div>
-              </div>
-              <div class="datos__fila">
-                <div class="datos__clave">Este viaje</div>
-                <div class="datos__valor">${ORIGEN[nube.origen]?.(nube.version) || ORIGEN['sin-nube']()}${nube.pendientes ? `<span class="chip chip--alerta" style="margin-left:6px">${nube.pendientes} sin guardar</span>` : ''}</div>
-              </div>
-              <div class="datos__fila">
-                <div class="datos__clave">Tu id</div>
-                <div class="datos__valor"><code class="menudo">${esc(nube.usuario.id)}</code>
-                  <span class="menudo" style="display:block">Pásaselo a quien quieras invitar al viaje.</span></div>
-              </div>
-            </div>
-            <div style="display:flex;gap:8px;margin-top:var(--e3);flex-wrap:wrap">
-              <button type="button" class="boton" data-accion="sincronizar">
-                <svg aria-hidden="true"><use href="#i-importar"/></svg>Sincronizar ahora
-              </button>
-              <button type="button" class="boton boton--fantasma" data-accion="salir-nube">Cerrar sesión</button>
-            </div>
-          ` : `
-            <p class="secundario" style="margin-top:4px">
-              Entra con tu correo para sincronizar el viaje entre dispositivos. Se manda un enlace: no hay contraseña que recordar.
-            </p>
-            <div class="campo campo--ancho" style="margin-top:var(--e3)">
-              <label class="etiqueta" for="correo-nube">Correo</label>
-              <input id="correo-nube" type="email" data-correo-nube placeholder="tu@correo.com" autocomplete="email">
-            </div>
-            <button type="button" class="boton boton--principal boton--bloque" data-accion="entrar-nube" style="margin-top:var(--e2)">
-              Mandarme el enlace de acceso
-            </button>
-          `}
-        ` : `
-          <p class="menudo" style="margin-top:4px">
-            No configurada. La aplicación funciona igual: lee el viaje del repositorio y guarda en este navegador.
-            Para activarla hace falta <code>data/nube.json</code> — ver <code>supabase/LEEME.md</code>.
-          </p>
-        `}
-      </div>`) : ''}
-
     <div class="panel__seccion">
-      <h2 class="titulo-2">Recuerdos</h2>
+      <h2 class="titulo-2">Este viaje en la nube</h2>
       <p class="menudo" style="margin-top:4px">
-        Lo visitado, las notas y las fotos viven en este navegador. Si se limpia,
-        se pierden: exporta un archivo para conservarlos.
+        De dónde sale lo que estás viendo. Tu cuenta y tus datos privados están en
+        <a href="#/perfil">Tus datos</a>.
       </p>
-      <div style="display:flex;gap:8px;margin-top:var(--e3);flex-wrap:wrap">
-        <button type="button" class="boton" data-accion="exportar">${icono('descarga')}Exportar</button>
-        <label class="boton" tabindex="0">${icono('importar')}Importar
-          <input type="file" accept="application/json" class="solo-lectores" data-campo="importar">
-        </label>
-      </div>
-      <p class="menudo" data-ocupacion style="margin-top:var(--e2)"></p>
+      <p class="cuerpo" style="margin-top:var(--e3)">
+        ${crudo(ORIGEN[nube.origen]?.(nube.version) || ORIGEN['sin-nube']())}${nube.pendientes ? crudo(`<span class="chip chip--alerta" style="margin-left:6px">${esc(nube.pendientes)} sin guardar</span>`) : ''}
+      </p>
+      ${!nube?.configurada ? crudo(`
+        <p class="menudo" style="margin-top:var(--e3)">
+          La nube no está configurada, así que este viaje solo vive en el repositorio y en
+          este navegador. Para activarla hace falta <code>data/nube.json</code> —
+          ver <code>supabase/LEEME.md</code>.
+        </p>`) : !nube.usuario ? html`
+        <a class="boton boton--principal boton--bloque" href="#/perfil" style="margin-top:var(--e3)">
+          ${icono('nube')}Entrar para sincronizarlo
+        </a>` : html`
+        <button type="button" class="boton boton--bloque" data-accion="sincronizar" style="margin-top:var(--e3)">
+          ${icono('importar')}Sincronizar ahora
+        </button>`}
     </div>
 
     ${(() => {

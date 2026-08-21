@@ -6,7 +6,7 @@
  * se distingue de un vistazo.
  */
 
-import { html, esc, icono, crudo, alPulsar } from '../ui/dom.js';
+import { html, esc, icono, crudo } from '../ui/dom.js';
 import { cargarRegistro } from '../datos.js';
 import { estadoDe } from '../estado.js';
 import { fechaLarga, diasEntre, aFecha, NOMBRE_MES } from '../horarios.js';
@@ -45,18 +45,18 @@ function tarjeta(v, i) {
     </a>`;
 }
 
-export async function montarRegistro(raiz, { alTema }) {
+export async function montarRegistro(raiz) {
   const registro = await cargarRegistro();
 
   raiz.className = 'registro scroll-y';
   raiz.innerHTML = html`
     <div class="registro__interior">
       <header style="display:flex;align-items:start;gap:var(--e4);margin-bottom:var(--e6)">
-        <div style="flex:1">
+        <div style="flex:1;min-width:0">
           <h1 class="display">${registro.titulo || 'Bitácora'}</h1>
           <p class="secundario" style="margin-top:var(--e3);max-width:44ch">${registro.descripcion || ''}</p>
         </div>
-        <button type="button" class="icono-boton" data-accion="tema" aria-label="Cambiar tema">${icono('sol')}</button>
+        <a class="icono-boton" href="#/perfil" aria-label="Tus datos y tu cuenta" title="Tus datos">${icono('persona')}</a>
       </header>
 
       ${registro.viajes.length
@@ -75,6 +75,5 @@ export async function montarRegistro(raiz, { alTema }) {
       </footer>
     </div>`;
 
-  alPulsar(raiz, '[data-accion="tema"]', alTema);
   return { destruir() {} };
 }

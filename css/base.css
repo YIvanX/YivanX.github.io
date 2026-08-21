@@ -179,6 +179,16 @@ ul, ol { padding: 0; list-style: none; }
 button, input, textarea, select { font: inherit; color: inherit; }
 button { background: none; border: 0; padding: 0; cursor: pointer; }
 a { color: inherit; text-decoration-color: var(--borde-fuerte); text-underline-offset: 2px; }
+
+/* Un título nunca deja una palabra sola en la última línea: el navegador reparte
+   las líneas para que queden parejas. `pretty` en la prosa hace lo mismo pero
+   solo con la última línea, que es lo barato de calcular en un párrafo largo. */
+h1, h2, h3, h4, .display, .titulo-1, .titulo-2, .titulo-3 { text-wrap: balance; }
+p, .cuerpo, .secundario, .menudo { text-wrap: pretty; }
+
+/* Permite animar `height: auto`, que es lo que necesitan las bandas del día
+   para abrirse con una transición en vez de dar un salto. */
+:root { interpolate-size: allow-keywords; }
 img, svg { display: block; max-width: 100%; }
 svg { fill: none; }
 table { border-collapse: collapse; width: 100%; }

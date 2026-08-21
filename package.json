@@ -6,7 +6,7 @@
   "description": "Guía de viajes interactiva y registro de viajes. Sitio estático sin dependencias: este archivo existe SOLO para que Node trate los .js como módulos ES y las herramientas de herramientas/ puedan reutilizar el mismo código que el navegador. No hay npm install, no hay build, no hay dependencias. Borrarlo rompe las herramientas, no el sitio.",
   "scripts": {
     "validar": "node herramientas/validar.mjs",
-    "probar": "node --test herramientas/horarios.test.mjs herramientas/personalizacion.test.mjs herramientas/nube.test.mjs herramientas/sincronizacion.test.mjs",
+    "probar": "node --test herramientas/horarios.test.mjs herramientas/personalizacion.test.mjs herramientas/nube.test.mjs herramientas/sincronizacion.test.mjs herramientas/agenda.test.mjs",
     "servir": "node herramientas/servir.mjs",
     "nuevo": "node herramientas/nuevo-viaje.mjs",
     "coordenadas": "node herramientas/coordenadas.mjs",

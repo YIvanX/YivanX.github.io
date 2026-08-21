@@ -99,6 +99,182 @@ Cuando un cambio merezca ser permanente, «Copiar como JSON» lo deja listo para
 pegar en `data/viajes/<id>.json`. Ese es el puente entre lo efímero y el
 repositorio.
 
+## Cuatro pestañas hermanas que no eran hermanas
+
+La primera versión ponía `Itinerario · Transporte · Listas · Viaje` en una barra
+de pestañas, todas al mismo nivel. No lo estaban:
+
+- **Itinerario** era **un día**.
+- **Transporte** y **Listas** eran tablas del **viaje entero**.
+- **Viaje** era el viaje que **contiene** a las otras tres, más la cuenta de
+  Supabase, más los créditos de las fotos.
+
+La prueba estaba en la propia interfaz: la barra de días desaparecía en tres de
+las cuatro pestañas. La aplicación ya sabía la jerarquía correcta y la barra la
+negaba.
+
+Ahora la jerarquía la lleva la cabecera, con **un icono por destino**: la maleta
+sube a la portada del viaje y la persona lleva a Tus datos. De la portada cuelgan
+el itinerario, Transporte, Listas, Preparativos y Al volver. No hay barra de
+pestañas.
+
+**Los iconos no son adorno, son la corrección de un fallo medido.** La primera
+versión dejaba el acceso a la portada solo en el título de la cabecera: un
+objetivo táctil de **37 × 26 px**, la mitad del mínimo de 44. Con su icono
+propio, y con el título convertido en un objetivo de 44 px de alto, el acceso
+pasa a existir de verdad. El icono lleva `aria-current="page"` cuando ya estás
+en la portada, para que no invite a ir a donde ya estás.
+
+**El tema se fue a Tus datos.** Cinco objetivos táctiles en una cabecera de 52 px
+no caben, y un icono que cicla entre automático, claro y oscuro obliga a
+**deducir** en cuál de los tres estás. En Tus datos son tres botones con su
+nombre escrito. Se pierde el cambio de tema en un toque; a cambio, «automático»
+—que es el de fábrica— ya sigue al móvil, que de noche cambia solo.
+
+**Se entra por el día, no por la portada.** La jerarquía dice que el viaje
+contiene al día, pero durante el viaje esto se abre veinte veces al día para ver
+qué toca ahora, y ese gesto no puede costar un toque más. Subir es lo que cuesta
+un toque, y se hace pocas veces.
+
+**Portada, Transporte y Listas no montan una vista aparte.** Se pintan dentro de
+`montarViaje` y solo ensanchan el panel por CSS. Sacarlas fuera habría destruido
+y reconstruido el mapa en cada ida y vuelta, que es justo lo que evita el resto
+del diseño de esa vista.
+
+## Un aviso se lee el día que importa, no antes
+
+`avisos[]` y `listas[]` llevan dos campos opcionales, `dias` y `momento`. Sin
+ninguno de los dos, la entrada es del viaje y se comporta igual que siempre: es
+lo que hace que el cambio no rompa ningún archivo existente.
+
+El motivo es medible. De los seis avisos del viaje a León, **cuatro hablan de un
+día concreto** —el peaje de la AP-71, los dos aparcamientos de Las Médulas, la
+reserva de Valporquero, la ventana del coche de alquiler— y se enseñaban todos
+juntos en una pestaña que se visita dos veces y nunca cuando hacen falta.
+
+Dentro del día van en **bandas plegables**, no en sub-pestañas. Una cuarta fila
+de navegación sobre una hoja que asoma 132 px no deja sitio para el plan, que es
+lo que se está mirando. Son `<details>` nativos: sin estado en JS, con teclado, y
+**siempre cerradas** — una banda que se abre sola se come lo que asoma.
+
+Lo que decide qué pertenece a qué vive en `js/agenda.js`, **puro y con pruebas**,
+por lo mismo que `personalizacion.js`: un fallo ahí no da error, esconde un
+aviso, y eso no se echa de menos hasta que estás delante de la taquilla cerrada.
+El validador comprueba además que cada fecha caiga dentro del viaje.
+
+## Transporte se calcula, no se escribe
+
+La tabla `transporte[]` tenía 7 entradas en el viaje a León y **5 duplicaban a
+mano bloques `traslado` que ya estaban en los días**. Ya habían empezado a
+divergir: una decía «Ponferrada → León» cuando el bloque real de ese día salía de
+Villafranca.
+
+Ahora la vista Transporte sale de los bloques de traslado: fecha, hora, modo,
+origen, destino, duración real y enlace a Maps. Es más de lo que tenía la tabla y
+no puede desviarse. En `transporte[]` queda lo que **no** es un tramo de un día —
+el alquiler del coche, un abono— y se enseña como «Contratos y reservas», que es
+lo que de verdad es y por eso también aparece en Preparativos.
+
+## Preparativos y Al volver no son días
+
+Son dos pestañas más en la barra de días, con ruta propia (`/d/pre`, `/d/post`),
+pero **no entran en `viaje.dias`**. Ese array va indexado por fecha en todas
+partes —el orden, `diasEntre`, el día por defecto, las flechas del teclado— y una
+entrada con `fecha: "pre"` habría roto el orden y el día al que se entra.
+
+«Al volver» solo aparece si tiene algo dentro o si el viaje está completado. Una
+pestaña vacía los seis días es peor que no tenerla.
+
+## La cuenta no es del viaje
+
+`#/perfil` —«Tus datos»— tiene la sesión, el id para invitar, el estado de la
+conexión, el tema, lo que ocupa Bitácora en el navegador y, **por cada viaje, sus
+datos privados y sus recuerdos**. La portada del viaje tiene si **ese** viaje
+está sincronizado, en qué versión y cuántos cambios faltan por subir.
+
+El corte que decide qué va dónde:
+
+- **El viaje es lo público.** Sale del JSON del repositorio y lo ve igual
+  cualquiera con quien lo compartas: días, avisos, presupuesto, transporte.
+- **Tus datos es lo privado.** Vive solo en este navegador y no sube nunca: la
+  dirección del alojamiento, las referencias de reserva, las notas, las fotos, y
+  quién eres para la nube.
+
+Por eso los datos privados **no pueden** estar en la pantalla del viaje: el
+repositorio es público, un itinerario ya dice qué días no hay nadie en casa, y la
+dirección exacta no puede vivir al lado de eso ni siquiera visualmente.
+
+Estaban en la misma caja y por eso no se leía ninguna: «¿he iniciado sesión?» y
+«¿está este viaje en la nube?» son preguntas distintas. Y lo que ocupa el
+navegador es del origen, no de un viaje: decirlo dentro de uno era mentir por
+encuadre.
+
+Exportar los recuerdos vive **en un solo sitio**. «Al volver» enlaza a Tus datos
+en vez de tener su propio botón: dos implementaciones de lo mismo son dos sitios
+donde arreglar el mismo fallo.
+
+## La barra de días son enlaces, no pestañas
+
+Eran `<button role="tab">` dentro de un `role="tablist"` sin un solo
+`tabpanel` — ARIA que describía algo que no existía. Y cada día **es** una URL.
+
+Ahora son `<a href="#/v/<viaje>/d/<fecha>">` con `aria-current="page"`. Sale
+gratis lo que antes habría habido que programar: abrir un día en otra pestaña,
+copiar su enlace, recorrer la barra con el tabulador. El manejador de click se
+queda solo con el efecto que el enlace no puede hacer — apagar «ver todo el
+viaje», porque elegir un día es decir que quieres mirar ese día.
+
+## Deslizar entre días
+
+Con el dedo, cambiar de día obligaba a apuntar a una pestaña de 44 px en una
+barra que además se desplaza. El gesto natural es el que ya hacían las flechas
+del teclado.
+
+Está construido con las mismas piezas que la hoja arrastrable, y la primera
+versión las tenía todas mal:
+
+- **`setPointerCapture` en cuanto se decide que el gesto es horizontal.** Sin
+  captura, sacar el dedo del panel a mitad de arrastre mata el gesto. Va en ese
+  momento y no en el `pointerdown` porque el panel es grande —no se pierde nada
+  por empezar tarde— y capturar cada toque estorbaría a los botones de dentro.
+- **Decide la velocidad, no la distancia.** Se proyecta a dónde iba el gesto con
+  la misma función de inercia de la hoja y se decide sobre esa proyección.
+  Medido: un golpe seco de **42 px** pasa de día, aunque el umbral sean 56.
+- **Muelle en `requestAnimationFrame`, no transición de CSS.** Una transición no
+  se puede agarrar a mitad: si vuelves a deslizar mientras el panel regresa, el
+  muelle arranca del valor que hay en pantalla y hereda su velocidad.
+- **Goma elástica en los topes.** El primer día no tiene anterior, y eso se dice
+  resistiendo cada vez más, no parándose en seco.
+
+**Solo con el dedo.** Con ratón, un arrastre horizontal es seleccionar texto, y
+robárselo sería peor que no tener el gesto. Y el día nuevo entra por el lado del
+que tiraste: si apareciera sin más, el desplazamiento no habría significado nada.
+
+**Las flechas del teclado no animan.** Una flecha se repite muchas veces
+seguidas, y animar cada repetición hace que el teclado se sienta lento. El gesto
+sí anima, porque ahí la animación *continúa* un movimiento que ya existía.
+
+El gesto nunca es la única vía: las pestañas de día y las flechas siguen ahí.
+
+## La hoja inferior pide alto, no estrechez
+
+El corte era `max-width: 899px` a secas, así que un móvil **apaisado** —844 × 390—
+entraba en el modo hoja: ancho de sobra para dos columnas y casi nada de alto
+para una hoja. Medido antes del arreglo: 118 px de los 390 se iban en cabecera y
+barra de días, y el mapa quedaba en una tira detrás de la hoja.
+
+Ahora la consulta es `(max-width: 899px) and (min-height: 500px)`, y **la exporta
+`ui/hoja.js`** para que el CSS y el JS no puedan discrepar: si dijeran cosas
+distintas, el JS estaría moviendo con `transform` un panel que el CSS ya no trata
+como hoja. Por debajo de 500 px de alto se usan dos columnas, el panel se
+estrecha a 320 px y la barra de días se aprieta a una sola línea.
+
+**Y una trampa de CSS que costó un recorte invisible:** un elemento de rejilla
+tiene `min-width: auto`, así que **no baja de su contenido mínimo**. Con el panel
+a ancho completo y en flujo, a 320 px la cabecera se estiraba a 389 y `.app`
+—que recorta— se comía el trozo de la derecha sin dejar ni barra de scroll. Se
+arregla con `min-width: 0` en `.escenario` y en `.panel`.
+
 ## Photon para buscar sitios, no Google Places
 
 **Google Places queda descartado por una razón concreta:** exige clave de API y
@@ -187,6 +363,19 @@ Apple, leídas enteras antes de escribir CSS:
 - `prefers-reduced-motion`, `prefers-reduced-transparency` y `prefers-contrast`
   atendidos. Movimiento reducido no es «sin movimiento»: se conserva la opacidad,
   que ayuda a entender, y se quita el desplazamiento, que es lo que marea.
+
+### Tipografía y copia
+
+- **`text-wrap: balance` en los títulos** para que ninguno deje una palabra sola
+  en la última línea, y `pretty` en la prosa, que hace lo mismo pero solo con la
+  última línea y es lo barato de calcular en un párrafo largo.
+- **Nada de «3 nota(s)».** Eso es lo que escribe un programa, no lo que escribe
+  alguien, y esto se lee de pie en una plaza. Hay un `plural()` en `ui/dom.js`.
+- **Los ceros no se pintan.** Una fila de «0 notas · 0 visitados · 0 fotos» no
+  informa de nada y tapa el número que sí importa.
+- **Un `h1` por pantalla**, el que ya lleva `data-foco`. Antes la vista de un día
+  encabezaba con `h2` y no había ningún `h1`, porque el título del viaje es un
+  `<span>` de la cabecera.
 
 ### La hoja arrastrable
 

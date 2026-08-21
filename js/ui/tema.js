@@ -34,6 +34,19 @@ export function alternarTema() {
   return preferencia;
 }
 
+/**
+ * Fija una preferencia concreta. Es lo que usa el perfil: tres botones con su
+ * nombre escrito, en vez de un icono que cicla y del que hay que **deducir** en
+ * cuál de los tres estados está.
+ */
+export function fijarTema(nueva) {
+  if (!['auto', 'claro', 'oscuro'].includes(nueva)) return preferencia;
+  preferencia = nueva;
+  guardarTema(preferencia);
+  aplicar();
+  return preferencia;
+}
+
 export const preferenciaActual = () => preferencia;
 export const alCambiarTema = (fn) => { oyentes.add(fn); return () => oyentes.delete(fn); };
 

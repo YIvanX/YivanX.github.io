@@ -83,7 +83,7 @@ Con la clave local borrada, el itinerario volvió de la nube.
 
 ## Cómo entra el primero, y cómo entra el segundo
 
-1. Abre la web → **Viaje → Nube** → escribe tu correo → **Mandarme el enlace**.
+1. Abre la web → **el icono de perfil** → escribe tu correo → **Mandarme el enlace**.
 2. Abre el enlace **en el mismo dispositivo**. La sesión se queda y se renueva
    sola; no hay que volver a pedirlo.
 3. Para invitar a alguien: que entre él con su correo, copie **su id** de esa
@@ -127,7 +127,7 @@ ahí las dos reglas de esta carpeta:
   la fuente de verdad, y con él se rehace el proyecto entero desde cero.
 - **El JSON del repositorio se mantiene al día** como semilla y respaldo. Cuando
   el viaje cambie mucho en la nube, se vuelca con
-  `Viaje → Copiar como JSON` y se pega en el archivo.
+  `portada del viaje → Copiar como JSON` y se pega en el archivo.
 
 ---
 

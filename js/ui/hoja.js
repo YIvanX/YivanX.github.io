@@ -22,8 +22,21 @@ const ASOMA = 132;          // px visibles cuando está colapsada
 const HISTERESIS = 8;       // px antes de dar por empezado el arrastre
 const VEL_DECISIVA = 420;   // px/s: por encima de esto manda el gesto, no la posición
 
+/**
+ * Cuándo el panel es una hoja arrastrable.
+ *
+ * **Pide alto, no estrechez.** Un móvil apaisado mide 844x390: ancho de sobra
+ * para dos columnas y casi nada de alto para una hoja. El corte de antes solo
+ * miraba el ancho y le metía una hoja a una pantalla de 390 px de alto.
+ *
+ * Se exporta para que la use todo el que necesite saberlo, y el CSS repite esta
+ * misma consulta: si los dos no dijeran lo mismo, el JS estaría moviendo con
+ * `transform` un panel que el CSS ya no trata como hoja.
+ */
+export const CONSULTA_HOJA = '(max-width: 899px) and (min-height: 500px)';
+
 export function crearHoja(panel, { tirador, cuerpo, alCambiar = () => {} } = {}) {
-  const consulta = matchMedia('(max-width: 899px)');
+  const consulta = matchMedia(CONSULTA_HOJA);
   const sinMovimiento = matchMedia('(prefers-reduced-motion: reduce)');
 
   let activa = false;
