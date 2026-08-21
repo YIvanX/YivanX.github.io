@@ -20,7 +20,7 @@
  * que es justo lo que dice el párrafo de arriba que no se puede hacer.
  */
 
-import { html, esc, icono, crudo, plural, $, $$, alPulsar, muelle, proyectar, gomaElastica } from '../ui/dom.js';
+import { html, esc, icono, crudo, plural, $, $$, alPulsar, muelle, proyectar, gomaElastica, transicion } from '../ui/dom.js';
 import { cargarViaje, diaPorDefecto, recuadroDe, INTENSIDADES, recomponer, viajeBase, versionNubeDe, fijarVersionNube, origenDe, fijarCapaSubida } from '../datos.js';
 import { Mapa } from '../mapa.js';
 import { crearHoja, CONSULTA_HOJA } from '../ui/hoja.js';
@@ -218,20 +218,59 @@ export async function montarViaje(raiz, ruta) {
 
   /**
    * De qué lado entra el día que se va a pintar: 1 por la derecha, -1 por la
-   * izquierda, 0 sin entrada. Lo fijan el gesto y las flechas justo antes de
-   * navegar, y lo consume la siguiente pintada.
+   * izquierda, 0 sin entrada. **Lo fija solo el gesto**, justo antes de navegar,
+   * y lo consume la siguiente pintada. Las flechas no lo tocan a propósito —
+   * ver el comentario del teclado, más abajo.
    *
    * Es lo que hace que el gesto y su resultado sean la misma cosa: si el día
    * apareciera sin más, el desplazamiento del dedo no habría significado nada.
    */
   let entradaPendiente = 0;
 
-  function animarEntrada() {
+  /**
+   * El muelle solo mete el contenido nuevo desde 26 px: el viejo desaparece de
+   * golpe. Cuando hay View Transition la usamos en su lugar, porque saca al
+   * viejo *y* mete al nuevo, que es lo que hace que un día parezca una hoja que
+   * se va y no un contenido que se sustituye. El muelle queda de reserva.
+   */
+  function animarEntrada({ loHaceLaTransicion = false } = {}) {
     const lado = entradaPendiente;
     entradaPendiente = 0;
+    if (loHaceLaTransicion) {
+      // El arrastre dejó `cuerpo` desplazado; si no se limpia, la foto del
+      // antes sale torcida.
+      resorteDesliz.fijar(0);
+      return;
+    }
     if (!lado || sinMovimiento.matches) return;
     resorteDesliz.fijar(lado * 26);
     resorteDesliz.hacia(0);
+  }
+
+  /** Lo último que se pintó, para saber de dónde venimos al elegir la transición. */
+  let vistaPintada = null;
+  let fechaPintada = null;
+
+  /**
+   * Qué transición toca, o `null` para ninguna.
+   *
+   * `null` es el caso más importante y el más fácil de olvidar: `pintarPanel`
+   * también se llama al marcar algo visitado o al tocar una casilla, y un
+   * fundido ahí sería un parpadeo gratuito en mitad de una acción.
+   */
+  function tipoDeTransicion() {
+    if (actual.vista === vistaPintada && actual.fecha === fechaPintada) return null;
+    if (vistaPintada === null) return null;   // primera pintada: no hay «antes»
+
+    if (actual.vista === 'dia' && vistaPintada === 'dia') {
+      const a = viaje.dias.findIndex((d) => d.fecha === fechaPintada);
+      const b = viaje.dias.findIndex((d) => d.fecha === actual.fecha);
+      if (a >= 0 && b >= 0 && a !== b) return b > a ? 'dia-der' : 'dia-izq';
+      return 'fundido';
+    }
+    if (actual.vista === 'lugar') return 'entra';
+    if (vistaPintada === 'lugar') return 'sale';
+    return 'fundido';
   }
 
   /**
@@ -256,7 +295,39 @@ export async function montarViaje(raiz, ruta) {
     || viaje.dias.find((d) => d.fecha === diaPorDefecto(viaje))
     || viaje.dias[0];
 
+  /**
+   * Marca la cronología para que sus filas entren escalonadas y le pone a cada
+   * una su índice.
+   *
+   * El tope existe por una razón medible: sin él, un día de quince paradas
+   * tardaría medio segundo en terminar de aparecer, y para entonces ya estás
+   * leyendo la primera. A partir de la novena entran todas juntas.
+   */
+  const ESCALON_MAX = 8;
+
+  function escalonarCronologia() {
+    if (sinMovimiento.matches) return;
+    const lista = $('.cronologia', cuerpo);
+    if (!lista) return;
+    lista.classList.add('cronologia--entra');
+    $$(':scope > *', lista).forEach((fila, i) => {
+      fila.style.setProperty('--i', String(Math.min(i, ESCALON_MAX)));
+    });
+  }
+
   function pintarPanel({ moverFoco = true } = {}) {
+    const tipo = tipoDeTransicion();
+    const conTransicion = Boolean(tipo && document.startViewTransition);
+    // Escalonar solo al **llegar** a un día desde otra vista. Entre día y día
+    // manda el desplazamiento lateral, y las dos cosas a la vez se pisan.
+    const escalonar = actual.vista === 'dia' && vistaPintada !== 'dia';
+    const aplicar = () => pintarPanelYa({ moverFoco, conTransicion, escalonar });
+
+    if (conTransicion) transicion(aplicar, tipo);
+    else aplicar();
+  }
+
+  function pintarPanelYa({ moverFoco, conTransicion, escalonar }) {
     limpiarUrls();
     const guardado = estado.estadoDe(viaje.id);
 
@@ -303,7 +374,10 @@ export async function montarViaje(raiz, ruta) {
       if (moverFoco) situarFoco(`${dia.titulo}, ${fechaLarga(dia.fecha)}`);
     }
     cuerpo.scrollTop = 0;
-    animarEntrada();
+    if (escalonar) escalonarCronologia();
+    animarEntrada({ loHaceLaTransicion: conTransicion });
+    vistaPintada = actual.vista;
+    fechaPintada = actual.fecha;
   }
 
   async function hidratarGaleria(lugar) {

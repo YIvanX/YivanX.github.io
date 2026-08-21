@@ -234,6 +234,19 @@
 
 .cronologia { padding: 0 var(--e4) var(--e8); }
 
+/* Entrada escalonada: las filas del día llegan una detrás de otra, en el mismo
+   orden en que se recorren. 22 ms entre ellas — por debajo no se percibe como
+   secuencia y por encima se nota la espera. El índice lo pone `viaje.js`, que
+   además lo topa: a partir de la novena fila entran todas juntas, porque un día
+   de quince paradas tardaría medio segundo en acabar de aparecer.
+
+   Solo se marca al llegar a un día desde otra vista; entre día y día manda el
+   desplazamiento lateral. Con movimiento reducido la clase no se añade. */
+.cronologia--entra > * {
+  animation: entrar var(--t-medio) var(--sal) both;
+  animation-delay: calc(var(--i, 0) * 22ms);
+}
+
 .bloque {
   position: relative;
   display: grid;
@@ -668,6 +681,76 @@
 @keyframes entrar {
   from { opacity: 0; transform: translateY(10px) scale(0.985); }
   to   { opacity: 1; transform: none; }
+}
+
+/* --- Transiciones entre estados del panel --------------------------------
+   El panel se repinta con `innerHTML`, así que el DOM viejo se destruye: cuando
+   el estado nuevo existe, el anterior ya no está y no hay nada entre lo que
+   animar. La View Transition API saca una foto del antes y sí lo permite.
+
+   **Solo transiciona el cuerpo del panel.** La cabecera, la barra de días y el
+   mapa se quedan quietos: son el marco, y un marco que se mueve con su
+   contenido convierte una navegación en un sobresalto. */
+@supports (view-transition-name: none) {
+  .panel__cuerpo { view-transition-name: panel; }
+
+  /* El resto de la página no participa. Su «antes» y su «después» son iguales,
+     así que animarlos solo cuesta trabajo y arriesga un parpadeo del mapa. */
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation: none; }
+
+  ::view-transition-old(panel),
+  ::view-transition-new(panel) {
+    /* Sin esto, cuando las dos fotos no miden igual —el panel se ensancha en
+       portada, transporte y listas— el navegador las estira para que encajen y
+       el texto se deforma mientras cruza. Recortar es preferible a deformar. */
+    height: 100%;
+    object-fit: none;
+    object-position: top left;
+    animation-duration: var(--t-panel);
+    animation-timing-function: var(--sal);
+    animation-fill-mode: both;
+  }
+
+  /* Día a día: una hoja que se va por un lado y otra que entra por el otro.
+     14 px y no el ancho entero: es una pista de dirección, no un carrusel. */
+  [data-vt="dia-der"]::view-transition-old(panel) { animation-name: vt-sale-izq; }
+  [data-vt="dia-der"]::view-transition-new(panel) { animation-name: vt-entra-der; }
+  [data-vt="dia-izq"]::view-transition-old(panel) { animation-name: vt-sale-der; }
+  [data-vt="dia-izq"]::view-transition-new(panel) { animation-name: vt-entra-izq; }
+
+  /* Abrir una ficha es bajar un nivel; volver es subir. Lo dice la profundidad,
+     no el lado: si usara el mismo eje que los días, entrar en un sitio y pasar
+     al día siguiente se sentirían igual siendo cosas distintas. */
+  [data-vt="entra"]::view-transition-old(panel) { animation-name: vt-hunde; }
+  [data-vt="entra"]::view-transition-new(panel) { animation-name: vt-emerge; }
+  [data-vt="sale"]::view-transition-old(panel)  { animation-name: vt-emerge-inv; }
+  [data-vt="sale"]::view-transition-new(panel)  { animation-name: vt-hunde-inv; }
+
+  [data-vt="fundido"]::view-transition-old(panel) { animation-name: vt-fundido-sale; }
+  [data-vt="fundido"]::view-transition-new(panel) { animation-name: vt-fundido-entra; }
+}
+
+@keyframes vt-sale-izq  { to   { opacity: 0; transform: translateX(-14px); } }
+@keyframes vt-entra-der { from { opacity: 0; transform: translateX(14px); } }
+@keyframes vt-sale-der  { to   { opacity: 0; transform: translateX(14px); } }
+@keyframes vt-entra-izq { from { opacity: 0; transform: translateX(-14px); } }
+
+@keyframes vt-hunde      { to   { opacity: 0; transform: scale(0.985); } }
+@keyframes vt-emerge     { from { opacity: 0; transform: translateY(8px); } }
+@keyframes vt-emerge-inv { to   { opacity: 0; transform: translateY(8px); } }
+@keyframes vt-hunde-inv  { from { opacity: 0; transform: scale(0.985); } }
+
+@keyframes vt-fundido-sale  { to   { opacity: 0; } }
+@keyframes vt-fundido-entra { from { opacity: 0; } }
+
+/* Movimiento reducido: se conserva el fundido, que ayuda a entender que algo ha
+   cambiado, y se quita el desplazamiento, que es lo que marea. Misma regla que
+   el resto de la aplicación. Va explícito porque el `*` de `base.css` no
+   alcanza a los pseudoelementos de transición. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(panel) { animation: vt-fundido-sale var(--t-rapido) linear both !important; }
+  ::view-transition-new(panel) { animation: vt-fundido-entra var(--t-rapido) linear both !important; }
 }
 
 /* --- Buscador ----------------------------------------------------------- */
@@ -1218,11 +1301,18 @@ a.cabecera__marca:active { opacity: 0.6; }
 /* Medido antes: el título del viaje era el único acceso a su portada y ocupaba
    37 × 26 px en móvil, la mitad del mínimo táctil. Ahora tiene su propio icono
    en las acciones, y el título además es un objetivo de 44 px de alto. */
+/* El relleno vertical y no `align-items`: los dos hijos se alinean por línea
+   base —es lo que hace que un título de 17 px y un subtítulo de 12 se lean como
+   una sola frase— y **un grupo alineado por línea base se coloca al principio de
+   la caja flex, no en su centro**. Con `min-height: 44px` para el objetivo
+   táctil, eso dejaba el texto 8,8 px por encima del centro y 15 px muertos
+   debajo. `align-items: center` estaba ahí y no hacía nada, porque cada hijo lo
+   anula con `align-self: baseline`. El relleno sí centra, y sin tocar la línea
+   base. Medido antes y después. */
 a.cabecera__marca {
   display: flex;
-  align-items: center;
   min-height: 44px;
-  padding: 0 var(--e2);
+  padding: 9px var(--e2);
   margin-left: calc(var(--e2) * -1);
 }
 .cabecera__marca .cabecera__logo,

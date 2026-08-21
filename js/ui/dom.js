@@ -189,6 +189,37 @@ export function muelle(alActualizar, { rigidez = 170, amortiguacion = 26 } = {})
 }
 
 /**
+ * Transición entre dos estados del DOM con la View Transition API.
+ *
+ * El panel se repinta con `innerHTML`, así que el DOM viejo se **destruye**: sin
+ * esto no hay forma de que una transición de CSS cruce entre dos estados, porque
+ * cuando el nuevo existe el anterior ya no está. `startViewTransition` saca una
+ * foto del antes, aplica el cambio y anima entre las dos con pseudoelementos.
+ *
+ * Mejora progresiva: donde no exista, se aplica el cambio tal cual y nadie queda
+ * peor que hoy. El `tipo` viaja a CSS en `data-vt` del elemento raíz, que es lo
+ * que decide de qué lado entra.
+ *
+ * El testigo evita que una transición que termina tarde borre el `data-vt` de
+ * otra que ya ha empezado: al cambiar de día deprisa se solapan.
+ */
+let testigoVt = 0;
+
+export function transicion(aplicar, tipo = '') {
+  if (!document.startViewTransition) { aplicar(); return null; }
+
+  const raiz = document.documentElement;
+  const mio = ++testigoVt;
+  raiz.dataset.vt = tipo;
+
+  const t = document.startViewTransition(aplicar);
+  // `finished` se rechaza si la transición se salta; las dos salidas limpian.
+  const limpiar = () => { if (mio === testigoVt) delete raiz.dataset.vt; };
+  t.finished.then(limpiar, limpiar);
+  return t;
+}
+
+/**
  * Proyección de inercia de Apple (Designing Fluid Interfaces).
  * Dice dónde acabaría el elemento si se soltara con esta velocidad, para poder
  * elegir el punto de anclaje al que va **de verdad** y no al más cercano al dedo.
