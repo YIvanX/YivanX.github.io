@@ -393,17 +393,17 @@ export function pintarDia(viaje, dia, estado, { ocultos = 0 } = {}) {
       <h1 class="titulo-1" data-foco tabindex="-1">${dia.titulo}</h1>
       <p class="menudo" style="margin-top:4px">${fechaLarga(dia.fecha)}</p>
       ${dia.resumen ? crudo(`<p class="dia-cabecera__resumen secundario">${esc(dia.resumen)}</p>`) : ''}
-      ${bandasDelDia(viaje, dia, estado)}
       ${enlaceRuta(dia)}
-      <div class="dia-cabecera__editar">
-        <button type="button" class="boton" data-accion="anadir-parada">${icono('mas')}Añadir una parada</button>
-        ${ocultos ? crudo(`<button type="button" class="boton boton--fantasma" data-accion="restaurar">
-          ${esc(ocultos)} quitada${ocultos === 1 ? '' : 's'} · restaurar</button>`) : ''}
-      </div>
+      ${bandasDelDia(viaje, dia, estado)}
     </div>
     ${dia.bloques.length
       ? crudo(`<div class="cronologia">${cuerpo}${cola}</div>`)
       : crudo('<div class="vacio"><svg aria-hidden="true"><use href="#i-reloj"/></svg><p class="secundario">Este día no tiene nada planificado todavía.</p></div>')}
+    <div class="dia-editar">
+      <button type="button" class="boton" data-accion="anadir-parada">${icono('mas')}Añadir una parada</button>
+      ${ocultos ? crudo(`<button type="button" class="boton boton--fantasma" data-accion="restaurar">
+        ${esc(ocultos)} quitada${ocultos === 1 ? '' : 's'} · restaurar</button>`) : ''}
+    </div>
   `;
 }
 

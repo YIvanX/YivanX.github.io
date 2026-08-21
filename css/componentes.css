@@ -232,7 +232,8 @@
 .dia-cabecera__meta { display: flex; align-items: center; gap: var(--e2); flex-wrap: wrap; margin-bottom: var(--e2); }
 .dia-cabecera__resumen { margin-top: var(--e2); }
 
-.cronologia { padding: 0 var(--e4) var(--e8); }
+/* El hueco de abajo lo pone ahora `.dia-editar`, que va detras. */
+.cronologia { padding: 0 var(--e4) var(--e5); }
 
 /* Entrada escalonada: las filas del día llegan una detrás de otra, en el mismo
    orden en que se recorren. 22 ms entre ellas — por debajo no se percibe como
@@ -468,8 +469,28 @@
   pointer-events: none;
 }
 .ahora__hora { font-family: var(--mono); font-size: 0.6875rem; font-weight: 700; color: var(--acento); text-align: right; padding-right: 2px; }
-.ahora__marca { justify-self: center; width: 7px; height: 7px; border-radius: 50%; background: var(--acento); }
+.ahora__marca { position: relative; justify-self: center; width: 7px; height: 7px; border-radius: 50%; background: var(--acento); }
 .ahora__linea { height: 1px; background: linear-gradient(to right, var(--acento), transparent); }
+
+/* «Ahora» es lo único de la pantalla que se mueve solo, y se lo ha ganado: en
+   un día de doce paradas es la referencia que dice dónde estás. Un anillo que
+   sale del punto cada 2,8 s — lento a propósito, porque esto se mira de reojo
+   mientras andas y algo que parpadea deprisa pide atención que no tiene que
+   pedir. Se anima `transform` y `opacity`, que van al compositor y no cuestan
+   repintado. Solo existe cuando el día que miras es hoy. */
+.ahora__marca::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--acento);
+  animation: ahora-anillo 2800ms var(--sal) infinite;
+}
+@keyframes ahora-anillo {
+  0%       { transform: scale(0.62); opacity: 0.55; }
+  70%, 100% { transform: scale(1.4);  opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .ahora__marca::after { display: none; } }
 
 /* --- Ficha de lugar ----------------------------------------------------- */
 .ficha__cabecera {
@@ -620,6 +641,28 @@
 }
 .marca svg { width: 12px; height: 12px; }
 [aria-checked="true"] .marca { background: var(--acento); border-color: var(--acento); color: var(--acento-tinta); }
+
+/* Confirmación del **acto**, no del estado, y esa distinción es toda la regla:
+   si esto colgara de `[aria-checked="true"]` se dispararía también al pintar el
+   día, y todo lo ya marcado daría un salto al abrirlo. La clase la enciende
+   quien atiende el toque (`pulso()` en `dom.js`) y se apaga sola.
+
+   Esto se toca de pie, delante del sitio, mirando otra cosa: el dedo tapa la
+   casilla justo cuando cambia, así que el acuse tiene que durar lo suficiente
+   para verse al levantarlo. La casilla se hunde y la marca entra rebasando. */
+.pulso .marca { animation: marca-hunde 300ms var(--sal); }
+@keyframes marca-hunde {
+  0%   { transform: scale(1); }
+  36%  { transform: scale(0.84); }
+  100% { transform: scale(1); }
+}
+
+.pulso[aria-checked="true"] .marca svg { animation: marca-entra 320ms var(--sal) both; }
+@keyframes marca-entra {
+  0%   { opacity: 0; transform: scale(0.4); }
+  58%  { opacity: 1; transform: scale(1.18); }
+  100% { opacity: 1; transform: none; }
+}
 [aria-checked="true"] .tarea__texto { color: var(--tinta-suave); text-decoration: line-through; text-decoration-color: var(--borde-fuerte); }
 .tarea__texto { font-size: 0.875rem; line-height: 1.45; font-weight: 500; }
 .tarea__detalle { margin-top: 3px; font-size: 0.75rem; line-height: 1.45; color: var(--tinta-suave); }
@@ -946,6 +989,19 @@ kbd {
 .bloque__nube--pendiente { color: var(--alerta-t); }
 .bloque__nube--en-nube   { color: var(--tinta-suave); opacity: .55; }
 
+/* Al terminar una subida, cada parada que acaba de llegar a la nube lo dice una
+   vez, en el orden en que están en el día. Sin esto el icono aparece ya en gris,
+   igual que si siempre hubiera estado subido, y la única señal de que algo pasó
+   es que la barra de arriba desaparece. Lo enciende `viaje.js` después de que la
+   escritura haya ido bien — nunca antes, porque un fallo de red celebrando una
+   subida que no ocurrió es la peor mentira posible aquí. */
+.bloque__nube.nube-llega { animation: nube-llega 420ms var(--sal) both; animation-delay: calc(var(--i, 0) * 30ms); }
+@keyframes nube-llega {
+  0%   { opacity: 0; transform: translateY(-5px) scale(0.8); color: var(--alerta-t); }
+  55%  { opacity: 1; transform: none; }
+  100% { opacity: .55; transform: none; }
+}
+
 /* --- Barra de cambios sin guardar ---------------------------------------
    Pegada arriba porque su trabajo es no perderse de vista: mientras haya algo
    sin subir tiene que seguir ahí, se navegue a donde se navegue dentro del día. */
@@ -1039,7 +1095,18 @@ kbd {
 .nivel--opcional     { background: transparent; border: 1px solid var(--borde); color: var(--tinta-suave); }
 
 /* --- Editar el itinerario sobre la marcha -------------------------------- */
-.dia-cabecera__editar { display: flex; flex-wrap: wrap; gap: var(--e2); margin-top: var(--e3); }
+/* Las acciones de autoría van **después** de la cronología, no entre la cabecera
+   y ella. Bosquejar el viaje se hace en casa y una vez; leer el día se hace en la
+   calle y veinte veces, así que «Añadir una parada» no puede estar en mitad del
+   camino de lectura. Por el mismo motivo el enlace de ruta subió junto al
+   encabezado: es lo que se busca al salir del alojamiento, y estaba enterrado
+   detrás de las bandas plegables. */
+.dia-editar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e2);
+  padding: 0 var(--e4) calc(var(--e8) + env(safe-area-inset-bottom));
+}
 .chip--propio { background: var(--acento-velo); color: var(--acento); }
 
 .anadir {

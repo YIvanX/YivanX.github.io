@@ -189,6 +189,27 @@ export function muelle(alActualizar, { rigidez = 170, amortiguacion = 26 } = {})
 }
 
 /**
+ * Enciende una animación de confirmación **una sola vez**, ahora.
+ *
+ * Existe porque la alternativa obvia no funciona: si la animación colgara del
+ * estado —`[aria-checked="true"] .marca { animation: … }`— se dispararía también
+ * al pintar el día, y todo lo que ya estaba marcado daría un salto al abrirlo.
+ * La confirmación es del **acto**, no del estado, así que la enciende quien
+ * atiende el toque y se apaga sola al terminar.
+ *
+ * El `offsetWidth` fuerza un reflujo entre quitar y poner la clase; sin él,
+ * marcar y desmarcar deprisa no reinicia la animación y el segundo toque parece
+ * que no ha hecho nada.
+ */
+export function pulso(el, clase = 'pulso') {
+  if (!el) return;
+  el.classList.remove(clase);
+  void el.offsetWidth;
+  el.classList.add(clase);
+  el.addEventListener('animationend', () => el.classList.remove(clase), { once: true });
+}
+
+/**
  * Transición entre dos estados del DOM con la View Transition API.
  *
  * El panel se repinta con `innerHTML`, así que el DOM viejo se **destruye**: sin

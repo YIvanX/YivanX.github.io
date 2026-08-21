@@ -20,7 +20,7 @@
  * que es justo lo que dice el párrafo de arriba que no se puede hacer.
  */
 
-import { html, esc, icono, crudo, plural, $, $$, alPulsar, muelle, proyectar, gomaElastica, transicion } from '../ui/dom.js';
+import { html, esc, icono, crudo, plural, $, $$, alPulsar, muelle, proyectar, gomaElastica, transicion, pulso } from '../ui/dom.js';
 import { cargarViaje, diaPorDefecto, recuadroDe, INTENSIDADES, recomponer, viajeBase, versionNubeDe, fijarVersionNube, origenDe, fijarCapaSubida } from '../datos.js';
 import { Mapa } from '../mapa.js';
 import { crearHoja, CONSULTA_HOJA } from '../ui/hoja.js';
@@ -247,6 +247,9 @@ export async function montarViaje(raiz, ruta) {
     resorteDesliz.hacia(0);
   }
 
+  /** Una subida a la nube acaba de terminar: los iconos nuevos lo dicen una vez. */
+  let celebrarNube = false;
+
   /** Lo último que se pintó, para saber de dónde venimos al elegir la transición. */
   let vistaPintada = null;
   let fechaPintada = null;
@@ -374,6 +377,13 @@ export async function montarViaje(raiz, ruta) {
       if (moverFoco) situarFoco(`${dia.titulo}, ${fechaLarga(dia.fecha)}`);
     }
     cuerpo.scrollTop = 0;
+    if (celebrarNube) {
+      celebrarNube = false;
+      $$('.bloque__nube--en-nube', cuerpo).forEach((n, i) => {
+        n.style.setProperty('--i', String(Math.min(i, 8)));
+        pulso(n, 'nube-llega');
+      });
+    }
     if (escalonar) escalonarCronologia();
     animarEntrada({ loHaceLaTransicion: conTransicion });
     vistaPintada = actual.vista;
@@ -457,6 +467,7 @@ export async function montarViaje(raiz, ruta) {
   alPulsar(cuerpo, '[data-visto]', (b) => {
     const visto = estado.alternarVisto(viaje.id, b.dataset.visto);
     b.setAttribute('aria-checked', String(visto));
+    pulso(b);
     // Solo el contador: repintar la ficha entera perdería el sitio del scroll
     // justo cuando estás de pie delante del sitio con el móvil en la mano.
     const seccion = b.closest('.mirar');
@@ -470,6 +481,7 @@ export async function montarViaje(raiz, ruta) {
   alPulsar(cuerpo, '[data-tarea]', (b) => {
     const hecha = estado.alternarTarea(viaje.id, b.dataset.tarea);
     b.setAttribute('aria-checked', String(hecha));
+    pulso(b);
     // Solo se repinta la barra de progreso: repintar la lista entera perdería
     // el sitio del scroll y la sensación de que el toque hizo algo.
     //
@@ -664,6 +676,10 @@ export async function montarViaje(raiz, ruta) {
 
   /** Repinta con los estados de nube recalculados tras guardar. */
   function trasGuardar() {
+    // Los iconos de nube se repintan aqui: la bandera hace que los nuevos
+    // anuncien el cambio una vez, en vez de aparecer ya en gris como si
+    // siempre hubieran estado subidos.
+    celebrarNube = true;
     const rehecho = recomponer(viaje.id, { archivo: null });
     if (rehecho) viaje = rehecho;
     modoPintado = null;
