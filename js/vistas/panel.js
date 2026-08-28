@@ -22,6 +22,9 @@ import {
 import {
   fechaLarga, textoHorario, revisarBloque, estadoEn, aMinutos, aHora, aIso, claveDia, NOMBRE_DIA,
 } from '../horarios.js';
+import {
+  describirCielo, tiempoDelDia, resumenDelTiempo, alcanceDeFecha, desdeCuando, HORIZONTE,
+} from '../tiempo.js';
 
 const minutosAhora = () => { const d = new Date(); return d.getHours() * 60 + d.getMinutes(); };
 
@@ -290,6 +293,158 @@ function pintarTramo(t) {
     </div>`;
 }
 
+// --- El tiempo ------------------------------------------------------------
+// Tres piezas con trabajos distintos: la **tira** es lo que se lee sin abrir
+// nada, dentro de la cabecera del día; las **horas** viven en una banda porque
+// solo hacen falta cuando estás decidiendo a qué hora sales; y la **lista** de
+// la portada es el viaje entero de un vistazo.
+
+/** "25°", y una raya cuando no hay dato: un hueco vacío parece un fallo de pintado. */
+const grados = (n) => (n === null || n === undefined ? '—' : `${Math.round(n)}°`);
+
+/**
+ * La tira compacta de un día.
+ *
+ * Va en la cabecera y no en una banda a propósito: en el móvil el panel asoma
+ * 132 px sobre el mapa, y si llueve hay que saberlo sin abrir nada. Un dato que
+ * cuesta un toque es un dato que se mira cuando ya te has mojado.
+ */
+function tiraDeTiempo(t) {
+  if (!t) return '';
+  const cielo = describirCielo(t.codigo);
+  return html`
+    <div class="tiempo-tira">
+      ${icono(cielo.icono, 'tiempo-tira__icono')}
+      <span class="tiempo-tira__cielo">${cielo.texto}</span>
+      <span class="tiempo-tira__temp">${grados(t.max)}<span class="tiempo-tira__min">${grados(t.min)}</span></span>
+      <span class="tiempo-tira__datos">
+        ${t.lluvia === null ? '' : html`<span class="tiempo-tira__dato ${t.lluvia >= 30 ? 'tiempo-tira__dato--alta' : ''}">${icono('gota')}${t.lluvia}%</span>`}
+        ${t.viento === null ? '' : html`<span class="tiempo-tira__dato">${icono('viento')}${Math.round(t.viento)} km/h</span>`}
+        ${t.atardecer ? html`<span class="tiempo-tira__dato">${icono('atardecer')}${t.atardecer}</span>` : ''}
+      </span>
+    </div>`;
+}
+
+/**
+ * Las horas del día en las que se está en la calle, no las veinticuatro.
+ *
+ * La barra existe porque la forma del día se lee antes que los números: dónde
+ * está el calor y a qué hora empieza a caer se ve de un vistazo, y las cifras
+ * solo confirman. Se escala entre la mínima y la máxima **de esas horas**, no
+ * del día entero, o un día llano saldría plano del todo.
+ */
+function pintarHoras(t) {
+  const horas = t.horas || [];
+  if (!horas.length) return '';
+  const temps = horas.map((h) => h.t);
+  const alta = Math.max(...temps);
+  const baja = Math.min(...temps);
+  const recorrido = alta - baja;
+  // La fila de lluvia se reserva **por día y no por hora**: si se reservara por
+  // hora, un día seco dejaría una banda vacía de 15 px debajo de las cifras, y
+  // si no se reservara nada, en un día con dos horas de lluvia las columnas
+  // tendrían alturas distintas y la fila entera bailaría.
+  const conLluvia = horas.some((h) => h.p);
+
+  return html`
+    <div class="tiempo-horas scroll-x">
+      ${horas.map((h) => {
+        // Sin recorrido, todas a media altura: una barra al 100% mentiría.
+        const alto = recorrido ? 8 + Math.round(((h.t - baja) / recorrido) * 26) : 18;
+        const cielo = describirCielo(h.c);
+        return html`
+          <div class="tiempo-hora" title="${aHora(h.h * 60)} · ${cielo.texto}">
+            <span class="tiempo-hora__h menudo">${h.h}</span>
+            ${icono(cielo.icono, 'tiempo-hora__icono')}
+            <span class="tiempo-hora__barra" aria-hidden="true"><i style="height:${alto}px"></i></span>
+            <span class="tiempo-hora__t">${h.t}°</span>
+            ${conLluvia ? html`<span class="tiempo-hora__p menudo ${h.p >= 30 ? 'tiempo-hora__p--alta' : ''}">${h.p ? `${h.p}%` : ''}</span>` : ''}
+          </div>`;
+      })}
+    </div>
+    <p class="menudo" style="margin-top:var(--e2)">
+      ${t.amanecer ? `Amanece a las ${t.amanecer}` : ''}${t.amanecer && t.atardecer ? ' y anochece a las ' : ''}${t.atardecer || ''}${t.altitud === null ? '' : `. ${t.etiqueta || 'El punto medido'}, a ${miles(t.altitud)} m`}.
+    </p>`;
+}
+
+/** Una fila de la lista del viaje: un día, con enlace a su día. */
+function filaDeTiempo(viaje, dia, t, hoy) {
+  const f = dia.fecha;
+  const cabecera = html`
+    <span class="tiempo-fila__fecha">
+      <span class="tiempo-fila__dia">${NOMBRE_DIA[claveDia(f)].slice(0, 3)}</span>
+      <span class="tiempo-fila__num">${Number(f.slice(8, 10))}</span>
+    </span>`;
+
+  if (!t) {
+    const alcance = alcanceDeFecha(f, hoy);
+    const motivo = alcance.estado === 'lejano'
+      ? `Aún no hay predicción · faltan ${plural(alcance.dias - HORIZONTE, 'día')}`
+      : 'Sin dato';
+    return html`
+      <a class="tiempo-fila tiempo-fila--vacia" href="#/v/${viaje.id}/d/${f}">
+        ${cabecera}
+        ${icono('practico', 'tiempo-fila__icono')}
+        <span class="tiempo-fila__cuerpo"><span class="tiempo-fila__cielo menudo">${motivo}</span></span>
+      </a>`;
+  }
+
+  const cielo = describirCielo(t.codigo);
+  return html`
+    <a class="tiempo-fila ${f === hoy ? 'tiempo-fila--hoy' : ''}" href="#/v/${viaje.id}/d/${f}">
+      ${cabecera}
+      ${icono(cielo.icono, 'tiempo-fila__icono')}
+      <span class="tiempo-fila__cuerpo">
+        <span class="tiempo-fila__cielo">${cielo.texto}</span>
+        ${t.etiqueta ? crudo(`<span class="tiempo-fila__zona menudo">${esc(t.etiqueta)}</span>`) : ''}
+      </span>
+      ${t.lluvia === null ? '' : html`<span class="tiempo-fila__lluvia menudo ${t.lluvia >= 30 ? 'tiempo-fila__lluvia--alta' : ''}">${icono('gota')}${t.lluvia}%</span>`}
+      <span class="tiempo-fila__temp"><b>${grados(t.max)}</b><span class="menudo">${grados(t.min)}</span></span>
+    </a>`;
+}
+
+/**
+ * El tiempo del viaje entero, para la portada.
+ *
+ * La sección se pinta **aunque no haya un solo dato**: es la respuesta a «¿qué
+ * tiempo va a hacer?», y un hueco donde debería estar la respuesta obliga a
+ * preguntarse si la guía lo sabe y no lo enseña o si es que no lo sabe.
+ */
+export function pintarTiempoDelViaje(viaje, tiempo) {
+  const hoy = aIso(new Date());
+  const resumen = resumenDelTiempo(tiempo, viaje);
+  const dias = viaje.dias || [];
+
+  let titular;
+  if (!resumen) {
+    const lejanos = dias.filter((d) => alcanceDeFecha(d.fecha, hoy).estado === 'lejano').length;
+    titular = lejanos === dias.length && dias.length
+      ? `Todavía no hay predicción: la de Open-Meteo llega a ${HORIZONTE} días vista.`
+      : 'El tiempo llega en cuanto haya conexión. Lo último que se descargue se queda guardado para verlo sin ella.';
+  } else {
+    const agua = resumen.agua === 0
+      ? 'Ninguno con lluvia'
+      : `${plural(resumen.agua, 'día')} con lluvia`;
+    const falta = resumen.faltan
+      ? ` Faltan ${plural(resumen.faltan, 'día')}: la predicción llega a ${HORIZONTE} días vista.`
+      : '';
+    titular = `De ${grados(resumen.min)} a ${grados(resumen.max)} en ${plural(resumen.cuantos, 'día')}. ${agua}.${falta}`;
+  }
+
+  return html`
+    <div class="panel__seccion">
+      <h2 class="titulo-2">El tiempo</h2>
+      <p class="secundario" style="margin-top:4px">${titular}</p>
+      <p class="menudo" style="margin-top:6px">
+        Medido en la zona de cada día y no en la ciudad base: sale del itinerario, igual que los tramos.
+        Datos de <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a>${tiempo?.generado ? `, ${desdeCuando(tiempo.generado)}` : ''}.
+      </p>
+      <div class="tiempo-lista">
+        ${dias.map((d) => filaDeTiempo(viaje, d, tiempoDelDia(tiempo, d.fecha), hoy))}
+      </div>
+    </div>`;
+}
+
 /**
  * Una banda plegable del día.
  *
@@ -317,11 +472,12 @@ function banda(nombre, { icono: nombreIcono, titulo, pista = '', clase = '', cue
  * lista. **Lo que no tiene contenido no se pinta**, así que un día pelado se ve
  * exactamente igual que antes de que estas bandas existieran.
  */
-function bandasDelDia(viaje, dia, estado) {
+function bandasDelDia(viaje, dia, estado, tiempo) {
   const avisos = avisosDelDia(viaje, dia.fecha);
   const tramos = tramosDelDia(dia);
   const listas = listasDe(viaje, dia.fecha);
-  if (!avisos.length && !tramos.length && !listas.length) return '';
+  const horas = tiempo?.horas?.length ? tiempo : null;
+  if (!avisos.length && !tramos.length && !listas.length && !horas) return '';
 
   const bandas = [];
 
@@ -332,6 +488,19 @@ function bandasDelDia(viaje, dia, estado) {
       clase: grave ? 'banda--grave' : '',
       titulo: `${avisos.length} aviso${avisos.length === 1 ? '' : 's'} de este día`,
       cuerpo: html`${avisos.map(pintarAviso)}`,
+    }));
+  }
+
+  // Antes que los traslados: el tiempo decide si el día se hace, y el traslado
+  // solo cómo. La tira de la cabecera ya ha dicho lo esencial; esta banda es
+  // para cuando estás eligiendo a qué hora sales.
+  if (horas) {
+    bandas.push(banda('tiempo', {
+      icono: describirCielo(horas.codigo).icono,
+      titulo: 'Hora a hora',
+      pista: [`${grados(horas.max)} / ${grados(horas.min)}`, horas.lluvia === null ? '' : `${horas.lluvia}%`]
+        .filter(Boolean).join(' · '),
+      cuerpo: pintarHoras(horas),
     }));
   }
 
@@ -360,7 +529,8 @@ function bandasDelDia(viaje, dia, estado) {
   return html`<div class="bandas">${bandas}</div>`;
 }
 
-export function pintarDia(viaje, dia, estado, { ocultos = 0 } = {}) {
+export function pintarDia(viaje, dia, estado, { ocultos = 0, tiempo = null } = {}) {
+  const tiempoHoy = tiempoDelDia(tiempo, dia.fecha);
   const intensidad = INTENSIDADES[dia.intensidad] || INTENSIDADES.suave;
   const esHoy = dia.fecha === aIso(new Date());
   const ahora = minutosAhora();
@@ -392,9 +562,10 @@ export function pintarDia(viaje, dia, estado, { ocultos = 0 } = {}) {
       </div>
       <h1 class="titulo-1" data-foco tabindex="-1">${dia.titulo}</h1>
       <p class="menudo" style="margin-top:4px">${fechaLarga(dia.fecha)}</p>
+      ${tiraDeTiempo(tiempoHoy)}
       ${dia.resumen ? crudo(`<p class="dia-cabecera__resumen secundario">${esc(dia.resumen)}</p>`) : ''}
       ${enlaceRuta(dia)}
-      ${bandasDelDia(viaje, dia, estado)}
+      ${bandasDelDia(viaje, dia, estado, tiempoHoy)}
     </div>
     ${dia.bloques.length
       ? crudo(`<div class="cronologia">${cuerpo}${cola}</div>`)
@@ -781,7 +952,7 @@ function filaDeSeccion({ url, nombreIcono, titulo, pista = '' }) {
  * es una pregunta sobre el viaje. Compartiendo caja, ninguna de las dos se leía.
  */
 export function pintarPortada(viaje, {
-  capa = null, nube = null, tareas = {}, atencion = () => false,
+  capa = null, nube = null, tareas = {}, atencion = () => false, tiempo = null,
 } = {}) {
   const hoy = aIso(new Date());
   const estadoViaje = ESTADOS_VIAJE[viaje.estadoReal] || ESTADOS_VIAJE.planificado;
@@ -825,6 +996,8 @@ export function pintarPortada(viaje, {
         }) : ''}
       </div>
     </div>
+
+    ${pintarTiempoDelViaje(viaje, tiempo)}
 
     <div class="panel__seccion">
       <h2 class="titulo-2">Del viaje entero</h2>

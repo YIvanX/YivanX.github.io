@@ -28,6 +28,7 @@ import { brindis, actualizarBrindis } from '../ui/brindis.js';
 import * as buscador from '../ui/buscador.js';
 import * as buscarLugar from '../ui/buscar-lugar.js';
 import { lugarDesdeBusqueda, claveEstable, nuevoId, ocultosDelDia, comoJsonDelViaje } from '../personalizacion.js';
+import { tiempoGuardado, actualizarTiempo } from '../tiempo.js';
 import * as estado from '../estado.js';
 import * as nube from '../nube.js';
 import * as sincronizacion from '../sincronizacion.js';
@@ -60,6 +61,12 @@ export async function montarViaje(raiz, ruta) {
   let actual = { ...ruta, fecha: ruta.fecha || diaPorDefecto(viaje) };
   let verTodo = false;
   const urlsObjeto = new Set();
+
+  // Lo último que se descargó del tiempo, leído del navegador y **sin esperar a
+  // la red**: así el primer pintado ya lo lleva. La actualización se lanza al
+  // final del montaje y repinta si trae algo distinto.
+  let tiempo = tiempoGuardado(ruta.viajeId);
+  let vivo = true;
 
   raiz.className = '';
   raiz.innerHTML = html`
@@ -388,6 +395,7 @@ export async function montarViaje(raiz, ruta) {
       cuerpo.innerHTML = pintarPortada(viaje, {
         capa: estado.capaDe(viaje.id),
         tareas: guardado.tareas,
+        tiempo,
         atencion: (fecha) => diaTieneAtencion(viaje, fecha, guardado.tareas),
         nube: {
           configurada: nubeLista,
@@ -402,7 +410,7 @@ export async function montarViaje(raiz, ruta) {
       const dia = diaActual();
       const base = viajeBase(viaje.id);
       const ocultos = base ? ocultosDelDia(base, estado.capaDe(viaje.id), dia.fecha).length : 0;
-      cuerpo.innerHTML = pintarDia(viaje, dia, guardado, { ocultos });
+      cuerpo.innerHTML = pintarDia(viaje, dia, guardado, { ocultos, tiempo });
       if (moverFoco) situarFoco(`${dia.titulo}, ${fechaLarga(dia.fecha)}`);
     }
     if (navegando) situarScroll();
@@ -988,6 +996,21 @@ export async function montarViaje(raiz, ruta) {
 
   pintar();
 
+  // --- El tiempo -----------------------------------------------------------
+  // Se pide después de pintar y sin bloquear nada: la guía ya está en pantalla,
+  // y lo que se descargó la última vez ya se ha pintado con ella. Si no llega
+  // —sin cobertura, o con el viaje fuera de la ventana de predicción— no pasa
+  // absolutamente nada: no hay aviso que dar, porque no ha fallado ninguna
+  // acción tuya.
+  //
+  // Al repintar **no se mueve el foco**: puedes estar leyendo un día, y que un
+  // dato de fondo te robe el sitio sería peor que no tener el dato.
+  actualizarTiempo(viaje).then((nuevo) => {
+    if (!vivo || !nuevo || nuevo.generado === tiempo?.generado) return;
+    tiempo = nuevo;
+    pintarPanel({ moverFoco: false });
+  });
+
   // --- Qué pasó con la bajada --------------------------------------------
   // Se dice solo cuando hay algo que decir. Sin nube configurada o sin sesión
   // es el funcionamiento normal y callarse es lo correcto; lo que no se puede
@@ -1023,6 +1046,7 @@ export async function montarViaje(raiz, ruta) {
       pintar();
     },
     destruir() {
+      vivo = false;
       resorteDesliz.parar();
       removeEventListener('keydown', alTeclado);
       quitarOyenteTema();

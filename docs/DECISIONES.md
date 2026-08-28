@@ -175,6 +175,39 @@ no puede desviarse. En `transporte[]` queda lo que **no** es un tramo de un día
 el alquiler del coche, un abono— y se enseña como «Contratos y reservas», que es
 lo que de verdad es y por eso también aparece en Preparativos.
 
+## El tiempo se pide por día, no por la ciudad base
+
+Lo mismo que el transporte: **se calcula del itinerario**. La coordenada de cada
+día es el centroide de sus paradas y la etiqueta son sus zonas, así que un viaje
+nuevo no toca ni una línea y una parada añadida en la calle mueve el punto sola.
+
+La decisión de fondo es no enseñar una sola ciudad para todo el viaje. El 29 de
+agosto de 2026, en el viaje a León, la API daba **25,1° y cubierto en León y
+21,0° con llovizna en los Argüellos** — 205 m de desnivel, el mismo día. Un
+bloque de «el tiempo en León» durante seis días es decoración; el dato con el que
+se decide si se sube a las Hoces es el del sitio al que se va.
+
+**Open-Meteo** (CC BY 4.0): sin clave, con CORS y con las coordenadas separadas
+por comas, así que el viaje entero cabe en **una sola petición** — 32 KB con los
+datos hora a hora. Su ventana, medida contra ella y no leída en la documentación,
+es de **92 días hacia atrás y 16 hacia delante**, y hay que respetarla al
+construir la URL: *una sola fecha fuera de rango tumba la petición entera*, no
+solo ese día. Por eso solo se piden los días que caben y los demás dicen
+«todavía no hay predicción» en vez de quedarse en blanco.
+
+La caché vive en `localStorage` y **se sirve antes de pedir nada**, igual que el
+repositorio es el suelo de la nube: sin cobertura se pinta lo último que llegó,
+diciendo de cuándo es. Un fallo de red no da aviso, porque no ha fallado ninguna
+acción del usuario.
+
+Dónde se enseña, y por qué ahí: la **tira** va en la cabecera del día y no dentro
+de una banda, porque en el móvil el panel asoma sobre el mapa y si llueve hay que
+saberlo sin abrir nada; las **horas** sí van en banda, porque solo hacen falta al
+decidir a qué hora se sale; y la **lista** de la portada es el viaje entero de un
+vistazo. La fila de la probabilidad de lluvia se reserva por día y no por hora:
+por hora, un día seco deja una banda vacía debajo de las cifras, y sin reservarla
+las columnas de un día con dos horas de lluvia miden distinto y la fila baila.
+
 ## Preparativos y Al volver no son días
 
 Son dos pestañas más en la barra de días, con ruta propia (`/d/pre`, `/d/post`),

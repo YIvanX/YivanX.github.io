@@ -1479,3 +1479,124 @@ a.cabecera__marca {
    nada que diga que se puede entrar ahí. */
 .tarjeta-datos__nombre { display: inline-flex; align-items: center; gap: 6px; }
 .tarjeta-datos__nombre svg { width: 13px; height: 13px; color: var(--tinta-suave); }
+
+/* --- El tiempo ------------------------------------------------------------
+   El color sigue significando solo dos cosas, y aquí no hay ninguna categoría:
+   la probabilidad de lluvia alta se tiñe de alerta —que es un estado— y todo lo
+   demás va en tinta. Un cielo de colorines sería decoración, que es justo lo
+   que este sistema no hace. */
+
+/* La tira de la cabecera del día. Va arriba y no dentro de una banda porque en
+   el móvil el panel asoma 132 px sobre el mapa: si llueve, hay que saberlo sin
+   abrir nada. Los datos secundarios bajan a su propia línea siempre, y no
+   cuando no caben, para que la tira mida lo mismo en los seis días. */
+.tiempo-tira {
+  display: flex;
+  align-items: center;
+  gap: var(--e2);
+  flex-wrap: wrap;
+  margin-top: var(--e3);
+  padding: 8px 10px;
+  border: 1px solid var(--borde);
+  border-radius: var(--r-m);
+  background: var(--superficie);
+  font-size: 0.8125rem;
+}
+.tiempo-tira__icono { width: 20px; height: 20px; flex: 0 0 20px; color: var(--tinta-media); }
+.tiempo-tira__cielo { font-weight: 600; min-width: 0; }
+.tiempo-tira__temp {
+  margin-left: auto;
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.tiempo-tira__min { margin-left: 6px; color: var(--tinta-suave); }
+.tiempo-tira__datos {
+  flex: 1 0 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e3);
+  color: var(--tinta-media);
+}
+.tiempo-tira__dato { display: inline-flex; align-items: center; gap: 4px; font-variant-numeric: tabular-nums; }
+.tiempo-tira__dato svg { width: 13px; height: 13px; color: var(--tinta-suave); }
+.tiempo-tira__dato--alta { color: var(--alerta-t); }
+.tiempo-tira__dato--alta svg { color: currentColor; }
+
+/* Hora a hora. La barra dibuja la forma del día: dónde está el calor y cuándo
+   empieza a caer se lee antes que cualquier cifra. Se escala entre la mínima y
+   la máxima de las horas que se enseñan, no del día entero. */
+.tiempo-horas { display: flex; gap: 2px; padding-bottom: 4px; }
+.tiempo-hora {
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  flex: 0 0 42px;
+  padding: 4px 0;
+  border-radius: var(--r-s);
+}
+.tiempo-hora__h { font-variant-numeric: tabular-nums; }
+.tiempo-hora__icono { width: 15px; height: 15px; color: var(--tinta-suave); }
+.tiempo-hora__barra { display: flex; align-items: flex-end; height: 34px; }
+.tiempo-hora__barra i {
+  display: block;
+  width: 6px;
+  border-radius: var(--r-pill);
+  background: var(--acento);
+  opacity: 0.38;
+}
+.tiempo-hora__t { font-size: 0.75rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+/* La fila existe o no existe para el día entero —lo decide `pintarHoras`—, así
+   que aquí solo hay que reservar su alto para las horas secas de un día que sí
+   la tiene. Si no, las columnas con cifra serían más altas y la fila bailaría. */
+.tiempo-hora__p { min-height: 1.1em; font-variant-numeric: tabular-nums; }
+.tiempo-hora__p--alta { color: var(--alerta-t); }
+
+/* La lista del viaje entero, en la portada. Cada fila es su día: se toca y se
+   entra, igual que en la lista del itinerario de arriba. */
+.tiempo-lista { margin-top: var(--e3); }
+.tiempo-fila {
+  display: flex;
+  align-items: center;
+  gap: var(--e3);
+  padding: 9px var(--e2);
+  border-radius: var(--r-m);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color var(--t-rapido) ease, transform var(--t-pulsar) var(--sal);
+}
+.tiempo-fila + .tiempo-fila { border-top: 1px solid var(--borde); border-radius: 0; }
+.tiempo-fila:active { transform: scale(0.995); background: var(--superficie-2); }
+@media (hover: hover) and (pointer: fine) { .tiempo-fila:hover { background: var(--superficie-2); } }
+
+.tiempo-fila__fecha { display: flex; align-items: baseline; gap: 5px; flex: 0 0 50px; color: var(--tinta-media); }
+.tiempo-fila__dia { font-size: 0.625rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.tiempo-fila__num { font-family: var(--serif); font-size: 1.0625rem; line-height: 1; }
+.tiempo-fila__icono { width: 22px; height: 22px; flex: 0 0 22px; color: var(--tinta-media); }
+.tiempo-fila__cuerpo { flex: 1; min-width: 0; }
+.tiempo-fila__cielo {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.tiempo-fila__zona { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tiempo-fila__lluvia { display: inline-flex; align-items: center; gap: 3px; flex: 0 0 auto; font-variant-numeric: tabular-nums; }
+.tiempo-fila__lluvia svg { width: 12px; height: 12px; }
+.tiempo-fila__lluvia--alta { color: var(--alerta-t); }
+.tiempo-fila__temp {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex: 0 0 auto;
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+.tiempo-fila--hoy .tiempo-fila__fecha { color: var(--acento); }
+.tiempo-fila--hoy .tiempo-fila__dia { font-weight: 800; }
+/* Un día sin predicción se enseña igual y apagado: que falte el dato es una
+   respuesta, y esconder la fila haría dudar de si el día existe. */
+.tiempo-fila--vacia .tiempo-fila__icono { color: var(--tinta-suave); opacity: 0.5; }
+.tiempo-fila--vacia .tiempo-fila__cielo { font-weight: 400; }

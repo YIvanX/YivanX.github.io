@@ -270,6 +270,11 @@ table { border-collapse: collapse; width: 100%; }
 .scroll-y::-webkit-scrollbar-thumb { background: var(--borde-fuerte); border-radius: var(--r-pill); }
 .scroll-y::-webkit-scrollbar-track { background: transparent; }
 
+.scroll-x { overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; scrollbar-color: var(--borde-fuerte) transparent; }
+.scroll-x::-webkit-scrollbar { width: 8px; height: 8px; }
+.scroll-x::-webkit-scrollbar-thumb { background: var(--borde-fuerte); border-radius: var(--r-pill); }
+.scroll-x::-webkit-scrollbar-track { background: transparent; }
+
 /* --- Accesibilidad ------------------------------------------------------
    Movimiento reducido no es «sin movimiento»: se conservan opacidad y color,
    que ayudan a entender, y se quita el desplazamiento, que es lo que marea. */

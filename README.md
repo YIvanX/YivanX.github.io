@@ -48,6 +48,11 @@ destino escrito en el código, así que el siguiente viaje no toca ni una línea
   modo, origen, destino, duración y enlace a Maps salen de los propios traslados,
   así que no pueden decir algo distinto del día. Lo que se contrata o se reserva
   —el coche de alquiler, un abono— va aparte, en Preparativos.
+- **El tiempo, en la zona de cada día y no en la ciudad base.** El punto sale del
+  itinerario, igual que los tramos: el día que se sube a la montaña no dice el
+  tiempo que hace en la capital. Hay una sección con el viaje entero en la
+  portada, una tira en la cabecera de cada día y las horas del día en una banda.
+  Lo último que se descargue se queda guardado y se ve sin conexión.
 - Listas de reservas y equipaje con su progreso, presupuesto, avisos de lo que
   puede romper el viaje, y buscador con `Ctrl+K`.
 - Tema claro y oscuro, incluido el mapa.
@@ -114,6 +119,7 @@ js/
   agenda.js             qué aviso, lista o tramo va en qué día (puro, con pruebas)
   estado.js             localStorage + IndexedDB (visitados, notas, fotos)
   horarios.js           ¿está abierto? — compartido con el validador
+  tiempo.js             el tiempo por día, del itinerario (puro, con pruebas)
   mapa.js               envoltorio de Leaflet
   enlaces-mapa.js       rutas y enlaces de Google Maps
   personalizacion.js    capa de paradas añadidas y quitadas (puro, con pruebas)
@@ -152,6 +158,7 @@ IndexedDB y publicar una es una decisión explícita.
 Mapas de [CARTO](https://carto.com/attributions) sobre datos de
 [OpenStreetMap](https://www.openstreetmap.org/copyright).
 [Leaflet](https://leafletjs.com) 1.9.4, BSD-2-Clause.
+El tiempo, de [Open-Meteo](https://open-meteo.com/), CC BY 4.0.
 Los datos de los viajes son propios, con su fuente y su fecha de verificación
 anotadas lugar por lugar.
 

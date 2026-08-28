@@ -322,6 +322,21 @@ Por encima de nueve paradas intermedias, la forma `?api=1` deja de admitirlas y
 se cambia sola a la forma de ruta por segmentos (`/dir/a/b/c/`), que no tiene
 ese tope.
 
+## El tiempo también se pide solo
+
+**No hay ningún campo que rellenar.** El punto de cada día es el centroide de sus
+paradas y la etiqueta son sus zonas, así que sale del itinerario igual que los
+tramos de transporte. Lo único que hace falta es que los lugares tengan sus
+`coords` bien puestas, que ya es obligatorio para el mapa.
+
+Dos cosas que conviene saber:
+
+- **La predicción de Open-Meteo llega a 16 días vista.** Un viaje que se monta
+  con dos meses de antelación enseña la sección con «todavía no hay predicción» y
+  se llena sola según se acerque la fecha. No es un fallo del archivo.
+- **`zona` deja de ser decorativa**: es lo que etiqueta la fila del tiempo de ese
+  día. Un día con paradas en dos comarcas sale como «Astorga y Maragatería».
+
 ---
 
 ## 4. Validar
