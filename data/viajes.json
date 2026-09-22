@@ -3,6 +3,17 @@
   "descripcion": "Guía interactiva durante el viaje y registro de viajes después.",
   "viajes": [
     {
+      "id": "praga-2026-10",
+      "archivo": "data/viajes/praga-2026-10.json",
+      "titulo": "Praga",
+      "subtitulo": "Cinco días a pie y en tranvía, sin salir de la ciudad",
+      "fechas": {
+        "inicio": "2026-10-03",
+        "fin": "2026-10-07"
+      },
+      "estado": "planificado"
+    },
+    {
       "id": "leon-2026-08",
       "archivo": "data/viajes/leon-2026-08.json",
       "titulo": "León",

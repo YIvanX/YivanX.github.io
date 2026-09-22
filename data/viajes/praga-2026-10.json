@@ -1,0 +1,3523 @@
+{
+  "id": "praga-2026-10",
+  "version": 1,
+  "titulo": "Praga",
+  "subtitulo": "Cinco días a pie y en tranvía, sin salir de la ciudad",
+  "estado": "planificado",
+  "fechas": {
+    "inicio": "2026-10-03",
+    "fin": "2026-10-07"
+  },
+  "viajeros": [
+    "La pareja de Yixuan",
+    "Una amiga"
+  ],
+  "moneda": "CZK",
+  "base": "Vinohrady, junto al metro Jiřího z Poděbrad (línea A)",
+  "resumen": "Se aterriza el sábado a las 9:00 y se vuela el miércoles a las 20:00. Todo es Praga, sin excursiones: el sábado la Ciudad Vieja y el puente de Carlos al atardecer, el domingo Malá Strana bajando desde Petřín y el atardecer en Letná, el lunes el castillo y el barrio judío, el martes Vyšehrad y la Ciudad Nueva, y el miércoles el barrio donde se duerme. El orden no es caprichoso: el Museo Judío cierra el sábado y el domingo, y la catedral de San Vito no abre hasta las 12:00 los domingos.",
+  "mapa": {
+    "centro": [
+      50.083,
+      14.42
+    ],
+    "zoom": 13
+  },
+  "avisos": [
+    {
+      "nivel": "alto",
+      "titulo": "El Museo Judío cierra el sábado 3 y también el domingo 4",
+      "texto": "Cierra todos los sábados, y el domingo 4 de octubre es Simjat Torá, que está en su lista de cierres de 2026. Por eso el barrio judío va el lunes por la tarde. Si el lunes se tuerce, el martes y el miércoles abre de 9:00 a 18:00; la taquilla cierra media hora antes.",
+      "dias": [
+        "2026-10-04",
+        "2026-10-05"
+      ]
+    },
+    {
+      "nivel": "alto",
+      "titulo": "El miércoles: maletas y aeropuerto",
+      "texto": "El vuelo sale a las 20:00 desde la terminal 2, la de los vuelos Schengen, y hay que salir del alojamiento a las 17:00 como tarde. El check-out será seguramente a las 11:00: hay que confirmarlo y preguntar si pueden guardar las maletas hasta las 17:00. Si no pueden, hay consignas en la estación central (Praha hlavní nádraží), que pilla a mitad de camino en metro.",
+      "dias": [
+        "2026-10-07"
+      ],
+      "momento": "pre"
+    },
+    {
+      "nivel": "medio",
+      "titulo": "San Vito, el domingo, no abre hasta las 12:00",
+      "texto": "De lunes a sábado abre de 9:00 a 17:00; el domingo, de 12:00 a 17:00, por los oficios. Por eso el castillo va el lunes a primera hora: es la única forma de entrar en la catedral antes que los grupos.",
+      "dias": [
+        "2026-10-05"
+      ]
+    },
+    {
+      "nivel": "medio",
+      "titulo": "El castillo ha tenido cierres parciales hasta el 1 de octubre",
+      "texto": "El Palacio Real Viejo estuvo cerrado del 3 de septiembre al 1 de octubre, y San Vito ha tenido días con horario recortado por motivos litúrgicos. El domingo por la noche conviene mirar la página de cierres del castillo (hrad.cz → Current closures) por si hay algo para el lunes.",
+      "dias": [
+        "2026-10-05"
+      ]
+    },
+    {
+      "nivel": "medio",
+      "titulo": "La cervecería de Letná solo acepta efectivo",
+      "texto": "Hay cajero dentro, pero no todas las tarjetas funcionan. Llevar unas 500 coronas encima y contar con la fianza del vaso, 50 CZK, que se devuelve al entregarlo.",
+      "dias": [
+        "2026-10-04"
+      ]
+    },
+    {
+      "nivel": "info",
+      "titulo": "Pagar siempre en coronas",
+      "texto": "La moneda es la corona checa: 1 € = 24,35 CZK según el Banco Nacional Checo el 22 de septiembre de 2026. Cuando un datáfono o un cajero pregunte si se quiere pagar en euros, la respuesta es no: el cambio que aplican es peor que el del banco. Y las casas de cambio con «0 % de comisión» del centro suelen compensarlo con el tipo."
+    },
+    {
+      "nivel": "info",
+      "titulo": "Cómo se ha clasificado cada sitio",
+      "texto": "Fuente: TripAdvisor, consultado el 22 de septiembre de 2026, con el mismo criterio que en León. Obligatorio = nota >= 4,5 con >= 800 reseñas, o cabeza del ranking de Praga con mucho volumen. Recomendable = nota >= 4,2 con >= 200 reseñas, o >= 4,5 con volumen medio. Opcional = por debajo de eso, muy pocas reseñas, o no es un destino en sí."
+    }
+  ],
+  "lugares": [
+    {
+      "id": "aeropuerto",
+      "nombre": "Aeropuerto Václav Havel, terminal 2",
+      "categoria": "transporte",
+      "zona": "Aeropuerto",
+      "coords": [
+        50.10526,
+        14.26637
+      ],
+      "resumen": "La terminal de los vuelos Schengen. El trolebús 59 sale de la puerta de llegadas.",
+      "descripcion": "Los vuelos desde España llegan y salen por la **terminal 2**, la de los vuelos dentro del espacio Schengen, así que no hay control de pasaportes.\n\nPara ir a la ciudad, lo barato y rápido es el **trolebús 59** hasta Nádraží Veleslavín y allí el **metro A** hasta Jiřího z Poděbrad, sin más transbordos. Un billete de 90 minutos lo cubre todo. El Airport Express (AE) va a la estación central, cuesta 200 CZK y no compensa para ir a Vinohrady.",
+      "duracionMin": 30,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "No es un destino",
+        "fuente": "Es el medio para llegar, no una visita"
+      },
+      "consejos": [
+        "Comprar el billete de 90 minutos en la app PID Lítačka antes de subir al trolebús: 46 CZK en la app, 50 CZK en papel.",
+        "El trolebús 59 pasa cada 7-20 minutos y tarda unos 15 hasta Nádraží Veleslavín."
+      ],
+      "enlaces": [
+        {
+          "texto": "Transporte público desde el aeropuerto",
+          "url": "https://www.prg.aero/en/public-transport-buses-to-airport"
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/aeropuerto.jpg",
+        "credito": "European Union, Copernicus Sentinel-2 imagery",
+        "licencia": "Attribution",
+        "fuente": "https://commons.wikimedia.org/wiki/File:EU_Space_Week_2022_in_Prague_(cropped).jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "prg.aero, pid.cz y OpenStreetMap (aeroway=terminal)"
+      }
+    },
+    {
+      "id": "alojamiento",
+      "nombre": "Alojamiento",
+      "categoria": "alojamiento",
+      "zona": "Vinohrady",
+      "coords": [
+        50.076,
+        14.451
+      ],
+      "resumen": "Vinohrady: barrio de fachadas modernistas, a una parada de metro del centro.",
+      "descripcion": "Las coordenadas son las del barrio, no las del edificio. La dirección exacta y la referencia de reserva **no van aquí**, porque este repositorio es público: están en el panel de «Datos privados» de la aplicación, que vive solo en el móvil.\n\nEl metro más cercano es **Jiřího z Poděbrad**, en la línea A, la misma que lleva al aeropuerto y a Malostranská, junto al castillo. La plaza del metro tiene mercado los miércoles y la iglesia de Plečnik en medio.",
+      "duracionMin": 20,
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "OpenStreetMap; ubicación aproximada a propósito"
+      }
+    },
+    {
+      "id": "naplavka",
+      "nombre": "Mercado de Náplavka",
+      "categoria": "comida",
+      "zona": "Nové Město",
+      "coords": [
+        50.07176,
+        14.41388
+      ],
+      "resumen": "Mercado de productores en la orilla del Moldava. Solo los sábados, y se desayuna de pie mirando el río.",
+      "descripcion": "Cada sábado por la mañana, el muelle de Rašínovo nábřeží se llena de puestos: pan de centeno, quesos, salchichas a la brasa, vino de Moravia y café. Lo frecuentan más los praguenses que los turistas, y eso se nota en los precios.\n\nEs el primer contacto con la ciudad perfecto después del avión: se come algo, se pasea junto al agua y a diez minutos está la Casa Danzante.",
+      "duracionMin": 90,
+      "horarios": {
+        "sab": [
+          [
+            "08:00",
+            "14:00"
+          ]
+        ]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "nota": 4.6,
+        "resenas": 288,
+        "puesto": "N.º 48 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "Los barcos-bar amarrados al muelle",
+          "porque": "De noche son terrazas; el sábado por la mañana se ven desde el mercado con la ciudad al fondo."
+        },
+        {
+          "que": "Los puestos de trdelník de verdad",
+          "porque": "El dulce de canela en rollo es un invento para turistas; el pan y los quesos de aquí, no."
+        },
+        {
+          "que": "El castillo, río abajo",
+          "porque": "Desde el muelle se ve a lo lejos, sobre la colina. Es la primera vista de lo que viene el lunes."
+        }
+      ],
+      "consejos": [
+        "Cierra a las 14:00, pero a partir de mediodía muchos puestos ya se están recogiendo.",
+        "Llevar algo de efectivo: casi todos aceptan tarjeta, pero no todos."
+      ],
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "prague.eu (sábados de 8:00 a 14:00 desde el 31 de enero de 2026)"
+      }
+    },
+    {
+      "id": "casa-danzante",
+      "nombre": "Casa Danzante",
+      "categoria": "patrimonio",
+      "zona": "Nové Město",
+      "coords": [
+        50.07543,
+        14.41417
+      ],
+      "resumen": "Un edificio que parece una pareja bailando, en una calle de fachadas del siglo XIX.",
+      "descripcion": "Lo proyectaron Frank Gehry y el checo Vlado Milunić y se terminó en 1996. La torre de cristal que se estrecha por la cintura es ella; la de hormigón, más recta, es él. En Praga la llaman **Ginger y Fred**.\n\nSe ve en diez minutos desde la acera de enfrente. Dentro hay un hotel, una galería y un bar en la azotea, pero la gracia está fuera.",
+      "duracionMin": 15,
+      "nivel": "opcional",
+      "valoracion": {
+        "nota": 3.9,
+        "resenas": 3070,
+        "puesto": "N.º 44 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "La cintura de la torre de cristal",
+          "porque": "Es la falda de Ginger al girar. Desde la esquina del puente se entiende mejor."
+        },
+        {
+          "que": "Las ventanas descolocadas",
+          "porque": "No hay dos filas a la misma altura: siguen la ondulación de la fachada, no los pisos."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Un hueco de la guerra",
+          "texto": "El solar estaba vacío desde 1945, cuando un bombardeo destruyó el edificio anterior. Václav Havel, que vivía justo al lado, empujó para que ahí se hiciera algo distinto."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/casa-danzante.jpg",
+        "credito": "Danny Alexander Lettkemann, Architekt",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Tanzendes_Haus_2023.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "OpenStreetMap; se ve por fuera"
+      }
+    },
+    {
+      "id": "plaza-ciudad-vieja",
+      "nombre": "Plaza de la Ciudad Vieja",
+      "categoria": "patrimonio",
+      "zona": "Staré Město",
+      "coords": [
+        50.08745,
+        14.42097
+      ],
+      "resumen": "Gótico, barroco y rococó en una misma plaza. Es el sitio n.º 1 de Praga.",
+      "descripcion": "Es el corazón de Praga desde el siglo XII y resume la ciudad de un vistazo: las torres negras de Týn, el Ayuntamiento Viejo con su reloj, la iglesia barroca de San Nicolás y un friso de casas de colores que no se parecen entre sí.\n\nEstará llena de gente. Merece la pena rodearla despacio, mirar hacia arriba y volver alguna noche, cuando se vacía.",
+      "duracionMin": 60,
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.7,
+        "resenas": 55973,
+        "puesto": "N.º 1 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "Las 27 cruces blancas del suelo",
+          "porque": "Junto al Ayuntamiento Viejo. Marcan a los 27 nobles ejecutados aquí en 1621. La gente las pisa sin verlas."
+        },
+        {
+          "que": "El monumento a Jan Hus",
+          "porque": "En el centro. El reformador quemado en 1415, cien años antes que Lutero."
+        },
+        {
+          "que": "La Casa de la Campana de Piedra",
+          "porque": "Una fachada gótica que estuvo escondida bajo otra barroca hasta los años 60."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "El meridiano de Praga",
+          "texto": "En el suelo hay una línea de metal: marca el meridiano por el que se ajustaba la hora de la ciudad. Cuando la sombra de la columna mariana, hoy reconstruida, caía sobre ella, era mediodía."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/plaza-ciudad-vieja.jpg",
+        "credito": "Tiia Monto",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Old_Town_Square_-_panorama_2.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "OpenStreetMap (place=square)"
+      }
+    },
+    {
+      "id": "reloj-astronomico",
+      "nombre": "Ayuntamiento Viejo y reloj astronómico",
+      "categoria": "patrimonio",
+      "zona": "Staré Město",
+      "coords": [
+        50.08698,
+        14.42071
+      ],
+      "resumen": "Un reloj de 1410 que todavía funciona. Cada hora en punto salen los apóstoles y la Muerte toca la campana.",
+      "descripcion": "El Orloj es uno de los relojes astronómicos más antiguos del mundo que siguen en marcha. No solo da la hora: marca la posición del sol y de la luna, el zodiaco y la hora de la antigua Bohemia.\n\nA cada hora en punto, entre las 9:00 y las 23:00, se abren dos ventanillas y desfilan los doce apóstoles mientras un esqueleto tira de la cuerda de la campana. Dura menos de un minuto, así que hay que estar abajo un par de minutos antes.\n\nLa **torre del Ayuntamiento** tiene la mejor vista de la plaza. Es opcional: la del puente de Carlos, esa misma tarde, sale más barata.",
+      "duracionMin": 20,
+      "precio": {
+        "importe": 350,
+        "detalle": "Torre y sala de los Caballeros (≈14 €). El espectáculo del reloj, desde la plaza, es gratis. 50 % de descuento en la primera hora tras la apertura"
+      },
+      "horarios": {
+        "lun": [
+          [
+            "09:00",
+            "20:00"
+          ]
+        ],
+        "mar": [
+          [
+            "09:00",
+            "20:00"
+          ]
+        ],
+        "mie": [
+          [
+            "09:00",
+            "20:00"
+          ]
+        ],
+        "jue": [
+          [
+            "09:00",
+            "20:00"
+          ]
+        ],
+        "vie": [
+          [
+            "09:00",
+            "20:00"
+          ]
+        ],
+        "sab": [
+          [
+            "09:00",
+            "20:00"
+          ]
+        ],
+        "dom": [
+          [
+            "09:00",
+            "20:00"
+          ]
+        ]
+      },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.4,
+        "resenas": 27635,
+        "puesto": "N.º 6 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "La Muerte tirando de la cuerda",
+          "porque": "El esqueleto de la derecha. Es quien da la señal; a su lado, el avaro sacude la bolsa y el vanidoso se mira al espejo."
+        },
+        {
+          "que": "El gallo dorado de arriba",
+          "porque": "Canta al final del desfile. Casi nadie lo ve porque todo el mundo baja el móvil antes."
+        },
+        {
+          "que": "El calendario de abajo",
+          "porque": "Doce medallones con las faenas del campo de cada mes. Es una copia; el original está en el Museo de la Ciudad."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "El relojero al que dejaron ciego",
+          "texto": "La leyenda cuenta que los concejales mandaron cegar al maestro Hanuš para que no construyera otro reloj igual en ninguna parte. Él, en venganza, metió la mano en el mecanismo y lo paró durante años."
+        }
+      ],
+      "consejos": [
+        "Para el espectáculo, mejor ponerse algo apartado y de frente, no justo debajo: se ven las dos ventanillas a la vez."
+      ],
+      "enlaces": [
+        {
+          "texto": "Horarios y precios · Prague City Tourism",
+          "url": "https://prague.eu/en/objevujte/old-town-hall-with-astronomical-clock-staromestska-radnice-s-orlojem/"
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/reloj-astronomico.jpg",
+        "credito": "James Grimmelmann",
+        "licencia": "CC BY 2.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Prague_Clock_Tower.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "prague.eu (abril-diciembre, de 9:00 a 20:00 todos los días)"
+      }
+    },
+    {
+      "id": "tyn",
+      "nombre": "Iglesia de Nuestra Señora de Týn",
+      "categoria": "patrimonio",
+      "zona": "Staré Město",
+      "coords": [
+        50.08772,
+        14.42269
+      ],
+      "resumen": "Las dos torres negras que salen en todas las fotos de Praga. Y no son iguales.",
+      "descripcion": "Sus torres de 80 metros, rematadas de agujas, son la silueta de la Ciudad Vieja. Por dentro es gótica con altares barrocos y está bastante oscura, lo que le da un aire muy distinto al de la plaza.\n\nLa entrada está escondida: se entra por un pasaje entre las casas de la fachada, bajo los soportales. **Abre poco**: de martes a sábado, de 10:00 a 13:00 y de 15:00 a 17:00. El sábado por la tarde es la única oportunidad del viaje que no choca con nada.",
+      "duracionMin": 40,
+      "precio": {
+        "importe": 50,
+        "detalle": "Donativo voluntario recomendado (≈2 €)"
+      },
+      "horarios": {
+        "mar": [
+          [
+            "10:00",
+            "13:00"
+          ],
+          [
+            "15:00",
+            "17:00"
+          ]
+        ],
+        "mie": [
+          [
+            "10:00",
+            "13:00"
+          ],
+          [
+            "15:00",
+            "17:00"
+          ]
+        ],
+        "jue": [
+          [
+            "10:00",
+            "13:00"
+          ],
+          [
+            "15:00",
+            "17:00"
+          ]
+        ],
+        "vie": [
+          [
+            "10:00",
+            "13:00"
+          ],
+          [
+            "15:00",
+            "17:00"
+          ]
+        ],
+        "sab": [
+          [
+            "10:00",
+            "13:00"
+          ],
+          [
+            "15:00",
+            "17:00"
+          ]
+        ]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "nota": 4.5,
+        "resenas": 2233,
+        "puesto": "N.º 32 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "Las dos torres desde la plaza",
+          "porque": "La de la derecha es más gruesa. En Praga las llaman Adán y Eva."
+        },
+        {
+          "que": "La lápida de Tycho Brahe",
+          "porque": "A la derecha del altar mayor. El astrónomo danés murió en Praga en 1601 y está enterrado aquí."
+        },
+        {
+          "que": "La pila bautismal de estaño",
+          "porque": "De 1414. Es de las piezas más antiguas del templo."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Murió por no levantarse de la mesa",
+          "texto": "Cuenta la historia que Tycho Brahe enfermó en un banquete por no querer levantarse a orinar delante de un noble, que habría sido de mala educación. Once días después murió. Cuando se exhumó en 2010 se descartó que lo envenenaran."
+        }
+      ],
+      "enlaces": [
+        {
+          "texto": "Horarios · Prague City Tourism",
+          "url": "https://prague.eu/en/objevujte/church-of-our-lady-before-tyn-chram-matky-bozi-pred-tynem/"
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/tyn.jpg",
+        "credito": "A.Savin",
+        "licencia": "FAL",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Prague_07-2016_View_from_Old_Town_Hall_Tower_img2.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "prague.eu (marzo-noviembre: lunes y domingo cerrado)"
+      }
+    },
+    {
+      "id": "torre-puente",
+      "nombre": "Torre del puente de la Ciudad Vieja",
+      "categoria": "patrimonio",
+      "zona": "Staré Město",
+      "coords": [
+        50.08618,
+        14.41361
+      ],
+      "resumen": "138 escalones y debajo, el puente de Carlos entero con el castillo al fondo.",
+      "descripcion": "La puerta gótica que da entrada al puente la levantó Peter Parler, el mismo arquitecto de la catedral de San Vito, en el siglo XIV. Por fuera es un escaparate de esculturas; por dentro, una escalera de caracol que acaba en una galería al aire libre.\n\nDesde arriba se ve todo el puente con sus estatuas, Malá Strana y el castillo coronándolo. A media tarde el sol empieza a caer justo por ese lado.",
+      "duracionMin": 40,
+      "precio": {
+        "importe": 150,
+        "detalle": "General (≈6 €). Solo es válida la entrada oficial de Prague City Tourism"
+      },
+      "horarios": {
+        "lun": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "mar": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "mie": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "jue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "vie": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sab": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "dom": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ]
+      },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.5,
+        "resenas": 1793,
+        "puesto": "N.º 49 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "La fachada que da a la Ciudad Vieja",
+          "porque": "Carlos IV y su hijo Wenceslao sentados, con San Vito de pie en medio. Es la fachada de verdad; la del puente se destrozó en 1648."
+        },
+        {
+          "que": "El puente desde arriba",
+          "porque": "Se ve la ligera curva que hace. Desde el suelo parece recto."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "La fecha capicúa",
+          "texto": "La primera piedra del puente se puso el 9 de julio de 1357 a las 5:31. Escrito seguido, 1357 9 7 5 31, se lee igual al derecho y al revés. Carlos IV era muy aficionado a la astrología y se cree que lo eligió a propósito."
+        }
+      ],
+      "consejos": [
+        "La última entrada es media hora antes del cierre: a las 17:30 como tarde."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/torre-puente.jpg",
+        "credito": "VitVit",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Karl%C5%AFv_most_v%C4%9B%C5%BE.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "prague.eu y colosseumticket.cz (octubre-noviembre, de 10:00 a 18:00)"
+      }
+    },
+    {
+      "id": "puente-carlos",
+      "nombre": "Puente de Carlos",
+      "categoria": "patrimonio",
+      "zona": "Staré Město y Malá Strana",
+      "coords": [
+        50.08663,
+        14.41015
+      ],
+      "resumen": "Medio kilómetro de piedra y treinta santos sobre el Moldava. Al atardecer se vuelve dorado.",
+      "descripcion": "Durante más de cuatro siglos fue el único puente de Praga sobre el Moldava. Es peatonal, mide unos 500 metros y lo flanquean treinta estatuas barrocas, casi todas copias: los originales están a salvo en museos.\n\nDe día es un río de gente, músicos y retratistas. **Al atardecer**, con el sol cayendo detrás del castillo, es cuando se entiende por qué lo pinta todo el mundo. El sábado 3 el sol se pone a las 18:38.",
+      "duracionMin": 60,
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.6,
+        "resenas": 73487,
+        "puesto": "N.º 3 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "La estatua de San Juan Nepomuceno",
+          "porque": "La octava a la derecha según se va hacia el castillo. Abajo hay un relieve de bronce brillante de tanto tocarlo: dicen que trae suerte y que hace volver a Praga."
+        },
+        {
+          "que": "La cruz de metal en el pretil",
+          "porque": "Un poco más allá, entre estatuas. Marca el punto desde el que tiraron al santo al río en 1393."
+        },
+        {
+          "que": "El castillo con la luz de la tarde",
+          "porque": "Desde el centro del puente, mirando a Malá Strana. Es la foto de la guía, pero en persona se entiende."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Huevos en la argamasa",
+          "texto": "La leyenda dice que, para que la argamasa aguantara, Carlos IV pidió huevos a todos los pueblos de Bohemia. Uno los mandó cocidos, por miedo a que se rompieran por el camino."
+        }
+      ],
+      "consejos": [
+        "Es el sitio de Praga con más carteristas. La mochila, delante.",
+        "Si se quiere vacío, hay que venir antes de las 8:00. Ese no es el plan de este viaje."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/puente-carlos.jpg",
+        "credito": "David Sedlecký",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Karl%C5%AFv_most_z_Kampy.JPG"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "OpenStreetMap (man_made=bridge); puesta de sol, sunrise-sunset.org"
+      }
+    },
+    {
+      "id": "lokal-dlouha",
+      "nombre": "Lokál Dlouhááá",
+      "categoria": "comida",
+      "zona": "Staré Město",
+      "coords": [
+        50.0907,
+        14.42576
+      ],
+      "resumen": "Una cervecería larguísima, cocina checa de siempre y Pilsner servida de tanque.",
+      "descripcion": "Imita la cervecería de barrio de la época comunista: mesas corridas, lámparas de tubo y un salón tan largo que el nombre lo dice con tres aes. Sirve **Pilsner Urquell de tanque**, sin pasteurizar, que llega de la fábrica en cisternas y es de lo mejor que se puede beber en Praga.\n\nPara la primera cena: gulash, svíčková (ternera en salsa de nata con knedlíky) o un escalope.",
+      "duracionMin": 120,
+      "nivel": "opcional",
+      "valoracion": {
+        "nota": 4.1,
+        "resenas": 4121,
+        "puesto": "N.º 304 de 4.847 restaurantes de Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "Cómo se tira la cerveza",
+          "porque": "Existe el «mlíko»: una jarra casi toda de espuma, que se bebe de un trago. Es un pedido de verdad, no un error."
+        }
+      ],
+      "consejos": [
+        "Sábado por la noche: mejor reservar mesa en su web.",
+        "Si no hay sitio, U Zlatého tygra está a diez minutos y es de las mismas."
+      ],
+      "enlaces": [
+        {
+          "texto": "Lokál Dlouhááá",
+          "url": "https://lokal-dlouha.ambi.cz/"
+        }
+      ],
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "OpenStreetMap (amenity=restaurant) y TripAdvisor; horario sin verificar"
+      }
+    },
+    {
+      "id": "funicular-petrin",
+      "nombre": "Funicular de Petřín",
+      "categoria": "transporte",
+      "zona": "Malá Strana",
+      "coords": [
+        50.08265,
+        14.40303
+      ],
+      "resumen": "Reabierto el 22 de septiembre de 2026, tras dos años cerrado. Cabinas nuevas con techo de cristal.",
+      "descripcion": "Sube desde Újezd hasta lo alto de Petřín en unos minutos. Estuvo cerrado desde que las lluvias de septiembre de 2024 dañaron la ladera, y ha vuelto con vías nuevas y dos cabinas diseñadas en Praga con techo acristalado.\n\n**El abono de 72 horas lo cubre**: no hace falta billete aparte.",
+      "duracionMin": 15,
+      "precio": {
+        "importe": 0,
+        "detalle": "Incluido en el abono de 24 o 72 h. Suelto: 90 CZK en la app, 100 CZK en taquilla"
+      },
+      "horarios": {
+        "lun": [
+          [
+            "07:00",
+            "22:15"
+          ]
+        ],
+        "mar": [
+          [
+            "07:00",
+            "22:15"
+          ]
+        ],
+        "mie": [
+          [
+            "07:00",
+            "22:15"
+          ]
+        ],
+        "jue": [
+          [
+            "07:00",
+            "22:15"
+          ]
+        ],
+        "vie": [
+          [
+            "07:00",
+            "22:15"
+          ]
+        ],
+        "sab": [
+          [
+            "07:00",
+            "22:15"
+          ]
+        ],
+        "dom": [
+          [
+            "07:00",
+            "22:15"
+          ]
+        ]
+      },
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "No es un destino",
+        "fuente": "Es el medio para subir a Petřín, no una visita"
+      },
+      "consejos": [
+        "Recién reabierto: la primera semana habrá cola. El domingo 4 ya debería estar normal.",
+        "Si la cola es larga, se sube andando en 25 minutos por los jardines."
+      ],
+      "enlaces": [
+        {
+          "texto": "Funicular a Petřín · PID",
+          "url": "https://pid.cz/en/funicular/"
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/funicular-petrin.jpg",
+        "credito": "Mattsjc",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Pet%C5%99%C3%ADn%20funicular%20in%20Prague%20at%20%C3%9Ajezd%20station.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "pid.cz (de 7:00 a 22:15, cada 10 minutos) y praguemorning.cz (reapertura)"
+      }
+    },
+    {
+      "id": "torre-petrin",
+      "nombre": "Torre mirador de Petřín",
+      "categoria": "patrimonio",
+      "zona": "Malá Strana",
+      "coords": [
+        50.08352,
+        14.39509
+      ],
+      "resumen": "Una Torre Eiffel en pequeño, dos años más joven. Desde arriba se ve Praga entera.",
+      "descripcion": "Se levantó en 1891 para la Exposición del Jubileo, después de que unos checos volvieran entusiasmados de ver la Torre Eiffel en París. Mide unos 63 metros, a escala 1:5 de la original, pero al estar en lo alto de la colina tiene la ciudad entera a los pies.\n\nSon **299 escalones** en espiral. Hay ascensor, de pago aparte.",
+      "duracionMin": 45,
+      "precio": {
+        "importe": 150,
+        "detalle": "General (≈6 €)"
+      },
+      "horarios": {
+        "lun": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "mar": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "mie": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "jue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "vie": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sab": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "dom": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "nota": 4.2,
+        "resenas": 3362,
+        "puesto": "N.º 20 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "Los tejados rojos de Malá Strana",
+          "porque": "Justo debajo, con la cúpula verde de San Nicolás en medio. Es la vista del domingo entero."
+        },
+        {
+          "que": "El castillo de lado",
+          "porque": "Desde aquí se ve lo largo que es: más de medio kilómetro de palacios en fila."
+        },
+        {
+          "que": "La torre de televisión de Žižkov",
+          "porque": "La aguja gris al fondo, al otro lado de la ciudad. Queda al lado del alojamiento y va el miércoles."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "El muro del hambre",
+          "texto": "La muralla almenada que baja por la colina la mandó construir Carlos IV hacia 1360. Dice la tradición que fue para dar trabajo, y pan, a los pobres de la ciudad en un año de hambruna."
+        }
+      ],
+      "enlaces": [
+        {
+          "texto": "Torre de Petřín · Prague City Tourism",
+          "url": "https://prague.eu/en/objevujte/petrin-tower-petrinska-rozhledna/"
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/torre-petrin.jpg",
+        "credito": "A.Savin",
+        "licencia": "FAL",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Prague_07-2016_View_from_Lesser_Town_Nicholas_Church_img5.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "prague.eu y guías locales (octubre, de 10:00 a 18:00)"
+      }
+    },
+    {
+      "id": "strahov",
+      "nombre": "Monasterio de Strahov",
+      "categoria": "patrimonio",
+      "zona": "Hradčany",
+      "coords": [
+        50.08626,
+        14.38907
+      ],
+      "resumen": "Un monasterio de 1143 con cervecería propia y una de las mejores vistas de Praga desde su huerta.",
+      "descripcion": "Los premonstratenses llevan aquí desde el siglo XII. El patio es de entrada libre, y **desde el borde de la huerta**, bajando hacia Malá Strana, hay una de las vistas más bonitas de la ciudad, con muchísima menos gente que en el castillo.\n\nLa biblioteca barroca es famosa, pero **la entrada solo deja mirar las salas desde la puerta**, y las reseñas lo castigan: 3,2 sobre 301. Si apetece, 220 CZK; si no, no se pierde nada.",
+      "duracionMin": 45,
+      "nivel": "opcional",
+      "valoracion": {
+        "nota": 3.9,
+        "resenas": 1893,
+        "puesto": "N.º 41 de las cosas que hacer en Praga · la biblioteca, 3,2 con 301 reseñas",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "La vista desde la huerta",
+          "porque": "Se baja del patio por el camino de la derecha. Praga entera, con las torres de la Ciudad Vieja al fondo."
+        },
+        {
+          "que": "La fachada barroca de la iglesia de la Asunción",
+          "porque": "En el patio. Mozart tocó su órgano en 1787."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Cerveza de monjes",
+          "texto": "El monasterio tiene cervecería propia en el mismo patio, la Klášterní pivovar Strahov, con cerveza hecha allí mismo. Es buen sitio para una caña antes de bajar a Malá Strana."
+        }
+      ],
+      "consejos": [
+        "Desde aquí se baja a Malá Strana por la calle Nerudova, cuesta abajo todo el rato."
+      ],
+      "enlaces": [
+        {
+          "texto": "Monasterio de Strahov",
+          "url": "https://www.strahovskyklaster.cz/en/for-visitors"
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/strahov.jpg",
+        "credito": "Matěj Baťha",
+        "licencia": "CC BY-SA 2.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Praha%2C_Hradcany_-_Strahovsky_klaster_(pohled_z_ulice_Uvoz).jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "strahovskyklaster.cz (biblioteca, de 9:00 a 17:00, 220 CZK) y TripAdvisor"
+      }
+    },
+    {
+      "id": "mala-strana",
+      "nombre": "Plaza de Malá Strana",
+      "categoria": "comida",
+      "zona": "Malá Strana",
+      "coords": [
+        50.08811,
+        14.40433
+      ],
+      "resumen": "El barrio barroco a los pies del castillo. Buen sitio para comer entre palacios.",
+      "descripcion": "Malá Strana, el «Lado Pequeño», se levantó casi entero en los siglos XVII y XVIII para la nobleza que quería vivir junto al castillo. Por eso es todo palacios, jardines escondidos y calles en cuesta.\n\nLa plaza es el centro del barrio. Alrededor, en las calles de detrás, se come mejor y más barato que en la propia plaza.",
+      "duracionMin": 75,
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.6,
+        "resenas": 5083,
+        "puesto": "N.º 11 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "Los emblemas encima de las puertas en Nerudova",
+          "porque": "Antes de que existieran los números, las casas se conocían por su emblema: los Tres Violines, la Herradura de Oro, el Cordero Blanco."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Un barrio que ardió entero",
+          "texto": "En 1541 un incendio arrasó Malá Strana y buena parte del castillo. Casi todo lo que se ve hoy se construyó después, y por eso el barrio es tan uniformemente barroco."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/mala-strana.jpg",
+        "credito": "Maksym Kozlenko",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:2017-06-01%20Malostransk%C3%A9%20n%C3%A1m%C4%9Bst%C3%AD.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "OpenStreetMap (place=square)"
+      }
+    },
+    {
+      "id": "san-nicolas",
+      "nombre": "Iglesia de San Nicolás de Malá Strana",
+      "categoria": "patrimonio",
+      "zona": "Malá Strana",
+      "coords": [
+        50.08798,
+        14.40322
+      ],
+      "resumen": "El barroco más exagerado de Praga: todo lo que parece mármol es madera o estuco pintado.",
+      "descripcion": "La levantaron los Dientzenhofer, padre e hijo, a lo largo del siglo XVIII, y su cúpula verde es la que manda en el perfil de Malá Strana. Por dentro es un derroche: el fresco de la nave es de los más grandes de Europa y las estatuas de los santos miden varios metros.\n\nLo más curioso es que casi nada es lo que parece. Las columnas de «mármol» son estuco, y buena parte de los dorados, madera.",
+      "duracionMin": 50,
+      "precio": {
+        "importe": 150,
+        "detalle": "General (≈6 €)"
+      },
+      "horarios": {
+        "lun": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "mar": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "mie": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "jue": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "vie": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "sab": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "dom": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ]
+      },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.5,
+        "resenas": 4442,
+        "puesto": "N.º 19 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "El fresco del techo de la nave",
+          "porque": "La vida de San Nicolás en unos 1.500 m². Colócate en el centro y mira hacia arriba: la arquitectura pintada parece seguir hacia el cielo."
+        },
+        {
+          "que": "El órgano",
+          "porque": "Tiene más de 4.000 tubos. Mozart lo tocó en 1787."
+        },
+        {
+          "que": "La galería de arriba",
+          "porque": "Si está abierta, desde ahí se ve la nave entera y se entiende el tamaño de las estatuas."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Un campanario para espiar",
+          "texto": "Durante el comunismo, la policía secreta usaba el campanario para vigilar las embajadas occidentales de Malá Strana y a quien entraba y salía de ellas. Desde arriba se ven la de Estados Unidos y la de Alemania."
+        }
+      ],
+      "consejos": [
+        "Algunos viernes y sábados hay conciertos de música sacra por la noche. El programa está en su web."
+      ],
+      "enlaces": [
+        {
+          "texto": "Horarios · San Nicolás",
+          "url": "https://www.stnicholas.cz/en/tours/opening-hours/"
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/san-nicolas.jpg",
+        "credito": "VitVit",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Mal%C3%A1_Strana_kostel_sv._Mikul%C3%A1%C5%A1e_z_Pet%C5%99%C3%ADna-3.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "stnicholas.cz (octubre: viernes y sábado de 9:00 a 17:00, resto de 9:00 a 18:00)"
+      }
+    },
+    {
+      "id": "muro-lennon",
+      "nombre": "Muro de John Lennon",
+      "categoria": "patrimonio",
+      "zona": "Malá Strana",
+      "coords": [
+        50.08624,
+        14.40681
+      ],
+      "resumen": "Una pared que la policía comunista pintaba de blanco y los estudiantes volvían a llenar cada noche.",
+      "descripcion": "Tras el asesinato de Lennon en 1980, alguien pintó su cara en esta pared y empezaron a aparecer letras de los Beatles y frases contra el régimen. La policía la blanqueaba una y otra vez, y a la mañana siguiente estaba escrita de nuevo.\n\nHoy es un muro de pintadas que cambia cada día y ya no queda ni rastro del retrato. Pilla de camino a Kampa: se ve en diez minutos.",
+      "duracionMin": 15,
+      "nivel": "opcional",
+      "valoracion": {
+        "resenas": 2812,
+        "puesto": "N.º 171 de los lugares de interés de Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026; muchas reseñas dicen que no merece un desvío"
+      },
+      "queMirar": [
+        {
+          "que": "Qué ha escrito la gente hoy",
+          "porque": "Es lo único que no estará igual mañana."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "El lennonismo",
+          "texto": "A finales de los 80, los jóvenes de Praga se llamaban medio en broma «lennonistas», y el régimen hablaba de ellos como de alcohólicos y enfermos mentales. La pared fue una de las chispas que acabaron en la Revolución de Terciopelo de 1989."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/muro-lennon.jpg",
+        "credito": "Elemaki",
+        "licencia": "CC BY 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:JohnLennonPraga.JPG"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "OpenStreetMap (tourism=attraction)"
+      }
+    },
+    {
+      "id": "kampa",
+      "nombre": "Isla de Kampa",
+      "categoria": "naturaleza",
+      "zona": "Malá Strana",
+      "coords": [
+        50.08388,
+        14.40766
+      ],
+      "resumen": "Una isla con molinos, un canal que llaman del Diablo y bebés gigantes gateando por el césped.",
+      "descripcion": "Kampa está separada de Malá Strana por la Čertovka, el «canal del Diablo», que movía antiguas ruedas de molino que todavía están ahí. La parte sur es un parque tranquilo a la orilla del Moldava, con el puente de Carlos a un lado.\n\nEs el sitio para sentarse un rato después de todo el día de iglesias.",
+      "duracionMin": 45,
+      "nivel": "recomendable",
+      "valoracion": {
+        "nota": 4.4,
+        "resenas": 1680,
+        "puesto": "N.º 39 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "Los bebés de David Černý",
+          "porque": "Tres bebés de bronce enormes, con una ranura en la cara, delante del Museo Kampa. Sus hermanos trepan por la torre de Žižkov."
+        },
+        {
+          "que": "La rueda del molino sobre la Čertovka",
+          "porque": "Desde el puentecito junto al muro de Lennon. Es la Venecia de Praga en diez metros."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Por qué del Diablo",
+          "texto": "La versión que más se repite dice que el canal se llama así por una vecina de genio endemoniado que vivía en una casa de la orilla."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/kampa.jpg",
+        "credito": "Chmee2",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Kampa5.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "OpenStreetMap (leisure=park)"
+      }
+    },
+    {
+      "id": "jardin-wallenstein",
+      "nombre": "Jardín de Wallenstein",
+      "categoria": "naturaleza",
+      "zona": "Malá Strana",
+      "coords": [
+        50.09016,
+        14.40643
+      ],
+      "resumen": "Un jardín barroco con pavos reales sueltos y una pared que imita una cueva llena de caras escondidas.",
+      "descripcion": "Albrecht von Wallenstein, general de la guerra de los Treinta Años, se hizo construir en el siglo XVII un palacio que compitiera con el castillo. El jardín es gratis, está casi vacío y tiene un estanque, estatuas de bronce y una logia gigantesca.\n\nHoy el palacio es el Senado checo, así que el sitio está impecable.",
+      "duracionMin": 40,
+      "horarios": {
+        "lun": [
+          [
+            "07:00",
+            "19:00"
+          ]
+        ],
+        "mar": [
+          [
+            "07:00",
+            "19:00"
+          ]
+        ],
+        "mie": [
+          [
+            "07:00",
+            "19:00"
+          ]
+        ],
+        "jue": [
+          [
+            "07:00",
+            "19:00"
+          ]
+        ],
+        "vie": [
+          [
+            "07:00",
+            "19:00"
+          ]
+        ],
+        "sab": [
+          [
+            "09:00",
+            "19:00"
+          ]
+        ],
+        "dom": [
+          [
+            "09:00",
+            "19:00"
+          ]
+        ]
+      },
+      "precio": {
+        "importe": 0,
+        "detalle": "Entrada libre"
+      },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.5,
+        "resenas": 1475,
+        "puesto": "N.º 17 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "La pared de estalactitas",
+          "porque": "Al fondo del jardín. Parece una cueva derretida, y si se mira un rato aparecen caras, serpientes y un sapo."
+        },
+        {
+          "que": "Los pavos reales",
+          "porque": "Andan sueltos. Hay uno blanco."
+        },
+        {
+          "que": "Las estatuas de bronce del paseo",
+          "porque": "Son copias. Los suecos se llevaron los originales como botín en 1648 y siguen en Suecia."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "El general que quiso ser rey",
+          "texto": "Wallenstein llegó a tener un ejército propio y más poder que el emperador al que servía. Precisamente por eso lo mandaron asesinar en 1634."
+        }
+      ],
+      "consejos": [
+        "Abre de abril a octubre. Por dentro se puede cruzar hasta la salida de la calle Letenská, que es la que queda de camino a Letná."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/jardin-wallenstein.jpg",
+        "credito": "VitVit",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Mal%C3%A1_Strana_Vald%C5%A1tejnsk%C3%A1_zahrada_a_sala_terrena_2.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "prague.eu y guías locales (octubre: entre semana de 7:00 a 19:00, fines de semana de 9:00 a 19:00)"
+      }
+    },
+    {
+      "id": "letna",
+      "nombre": "Mirador de Letná",
+      "categoria": "naturaleza",
+      "zona": "Letná",
+      "coords": [
+        50.09474,
+        14.41594
+      ],
+      "resumen": "Donde estaba el mayor monumento a Stalin del mundo hay ahora un metrónomo. Y los puentes de Praga en fila.",
+      "descripcion": "La explanada de Letná asoma sobre el Moldava y deja ver los puentes uno detrás de otro, la Ciudad Vieja enfrente y el castillo a la izquierda. Al atardecer es de los mejores sitios de la ciudad, y lo frecuentan más praguenses que turistas.\n\nSe sube por una escalera empinada desde el río. El domingo 4 el sol se pone a las 18:37.",
+      "duracionMin": 60,
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.5,
+        "resenas": 1533,
+        "puesto": "N.º 36 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "Los puentes en fila",
+          "porque": "Desde el borde de la explanada, a la derecha del metrónomo. Se cuentan cinco o seis, uno detrás de otro."
+        },
+        {
+          "que": "El metrónomo gigante",
+          "porque": "Mide 23 metros y lleva marcando el tiempo desde 1991, justo donde estuvo Stalin."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Stalin duró siete años",
+          "texto": "El monumento, con Stalin encabezando una fila de trabajadores, se inauguró en 1955, cuando el propio Stalin ya había muerto y empezaba a caer en desgracia. En 1962 lo volaron con explosivos. Los praguenses lo llamaban «la cola de la carne»."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/letna.jpg",
+        "credito": "User:Aktron",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Praha%2C%20Letn%C3%A1%2C%20Metronom.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "OpenStreetMap (tourism=attraction); puesta de sol, sunrise-sunset.org"
+      }
+    },
+    {
+      "id": "cerveceria-letna",
+      "nombre": "Cervecería al aire libre de Letná",
+      "categoria": "comida",
+      "zona": "Letná",
+      "coords": [
+        50.09598,
+        14.42567
+      ],
+      "resumen": "Mesas de madera bajo los castaños, cerveza a precio de barrio y Praga entera abajo.",
+      "descripcion": "Es la terraza junto al Letenský zámeček, un pequeño palacete en el borde del parque. Nada de camareros: se pide en la barra y se busca sitio en las mesas corridas bajo los árboles. La vista, sobre el río y los puentes, es la misma que la del mirador.\n\nPara comer hay poco más que salchichas. Es para tomar algo al caer el sol; la cena, después.",
+      "duracionMin": 90,
+      "horarios": {
+        "lun": [
+          [
+            "11:00",
+            "23:00"
+          ]
+        ],
+        "mar": [
+          [
+            "11:00",
+            "23:00"
+          ]
+        ],
+        "mie": [
+          [
+            "11:00",
+            "23:00"
+          ]
+        ],
+        "jue": [
+          [
+            "11:00",
+            "23:00"
+          ]
+        ],
+        "vie": [
+          [
+            "11:00",
+            "23:00"
+          ]
+        ],
+        "sab": [
+          [
+            "11:00",
+            "23:00"
+          ]
+        ],
+        "dom": [
+          [
+            "11:00",
+            "23:00"
+          ]
+        ]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "nota": 4.6,
+        "resenas": 292,
+        "puesto": "N.º 27 de 787 sitios de ocio nocturno de Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "El puente Čech justo debajo",
+          "porque": "Es el que lleva las columnas con estatuas doradas. De noche se ilumina."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Un restaurante de 1863",
+          "texto": "El Letenský zámeček se construyó como restaurante de recreo en el siglo XIX, cuando Letná era el sitio donde los praguenses subían a pasear los domingos. Lleva siglo y medio haciendo lo mismo."
+        }
+      ],
+      "consejos": [
+        "Solo efectivo, y 50 CZK de fianza por el vaso.",
+        "Es de temporada, de abril a octubre, y depende del tiempo. Si llueve, abren solo el restaurante de dentro."
+      ],
+      "enlaces": [
+        {
+          "texto": "Letenský zámeček",
+          "url": "https://www.letenskyzamecek.cz/en/zahradky"
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/cerveceria-letna.jpg",
+        "credito": "Renardo la vulpo",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Praha%2C%20Letensk%C3%BD%20z%C3%A1me%C4%8Dek%2C%209.jpeg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "letenskyzamecek.cz y TripAdvisor (de 11:00 a 23:00)"
+      }
+    },
+    {
+      "id": "san-vito",
+      "nombre": "Catedral de San Vito",
+      "categoria": "patrimonio",
+      "zona": "Hradčany",
+      "coords": [
+        50.09086,
+        14.40057
+      ],
+      "resumen": "Tardaron casi seis siglos en terminarla. Dentro hay una vidriera de Mucha y una capilla forrada de piedras preciosas.",
+      "descripcion": "Se empezó en 1344 y no se terminó hasta 1929, así que es un gótico auténtico por delante y un neogótico del siglo XX por detrás, y cuesta ver la costura. Aquí se coronaba a los reyes de Bohemia y aquí están enterrados muchos de ellos.\n\n**Hay que entrar a las 9:00**, en cuanto abre. A las diez la nave ya está llena de grupos, y lo que se ve con calma a primera hora, luego se ve a empujones.",
+      "duracionMin": 75,
+      "precio": {
+        "importe": 450,
+        "detalle": "Va dentro del circuito principal del castillo (≈18 €), que sirve dos días. La nave junto a la entrada se ve gratis"
+      },
+      "horarios": {
+        "lun": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "mar": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "mie": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "jue": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "vie": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "sab": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "dom": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.7,
+        "resenas": 23962,
+        "puesto": "N.º 4 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "La vidriera de Alfons Mucha",
+          "porque": "En la tercera capilla a la izquierda. Es Art Nouveau puro en mitad del gótico: se reconoce el estilo de sus carteles al primer vistazo."
+        },
+        {
+          "que": "La capilla de San Wenceslao",
+          "porque": "Paredes cubiertas de jaspe y amatista con juntas doradas. No se entra, se mira desde la puerta."
+        },
+        {
+          "que": "La tumba de plata de San Juan Nepomuceno",
+          "porque": "Casi dos toneladas de plata. Es el mismo santo del puente de Carlos."
+        },
+        {
+          "que": "La puerta de las siete cerraduras",
+          "porque": "En la capilla de San Wenceslao. Detrás están las joyas de la corona."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Siete llaves y siete personas",
+          "texto": "La cámara de las joyas de la corona tiene siete cerraduras y cada llave la guarda una persona distinta, entre ellas el presidente de la República y el arzobispo de Praga. Tienen que juntarse las siete para abrirla."
+        },
+        {
+          "titulo": "La maldición de la corona",
+          "texto": "Dice la leyenda que quien se pone la corona de San Wenceslao sin derecho muere antes de un año. Se cuenta que Heydrich se la probó en 1942. Le mataron ese mismo año, y la cripta donde se escondieron sus asesinos va el martes."
+        }
+      ],
+      "consejos": [
+        "Llegar a las 8:45 al tercer patio. Es lo que decide si el castillo se disfruta o se sufre.",
+        "Hay control de seguridad en la entrada del castillo, así que mejor sin navajas ni botellas de cristal."
+      ],
+      "enlaces": [
+        {
+          "texto": "Horarios · Castillo de Praga",
+          "url": "https://www.hrad.cz/en/prague-castle-for-visitors/opening-hours"
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/san-vito.jpg",
+        "credito": "Diego Delso",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Catedral_de_San_Vito%2C_Praga%2C_Rep%C3%BAblica_Checa%2C_2022-07-02%2C_DD_203.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "hrad.cz (temporada de verano hasta el 31 de octubre: lunes a sábado de 9:00 a 17:00, domingo de 12:00 a 17:00)"
+      }
+    },
+    {
+      "id": "castillo",
+      "nombre": "Castillo de Praga",
+      "categoria": "patrimonio",
+      "zona": "Hradčany",
+      "coords": [
+        50.09124,
+        14.40377
+      ],
+      "resumen": "El mayor conjunto de castillo antiguo del mundo: medio kilómetro de palacios, patios e iglesias.",
+      "descripcion": "No es un castillo, es una ciudad amurallada en lo alto de la colina, sede de los reyes de Bohemia y hoy del presidente de la República. El **circuito principal** incluye cuatro sitios: la catedral de San Vito, el Palacio Real Viejo, la basílica de San Jorge y el Callejón del Oro.\n\nEl orden bueno es la catedral nada más abrir y después el palacio y San Jorge, que están a unos pasos.",
+      "duracionMin": 120,
+      "precio": {
+        "importe": 450,
+        "detalle": "Circuito principal (≈18 €): San Vito, Palacio Real Viejo, San Jorge y Callejón del Oro. Sirve dos días, una entrada por edificio"
+      },
+      "horarios": {
+        "lun": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "mar": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "mie": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "jue": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "vie": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "sab": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "dom": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ]
+      },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.4,
+        "resenas": 37784,
+        "puesto": "N.º 2 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "La sala de Vladislao",
+          "porque": "En el Palacio Real Viejo. Una bóveda gótica enorme donde se celebraban torneos a caballo bajo techo."
+        },
+        {
+          "que": "La escalera de los Jinetes",
+          "porque": "Escalones bajos y anchos, pensados para que subieran los caballos hasta la sala."
+        },
+        {
+          "que": "La ventana de la defenestración",
+          "porque": "En la cancillería del palacio. Por ella tiraron a dos regidores imperiales en 1618 y empezó la guerra de los Treinta Años."
+        },
+        {
+          "que": "La fachada roja de San Jorge",
+          "porque": "Detrás de la catedral. Es románica por dentro y la iglesia más antigua del castillo."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Sobrevivieron a la caída",
+          "texto": "Los dos regidores y su secretario, tirados por la ventana desde unos quince metros en 1618, sobrevivieron. Los católicos dijeron que los salvaron los ángeles; los protestantes, que cayeron sobre un montón de estiércol."
+        }
+      ],
+      "consejos": [
+        "El cambio de guardia se hace cada hora en punto en la entrada principal. El de las 12:00 es el solemne, con fanfarria desde las ventanas del primer patio.",
+        "Si alguna parte del circuito está cerrada, la taquilla lo avisa: preguntar antes de pagar."
+      ],
+      "enlaces": [
+        {
+          "texto": "Entradas · Castillo de Praga",
+          "url": "https://www.hrad.cz/en/prague-castle-for-visitors/tickets"
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/castillo.jpg",
+        "credito": "Tilman2007",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Karl%C5%AFv_most_Praha%2C_Star%C3%A9_M%C4%9Bsto_20170810_007.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "hrad.cz (edificios históricos de 9:00 a 17:00 hasta el 31 de octubre; tarifas vigentes desde el 1 de marzo de 2024)"
+      }
+    },
+    {
+      "id": "callejon-oro",
+      "nombre": "Callejón del Oro",
+      "categoria": "patrimonio",
+      "zona": "Hradčany",
+      "coords": [
+        50.09206,
+        14.40427
+      ],
+      "resumen": "Casitas de colores encajadas en la muralla. En la del número 22 escribió Kafka.",
+      "descripcion": "Una calle de casas diminutas pegadas a la muralla del castillo, donde vivían los guardias y artesanos. La leyenda dice que aquí trabajaban los alquimistas de Rodolfo II buscando oro; en realidad eran orfebres.\n\nEntra en el circuito del castillo. Cada casita recrea cómo se vivía en una época distinta.",
+      "duracionMin": 30,
+      "precio": {
+        "importe": 0,
+        "detalle": "Incluido en el circuito principal del castillo"
+      },
+      "horarios": {
+        "lun": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "mar": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "mie": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "jue": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "vie": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "sab": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "dom": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ]
+      },
+      "nivel": "opcional",
+      "valoracion": {
+        "nota": 3.9,
+        "resenas": 1535,
+        "puesto": "N.º 63 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "La casa azul del número 22",
+          "porque": "Kafka la usó para escribir en 1916 y 1917. Hoy es una librería."
+        },
+        {
+          "que": "La torre Daliborka",
+          "porque": "Al final del callejón. Era una cárcel y todavía conserva la mazmorra."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Un violín en la torre",
+          "texto": "El primer preso de la Daliborka, el caballero Dalibor, aprendió a tocar el violín durante su encierro y la gente se acercaba a escucharle. De ahí sale el dicho checo «la necesidad enseñó a Dalibor a tocar el violín»."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/callejon-oro.jpg",
+        "credito": "Diego Delso",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Callej%C3%B3n_del_oro%2C_Praga%2C_Rep%C3%BAblica_Checa%2C_2022-07-02%2C_DD_139.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "hrad.cz"
+      }
+    },
+    {
+      "id": "cementerio-judio",
+      "nombre": "Cementerio judío antiguo y sinagoga Pinkas",
+      "categoria": "patrimonio",
+      "zona": "Josefov",
+      "coords": [
+        50.08998,
+        14.41691
+      ],
+      "resumen": "Doce mil lápidas amontonadas unas sobre otras porque no había sitio para más.",
+      "descripcion": "Durante más de tres siglos, hasta 1787, fue el único sitio donde los judíos de Praga podían enterrarse. Como no se podía ampliar, se echaba tierra encima y se enterraba en otra capa, y las lápidas antiguas se subían a la nueva. El resultado es un bosque de piedras torcidas.\n\nSe entra por la **sinagoga Pinkas**, cuyas paredes llevan escritos a mano los nombres de cerca de 80.000 judíos checos y moravos asesinados en el Holocausto. Es la visita más dura del viaje.",
+      "duracionMin": 60,
+      "precio": {
+        "importe": 600,
+        "detalle": "Entrada única del Museo Judío (≈25 €), vale para tres días de apertura. Estudiantes menores de 26 años, 400 CZK"
+      },
+      "horarios": {
+        "lun": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "mar": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "mie": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "jue": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "vie": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "dom": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ]
+      },
+      "nivel": "opcional",
+      "valoracion": {
+        "nota": 4,
+        "resenas": 2099,
+        "puesto": "N.º 65 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026; va en la misma entrada que la sinagoga Española"
+      },
+      "queMirar": [
+        {
+          "que": "Los nombres de la sinagoga Pinkas",
+          "porque": "Ordenados por pueblos, con fecha de nacimiento y de muerte. Arriba, los dibujos de los niños de Terezín."
+        },
+        {
+          "que": "La tumba del rabino Löw",
+          "porque": "Cerca de la salida, llena de piedrecitas y papelitos con deseos. Es el rabino al que la leyenda atribuye el Golem."
+        },
+        {
+          "que": "Los símbolos de las lápidas",
+          "porque": "Unas manos que bendicen son de la familia sacerdotal; una jarra, de los levitas; un racimo de uvas, de la fertilidad."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Por qué piedras y no flores",
+          "texto": "En la tradición judía se deja una piedrecita sobre la tumba en vez de flores. Las flores se marchitan; la piedra dice que alguien ha estado aquí y se acuerda."
+        }
+      ],
+      "enlaces": [
+        {
+          "texto": "Museo Judío · horarios y cierres",
+          "url": "https://www.jewishmuseum.cz/en/info/visit/opening-hours/"
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/cementerio-judio.jpg",
+        "credito": "Jorge Royan",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Old%20Jewish%20Cemetery%20in%20Josefov%2C%20Prague%20-%208363.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "jewishmuseum.cz (del 1 de septiembre al 17 de octubre, de 9:00 a 18:00; cierra los sábados y el 4 de octubre de 2026)"
+      }
+    },
+    {
+      "id": "sinagoga-vieja-nueva",
+      "nombre": "Sinagoga Vieja-Nueva",
+      "categoria": "patrimonio",
+      "zona": "Josefov",
+      "coords": [
+        50.09004,
+        14.41859
+      ],
+      "resumen": "La sinagoga en uso más antigua de Europa. Según la leyenda, el Golem sigue en el desván.",
+      "descripcion": "Se terminó hacia 1270 y lleva más de 750 años funcionando como sinagoga, con muy pocas interrupciones. Es pequeña, gótica y sombría: una sola sala con dos naves y una reja de hierro en el centro.\n\nDesde 2024 entra en la entrada general del Museo Judío. Hay que ir a verla sabiendo que la visita dura poco; lo que pesa es lo que representa.",
+      "duracionMin": 25,
+      "precio": {
+        "importe": 0,
+        "detalle": "Incluida en la entrada del Museo Judío"
+      },
+      "horarios": {
+        "lun": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "mar": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "mie": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "jue": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "vie": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "dom": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ]
+      },
+      "nivel": "opcional",
+      "valoracion": {
+        "nota": 3.6,
+        "resenas": 907,
+        "puesto": "N.º 135 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026; las quejas son por lo corta que es la visita"
+      },
+      "queMirar": [
+        {
+          "que": "Las nervaduras de cinco brazos",
+          "porque": "La bóveda gótica tendría que tener cuatro. Se añadió una quinta para que no formaran una cruz."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "El Golem del desván",
+          "texto": "Cuenta la leyenda que el rabino Löw creó un gigante de barro para proteger al barrio y, cuando se le fue de las manos, lo desactivó y guardó sus restos en el desván de esta sinagoga. La escalera exterior que sube hasta allí no está abierta al público."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/sinagoga-vieja-nueva.jpg",
+        "credito": "Jerzy Strzelecki",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Old_New_Synagogue_01(js).jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "jewishmuseum.cz y TripAdvisor"
+      }
+    },
+    {
+      "id": "sinagoga-espanola",
+      "nombre": "Sinagoga Española",
+      "categoria": "patrimonio",
+      "zona": "Josefov",
+      "coords": [
+        50.09036,
+        14.42085
+      ],
+      "resumen": "Dorados y arabescos por todas las paredes: por dentro parece la Alhambra.",
+      "descripcion": "Se construyó en 1868 en estilo morisco, con la Alhambra de Granada como modelo, y de ahí le viene el nombre. No hay un centímetro sin pintar: cúpula, paredes y galerías van cubiertas de motivos dorados, verdes y rojos.\n\nDentro está la exposición sobre la historia de los judíos checos desde el siglo XIX. Es lo mejor valorado del barrio judío y el sitio donde terminar la tarde.",
+      "duracionMin": 50,
+      "precio": {
+        "importe": 0,
+        "detalle": "Incluida en la entrada del Museo Judío"
+      },
+      "horarios": {
+        "lun": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "mar": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "mie": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "jue": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "vie": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ],
+        "dom": [
+          [
+            "09:00",
+            "18:00"
+          ]
+        ]
+      },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.5,
+        "resenas": 4780,
+        "puesto": "N.º 14 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "La cúpula desde el centro de la sala",
+          "porque": "Hay que ponerse justo debajo. Las estrellas doradas sobre azul son el techo más fotografiado del barrio."
+        },
+        {
+          "que": "La estatua de Kafka en la calle",
+          "porque": "Justo al salir, a la izquierda: un traje vacío que lleva a hombros a Kafka. Es de Jaroslav Róna."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Kafka nació a cinco minutos",
+          "texto": "Franz Kafka nació en 1883 en una casa junto a la iglesia de San Nicolás de la Ciudad Vieja, a cinco minutos de aquí, y pasó casi toda la vida en unas pocas calles de este barrio."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/sinagoga-espanola.jpg",
+        "credito": "Uoaei1",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Praha%20Spanish%20Synagogue%20Interior%2001.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "jewishmuseum.cz (taquilla hasta las 17:30)"
+      }
+    },
+    {
+      "id": "vysehrad",
+      "nombre": "Vyšehrad",
+      "categoria": "patrimonio",
+      "zona": "Vyšehrad",
+      "coords": [
+        50.06442,
+        14.41788
+      ],
+      "resumen": "El otro castillo de Praga: una fortaleza sobre el río, con los grandes de la cultura checa enterrados dentro.",
+      "descripcion": "Según la leyenda, aquí empezó todo: desde esta roca la princesa Libuše profetizó una gran ciudad cuya gloria llegaría a las estrellas. Hoy es un recinto amurallado, verde y tranquilo, con la **basílica de San Pedro y San Pablo** y el **cementerio** donde descansan Dvořák, Smetana y Mucha.\n\nEs lo que el castillo sería sin gente. Y la vista del Moldava desde las murallas, con el castillo de Praga al fondo, compite con la de Letná.",
+      "duracionMin": 120,
+      "precio": {
+        "importe": 130,
+        "detalle": "La basílica (≈5 €). El recinto, las murallas y el cementerio son gratis"
+      },
+      "horarios": {
+        "lun": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "mar": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "mie": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "jue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "vie": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sab": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "dom": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ]
+      },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.6,
+        "resenas": 3117,
+        "puesto": "N.º 23 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "El interior de la basílica",
+          "porque": "Todas las paredes pintadas en Art Nouveau, con motivos vegetales. Nada que ver con las iglesias de los otros días."
+        },
+        {
+          "que": "La tumba de Mucha en el cementerio",
+          "porque": "Y la de Dvořák, con un busto. Hay un plano a la entrada."
+        },
+        {
+          "que": "El Slavín",
+          "porque": "El gran panteón al fondo del cementerio, donde reposan más de cincuenta artistas checos juntos."
+        },
+        {
+          "que": "La rotonda de San Martín",
+          "porque": "Una iglesita redonda del siglo XI. Es el edificio más antiguo que queda en pie en Praga."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Un umbral para una ciudad",
+          "texto": "La leyenda dice que Libuše mandó construir la ciudad donde encontraran a un hombre tallando el umbral de una casa. «Umbral», en checo, es práh. De ahí vendría Praha."
+        }
+      ],
+      "consejos": [
+        "Desde el metro Vyšehrad (línea C) se llega en 10 minutos andando, sin cuestas.",
+        "Para bajar al río hay un camino por las murallas que sale junto a la basílica."
+      ],
+      "enlaces": [
+        {
+          "texto": "Vyšehrad",
+          "url": "https://praha-vysehrad.cz/en/"
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/vysehrad.jpg",
+        "credito": "No se ha podido leer automáticamente información sobre el autor; se as",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Vysehrad_as_seen_over_the_Vltava_from_Cisarska_louka_732.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "bazilika.kkvys.cz (basílica de 10:00 a 18:00 todos los días), praha-vysehrad.cz y TripAdvisor"
+      }
+    },
+    {
+      "id": "cirilo-metodio",
+      "nombre": "Cripta de los santos Cirilo y Metodio",
+      "categoria": "patrimonio",
+      "zona": "Nové Město",
+      "coords": [
+        50.07592,
+        14.41675
+      ],
+      "resumen": "Aquí se escondieron los paracaidistas que mataron a Heydrich. Los agujeros de bala siguen en la pared.",
+      "descripcion": "En 1942, siete paracaidistas checoslovacos entrenados en Inglaterra atentaron contra Reinhard Heydrich, el jerarca nazi que gobernaba Bohemia. Después se escondieron en la cripta de esta iglesia ortodoxa. Los delataron, y el 18 de junio cientos de soldados de las SS cercaron la iglesia. Resistieron horas; ninguno se entregó.\n\nLa cripta es hoy el **Memorial Nacional a los Héroes del Terror de Heydrich**. Es pequeña, está casi como la dejaron, y **la entrada es gratuita**. Va el martes porque el lunes cierra.",
+      "duracionMin": 60,
+      "precio": {
+        "importe": 0,
+        "detalle": "Entrada libre"
+      },
+      "horarios": {
+        "mar": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "mie": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "jue": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "vie": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "sab": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "dom": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ]
+      },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.7,
+        "resenas": 1442,
+        "puesto": "N.º 45 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "El respiradero de la calle Resslova",
+          "porque": "Por fuera, en la fachada. Está acribillado a balazos: por ahí intentaron inundar la cripta con mangueras de bomberos."
+        },
+        {
+          "que": "El túnel a medio excavar",
+          "porque": "Dentro de la cripta. Intentaron abrirse paso hasta la alcantarilla con lo que tenían a mano."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Lo que costó",
+          "texto": "La represalia nazi fue brutal: el pueblo de Lidice fue arrasado y sus hombres, fusilados. La operación se llamó Antropoide, igual que la película de 2016 que la cuenta."
+        }
+      ],
+      "enlaces": [
+        {
+          "texto": "Memorial · Instituto de Historia Militar",
+          "url": "https://www.vhu.cz/en/the-national-memorial-to-the-heroes-of-the-heydrich-terror/"
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/cirilo-metodio.jpg",
+        "credito": "Ludek",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Pravoslavny_katedralni_chram_sv._Cyrila_a_Metodeje_Resslova_Praha.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "vhu.cz y prague.eu (de martes a domingo, de 9:00 a 17:00; lunes cerrado)"
+      }
+    },
+    {
+      "id": "plaza-wenceslao",
+      "nombre": "Plaza de Wenceslao",
+      "categoria": "patrimonio",
+      "zona": "Nové Město",
+      "coords": [
+        50.08159,
+        14.42717
+      ],
+      "resumen": "Más bulevar que plaza. Aquí se derrumbó el comunismo en noviembre de 1989.",
+      "descripcion": "Es un bulevar de 750 metros que sube hasta el Museo Nacional, con la estatua ecuestre de San Wenceslao arriba. Hoy es comercial y algo impersonal, y las reseñas lo notan.\n\nLo que la hace importante es lo que pasó aquí: en 1968 los tanques soviéticos, en 1969 Jan Palach, y en noviembre de 1989 cientos de miles de personas agitando llaves hasta que cayó el régimen.",
+      "duracionMin": 30,
+      "nivel": "opcional",
+      "valoracion": {
+        "nota": 3.9,
+        "resenas": 2450,
+        "puesto": "N.º 40 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "La cruz en el suelo frente al museo",
+          "porque": "Una cruz de bronce hundida en el adoquinado, al pie de la estatua. Marca dónde se quemó Jan Palach en 1969 en protesta por la ocupación."
+        },
+        {
+          "que": "El caballo muerto del pasaje Lucerna",
+          "porque": "Bajando, a la izquierda. Una escultura de David Černý: San Wenceslao montado en su caballo, que cuelga boca arriba del techo."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "El ruido de las llaves",
+          "texto": "En noviembre de 1989 la gente agitaba las llaves en la plaza: era la forma de decirle al Gobierno comunista que ya podía irse a casa, que era la hora de cerrar."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/plaza-wenceslao.jpg",
+        "credito": "Nakalololo",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Place_Venceslas.JPG"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "OpenStreetMap (place=square)"
+      }
+    },
+    {
+      "id": "museo-nacional",
+      "nombre": "Museo Nacional",
+      "categoria": "patrimonio",
+      "zona": "Nové Město",
+      "coords": [
+        50.07892,
+        14.43097
+      ],
+      "resumen": "El edificio corona la plaza de Wenceslao. El panteón y la cúpula valen más que las colecciones.",
+      "descripcion": "Es el gran edificio neorrenacentista de 1891 que cierra la plaza por arriba. Por dentro, lo que la gente recuerda es la escalera, el panteón con las estatuas de los grandes checos y la cúpula, desde la que se ve la plaza entera.\n\nLas colecciones sacan poca nota: 3,3 con más de mil reseñas. Merece la pena solo si apetece un museo; si no, basta con la fachada y la vista desde la rampa.",
+      "duracionMin": 20,
+      "precio": {
+        "importe": 360,
+        "detalle": "Complejo del museo (≈15 €). Por fuera, gratis"
+      },
+      "horarios": {
+        "lun": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "mar": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "mie": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "jue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "vie": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sab": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "dom": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ]
+      },
+      "nivel": "opcional",
+      "valoracion": {
+        "nota": 3.3,
+        "resenas": 1044,
+        "puesto": "N.º 52 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "Las marcas en la fachada",
+          "porque": "Hay piedras más claras entre las columnas: rellenan los impactos de las ametralladoras soviéticas de agosto de 1968, que confundieron el museo con la radio."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Un error de 1968",
+          "texto": "Los soldados soviéticos dispararon contra el museo porque creyeron que era el Parlamento o la radio. Durante décadas los agujeros se rellenaron con piedra de otro color para que no se olvidaran."
+        }
+      ],
+      "enlaces": [
+        {
+          "texto": "Museo Nacional",
+          "url": "https://www.nm.cz/en/visit-us/buildings/museum-complex-of-the-national-museum"
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/museo-nacional.jpg",
+        "credito": "MichalPL",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:National%20Museum%20in%20Prague%20(main%20building)%2C%20September%202019.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "nm.cz (todos los días de 10:00 a 18:00, 360 CZK)"
+      }
+    },
+    {
+      "id": "museo-mucha",
+      "nombre": "Museo Mucha",
+      "categoria": "patrimonio",
+      "zona": "Nové Město",
+      "coords": [
+        50.08418,
+        14.42772
+      ],
+      "resumen": "Los carteles de Sarah Bernhardt que inventaron un estilo. Tres salas, sin más.",
+      "descripcion": "Alfons Mucha se hizo famoso en el París de 1895 con un cartel para Sarah Bernhardt, y de ahí salió medio Art Nouveau. El museo tiene sus carteles más conocidos, dibujos y un documental de media hora sobre su vida.\n\nEs pequeño y las reseñas lo dicen: 3,7 sobre 2.054. Para quien ya conozca a Mucha y le guste, merece la pena; si no, su vidriera en San Vito, el lunes, y la sala del Alcalde en la Casa Municipal, hoy, ya dan una idea.",
+      "duracionMin": 60,
+      "nivel": "opcional",
+      "valoracion": {
+        "nota": 3.7,
+        "resenas": 2054,
+        "puesto": "N.º 140 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "Las cuatro estaciones",
+          "porque": "Cuatro mujeres, cuatro paneles. Es la serie que más se ha copiado de todo el Art Nouveau."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Un encargo de Navidad",
+          "texto": "El cartel de Gismonda para Sarah Bernhardt se lo encargaron a Mucha casi de rebote, en plenas navidades de 1894, porque los artistas de la imprenta estaban de vacaciones. A ella le gustó tanto que lo contrató seis años."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/museo-mucha.jpg",
+        "credito": "George R. Lawrence Co., Chicago.",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Alfons_Mucha_LOC_3c05828u.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "TripAdvisor (de 9:30 a 18:30); horario oficial sin confirmar"
+      }
+    },
+    {
+      "id": "casa-municipal",
+      "nombre": "Casa Municipal",
+      "categoria": "patrimonio",
+      "zona": "Staré Město",
+      "coords": [
+        50.08776,
+        14.42776
+      ],
+      "resumen": "El edificio modernista más bonito de Praga, con una cafetería dentro en la que se puede entrar sin entrada.",
+      "descripcion": "Se inauguró en 1912 y es Art Nouveau de arriba abajo: mosaicos en la fachada, vidrieras, lámparas, pomos de las puertas. Mucha decoró la sala del Alcalde. Aquí se proclamó la independencia de Checoslovaquia el 28 de octubre de 1918.\n\nLas salas de dentro solo se ven con visita guiada, pero la **cafetería de la planta baja** es parte del edificio y es la forma más agradable de estar dentro: un café con tarta bajo las lámparas de 1912.",
+      "duracionMin": 50,
+      "nivel": "obligatorio",
+      "valoracion": {
+        "nota": 4.5,
+        "resenas": 4601,
+        "puesto": "N.º 13 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "El mosaico sobre la entrada",
+          "porque": "«Homenaje a Praga». Se ve mejor desde la acera de enfrente."
+        },
+        {
+          "que": "La Torre de la Pólvora pegada al lado",
+          "porque": "Una puerta gótica de la muralla medieval, junto a un edificio de 1912. Seis siglos en diez metros."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Sobre el palacio de los reyes",
+          "texto": "El edificio se levantó donde estaba la Corte del Rey, la residencia de los reyes de Bohemia en la Ciudad Vieja antes de que volvieran al castillo. Por eso la Torre de la Pólvora está justo al lado: era su puerta."
+        }
+      ],
+      "consejos": [
+        "Las visitas guiadas por dentro salen varias veces al día y se reservan en la taquilla del sótano. Si apetece ver la sala de Mucha, es la forma."
+      ],
+      "enlaces": [
+        {
+          "texto": "Casa Municipal",
+          "url": "https://www.obecnidum.cz/en/"
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/casa-municipal.jpg",
+        "credito": "Mike is Michi",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Municipal%20House%20Prague%202026.JPG"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "OpenStreetMap y TripAdvisor; se ve por fuera y desde la cafetería"
+      }
+    },
+    {
+      "id": "vinohradsky-pivovar",
+      "nombre": "Vinohradský pivovar",
+      "categoria": "comida",
+      "zona": "Vinohrady",
+      "coords": [
+        50.07531,
+        14.45742
+      ],
+      "resumen": "La cervecería del barrio, con cerveza hecha en la nave de al lado. A diez minutos a pie de casa.",
+      "descripcion": "Recupera la fábrica de cerveza que Vinohrady tuvo hasta mediados del siglo XX. Hacen cuatro o cinco cervezas a la vez, casi todas lager bohemias, y cocina checa algo más cuidada que la de las cervecerías del centro, con los principales sobre los 15 €.\n\nEs para la última cena: está en el barrio y, al acabar, se vuelve andando.",
+      "duracionMin": 120,
+      "nivel": "recomendable",
+      "valoracion": {
+        "nota": 4.5,
+        "resenas": 335,
+        "puesto": "N.º 306 de 4.848 restaurantes de Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "Los tanques de cobre",
+          "porque": "Se ven desde la sala. La cerveza que se bebe sale de ahí mismo."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Vinohrady significa viñedos",
+          "texto": "Carlos IV mandó plantar viñas en estas colinas en el siglo XIV. Hoy es un barrio de fachadas modernistas y no queda ni una cepa, salvo un pequeño viñedo en el parque Havlíčkovy sady."
+        }
+      ],
+      "consejos": [
+        "Reservar por la tarde para la noche del martes."
+      ],
+      "enlaces": [
+        {
+          "texto": "Vinohradský pivovar",
+          "url": "https://www.vinohradskypivovar.cz/"
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/vinohradsky-pivovar.jpg",
+        "credito": "JiriMatejicek",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Praha%20Vinohrady%20Korunni%20106%20Vinohradsky%20pivovar.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "OpenStreetMap (amenity=restaurant) y TripAdvisor; horario sin verificar"
+      }
+    },
+    {
+      "id": "mercado-jirak",
+      "nombre": "Mercado de Jiřího z Poděbrad",
+      "categoria": "comida",
+      "zona": "Vinohrady",
+      "coords": [
+        50.07796,
+        14.45035
+      ],
+      "resumen": "El mercado del barrio, en la plaza del metro. El miércoles abre desde las 8:00.",
+      "descripcion": "Los praguenses lo llaman Jiřák. Es un mercado de productores en la plaza que queda al lado del alojamiento: fruta, pan, quesos, embutido y puestos de comida caliente. El miércoles es de los días de mercado, así que la última mañana se desayuna aquí.\n\nLa plaza tiene en medio la iglesia de Plečnik, que es la mitad de la visita.",
+      "duracionMin": 60,
+      "horarios": {
+        "mie": [
+          [
+            "08:00",
+            "18:00"
+          ]
+        ]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "nota": 4.6,
+        "resenas": 76,
+        "puesto": "N.º 159 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "Los puestos de chlebíček",
+          "porque": "Tostas abiertas con ensaladilla, jamón y huevo. Es el desayuno de barra de Praga."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Un mercado a pie de metro",
+          "texto": "El mercado se monta sobre la plaza que cubre la estación de metro. Varios días a la semana, con los puestos dispuestos alrededor de la iglesia."
+        }
+      ],
+      "consejos": [
+        "Algunos puestos de comida no abren hasta media mañana. A las 9:30 ya estará casi todo."
+      ],
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "prague.eu, expats.cz y praguest.com (miércoles de 8:00 a 18:00)"
+      }
+    },
+    {
+      "id": "iglesia-plecnik",
+      "nombre": "Iglesia del Sagrado Corazón (Plečnik)",
+      "categoria": "patrimonio",
+      "zona": "Vinohrady",
+      "coords": [
+        50.07778,
+        14.45025
+      ],
+      "resumen": "Una iglesia de 1932 que parece un transatlántico, con un reloj de cristal de casi ocho metros en la torre.",
+      "descripcion": "La proyectó el esloveno Jože Plečnik, el mismo arquitecto que reformó el castillo de Praga para el presidente Masaryk. Mezcla un templo clásico con algo industrial: fachada de ladrillo oscuro salpicada de piedras que sobresalen, y una torre ancha y plana atravesada por un reloj redondo transparente.\n\nSolo abre en los oficios, así que se ve por fuera. Nadie la conoce y es de lo más original de la ciudad.",
+      "duracionMin": 15,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "Sin cifras con volumen",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026: pocas reseñas, muy buenas; abre solo en los oficios"
+      },
+      "queMirar": [
+        {
+          "que": "El reloj de la torre",
+          "porque": "Mide 7,6 metros y es de cristal: desde abajo se ve el mecanismo."
+        },
+        {
+          "que": "Las piedras que sobresalen del ladrillo",
+          "porque": "Salpican toda la fachada de ladrillo oscuro, como si estuviera bordada. De cerca se ve que son bloques de granito."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Una rampa en vez de escaleras",
+          "texto": "Por dentro de la torre no se sube por escalones, sino por una rampa que va dando vueltas hasta el reloj. Plečnik la diseñó así a propósito."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/iglesia-plecnik.jpg",
+        "credito": "VitVit",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Praha_kostel_NSP_bok_1.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "OpenStreetMap y TripAdvisor; se ve por fuera"
+      }
+    },
+    {
+      "id": "torre-zizkov",
+      "nombre": "Torre de televisión de Žižkov",
+      "categoria": "patrimonio",
+      "zona": "Žižkov",
+      "coords": [
+        50.08102,
+        14.45106
+      ],
+      "resumen": "Una torre de 216 m que parece un cohete y por la que trepan bebés gigantes de bronce.",
+      "descripcion": "Se terminó en 1992 y la mitad de Praga la odiaba. En 2000 David Černý le colgó diez bebés de bronce de tres metros gateando torre arriba, y así se hizo querer. El mirador está a 93 metros y tiene toda la ciudad alrededor, el castillo incluido.\n\nLas reseñas coinciden en que es cara para lo que es: 3,9 sobre 1.432. Pilla a cinco minutos del alojamiento y los bebés se ven gratis desde el parque.",
+      "duracionMin": 60,
+      "precio": {
+        "importe": 340,
+        "detalle": "Mirador (≈14 €)"
+      },
+      "horarios": {
+        "lun": [
+          [
+            "09:00",
+            "24:00"
+          ]
+        ],
+        "mar": [
+          [
+            "09:00",
+            "24:00"
+          ]
+        ],
+        "mie": [
+          [
+            "09:00",
+            "24:00"
+          ]
+        ],
+        "jue": [
+          [
+            "09:00",
+            "24:00"
+          ]
+        ],
+        "vie": [
+          [
+            "09:00",
+            "24:00"
+          ]
+        ],
+        "sab": [
+          [
+            "09:00",
+            "24:00"
+          ]
+        ],
+        "dom": [
+          [
+            "09:00",
+            "24:00"
+          ]
+        ]
+      },
+      "nivel": "opcional",
+      "valoracion": {
+        "nota": 3.9,
+        "resenas": 1432,
+        "puesto": "N.º 50 de 425 atracciones de ocio de Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "Las caras de los bebés",
+          "porque": "En vez de cara tienen una ranura, como un código de barras. Se ven desde abajo con el cielo detrás."
+        },
+        {
+          "que": "El cementerio judío de Žižkov",
+          "porque": "Pegado a la base de la torre. Construyeron la torre encima de una parte, y hubo que trasladar tumbas."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Iba a interferir la radio occidental",
+          "texto": "Se construyó en los últimos años del comunismo y durante mucho tiempo se dijo que su verdadera función era bloquear las emisiones de radio que llegaban del Oeste. Se inauguró cuando ya no quedaba nada que bloquear."
+        }
+      ],
+      "consejos": [
+        "Solo si hace un día claro. Con niebla, lo que se ve desde arriba es niebla."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/torre-zizkov.jpg",
+        "credito": "A.Savin",
+        "licencia": "FAL",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Prague_07-2016_View_from_Petrinska_Tower_img3.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "Tiqets y guías locales (de 9:00 a 24:00); precio en euros según los revendedores"
+      }
+    },
+    {
+      "id": "riegrovy-sady",
+      "nombre": "Parque Riegrovy sady",
+      "categoria": "naturaleza",
+      "zona": "Vinohrady",
+      "coords": [
+        50.08018,
+        14.43929
+      ],
+      "resumen": "El parque del barrio, en cuesta, con el castillo enfrente y la ciudad entre medias.",
+      "descripcion": "Es el parque donde la gente de Vinohrady sale a pasear al perro, tumbarse en la hierba o ver atardecer. Desde lo alto de la pradera se ve la Ciudad Vieja y, al fondo, el castillo entero: la despedida perfecta, mirando todo lo que se ha andado desde el sábado.\n\nLa cervecería del parque es de temporada, de abril a septiembre; en octubre puede estar cerrada.",
+      "duracionMin": 60,
+      "nivel": "opcional",
+      "valoracion": {
+        "nota": 4.7,
+        "resenas": 16,
+        "puesto": "N.º 247 de las cosas que hacer en Praga",
+        "fuente": "TripAdvisor, 22 de septiembre de 2026; muy buena nota pero con pocas reseñas"
+      },
+      "queMirar": [
+        {
+          "que": "El castillo desde lo alto de la pradera",
+          "porque": "Es la misma vista que se tenía el lunes desde abajo, pero al revés."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Otro viñedo que fue",
+          "texto": "El parque se abrió a principios del siglo XX sobre antiguos viñedos, como casi todo el barrio."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/praga-2026-10/fotos/riegrovy-sady.jpg",
+        "credito": "I would appreciate being notified if you use my work outside Wikimedia",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Praha%2C%20Riegrovy%20sady.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-09-22",
+        "fuente": "OpenStreetMap (leisure=park) y TripAdvisor"
+      }
+    }
+  ],
+  "dias": [
+    {
+      "fecha": "2026-10-03",
+      "titulo": "Llegada y Ciudad Vieja",
+      "intensidad": "llegada",
+      "resumen": "Aterrizaje a las 9:00, maletas en el alojamiento y mercado junto al río, que solo se monta los sábados. Por la tarde, la Ciudad Vieja, y el puente de Carlos para ver ponerse el sol a las 18:38. La iglesia de Týn va hoy porque el lunes y el domingo está cerrada.",
+      "bloques": [
+        {
+          "tipo": "hito",
+          "inicio": "09:00",
+          "titulo": "Aterrizaje en la terminal 2",
+          "detalle": "Vuelo Schengen: sin control de pasaportes. Con la recogida de maletas, fuera a las 9:30 más o menos"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "09:35",
+          "fin": "10:30",
+          "modo": "bus",
+          "desde": "aeropuerto",
+          "hasta": "alojamiento",
+          "detalle": "Trolebús 59 hasta Nádraží Veleslavín y metro A hasta Jiřího z Poděbrad, sin más transbordos. Billete de 90 minutos: 46 CZK en la app"
+        },
+        {
+          "inicio": "10:30",
+          "fin": "10:50",
+          "lugar": "alojamiento",
+          "nota": "Solo dejar las maletas: el check-in suele ser por la tarde. Hay que haberlo preguntado antes."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "10:50",
+          "fin": "11:20",
+          "modo": "tren",
+          "desde": "alojamiento",
+          "hasta": "naplavka",
+          "detalle": "Metro o tranvía, unos 25-30 minutos. La app PID o el enlace de Maps dan la combinación del momento"
+        },
+        {
+          "inicio": "11:20",
+          "fin": "12:50",
+          "lugar": "naplavka",
+          "nota": "Desayuno tardío o comida de pie entre puestos. Cierra a las 14:00."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "12:50",
+          "fin": "13:00",
+          "modo": "a-pie",
+          "desde": "naplavka",
+          "hasta": "casa-danzante",
+          "detalle": "400 m por la orilla"
+        },
+        {
+          "inicio": "13:00",
+          "fin": "13:15",
+          "lugar": "casa-danzante",
+          "exterior": true,
+          "opcional": true,
+          "nota": "Desde la acera de enfrente, junto al puente."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "13:15",
+          "fin": "13:50",
+          "modo": "a-pie",
+          "desde": "casa-danzante",
+          "hasta": "reloj-astronomico",
+          "detalle": "2 km por la orilla y la calle Národní, unos 30 minutos"
+        },
+        {
+          "inicio": "13:50",
+          "fin": "14:05",
+          "lugar": "reloj-astronomico",
+          "exterior": true,
+          "nota": "El desfile de los apóstoles de las 14:00. Hay que estar abajo un par de minutos antes."
+        },
+        {
+          "inicio": "14:05",
+          "fin": "15:00",
+          "lugar": "plaza-ciudad-vieja",
+          "nota": "Rodear la plaza sin prisa: las cruces del suelo, Jan Hus y las fachadas."
+        },
+        {
+          "inicio": "15:00",
+          "fin": "15:40",
+          "lugar": "tyn",
+          "nota": "Abre por la tarde a las 15:00. Es la única oportunidad del viaje: el domingo y el lunes está cerrada."
+        },
+        {
+          "inicio": "15:45",
+          "fin": "16:30",
+          "lugar": "reloj-astronomico",
+          "opcional": true,
+          "nota": "Subir a la torre del Ayuntamiento. Opcional: la del puente, dentro de un rato, cuesta la mitad."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "16:30",
+          "fin": "16:50",
+          "modo": "a-pie",
+          "desde": "reloj-astronomico",
+          "hasta": "torre-puente",
+          "detalle": "700 m por la calle Karlova, la más turística y retorcida de Praga"
+        },
+        {
+          "inicio": "16:50",
+          "fin": "17:30",
+          "lugar": "torre-puente",
+          "nota": "La última entrada es a las 17:30: no hay que llegar más tarde."
+        },
+        {
+          "inicio": "17:30",
+          "fin": "18:45",
+          "lugar": "puente-carlos",
+          "nota": "Cruzarlo despacio hasta Malá Strana y volver. El sol se pone a las 18:38, detrás del castillo."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "18:45",
+          "fin": "19:10",
+          "modo": "a-pie",
+          "desde": "puente-carlos",
+          "hasta": "lokal-dlouha",
+          "detalle": "1,5 km cruzando otra vez la Ciudad Vieja, ya con las luces encendidas"
+        },
+        {
+          "inicio": "19:10",
+          "fin": "21:00",
+          "lugar": "lokal-dlouha",
+          "nota": "Primera cena checa. Sábado: mejor con mesa reservada."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "21:00",
+          "fin": "21:30",
+          "modo": "tren",
+          "desde": "lokal-dlouha",
+          "hasta": "alojamiento",
+          "detalle": "Metro desde Náměstí Republiky, o tranvía. Unos 25 minutos"
+        }
+      ]
+    },
+    {
+      "fecha": "2026-10-04",
+      "titulo": "Petřín, Malá Strana y Letná",
+      "intensidad": "media",
+      "resumen": "Se sube en el funicular recién reabierto y se baja andando: Petřín, Strahov, Malá Strana, Kampa y el jardín de Wallenstein, siempre cuesta abajo. El día acaba en Letná, con el atardecer de las 18:37 y una cerveza bajo los árboles. Hoy es domingo: el castillo y el barrio judío esperan al lunes.",
+      "bloques": [
+        {
+          "tipo": "traslado",
+          "inicio": "09:30",
+          "fin": "10:05",
+          "modo": "tren",
+          "desde": "alojamiento",
+          "hasta": "funicular-petrin",
+          "detalle": "Tranvía 22 desde Náměstí Míru hasta Újezd, unos 30 minutos contando el paseo a la parada. Es el día de activar el abono de 72 horas"
+        },
+        {
+          "inicio": "10:05",
+          "fin": "10:20",
+          "lugar": "funicular-petrin",
+          "nota": "Incluido en el abono. Si hay cola larga, se sube andando en 25 minutos."
+        },
+        {
+          "inicio": "10:20",
+          "fin": "11:05",
+          "lugar": "torre-petrin",
+          "nota": "Abre a las 10:00. Con la luz de la mañana, la Ciudad Vieja se ve de frente."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "11:05",
+          "fin": "11:25",
+          "modo": "a-pie",
+          "desde": "torre-petrin",
+          "hasta": "strahov",
+          "detalle": "800 m por el sendero de la colina, entre huertos"
+        },
+        {
+          "inicio": "11:25",
+          "fin": "12:10",
+          "lugar": "strahov",
+          "exterior": true,
+          "nota": "El patio y la vista desde la huerta. La biblioteca es opcional: solo se mira desde la puerta."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "12:10",
+          "fin": "12:35",
+          "modo": "a-pie",
+          "desde": "strahov",
+          "hasta": "mala-strana",
+          "detalle": "1,2 km bajando por Nerudova, mirando los emblemas de las puertas"
+        },
+        {
+          "inicio": "12:35",
+          "fin": "14:00",
+          "lugar": "mala-strana",
+          "nota": "Comida. En las calles de detrás de la plaza se come mejor que en la plaza misma."
+        },
+        {
+          "inicio": "14:00",
+          "fin": "14:50",
+          "lugar": "san-nicolas",
+          "nota": "El domingo abre hasta las 18:00."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "14:50",
+          "fin": "15:05",
+          "modo": "a-pie",
+          "desde": "san-nicolas",
+          "hasta": "muro-lennon",
+          "detalle": "600 m"
+        },
+        {
+          "inicio": "15:05",
+          "fin": "15:20",
+          "lugar": "muro-lennon",
+          "opcional": true,
+          "nota": "De paso a Kampa. Diez minutos bastan."
+        },
+        {
+          "inicio": "15:20",
+          "fin": "16:05",
+          "lugar": "kampa",
+          "nota": "Sentarse un rato junto al río. Los bebés de Černý están delante del Museo Kampa."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "16:05",
+          "fin": "16:25",
+          "modo": "a-pie",
+          "desde": "kampa",
+          "hasta": "jardin-wallenstein",
+          "detalle": "900 m por Malá Strana"
+        },
+        {
+          "inicio": "16:25",
+          "fin": "17:05",
+          "lugar": "jardin-wallenstein",
+          "nota": "Gratis. El fin de semana abre hasta las 19:00."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "17:05",
+          "fin": "17:35",
+          "modo": "a-pie",
+          "desde": "jardin-wallenstein",
+          "hasta": "letna",
+          "detalle": "1,5 km: se baja a Klárov y se sube por la escalera de Letná, que es empinada. Unos 30 minutos"
+        },
+        {
+          "inicio": "17:35",
+          "fin": "18:45",
+          "lugar": "letna",
+          "nota": "El sol se pone a las 18:37. Mejor coger sitio junto al metrónomo con tiempo."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "18:45",
+          "fin": "18:55",
+          "modo": "a-pie",
+          "desde": "letna",
+          "hasta": "cerveceria-letna",
+          "detalle": "900 m por el borde del parque"
+        },
+        {
+          "inicio": "18:55",
+          "fin": "20:30",
+          "lugar": "cerveceria-letna",
+          "nota": "Solo efectivo. Para cenar en serio, hay restaurantes en Letenské náměstí, a diez minutos."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "20:30",
+          "fin": "21:05",
+          "modo": "tren",
+          "desde": "cerveceria-letna",
+          "hasta": "alojamiento",
+          "detalle": "Tranvía desde Letenské náměstí y metro, unos 35 minutos"
+        }
+      ]
+    },
+    {
+      "fecha": "2026-10-05",
+      "titulo": "El castillo y el barrio judío",
+      "intensidad": "fuerte",
+      "resumen": "El día fuerte. A las 9:00 en la catedral de San Vito, antes que los grupos, y después el resto del castillo. Por la tarde, el barrio judío, que es el primer día del viaje que abre. Hay que salir de casa a las 8:15.",
+      "bloques": [
+        {
+          "tipo": "traslado",
+          "inicio": "08:15",
+          "fin": "08:55",
+          "modo": "tren",
+          "desde": "alojamiento",
+          "hasta": "san-vito",
+          "detalle": "Metro A hasta Malostranská y tranvía 22 hasta Pražský hrad, o subir andando por la Escalera Vieja del castillo en diez minutos"
+        },
+        {
+          "inicio": "09:00",
+          "fin": "10:15",
+          "lugar": "san-vito",
+          "nota": "Entrar nada más abrir. Primero la nave y la vidriera de Mucha, antes de que lleguen los grupos."
+        },
+        {
+          "inicio": "10:15",
+          "fin": "12:00",
+          "lugar": "castillo",
+          "nota": "Palacio Real Viejo con la sala de Vladislao y después San Jorge. Con la misma entrada."
+        },
+        {
+          "tipo": "hito",
+          "inicio": "12:00",
+          "fin": "12:15",
+          "titulo": "Cambio de guardia solemne",
+          "detalle": "En el primer patio, con fanfarria. Opcional: se ve a cualquier hora en punto, pero el de las 12:00 es el grande",
+          "opcional": true
+        },
+        {
+          "inicio": "12:15",
+          "fin": "12:45",
+          "lugar": "callejon-oro",
+          "nota": "Va dentro de la entrada. La casa azul del número 22 es la de Kafka."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "12:45",
+          "fin": "13:15",
+          "modo": "a-pie",
+          "desde": "callejon-oro",
+          "hasta": "cementerio-judio",
+          "detalle": "2 km: se baja por la Escalera Vieja del castillo y se cruza el puente Mánes. Cuesta abajo"
+        },
+        {
+          "tipo": "hito",
+          "inicio": "13:15",
+          "fin": "14:15",
+          "titulo": "Comida en Josefov o en la Ciudad Vieja",
+          "detalle": "Hay muchos sitios en la calle Pařížská y alrededores, aunque salen más caros que en Vinohrady"
+        },
+        {
+          "inicio": "14:15",
+          "fin": "15:25",
+          "lugar": "cementerio-judio",
+          "nota": "La entrada se compra aquí o en cualquier taquilla del museo, y vale para todo el barrio. Se entra por la sinagoga Pinkas."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "15:25",
+          "fin": "15:30",
+          "modo": "a-pie",
+          "desde": "cementerio-judio",
+          "hasta": "sinagoga-vieja-nueva",
+          "detalle": "200 m"
+        },
+        {
+          "inicio": "15:30",
+          "fin": "15:55",
+          "lugar": "sinagoga-vieja-nueva",
+          "nota": "Es corta. Lo que pesa es su edad."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "15:55",
+          "fin": "16:00",
+          "modo": "a-pie",
+          "desde": "sinagoga-vieja-nueva",
+          "hasta": "sinagoga-espanola",
+          "detalle": "250 m"
+        },
+        {
+          "inicio": "16:00",
+          "fin": "16:50",
+          "lugar": "sinagoga-espanola",
+          "nota": "Lo mejor valorado del barrio, al final. Cierra a las 18:00; la taquilla, a las 17:30."
+        },
+        {
+          "tipo": "hito",
+          "inicio": "19:00",
+          "fin": "21:00",
+          "titulo": "Cena libre",
+          "detalle": "Después de este día, cerca de casa. Vinohrady está lleno de restaurantes y vinotecas alrededor de Náměstí Míru y de la calle Mánesova"
+        }
+      ]
+    },
+    {
+      "fecha": "2026-10-06",
+      "titulo": "Vyšehrad y la Ciudad Nueva",
+      "intensidad": "media",
+      "resumen": "La mañana en Vyšehrad, el castillo tranquilo, y bajada por el río hasta la cripta de los paracaidistas, que hoy abre. Por la tarde, la plaza de Wenceslao y el Art Nouveau: Mucha y la Casa Municipal. Cena en la cervecería del barrio.",
+      "bloques": [
+        {
+          "tipo": "traslado",
+          "inicio": "09:30",
+          "fin": "10:00",
+          "modo": "tren",
+          "desde": "alojamiento",
+          "hasta": "vysehrad",
+          "detalle": "Metro A hasta Muzeum, metro C hasta Vyšehrad y 10 minutos andando"
+        },
+        {
+          "inicio": "10:00",
+          "fin": "12:00",
+          "lugar": "vysehrad",
+          "nota": "La basílica abre a las 10:00. Después, el cementerio y la vuelta por las murallas."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "12:00",
+          "fin": "12:35",
+          "modo": "a-pie",
+          "desde": "vysehrad",
+          "hasta": "cirilo-metodio",
+          "detalle": "2 km bajando por las murallas y siguiendo el río, pasando otra vez por la Casa Danzante"
+        },
+        {
+          "tipo": "hito",
+          "inicio": "12:35",
+          "fin": "13:45",
+          "titulo": "Comida en la Ciudad Nueva",
+          "detalle": "Alrededor de Karlovo náměstí"
+        },
+        {
+          "inicio": "13:45",
+          "fin": "14:45",
+          "lugar": "cirilo-metodio",
+          "nota": "Gratis. Cierra los lunes; por eso va hoy. Antes de entrar, mirar el respiradero acribillado desde la calle Resslova."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "14:45",
+          "fin": "15:10",
+          "modo": "a-pie",
+          "desde": "cirilo-metodio",
+          "hasta": "plaza-wenceslao",
+          "detalle": "1,3 km"
+        },
+        {
+          "inicio": "15:10",
+          "fin": "15:40",
+          "lugar": "plaza-wenceslao",
+          "nota": "Subir hasta la estatua de San Wenceslao y la cruz de Jan Palach."
+        },
+        {
+          "inicio": "15:40",
+          "fin": "16:00",
+          "lugar": "museo-nacional",
+          "exterior": true,
+          "nota": "La fachada y la vista desde arriba de la plaza. Entrar solo si apetece un museo: las reseñas no lo recomiendan."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "16:00",
+          "fin": "16:15",
+          "modo": "a-pie",
+          "desde": "museo-nacional",
+          "hasta": "museo-mucha",
+          "detalle": "900 m bajando la plaza"
+        },
+        {
+          "inicio": "16:15",
+          "fin": "17:10",
+          "lugar": "museo-mucha",
+          "opcional": true,
+          "nota": "Opcional. Si no, directamente a la Casa Municipal y un café más largo."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "17:10",
+          "fin": "17:20",
+          "modo": "a-pie",
+          "desde": "museo-mucha",
+          "hasta": "casa-municipal",
+          "detalle": "500 m"
+        },
+        {
+          "inicio": "17:20",
+          "fin": "18:15",
+          "lugar": "casa-municipal",
+          "exterior": true,
+          "nota": "La fachada, la Torre de la Pólvora y un café en la cafetería modernista de la planta baja."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "18:15",
+          "fin": "18:45",
+          "modo": "tren",
+          "desde": "casa-municipal",
+          "hasta": "alojamiento",
+          "detalle": "Metro desde Náměstí Republiky. Un rato en casa antes de cenar"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "19:20",
+          "fin": "19:30",
+          "modo": "a-pie",
+          "desde": "alojamiento",
+          "hasta": "vinohradsky-pivovar",
+          "detalle": "800 m"
+        },
+        {
+          "inicio": "19:30",
+          "fin": "21:30",
+          "lugar": "vinohradsky-pivovar",
+          "nota": "La cena de despedida: la última noche entera en Praga."
+        }
+      ]
+    },
+    {
+      "fecha": "2026-10-07",
+      "titulo": "Vinohrady y vuelta",
+      "intensidad": "salida",
+      "resumen": "Un día sin metro, en el barrio donde se ha dormido. El mercado y la iglesia de Plečnik antes del check-out de las 11:00; después, la torre de Žižkov y el parque con el castillo enfrente para despedirse. A las 17:00 se recogen las maletas y se sale hacia el aeropuerto.",
+      "bloques": [
+        {
+          "tipo": "traslado",
+          "inicio": "09:20",
+          "fin": "09:30",
+          "modo": "a-pie",
+          "desde": "alojamiento",
+          "hasta": "mercado-jirak",
+          "detalle": "400 m"
+        },
+        {
+          "inicio": "09:30",
+          "fin": "10:30",
+          "lugar": "mercado-jirak",
+          "nota": "Desayuno entre los puestos."
+        },
+        {
+          "inicio": "10:30",
+          "fin": "10:45",
+          "lugar": "iglesia-plecnik",
+          "exterior": true,
+          "nota": "En la misma plaza. Rodearla para ver la fachada entera."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "10:45",
+          "fin": "10:55",
+          "modo": "a-pie",
+          "desde": "iglesia-plecnik",
+          "hasta": "alojamiento",
+          "detalle": "400 m de vuelta"
+        },
+        {
+          "inicio": "10:55",
+          "fin": "11:05",
+          "lugar": "alojamiento",
+          "nota": "Check-out a las 11:00, seguramente (a confirmar). Pedir que guarden las maletas hasta las 17:00."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "11:05",
+          "fin": "11:20",
+          "modo": "a-pie",
+          "desde": "alojamiento",
+          "hasta": "torre-zizkov",
+          "detalle": "800 m"
+        },
+        {
+          "inicio": "11:20",
+          "fin": "12:20",
+          "lugar": "torre-zizkov",
+          "opcional": true,
+          "nota": "Subir solo si está despejado. Los bebés se ven gratis desde abajo."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "12:20",
+          "fin": "12:45",
+          "modo": "a-pie",
+          "desde": "torre-zizkov",
+          "hasta": "riegrovy-sady",
+          "detalle": "1,2 km"
+        },
+        {
+          "inicio": "12:45",
+          "fin": "13:45",
+          "lugar": "riegrovy-sady",
+          "nota": "La última vista del castillo, desde lo alto de la pradera."
+        },
+        {
+          "tipo": "hito",
+          "inicio": "13:50",
+          "fin": "15:00",
+          "titulo": "Comida en Vinohrady",
+          "detalle": "Por la calle Mánesova o alrededor de Náměstí Míru"
+        },
+        {
+          "tipo": "hito",
+          "inicio": "15:00",
+          "fin": "16:45",
+          "titulo": "Tiempo libre",
+          "detalle": "Compras, un café o volver a algún sitio que se quedó a medias. Todo lo que quede a más de 20 minutos, mejor no"
+        },
+        {
+          "inicio": "16:45",
+          "fin": "17:00",
+          "lugar": "alojamiento",
+          "nota": "Recoger las maletas."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "17:00",
+          "fin": "17:55",
+          "modo": "bus",
+          "desde": "alojamiento",
+          "hasta": "aeropuerto",
+          "detalle": "Metro A desde Jiřího z Poděbrad hasta Nádraží Veleslavín y trolebús 59 hasta la terminal 2. Billete de 90 minutos"
+        },
+        {
+          "tipo": "hito",
+          "inicio": "18:00",
+          "titulo": "En la terminal 2",
+          "detalle": "Dos horas antes del vuelo de las 20:00. Vuelo Schengen: basta con facturar, si hay maleta, y pasar el control"
+        }
+      ]
+    }
+  ],
+  "transporte": [
+    {
+      "tramo": "Abono de transporte PID",
+      "modo": "tren",
+      "servicio": "Metro, tranvía, autobús, trolebús y funicular de Petřín",
+      "duracion": "72 h desde el domingo por la mañana",
+      "frecuencia": "Sábado y miércoles, billetes sueltos",
+      "precio": "Unas 500 CZK por persona (≈21 €)",
+      "descuento": "Más barato en la app PID Lítačka que en papel",
+      "nota": "Sábado: billete de 90 minutos para el aeropuerto (46 CZK) y dos de 30 minutos (36 CZK cada uno). Abono de 72 horas activado el domingo a las 9:30 (340 CZK), que llega hasta el miércoles a las 9:30 y cubre el funicular. Miércoles: otro de 90 minutos para el aeropuerto (46 CZK). Total: 504 CZK. Precios de la tarifa de 2026 en la app."
+    }
+  ],
+  "listas": [
+    {
+      "titulo": "Antes de salir",
+      "momento": "pre",
+      "items": [
+        {
+          "id": "app-pid",
+          "texto": "Instalar la app PID Lítačka y meter una tarjeta",
+          "detalle": "Todos los billetes salen más baratos en la app, y el del aeropuerto hay que tenerlo antes de subir al trolebús."
+        },
+        {
+          "id": "maletas-sabado",
+          "texto": "Preguntar al alojamiento si se pueden dejar las maletas el sábado a las 10:30",
+          "detalle": "Se llega mucho antes del check-in. Si no pueden, hay consignas en la estación central."
+        },
+        {
+          "id": "maletas-miercoles",
+          "texto": "Confirmar el check-out del miércoles (seguramente a las 11:00) y si guardan las maletas hasta las 17:00",
+          "detalle": "El vuelo es a las 20:00; sin eso, el último día se pasa arrastrando maletas."
+        },
+        {
+          "id": "reserva-lokal",
+          "texto": "Reservar mesa en Lokál Dlouhááá para el sábado a las 19:00",
+          "detalle": "Sábado por la noche en la Ciudad Vieja: sin reserva, cola."
+        },
+        {
+          "id": "reserva-pivovar",
+          "texto": "Reservar mesa en Vinohradský pivovar para el martes a las 19:30",
+          "detalle": "Es la cena de despedida y está en el barrio."
+        },
+        {
+          "id": "entrada-museo-judio",
+          "texto": "Opcional: comprar online la entrada del Museo Judío",
+          "detalle": "600 CZK, o 400 CZK para estudiantes menores de 26. Vale tres días de apertura. Ahorra la cola del lunes."
+        },
+        {
+          "id": "datos-privados",
+          "texto": "Meter la dirección del alojamiento en «Datos privados» de la aplicación",
+          "detalle": "La portada del viaje → Datos privados. Se guarda solo en el móvil y no sale del navegador."
+        },
+        {
+          "id": "abrir-guia",
+          "texto": "Abrir la guía el viernes 2 y descargar los mapas sin conexión",
+          "detalle": "Botón de descarga en cada día. Así el mapa funciona aunque no haya datos en el móvil."
+        },
+        {
+          "id": "dni-tarjeta-sanitaria",
+          "texto": "DNI vigente y Tarjeta Sanitaria Europea",
+          "detalle": "Chequia está en Schengen: el DNI basta. La tarjeta sanitaria se pide gratis en la Seguridad Social."
+        },
+        {
+          "id": "tarjeta-sin-comision",
+          "texto": "Una tarjeta que no cobre por pagar en coronas",
+          "detalle": "Y pagar siempre en CZK: si el datáfono ofrece euros, decir que no."
+        }
+      ]
+    },
+    {
+      "titulo": "Qué llevar",
+      "items": [
+        {
+          "id": "calzado",
+          "texto": "Calzado cómodo y con buena suela",
+          "detalle": "Todo es adoquín, y el domingo y el lunes hay cuestas: Petřín, el castillo, la escalera de Letná."
+        },
+        {
+          "id": "chaqueta",
+          "texto": "Chaqueta para las mañanas y las noches",
+          "detalle": "La previsión del 22 de septiembre daba de 9 a 14 °C de mínima y de 18 a 23 °C de máxima. Al atardecer en Letná y en el puente, refresca."
+        },
+        {
+          "id": "paraguas",
+          "texto": "Paraguas plegable",
+          "detalle": "Octubre en Praga puede cambiar en una hora."
+        },
+        {
+          "id": "efectivo",
+          "texto": "Unas 1.000 coronas en efectivo",
+          "detalle": "La cervecería de Letná solo acepta efectivo, y algún puesto de los mercados tampoco. Sacarlas de un cajero de banco, no de los Euronet de la calle."
+        },
+        {
+          "id": "powerbank",
+          "texto": "Batería externa",
+          "detalle": "El móvil es guía, mapa, billete de transporte y cámara a la vez, y los días son largos."
+        }
+      ]
+    }
+  ],
+  "presupuesto": {
+    "nota": "Estimación para dos personas, sin los vuelos ni el alojamiento. En coronas, con el cambio del Banco Nacional Checo del 22 de septiembre de 2026: 1 € = 24,35 CZK.",
+    "partidas": [
+      {
+        "concepto": "Transporte público × 2 (sueltos + abono de 72 h)",
+        "importe": "1.008 CZK · ≈41 €"
+      },
+      {
+        "concepto": "Entradas × 2 (castillo, Museo Judío, torre del puente, Petřín y San Nicolás)",
+        "importe": "3.000 CZK · ≈123 €"
+      },
+      {
+        "concepto": "Entradas opcionales × 2 (torre del Ayuntamiento, torre de Žižkov, Vyšehrad)",
+        "importe": "0-1.640 CZK · 0-67 €"
+      },
+      {
+        "concepto": "Comidas, cenas y cervezas, 5 días × 2",
+        "importe": "8.000-12.000 CZK · ≈330-490 €"
+      },
+      {
+        "concepto": "Total estimado",
+        "importe": "12.000-17.650 CZK · ≈495-725 €",
+        "destacado": true
+      }
+    ]
+  },
+  "fuentes": [
+    {
+      "texto": "Castillo de Praga · horarios",
+      "url": "https://www.hrad.cz/en/prague-castle-for-visitors/opening-hours"
+    },
+    {
+      "texto": "Castillo de Praga · cierres en curso",
+      "url": "https://www.hrad.cz/en/prague-castle-for-visitors/current-closures"
+    },
+    {
+      "texto": "Museo Judío · horarios y días de cierre de 2026",
+      "url": "https://www.jewishmuseum.cz/en/info/visit/opening-hours/"
+    },
+    {
+      "texto": "Museo Judío · tarifas",
+      "url": "https://www.jewishmuseum.cz/en/info/visit/admission/"
+    },
+    {
+      "texto": "PID · tarifa de 2026",
+      "url": "https://pid.cz/en/new-pid-tariff-from-1-january-2026-dont-pay-more-than-you-have-to/"
+    },
+    {
+      "texto": "PID · funicular de Petřín",
+      "url": "https://pid.cz/en/funicular/"
+    },
+    {
+      "texto": "Aeropuerto de Praga · transporte público",
+      "url": "https://www.prg.aero/en/public-transport-buses-to-airport"
+    },
+    {
+      "texto": "Prague City Tourism · horarios de monumentos",
+      "url": "https://prague.eu/en/"
+    },
+    {
+      "texto": "Banco Nacional Checo · cambio del día",
+      "url": "https://www.cnb.cz/en/financial-markets/foreign-exchange-market/central-bank-exchange-rate-fixing/central-bank-exchange-rate-fixing/"
+    },
+    {
+      "texto": "TripAdvisor · cosas que hacer en Praga",
+      "url": "https://www.tripadvisor.com/Attractions-g274707-Activities-Prague_Bohemia.html"
+    }
+  ]
+}
