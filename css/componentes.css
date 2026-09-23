@@ -1456,7 +1456,8 @@ a.cabecera__marca {
   background: var(--acento-velo);
   color: var(--acento);
 }
-.opcion[aria-checked="true"] .opcion__pista { color: inherit; opacity: 0.8; }
+/* Sin opacidad: el acento al 80 % sobre su velo bajaba a 3,3:1 (medido con axe). */
+.opcion[aria-checked="true"] .opcion__pista { color: inherit; }
 
 /* En cuanto hay sitio, las opciones se reparten en fila. */
 @media (min-width: 560px) {

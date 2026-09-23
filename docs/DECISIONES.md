@@ -319,6 +319,27 @@ azulado, 5,5:1 de contraste en claro y 8,1:1 en oscuro), en la aplicación, en e
 esquema y en el validador. Los tipos de actividad del formulario son una tabla en
 `js/actividades.js`: un tipo nuevo es una fila.
 
+## Accesibilidad medida, no supuesta
+
+El 23 de septiembre de 2026 se pasó axe-core (WCAG 2.2 A y AA) por trece vistas,
+en claro y en oscuro, a 1440 y 390 px. Lo que encontró y lo que se hizo:
+
+- **El gris de los textos pequeños no llegaba a 4,5:1** en ninguno de los dos
+  modos: 3,4-3,8 en claro y 3,5-4,1 en oscuro, según la superficie. Venía de
+  antes del rediseño. `--tinta-suave` pasa a `#736C64` y a `#908980`, los grises
+  más cercanos a los de antes que dan 4,6:1 o más en las tres superficies. La
+  jerarquía se mantiene porque el gris medio sigue en 6,5-7,6:1.
+- **La pista de la opción de tema elegida** llevaba `opacity: 0.8` y bajaba a
+  3,3:1. Sin la opacidad da 4,8:1 y 5,7:1.
+- **Los diálogos nuevos atrapan el tabulador.** `aria-modal` lo declara pero no
+  lo hace: el foco salía a la página tapada. Escape cierra y el foco vuelve al
+  botón que abrió el diálogo.
+- **Queda un aviso, y es a sabiendas:** marcadores del mapa que se tapan entre sí
+  cuando dos sitios están muy juntos. La WCAG 2.5.8 lo exime cuando la misma
+  acción está en otro control que cumple, y aquí cada marcador es una fila de la
+  cronología de 44 px de alto. Separarlos a la fuerza movería los puntos de su
+  coordenada real, y en un mapa eso sí es un fallo.
+
 ## El resumen del día solo dice lo que el itinerario sabe
 
 Actividades, horario, cuánto se anda y cuánto se va en transporte, cuánto

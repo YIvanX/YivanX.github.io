@@ -1240,10 +1240,14 @@ export function pintarGastos(viaje, estado, { capa = null } = {}) {
   return html`
     <div class="panel__seccion">
       <h1 class="titulo-1" data-foco tabindex="-1">Gastos</h1>
-      <div class="gastos-cifra">
-        <span class="gastos-cifra__valor">${dinero(r.total, moneda)}</span>
-        <span class="secundario">${r.cuantos ? `gastado en ${plural(r.cuantos, 'apunte')}` : 'Todavía no hay nada apuntado'}</span>
-      </div>
+      ${r.cuantos ? html`
+        <div class="gastos-cifra">
+          <span class="gastos-cifra__valor">${dinero(r.total, moneda)}</span>
+          <span class="secundario">gastado en ${plural(r.cuantos, 'apunte')}</span>
+        </div>` : html`
+        <p class="secundario" style="margin-top:var(--e2)">
+          Todavía no hay nada apuntado. Apunta lo que vais pagando y aquí saldrá sumado por categoría y por día.
+        </p>`}
       ${entradas ? html`<p class="menudo" style="margin-top:var(--e2)">Las entradas que dice el itinerario suman ${dinero(entradas, moneda)} por persona.</p>` : ''}
       <button type="button" class="boton boton--principal boton--grande" data-nuevo-gasto="" style="margin-top:var(--e4)">${icono('mas')}Apuntar un gasto</button>
     </div>

@@ -294,9 +294,13 @@ function pintarAntes(viaje, estado, { capa, ahora }) {
             ${icono(listas.hechas < listas.total ? 'lista' : 'check')}
             <a href="#/v/${viaje.id}/d/pre">Preparativos: ${listas.hechas} de ${listas.total} hechos</a>
           </li>` : ''}
+          ${progreso.total ? html`
           <li class="hoy-check--ok">${icono('itinerario')}
             <span>${plural(progreso.total, 'actividad planificada', 'actividades planificadas')}</span>
-          </li>
+          </li>` : html`
+          <li class="hoy-check--alerta">${icono('itinerario')}
+            <a href="#/v/${viaje.id}/d/${viaje.dias[0]?.fecha}">Todavía no hay actividades: empieza por el primer día</a>
+          </li>`}
         </ul>
       </section>
 

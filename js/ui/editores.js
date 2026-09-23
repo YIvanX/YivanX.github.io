@@ -49,7 +49,19 @@ function abrirDialogo({ id, titulo, cuerpo, pie }) {
   fondo.addEventListener('click', (e) => {
     if (e.target === fondo || e.target.closest('[data-cerrar]')) cerrar();
   });
-  fondo.addEventListener('keydown', (e) => { if (e.key === 'Escape') { e.stopPropagation(); cerrar(); } });
+  fondo.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') { e.stopPropagation(); cerrar(); return; }
+    // `aria-modal` lo dice, pero no lo hace: sin esto, el tabulador salía del
+    // diálogo a la página de detrás, que sigue ahí aunque esté tapada.
+    if (e.key !== 'Tab') return;
+    const enfocables = $$('button:not([disabled]), input:not([disabled]):not([type="hidden"]), select, textarea, a[href]', forma)
+      .filter((n) => n.offsetParent !== null);
+    if (!enfocables.length) return;
+    const primero = enfocables[0];
+    const ultimo = enfocables[enfocables.length - 1];
+    if (e.shiftKey && document.activeElement === primero) { e.preventDefault(); ultimo.focus(); }
+    else if (!e.shiftKey && document.activeElement === ultimo) { e.preventDefault(); primero.focus(); }
+  });
   // El primer campo que se escribe, no la cruz de cerrar.
   requestAnimationFrame(() => $('input:not([type="hidden"]):not([disabled]), textarea, select', forma)?.focus());
   return { fondo, forma, cerrar, error: (texto) => { const n = $('[data-error]', forma); if (n) n.textContent = texto; } };

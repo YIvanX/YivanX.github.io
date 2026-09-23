@@ -24,7 +24,7 @@
 
   --tinta:         #1C1917;
   --tinta-media:   #57534E;
-  --tinta-suave:   #8A8279;
+  --tinta-suave:   #736C64;  /* 4,6:1 o más sobre las tres superficies; #8A8279 daba 3,4-3,8 */
 
   --acento:        #96551F;
   --acento-tinta:  #FFFFFF;
@@ -93,7 +93,7 @@
 
     --tinta:        #EDE8E1;
     --tinta-media:  #ABA49B;
-    --tinta-suave:  #7B746B;
+    --tinta-suave:  #908980;
 
     --acento:       #D49B63;
     --acento-tinta: #201A13;
@@ -132,7 +132,7 @@
 
   --tinta:        #EDE8E1;
   --tinta-media:  #ABA49B;
-  --tinta-suave:  #7B746B;
+  --tinta-suave:  #908980;
 
   --acento:       #D49B63;
   --acento-tinta: #201A13;
