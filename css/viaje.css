@@ -1,0 +1,515 @@
+/* =========================================================================
+   Bitácora · el viaje como planificador
+   Secciones (Hoy · Itinerario · Mapa · Reservas), la cronología con estados,
+   el resumen del día, la vista Hoy y las reservas.
+
+   Va en su propio archivo y después de componentes.css a propósito: lo que
+   aquí se redefine gana por orden, sin `!important`, y lo que era de antes
+   sigue donde estaba. El criterio no cambia: el color significa categoría o
+   estado, nunca decora; y todo estado se dice también con icono o con texto.
+   ========================================================================= */
+
+:root {
+  --alto-nav: 62px;
+  --alto-nav-total: calc(var(--alto-nav) + env(safe-area-inset-bottom));
+}
+
+/* El panel respira un poco más en pantallas grandes: en 1440 px, 400 px de
+   itinerario dejaban el mapa con más sitio del que usa. Por debajo de 500 px de
+   alto manda la regla de componentes.css, que lo estrecha a 320. */
+@media (min-height: 500px) {
+  :root { --ancho-panel: clamp(380px, 30vw, 440px); }
+}
+
+/* --- Secciones ------------------------------------------------------------ */
+.secciones { display: flex; }
+
+.seccion {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: var(--r-pill);
+  color: var(--tinta-media);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: -0.003em;
+  text-decoration: none;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--t-rapido) ease, color var(--t-rapido) ease, transform var(--t-pulsar) var(--sal);
+}
+.seccion svg { width: 17px; height: 17px; flex: 0 0 17px; }
+.seccion:active { transform: scale(0.96); }
+.seccion[aria-current="page"] { color: var(--acento); background: var(--acento-velo); }
+@media (hover: hover) and (pointer: fine) {
+  .seccion:hover { color: var(--tinta); background: var(--superficie-2); }
+  .seccion[aria-current="page"]:hover { color: var(--acento); background: var(--acento-velo); }
+}
+
+/* Arriba, en la cabecera: entre el título y los iconos. El título se encoge
+   con puntos suspensivos antes que las secciones, que no se pueden cortar. */
+.secciones--arriba { gap: 2px; margin: 0 auto; flex: 0 0 auto; }
+.secciones--abajo { display: none; }
+.cabecera__marca { flex: 1 1 auto; }
+
+/* --- Cronología: tiempo · estado · actividad ------------------------------
+   El raíl pasa de 15 a 30 px porque ahora lleva el botón de estado, y todas
+   las filas —visitas, traslados, hitos y la línea de «ahora»— comparten
+   columnas para que el raíl siga siendo una sola línea. */
+.cronologia { --rail: 30px; padding-top: var(--e1); }
+.bloque,
+.ahora { grid-template-columns: 46px var(--rail, 30px) 1fr; }
+
+.bloque--visita {
+  display: grid;
+  gap: 0 var(--e2);
+  align-items: start;
+}
+.bloque--visita .bloque__principal {
+  display: block;
+  min-width: 0;
+  width: 100%;
+  text-align: left;
+}
+/* El cuerpo es un <span>: mientras era hijo directo de una rejilla, el navegador
+   lo convertía en bloque. Dentro del botón se quedaba en línea, y una caja en
+   línea solo pone su relleno derecho al final de la última línea —el nombre
+   largo pasaba por debajo de la foto— y pinta su fondo a trozos, que salían
+   como rectángulos blancos junto al raíl. Medido: `display: inline`. */
+.bloque--visita .bloque__cuerpo { display: block; }
+
+.estado-boton {
+  position: relative;
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+  margin: 8px auto 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1.5px solid var(--borde-fuerte);
+  background: var(--lienzo);
+  color: var(--tinta-suave);
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--t-rapido) var(--sal), border-color var(--t-rapido) var(--sal),
+              color var(--t-rapido) var(--sal), transform var(--t-pulsar) var(--sal);
+}
+/* El objetivo táctil es de 44 px aunque el dibujo mida 26: se toca andando. */
+.estado-boton::after { content: ""; position: absolute; inset: -9px; }
+.estado-boton svg { width: 14px; height: 14px; }
+.estado-boton:active { transform: scale(0.9); }
+.estado-boton:disabled { cursor: default; }
+
+/* Por hacer es el círculo vacío: el propio borde. El icono sobra. */
+.estado-boton[data-estado-actividad="pendiente"] svg { opacity: 0; transition: opacity var(--t-rapido) ease; }
+@media (hover: hover) and (pointer: fine) {
+  .estado-boton[data-estado-actividad="pendiente"]:hover { border-color: var(--ok-t); color: var(--ok-t); }
+  .estado-boton[data-estado-actividad="pendiente"]:hover svg { opacity: 0.6; }
+}
+.estado-boton[data-estado-actividad="hecho"] { background: var(--ok-t); border-color: var(--ok-t); color: var(--lienzo); }
+.estado-boton[data-estado-actividad="reservado"] { background: var(--ok-f); border-color: var(--ok-t); color: var(--ok-t); }
+.estado-boton[data-estado-actividad="requiere-reserva"] { background: var(--alerta-f); border-color: var(--alerta-t); color: var(--alerta-t); }
+.estado-boton[data-estado-actividad="cancelado"] { border-style: dashed; color: var(--tinta-suave); }
+.estado-boton.pulso { animation: estado-hunde 280ms var(--sal); }
+@keyframes estado-hunde { 40% { transform: scale(0.82); } 100% { transform: scale(1); } }
+
+.bloque__datos { display: block; margin-top: 2px; }
+/* El gancho de una línea: dos como mucho en la fila. Entero, en la ficha. */
+.bloque__resumen {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.bloque__chips:empty { display: none; }
+.bloque__nota { display: block; }
+.bloque__nota--mia { border-left-color: var(--acento); }
+
+.bloque[data-estado="hecho"] .bloque__titulo .titulo-3 { color: var(--tinta-media); }
+.bloque[data-estado="cancelado"] .bloque__cuerpo { opacity: 0.55; }
+.bloque[data-estado="cancelado"] .bloque__titulo .titulo-3 { text-decoration: line-through; text-decoration-color: var(--borde-fuerte); }
+
+/* El traslado es el enlace entre dos actividades, no una fila más. */
+.bloque--traslado .bloque__cuerpo { padding: 4px var(--e3) 10px; padding-right: 44px; }
+.conector {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px 6px;
+  font-size: 0.8125rem;
+  color: var(--tinta-media);
+}
+.conector svg { width: 15px; height: 15px; flex: 0 0 15px; color: var(--tinta-suave); }
+.conector b { color: var(--tinta); font-weight: 650; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.conector__modo { white-space: nowrap; }
+.conector__destino { min-width: 0; }
+.conector__detalle {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 2px;
+}
+
+.cronologia--filtrada .bloque__rail::before { display: none; }
+
+/* --- Cabecera del día y su resumen ----------------------------------------- */
+.dia-cabecera__sobre {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: var(--e2);
+}
+.dia-cabecera__sobre .etiqueta { color: var(--tinta-suave); margin-right: 2px; }
+
+.resumen-dia {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-top: var(--e3);
+  font-size: 0.8125rem;
+  color: var(--tinta-media);
+}
+.cifra { display: inline-flex; align-items: center; gap: 5px; font-variant-numeric: tabular-nums; }
+.cifra svg { width: 14px; height: 14px; flex: 0 0 14px; color: var(--tinta-suave); }
+.cifra b { color: var(--tinta); font-weight: 650; }
+.cifra--alerta, .cifra--alerta svg { color: var(--alerta-t); }
+
+/* --- Filtros ---------------------------------------------------------------- */
+.filtros {
+  display: flex;
+  gap: 6px;
+  padding: 0 var(--e4) var(--e3);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.filtros::-webkit-scrollbar { display: none; }
+.filtro {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  min-height: 34px;
+  padding: 6px 12px;
+  border: 1px solid var(--borde);
+  border-radius: var(--r-pill);
+  background: var(--superficie);
+  color: var(--tinta-media);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--t-rapido) ease, color var(--t-rapido) ease,
+              border-color var(--t-rapido) ease, transform var(--t-pulsar) var(--sal);
+}
+.filtro:active { transform: scale(0.96); }
+.filtro[aria-pressed="true"] { background: var(--tinta); border-color: var(--tinta); color: var(--lienzo); }
+.filtro__n { margin-left: 6px; opacity: 0.62; font-variant-numeric: tabular-nums; }
+@media (hover: hover) and (pointer: fine) {
+  .filtro:not([aria-pressed="true"]):hover { border-color: var(--borde-fuerte); color: var(--tinta); }
+}
+@media (pointer: coarse) { .filtro { min-height: 40px; } }
+
+.vacio--filtro { padding: var(--e5) var(--e4); }
+
+/* --- Estado en la ficha ------------------------------------------------------ */
+.selector-estado {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin: var(--e2) 0 var(--e4);
+}
+.selector-estado__opcion {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 4px;
+  min-height: 58px;
+  padding: 8px 4px;
+  border: 1px solid var(--borde);
+  border-radius: var(--r-m);
+  background: var(--superficie);
+  color: var(--tinta-media);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--t-rapido) ease, border-color var(--t-rapido) ease,
+              color var(--t-rapido) ease, transform var(--t-pulsar) var(--sal);
+}
+.selector-estado__opcion svg { width: 18px; height: 18px; }
+.selector-estado__opcion:active { transform: scale(0.96); }
+.selector-estado__opcion[aria-checked="true"] { border-color: var(--acento); background: var(--acento-velo); color: var(--acento); }
+@media (hover: hover) and (pointer: fine) {
+  .selector-estado__opcion:not([aria-checked="true"]):hover { background: var(--superficie-2); color: var(--tinta); }
+}
+
+/* --- Reservas ------------------------------------------------------------------ */
+.reservas { margin-top: var(--e3); }
+.reserva {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: var(--e3);
+  padding: var(--e3) 0;
+  border-bottom: 1px solid var(--borde);
+}
+.reserva:last-child { border-bottom: 0; }
+.reserva__fecha {
+  display: grid;
+  place-items: center;
+  align-self: start;
+  padding: 4px 0;
+  border-radius: var(--r-s);
+  background: var(--superficie-2);
+  color: var(--tinta-media);
+  text-decoration: none;
+}
+.reserva[data-estado="requiere-reserva"] .reserva__fecha { background: var(--alerta-f); color: var(--alerta-t); }
+.reserva__dia { font-size: 0.625rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.reserva__num { font-family: var(--serif); font-size: 1.125rem; line-height: 1.1; }
+.reserva__nombre { color: inherit; text-decoration: none; }
+.reserva__nota { margin-top: 6px; font-size: 0.8125rem; line-height: 1.5; color: var(--tinta-media); }
+.reserva__acciones { display: flex; flex-wrap: wrap; gap: var(--e2); margin-top: var(--e2); }
+
+/* --- Botones grandes, para la calle --------------------------------------------- */
+.boton--grande { min-height: 48px; padding: 12px 18px; font-size: 0.9375rem; flex: 1 1 auto; }
+.boton--grande svg { width: 17px; height: 17px; flex-basis: 17px; }
+.boton--hecho { background: var(--ok-f); border-color: transparent; color: var(--ok-t); }
+
+/* --- Hoy ------------------------------------------------------------------------- */
+.hoy {
+  display: grid;
+  gap: var(--e4);
+  padding: var(--e5) var(--e4) calc(var(--e8) + env(safe-area-inset-bottom));
+}
+.hoy__fecha { color: var(--acento); }
+.hoy__cabecera .display { margin-top: 6px; }
+.hoy__cabecera > .secundario { margin-top: 6px; }
+
+.hoy-ahora,
+.hoy-siguiente {
+  padding: var(--e4);
+  border: 1px solid var(--borde);
+  border-radius: var(--r-l);
+  background: var(--superficie);
+  overflow: hidden;
+}
+.hoy-ahora { box-shadow: var(--sombra-2); border-color: var(--borde-fuerte); }
+/* La foto llega a los bordes de la tarjeta. `max-width: none` hace falta por lo
+   mismo que en el globo del mapa: el reset pone `max-width: 100%`. */
+.hoy-ahora__foto {
+  display: block;
+  width: calc(100% + var(--e4) * 2);
+  max-width: none;
+  aspect-ratio: 16 / 8;
+  object-fit: cover;
+  margin: calc(var(--e4) * -1) calc(var(--e4) * -1) var(--e4);
+  background: var(--superficie-2);
+}
+.hoy-ahora__marca { display: flex; align-items: center; gap: 6px; color: var(--acento); }
+.hoy-ahora__marca svg { width: 14px; height: 14px; }
+.hoy-ahora__nombre {
+  margin-top: 6px;
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+.hoy-ahora__nombre a,
+.hoy-siguiente h2 a { color: inherit; text-decoration: none; }
+.hoy-ahora > .secundario, .hoy-ahora__texto > .menudo { margin-top: 4px; }
+.hoy-ahora__nota {
+  margin-top: var(--e3);
+  padding-left: 10px;
+  border-left: 2px solid var(--borde-fuerte);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--tinta-media);
+}
+.hoy-ahora--antes, .hoy-ahora--fin { box-shadow: none; border-color: var(--borde); }
+.hoy-ahora[data-estado="hecho"] .hoy-ahora__nombre { color: var(--tinta-media); }
+
+.hoy-sitio { margin-top: var(--e2); font-size: 0.8125rem; font-weight: 600; }
+.hoy-sitio--ok { color: var(--ok-t); }
+.hoy-sitio--alerta { color: var(--alerta-t); }
+.hoy-sitio--error { color: var(--error-t); }
+
+.hoy-acciones { display: flex; flex-wrap: wrap; gap: var(--e2); margin-top: var(--e4); }
+
+.hoy-siguiente h2 { margin-top: 0; }
+.hoy-siguiente > .etiqueta { color: var(--tinta-suave); }
+.hoy-siguiente__fila { display: flex; gap: var(--e3); align-items: flex-start; margin-top: var(--e2); }
+.hoy-siguiente__foto {
+  width: 64px; height: 64px; flex: 0 0 64px;
+  object-fit: cover;
+  border-radius: var(--r-m);
+  border: 1px solid var(--borde);
+  background: var(--superficie-2);
+}
+.hoy-llegada {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: var(--e3);
+  font-size: 0.8125rem;
+  color: var(--tinta-media);
+}
+.hoy-llegada svg { width: 15px; height: 15px; flex: 0 0 15px; margin-top: 2px; color: var(--tinta-suave); }
+
+.hoy-bloque > .etiqueta, .hoy-bloque > summary { color: var(--tinta-suave); }
+.hoy-bloque > .menudo { margin-top: 4px; }
+.hoy-lista { margin-top: var(--e2); }
+.hoy-fila {
+  display: grid;
+  grid-template-columns: 42px 30px 1fr;
+  align-items: center;
+  gap: var(--e2);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--borde);
+}
+.hoy-fila:last-child { border-bottom: 0; }
+.hoy-fila__hora { font-family: var(--mono); font-size: 0.75rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.hoy-fila .estado-boton { margin: 0 auto; }
+.hoy-fila__nombre { display: grid; min-width: 0; padding: 6px 0; color: inherit; text-decoration: none; }
+.hoy-fila__nombre > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hoy-fila[data-estado="hecho"] .titulo-3 { color: var(--tinta-media); }
+@media (hover: hover) and (pointer: fine) { .hoy-fila__nombre:hover .titulo-3 { color: var(--acento); } }
+
+.hoy-plegable > summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  cursor: pointer;
+  list-style: none;
+}
+.hoy-plegable > summary::-webkit-details-marker { display: none; }
+.hoy-plegable > summary::marker { content: ""; }
+.hoy-plegable > summary::after { content: "+"; margin-left: auto; font-size: 1rem; font-weight: 400; }
+.hoy-plegable[open] > summary::after { content: "−"; }
+.hoy-llegada b { font-weight: 600; color: var(--tinta); }
+
+.hoy .bandas { margin-top: 0; }
+.hoy-pie { display: grid; gap: var(--e2); }
+.hoy-pie .dia-cabecera__ruta { margin-top: 0; }
+.hoy-pista { text-align: center; padding: 0 var(--e4); }
+.hoy-aviso-nube { padding: 8px 12px; border-radius: var(--r-m); background: var(--alerta-f); color: var(--alerta-t); }
+
+.hoy-checks { margin-top: var(--e2); }
+.hoy-checks li {
+  display: flex;
+  align-items: center;
+  gap: var(--e2);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--borde);
+  font-size: 0.875rem;
+}
+.hoy-checks li:last-child { border-bottom: 0; }
+.hoy-checks svg { width: 17px; height: 17px; flex: 0 0 17px; }
+.hoy-checks a { color: inherit; }
+.hoy-check--alerta svg { color: var(--alerta-t); }
+.hoy-check--ok svg { color: var(--ok-t); }
+
+/* --- Mapa ------------------------------------------------------------------------- */
+/* La ruta del día, clara: línea continua sobre un halo del color del mapa. La
+   discontinua de antes se perdía sobre las calles de Stadia, que son grises. */
+.ruta-dia { stroke: var(--acento); stroke-width: 3.5; stroke-opacity: 0.9; stroke-dasharray: none; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.ruta-dia__halo { stroke: var(--superficie); stroke-width: 8; stroke-opacity: 0.85; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+
+/* Los sitios de otros días: contexto, no ruta. */
+.pin--fondo {
+  width: 11px; height: 11px;
+  opacity: 0.55;
+  background: var(--superficie) !important;
+  border: 1.5px solid var(--tinta-suave) !important;
+  box-shadow: none;
+}
+.pin--fondo svg { display: none; }
+
+.globo__pie { align-items: center; }
+.globo__enlace { margin-left: auto; font-size: 0.75rem; font-weight: 650; color: var(--acento); text-decoration: none; }
+
+/* Sección Mapa: el mapa a pantalla completa, la hoja fuera. */
+.escenario--mapa { grid-template-columns: 1fr; }
+.escenario--mapa .panel { display: none; }
+
+/* --- Móvil: barra de secciones abajo, donde llega el pulgar ------------------------
+   Misma consulta que la hoja arrastrable: donde hay hoja, hay barra abajo. En
+   un móvil apaisado cada píxel de alto cuenta, y ahí las secciones se quedan en
+   la cabecera. */
+@media (max-width: 899px) and (min-height: 500px) {
+  .app { grid-template-rows: var(--alto-cabecera) auto 1fr auto; }
+  .secciones--arriba { display: none; }
+  .secciones--abajo {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 4px 6px env(safe-area-inset-bottom);
+    border-top: 1px solid var(--borde);
+    background: var(--velo);
+    backdrop-filter: blur(14px) saturate(150%);
+    z-index: 60;
+  }
+  .secciones--abajo .seccion {
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    min-height: 54px;
+    padding: 6px 0;
+    border-radius: var(--r-m);
+    font-size: 0.6875rem;
+    letter-spacing: 0.01em;
+  }
+  .secciones--abajo .seccion svg { width: 22px; height: 22px; flex-basis: 22px; }
+  /* Abajo no hace falta el fondo: el color y el icono ya dicen dónde estás, y
+     cuatro píxeles de pastilla en un botón de 90 px de ancho sobran. */
+  .secciones--abajo .seccion[aria-current="page"] { background: transparent; }
+
+  /* La hoja termina donde empieza la barra, no en el borde de la pantalla. */
+  .panel {
+    bottom: var(--alto-nav-total);
+    height: calc(100dvh - var(--alto-cabecera) - var(--alto-nav-total) - 8px);
+  }
+
+  body:has(.secciones--abajo) .brindis-zona { bottom: calc(var(--alto-nav-total) + var(--e3)); }
+
+  /* Hoy en el móvil es una pantalla entera, no una hoja sobre el mapa: se lee
+     andando, y el mapa está a un toque. */
+  .escenario--hoy { grid-template-columns: 1fr; min-height: 0; }
+  .escenario--hoy .mapa-zona { display: none; }
+  .escenario--hoy .panel {
+    position: static;
+    height: auto;
+    min-height: 0;
+    transform: none !important;
+    border-radius: 0;
+    border-top: 0;
+    box-shadow: none;
+    background: var(--lienzo);
+    backdrop-filter: none;
+  }
+  .escenario--hoy .tirador { display: none; }
+
+  .escenario--mapa .leaflet-control-attribution { margin-bottom: 0 !important; }
+  .escenario--mapa .mapa-progreso { bottom: var(--e4); }
+
+}
+
+@media (max-width: 380px) {
+  .secciones--abajo .seccion { font-size: 0.625rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .estado-boton.pulso { animation: none; }
+}
+
+/* --- Filas fijas del armazón -------------------------------------------------
+   Cada pieza en su fila, dicho explícitamente. Con la colocación automática,
+   al ocultarse la barra de días —en Hoy, en Reservas— todo subía una fila: el
+   escenario caía en la de alto automático y la barra de secciones en la de 1fr,
+   flotando a media pantalla con un hueco debajo. Medido en 390 × 844. */
+.app > .cabecera { grid-row: 1; }
+.app > .barra-dias { grid-row: 2; }
+.app > .escenario { grid-row: 3; }
+.app > .secciones--abajo { grid-row: 4; }

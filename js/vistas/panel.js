@@ -25,6 +25,9 @@ import {
 import {
   describirCielo, tiempoDelDia, resumenDelTiempo, alcanceDeFecha, desdeCuando, HORIZONTE,
 } from '../tiempo.js';
+import {
+  ESTADOS, FILTROS, estadoDeActividad, pasaFiltro, cuentasPorFiltro, resumenDelDia, esActividad,
+} from '../actividades.js';
 
 const minutosAhora = () => { const d = new Date(); return d.getHours() * 60 + d.getMinutes(); };
 
@@ -37,19 +40,27 @@ const miles = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
 // --- Distintivos de un bloque --------------------------------------------
 
-function chipsDeBloque(bloque, dia, moneda) {
+/**
+ * Los distintivos de una actividad en la cronología.
+ *
+ * **Solo lo que pide una decisión**: el nivel, que es lo que decide qué se
+ * salta cuando el día se tuerce; el estado, cuando no es «por hacer»; y los
+ * avisos de horario. Lo que antes también iba aquí —la categoría, el precio y
+ * un «Abierto» verde en cada fila— sube a la línea de datos o se queda en la
+ * ficha: una fila con seis distintivos no deja ver el que importa.
+ */
+function chipsDeBloque(bloque, dia, estadoActividad) {
   const lugar = bloque.lugar;
   const chips = [];
 
-  // El nivel va primero a propósito: es lo que decide si te lo saltas cuando el
-  // día se ha torcido y son las siete de la tarde.
   if (bloque.propio) chips.push(html`<span class="chip chip--propio">${icono('mas')}Añadida por ti</span>`);
+
+  if (estadoActividad === 'requiere-reserva') chips.push(html`<span class="chip chip--alerta">${icono('aviso')}Requiere reserva</span>`);
+  else if (estadoActividad === 'reservado') chips.push(html`<span class="chip chip--ok">${icono('entrada')}Reservado</span>`);
+  else if (estadoActividad === 'cancelado') chips.push(html`<span class="chip">${icono('cerrar')}Cancelado</span>`);
 
   const nivel = NIVELES[lugar.nivel];
   if (nivel) chips.push(html`<span class="chip ${nivel.clase}">${nivel.etiqueta}</span>`);
-
-  const cat = CATEGORIAS[lugar.categoria] || CATEGORIAS.practico;
-  chips.push(html`<span class="chip chip--${lugar.categoria}">${icono(cat.icono)}${cat.etiqueta}</span>`);
 
   if (bloque.opcional) chips.push(html`<span class="chip chip--saltable">Se puede saltar</span>`);
 
@@ -61,16 +72,7 @@ function chipsDeBloque(bloque, dia, moneda) {
       chips.push(html`<span class="chip chip--error">${icono('aviso')}${revision.mensaje}</span>`);
     } else if (revision.nivel === 'aviso') {
       chips.push(html`<span class="chip chip--alerta">${icono('reloj')}Cierra antes de acabar</span>`);
-    } else if (lugar.horarios) {
-      chips.push(html`<span class="chip chip--ok">Abierto</span>`);
     }
-  }
-
-  if (lugar.precio) {
-    chips.push(html`<span class="chip">${icono('euro')}${dinero(lugar.precio.importe, moneda)}</span>`);
-  }
-  if (lugar.reserva?.necesaria) {
-    chips.push(html`<span class="chip chip--alerta">${icono('candado')}Reservar</span>`);
   }
   return chips;
 }
@@ -96,33 +98,66 @@ function marcaDeNube(bloque) {
   return '';
 }
 
-function pintarBloqueVisita(bloque, dia, viaje, estado) {
+/**
+ * El botón de estado de una actividad: el punto del raíl.
+ *
+ * Tocarlo marca o desmarca «hecho», que es lo que se hace veinte veces al día
+ * andando. Lo demás —reservado, cancelado— se decide con calma desde la ficha.
+ * El estado se dice con icono y con texto para lectores, no solo con color.
+ */
+export function botonDeEstado(bloque, estadoActividad) {
   const lugar = bloque.lugar;
-  const visitado = Boolean(estado.visitados[lugar.id]);
+  const hecho = estadoActividad === 'hecho';
+  const cancelado = estadoActividad === 'cancelado';
+  const info = ESTADOS[estadoActividad] || ESTADOS.pendiente;
+  const etiqueta = cancelado
+    ? `${lugar.nombre}: cancelado. Se cambia desde su ficha`
+    : hecho ? `${lugar.nombre}: hecho. Tocar para desmarcar` : `Marcar ${lugar.nombre} como hecho`;
+  return html`
+    <button type="button" class="estado-boton" data-estado-actividad="${estadoActividad}"
+            data-hecho="${lugar.id}" aria-pressed="${String(hecho)}" ${cancelado ? crudo('disabled') : ''}
+            aria-label="${etiqueta}" title="${info.etiqueta}">${icono(info.icono)}</button>`;
+}
+
+/** Categoría · zona · precio: la segunda línea, que dice qué es y dónde. */
+export function lineaDeDatos(bloque, moneda) {
+  const lugar = bloque.lugar;
+  const cat = CATEGORIAS[lugar.categoria] || CATEGORIAS.practico;
+  const precio = bloque.coste ?? lugar.precio?.importe;
+  return [
+    cat.etiqueta,
+    lugar.zona,
+    !bloque.exterior && typeof precio === 'number' ? dinero(precio, moneda) : '',
+  ].filter(Boolean).join(' · ');
+}
+
+function pintarBloqueVisita(bloque, dia, viaje, estado, actividad) {
+  const lugar = bloque.lugar;
+  const e = estadoDeActividad(bloque, actividad);
   const conNota = Boolean(estado.notas[lugar.id]);
 
   return html`
     <div class="bloque bloque--visita ${lugar.imagen ? 'bloque--con-foto' : ''} ${bloque.opcional ? 'bloque--opcional' : ''}"
-         data-clave="${bloque.clave}" data-lugar="${lugar.id}"
-         data-visitado="${String(visitado)}">
-      <button type="button" class="bloque__principal">
+         data-clave="${bloque.clave}" data-lugar="${lugar.id}" data-estado="${e}"
+         data-visitado="${String(e === 'hecho')}">
       <span class="bloque__tiempo">
         ${bloque.inicio ? crudo(`<span class="bloque__hora">${esc(bloque.inicio)}</span>`) : ''}
-        ${lugar.duracionMin ? crudo(`<span class="bloque__dur" style="display:block">${esc(duracionCorta(lugar.duracionMin))}</span>`) : ''}
+        ${lugar.duracionMin ? crudo(`<span class="bloque__dur">${esc(duracionCorta(lugar.duracionMin))}</span>`) : ''}
       </span>
-      <span class="bloque__rail"><span class="bloque__punto"></span></span>
-      <span class="bloque__cuerpo">
-        <span class="bloque__titulo">
-          <span class="bloque__orden">${bloque.orden}</span>
-          <span class="titulo-3">${lugar.nombre}</span>
-          ${visitado ? icono('check', 'bloque__hecho') : ''}
-          ${marcaDeNube(bloque)}
+      <span class="bloque__rail">${botonDeEstado(bloque, e)}</span>
+      <button type="button" class="bloque__principal">
+        <span class="bloque__cuerpo">
+          <span class="bloque__titulo">
+            <span class="bloque__orden">${bloque.orden}</span>
+            <span class="titulo-3">${lugar.nombre}</span>
+            ${marcaDeNube(bloque)}
+          </span>
+          <span class="bloque__datos menudo">${lineaDeDatos(bloque, viaje.moneda)}</span>
+          <span class="bloque__resumen secundario">${lugar.resumen}</span>
+          <span class="bloque__chips">${chipsDeBloque(bloque, dia, e)}</span>
+          ${bloque.nota ? crudo(`<span class="bloque__nota">${esc(bloque.nota)}</span>`) : ''}
+          ${conNota ? crudo(`<span class="bloque__nota bloque__nota--mia">${esc(estado.notas[lugar.id])}</span>`) : ''}
         </span>
-        <span class="bloque__resumen secundario" style="display:block">${lugar.resumen}</span>
-        <span class="bloque__chips">${chipsDeBloque(bloque, dia, viaje.moneda)}</span>
-        ${bloque.nota ? crudo(`<span class="bloque__nota" style="display:block">${esc(bloque.nota)}</span>`) : ''}
-        ${conNota ? crudo(`<span class="bloque__nota" style="display:block">${esc(estado.notas[lugar.id])}</span>`) : ''}
-      </span>
       </button>
       ${lugar.imagen ? crudo(`<img class="bloque__foto" src="${esc(lugar.imagen.archivo)}" alt=""
            loading="lazy" decoding="async" width="60" height="60"
@@ -132,6 +167,11 @@ function pintarBloqueVisita(bloque, dia, viaje, estado) {
     </div>`;
 }
 
+/**
+ * Un traslado es el tiempo entre dos actividades, y se pinta como tal: una
+ * línea de enlace con la duración delante, no una fila más que compita con los
+ * sitios. La duración sale de su hora de inicio y de fin, no de una estimación.
+ */
 function pintarBloqueTraslado(bloque) {
   const modo = MODOS[bloque.modo] || { etiqueta: 'Traslado', icono: 'adelante' };
   const minutos = (aMinutos(bloque.fin) - aMinutos(bloque.inicio)) || 0;
@@ -140,13 +180,17 @@ function pintarBloqueTraslado(bloque) {
 
   return html`
     <div class="bloque bloque--traslado">
-      <span class="bloque__tiempo">
-        ${minutos > 0 ? crudo(`<span class="bloque__dur">${esc(duracionCorta(minutos))}</span>`) : ''}
-      </span>
+      <span class="bloque__tiempo"></span>
       <span class="bloque__rail"></span>
       <span class="bloque__cuerpo">
-        <span class="bloque__linea">${icono(modo.icono)}<b>${modo.etiqueta}</b>${destino ? crudo(` &rarr; ${esc(destino)}`) : ''}${bloque.opcional ? crudo('<span class="chip chip--saltable">Se puede saltar</span>') : ''}</span>
-        ${bloque.detalle ? crudo(`<span class="menudo" style="display:block;margin-top:2px">${esc(bloque.detalle)}</span>`) : ''}
+        <span class="conector">
+          ${icono(modo.icono)}
+          ${minutos > 0 ? crudo(`<b>${esc(duracionTexto(minutos))}</b><span aria-hidden="true">·</span>`) : ''}
+          <span class="conector__modo">${modo.etiqueta}</span>
+          ${destino ? crudo(`<span class="conector__destino">&rarr; ${esc(destino)}</span>`) : ''}
+          ${bloque.opcional ? crudo('<span class="chip chip--saltable">Se puede saltar</span>') : ''}
+        </span>
+        ${bloque.detalle ? crudo(`<span class="conector__detalle menudo">${esc(bloque.detalle)}</span>`) : ''}
       </span>
       ${tramo ? crudo(`<a class="bloque__mapa bloque__mapa--tramo" href="${esc(tramo)}"
            target="_blank" rel="noopener noreferrer"
@@ -177,7 +221,7 @@ function pintarBloqueHito(bloque) {
  * intermedias en transporte público, así que un día de tren cae a `driving`.
  * Decirlo evita que alguien lo siga creyendo que son las indicaciones reales.
  */
-function enlaceRuta(dia) {
+export function enlaceRuta(dia) {
   const ruta = rutaDelDia(dia);
   if (!ruta) return '';
 
@@ -196,7 +240,7 @@ function enlaceRuta(dia) {
     </div>`;
 }
 
-const lineaAhora = () => html`
+export const lineaAhora = () => html`
   <div class="ahora" aria-label="Ahora">
     <span class="ahora__hora">${aHora(minutosAhora())}</span>
     <span class="ahora__marca"></span>
@@ -228,7 +272,7 @@ function barraPendientes(cuantos) {
 
 const CLASE_AVISO = { alto: 'aviso--alto', medio: 'aviso--medio', info: 'aviso--info' };
 
-function pintarAviso(a) {
+export function pintarAviso(a) {
   return html`
     <div class="aviso ${CLASE_AVISO[a.nivel] || 'aviso--info'}">
       ${icono('aviso')}
@@ -269,7 +313,7 @@ function pintarLista(lista, estado, { foco = false } = {}) {
 }
 
 /** Un tramo calculado del itinerario, con su enlace a Google Maps si lo tiene. */
-function pintarTramo(t) {
+export function pintarTramo(t) {
   const modo = MODOS[t.modo] || { etiqueta: t.modo || 'Traslado', icono: 'adelante' };
   const url = t.desde && t.hasta ? enlaceTramo(t.desde, t.hasta, t.modo) : '';
   const ruta = [t.desde?.nombre, t.hasta?.nombre].filter(Boolean).join(' → ');
@@ -309,7 +353,7 @@ const grados = (n) => (n === null || n === undefined ? '—' : `${Math.round(n)}
  * 132 px sobre el mapa, y si llueve hay que saberlo sin abrir nada. Un dato que
  * cuesta un toque es un dato que se mira cuando ya te has mojado.
  */
-function tiraDeTiempo(t) {
+export function tiraDeTiempo(t) {
   if (!t) return '';
   const cielo = describirCielo(t.codigo);
   return html`
@@ -472,7 +516,7 @@ function banda(nombre, { icono: nombreIcono, titulo, pista = '', clase = '', cue
  * lista. **Lo que no tiene contenido no se pinta**, así que un día pelado se ve
  * exactamente igual que antes de que estas bandas existieran.
  */
-function bandasDelDia(viaje, dia, estado, tiempo) {
+export function bandasDelDia(viaje, dia, estado, tiempo) {
   const avisos = avisosDelDia(viaje, dia.fecha);
   const tramos = tramosDelDia(dia);
   const listas = listasDe(viaje, dia.fecha);
@@ -529,49 +573,127 @@ function bandasDelDia(viaje, dia, estado, tiempo) {
   return html`<div class="bandas">${bandas}</div>`;
 }
 
-export function pintarDia(viaje, dia, estado, { ocultos = 0, tiempo = null } = {}) {
+/** «800 m», «5,9 km». La coma decimal a la española, sin depender de ICU. */
+export function distanciaTexto(metros) {
+  if (metros === null || metros === undefined) return '';
+  if (metros < 1000) return `${Math.round(metros / 10) * 10} m`;
+  return `${(metros / 1000).toFixed(1).replace('.', ',')} km`;
+}
+
+/**
+ * El día en una fila de cifras: cuántas actividades, de qué hora a qué hora,
+ * cuánto se anda, cuánto cuestan las entradas y qué reservas quedan.
+ *
+ * **Solo sale lo que se sabe.** Los kilómetros, si todos los tramos a pie dicen
+ * su distancia; el coste, si alguna actividad tiene precio, y diciendo que es
+ * por persona y de entradas, que es lo que el archivo guarda. Una cifra que no
+ * está no se pinta como cero.
+ */
+export function pintarResumenDelDia(r, moneda) {
+  const piezas = [];
+  if (r.actividades) piezas.push(html`<span class="cifra"><b>${r.actividades}</b> ${r.actividades === 1 ? 'actividad' : 'actividades'}</span>`);
+  if (r.desde !== null && r.hasta !== null) piezas.push(html`<span class="cifra">${icono('reloj')}${aHora(r.desde)}–${aHora(r.hasta)}</span>`);
+  if (r.aPie.minutos) {
+    const km = r.aPie.metros !== null ? ` · ${distanciaTexto(r.aPie.metros)}` : '';
+    piezas.push(html`<span class="cifra">${icono('a-pie')}${duracionTexto(r.aPie.minutos)}${km}</span>`);
+  }
+  const enTransporte = r.desplazamientos.minutos - r.aPie.minutos;
+  if (enTransporte > 0) piezas.push(html`<span class="cifra">${icono('transporte')}${duracionTexto(enTransporte)} en transporte</span>`);
+  if (r.coste.conPrecio) {
+    // El icono del euro solo cuando es euros: con coronas checas, un € delante
+    // de «450 CZK» contradice la cifra que acompaña.
+    piezas.push(html`<span class="cifra">${icono(moneda === 'EUR' ? 'euro' : 'entrada')}${r.coste.importe ? `${dinero(r.coste.importe, moneda)} por persona en entradas` : 'Entradas gratis'}</span>`);
+  }
+  if (r.reservas.pendientes) {
+    piezas.push(html`<span class="cifra cifra--alerta">${icono('aviso')}${r.reservas.pendientes} ${r.reservas.pendientes === 1 ? 'reserva pendiente' : 'reservas pendientes'}</span>`);
+  }
+  if (r.reservas.hechas) {
+    piezas.push(html`<span class="cifra">${icono('entrada')}${r.reservas.hechas} ${r.reservas.hechas === 1 ? 'reservada' : 'reservadas'}</span>`);
+  }
+  if (!piezas.length) return '';
+  return html`<div class="resumen-dia" aria-label="Resumen del día">${piezas}</div>`;
+}
+
+/** Todas · Pendientes · Reservadas · Hechas, con cuántas hay en cada una. */
+function pintarFiltros(cuentas, filtro) {
+  return html`
+    <div class="filtros" role="group" aria-label="Filtrar actividades">
+      ${Object.entries(FILTROS).map(([id, f]) => html`
+        <button type="button" class="filtro" data-filtro="${id}" aria-pressed="${String(filtro === id)}">
+          ${f.etiqueta}<span class="filtro__n">${cuentas[id]}</span>
+        </button>`)}
+    </div>`;
+}
+
+/** El número del día dentro del viaje: «Día 2». */
+export const numeroDeDia = (viaje, fecha) => viaje.dias.findIndex((d) => d.fecha === fecha) + 1;
+
+export function pintarDia(viaje, dia, estado, {
+  ocultos = 0, tiempo = null, capa = null, filtro = 'todas',
+} = {}) {
   const tiempoHoy = tiempoDelDia(tiempo, dia.fecha);
   const intensidad = INTENSIDADES[dia.intensidad] || INTENSIDADES.suave;
   const esHoy = dia.fecha === aIso(new Date());
   const ahora = minutosAhora();
+  const actividad = { visitados: estado.visitados, estados: capa?.estados || {} };
+  const resumen = resumenDelDia(dia, actividad);
+  const cuentas = cuentasPorFiltro(dia, actividad);
+  const filtrando = filtro !== 'todas' && FILTROS[filtro];
   let puestaLaLinea = false;
 
-  const cuerpo = dia.bloques.map((bloque) => {
+  // Filtrando, solo quedan las actividades que pasan: los traslados y los hitos
+  // unen actividades concretas, y entre dos que no son vecinas no significan
+  // nada. La línea de «ahora» tampoco, porque ya no hay un día que recorrer.
+  const visibles = filtrando
+    ? dia.bloques.filter((b) => esActividad(b) && pasaFiltro(estadoDeActividad(b, actividad), filtro))
+    : dia.bloques;
+
+  const cuerpo = visibles.map((bloque) => {
     let antes = '';
     // La línea de «ahora» solo se pinta si hoy es este día. Justo antes del
     // primer bloque que todavía no ha empezado.
-    if (esHoy && !puestaLaLinea && aMinutos(bloque.inicio) > ahora) {
+    if (!filtrando && esHoy && !puestaLaLinea && aMinutos(bloque.inicio) > ahora) {
       antes = lineaAhora();
       puestaLaLinea = true;
     }
     if (bloque.tipo === 'traslado') return antes + pintarBloqueTraslado(bloque);
     if (bloque.tipo === 'hito') return antes + pintarBloqueHito(bloque);
     if (!bloque.lugar) return antes;
-    return antes + pintarBloqueVisita(bloque, dia, viaje, estado);
+    return antes + pintarBloqueVisita(bloque, dia, viaje, estado, actividad);
   }).join('');
 
-  const cola = esHoy && !puestaLaLinea ? lineaAhora() : '';
+  const cola = !filtrando && esHoy && !puestaLaLinea ? lineaAhora() : '';
+  const n = numeroDeDia(viaje, dia.fecha);
+
+  let lista;
+  if (!dia.bloques.length) {
+    lista = crudo('<div class="vacio"><svg aria-hidden="true"><use href="#i-reloj"/></svg><p class="secundario">Este día no tiene nada planificado todavía.</p><p class="menudo" style="margin-top:6px">Añade la primera actividad con el botón de abajo.</p></div>');
+  } else if (!visibles.length) {
+    lista = html`<div class="vacio vacio--filtro"><p class="secundario">Ninguna actividad ${FILTROS[filtro].etiqueta.toLowerCase()} este día.</p>
+      <button type="button" class="boton boton--fantasma" data-filtro="todas" style="margin-top:var(--e2)">Ver todas</button></div>`;
+  } else {
+    lista = crudo(`<div class="cronologia ${filtrando ? 'cronologia--filtrada' : ''}">${cuerpo}${cola}</div>`);
+  }
 
   return html`
     ${barraPendientes(viaje.pendientes)}
     <div class="dia-cabecera">
-      <div class="dia-cabecera__meta">
-        <span class="chip ${intensidad.clase}">${intensidad.etiqueta}</span>
-        ${dia.totalParadas ? crudo(`<span class="chip">${dia.totalParadas} parada${dia.totalParadas === 1 ? '' : 's'}</span>`) : ''}
+      <p class="dia-cabecera__sobre">
+        <span class="etiqueta">${n ? `Día ${n} · ` : ''}${fechaLarga(dia.fecha)}</span>
         ${esHoy ? crudo('<span class="chip chip--ok">Hoy</span>') : ''}
-      </div>
+        <span class="chip ${intensidad.clase}">${intensidad.etiqueta}</span>
+      </p>
       <h1 class="titulo-1" data-foco tabindex="-1">${dia.titulo}</h1>
-      <p class="menudo" style="margin-top:4px">${fechaLarga(dia.fecha)}</p>
+      ${pintarResumenDelDia(resumen, viaje.moneda)}
       ${tiraDeTiempo(tiempoHoy)}
       ${dia.resumen ? crudo(`<p class="dia-cabecera__resumen secundario">${esc(dia.resumen)}</p>`) : ''}
       ${enlaceRuta(dia)}
       ${bandasDelDia(viaje, dia, estado, tiempoHoy)}
     </div>
-    ${dia.bloques.length
-      ? crudo(`<div class="cronologia">${cuerpo}${cola}</div>`)
-      : crudo('<div class="vacio"><svg aria-hidden="true"><use href="#i-reloj"/></svg><p class="secundario">Este día no tiene nada planificado todavía.</p></div>')}
+    ${cuentas.todas ? pintarFiltros(cuentas, filtro) : ''}
+    ${lista}
     <div class="dia-editar">
-      <button type="button" class="boton" data-accion="anadir-parada">${icono('mas')}Añadir una parada</button>
+      <button type="button" class="boton" data-accion="anadir-parada">${icono('mas')}Añadir una actividad</button>
       ${ocultos ? crudo(`<button type="button" class="boton boton--fantasma" data-accion="restaurar">
         ${esc(ocultos)} quitada${ocultos === 1 ? '' : 's'} · restaurar</button>`) : ''}
     </div>
@@ -580,7 +702,34 @@ export function pintarDia(viaje, dia, estado, { ocultos = 0, tiempo = null } = {
 
 // --- Ficha de lugar -------------------------------------------------------
 
-export function pintarFicha(viaje, lugar, estado, { fecha, bloqueActual = null } = {}) {
+/**
+ * El estado de una actividad, elegido con nombre. Es el sitio donde se marca
+ * reservado o cancelado; «hecho» también está, para que el control diga siempre
+ * en qué estado estás sin tener que deducirlo del punto del raíl.
+ *
+ * «Por hacer» se llama «Por reservar» cuando el sitio pide reserva: es el mismo
+ * estado de fondo, pero lo que falta hacer es otra cosa.
+ */
+const OPCIONES_DE_ESTADO = ['pendiente', 'reservado', 'hecho', 'cancelado'];
+
+function selectorDeEstado(bloque, estadoActividad) {
+  const actual = estadoActividad === 'requiere-reserva' ? 'pendiente' : estadoActividad;
+  return html`
+    <div class="selector-estado" role="radiogroup" aria-label="Estado de la actividad">
+      ${OPCIONES_DE_ESTADO.map((id) => {
+        const info = ESTADOS[id];
+        const etiqueta = id === 'pendiente' && estadoActividad === 'requiere-reserva' ? 'Por reservar' : info.etiqueta;
+        return html`
+          <button type="button" class="selector-estado__opcion" role="radio" data-fijar-estado="${id}"
+                  data-clave-actividad="${bloque.claveActividad}" data-lugar="${bloque.lugar.id}"
+                  aria-checked="${String(actual === id)}">
+            ${icono(id === 'pendiente' && estadoActividad === 'requiere-reserva' ? 'aviso' : info.icono)}<span>${etiqueta}</span>
+          </button>`;
+      })}
+    </div>`;
+}
+
+export function pintarFicha(viaje, lugar, estado, { fecha, bloqueActual = null, capa = null } = {}) {
   const cat = CATEGORIAS[lugar.categoria] || CATEGORIAS.practico;
   const visitado = Boolean(estado.visitados[lugar.id]);
   const dia = fecha || aIso(new Date());
@@ -633,6 +782,8 @@ export function pintarFicha(viaje, lugar, estado, { fecha, bloqueActual = null }
         ${visitado ? crudo('<span class="chip chip--ok">Visitado</span>') : ''}
       </div>
 
+      ${bloqueActual ? selectorDeEstado(bloqueActual, estadoDeActividad(bloqueActual, { visitados: estado.visitados, estados: capa?.estados || {} })) : ''}
+
       <p class="ficha__resumen">${lugar.resumen}</p>
 
       ${lugar.descripcion ? crudo(`<div class="prosa">${md(lugar.descripcion)}</div>`) : ''}
@@ -678,9 +829,10 @@ export function pintarFicha(viaje, lugar, estado, { fecha, bloqueActual = null }
         <div class="consejo"><svg aria-hidden="true"><use href="#i-consejo"/></svg><span>${esc(c)}</span></div>`).join('')}</div>`) : ''}
 
       <div class="acciones-lugar">
+        ${bloqueActual ? '' : html`
         <button type="button" class="boton ${visitado ? '' : 'boton--principal'}" data-accion="visitado" aria-pressed="${String(visitado)}">
           ${icono('check')}${visitado ? 'Visitado' : 'Marcar visitado'}
-        </button>
+        </button>`}
         <a class="boton" href="${enlaceLugar(lugar)}"
            target="_blank" rel="noopener noreferrer">${icono('pin')}Ver en Google Maps</a>
         <a class="boton" href="${enlaceComoLlegar(lugar)}"
@@ -724,7 +876,7 @@ export function pintarFicha(viaje, lugar, estado, { fecha, bloqueActual = null }
 // --- Transporte -----------------------------------------------------------
 
 /** Los contratos y reservas escritos a mano en `transporte[]`. */
-function pintarContratos(viaje, { foco = false } = {}) {
+export function pintarContratos(viaje, { foco = false } = {}) {
   if (!viaje.transporte?.length) return '';
   return html`
     <div class="panel__seccion">
@@ -790,6 +942,94 @@ export function pintarTransporte(viaje) {
           </div>`)}
       </div>` : ''}
     ${pintarContratos(viaje, { foco: !grupos.length })}`;
+}
+
+// --- Reservas -------------------------------------------------------------
+
+/** Una actividad en la lista de reservas: cuándo, qué, y qué hacer con ella. */
+function filaDeReserva(viaje, dia, bloque, e) {
+  const lugar = bloque.lugar;
+  const nota = bloque.reserva?.nota || lugar.reserva?.nota;
+  const web = (lugar.enlaces || [])[0];
+  return html`
+    <div class="reserva" data-estado="${e}">
+      <a class="reserva__fecha" href="#/v/${viaje.id}/d/${dia.fecha}">
+        <span class="reserva__dia">${NOMBRE_DIA[claveDia(dia.fecha)].slice(0, 3)}</span>
+        <span class="reserva__num">${Number(dia.fecha.slice(8, 10))}</span>
+      </a>
+      <div class="reserva__cuerpo">
+        <a class="titulo-3 reserva__nombre" href="#/v/${viaje.id}/l/${lugar.id}?d=${dia.fecha}">${lugar.nombre}</a>
+        <p class="menudo">${bloque.inicio ? `${bloque.inicio} · ` : ''}${lineaDeDatos(bloque, viaje.moneda)}</p>
+        ${nota ? crudo(`<p class="reserva__nota">${esc(nota)}</p>`) : ''}
+        <div class="reserva__acciones">
+          ${e === 'requiere-reserva'
+            ? html`<button type="button" class="boton boton--principal" data-fijar-estado="reservado"
+                     data-clave-actividad="${bloque.claveActividad}" data-lugar="${lugar.id}">${icono('entrada')}Marcar como reservada</button>`
+            : html`<button type="button" class="boton boton--fantasma" data-fijar-estado="pendiente"
+                     data-clave-actividad="${bloque.claveActividad}" data-lugar="${lugar.id}">Deshacer</button>`}
+          ${web ? html`<a class="boton" href="${web.url}" target="_blank" rel="noopener noreferrer">${icono('enlace')}${web.texto}</a>` : ''}
+        </div>
+      </div>
+    </div>`;
+}
+
+/**
+ * Lo que hay que reservar y lo que ya está reservado, del viaje entero.
+ *
+ * Sale del mismo estado que se pinta en la cronología: una actividad cuyo
+ * sitio pide reserva está aquí hasta que alguien la marca, y al marcarla pasa a
+ * «Reservadas» en los dos sitios a la vez. Los contratos del viaje —el abono,
+ * el coche de alquiler— van debajo, porque también son algo que se reserva.
+ */
+export function pintarReservas(viaje, estado, { capa = null } = {}) {
+  const actividad = { visitados: estado.visitados, estados: capa?.estados || {} };
+  const porReservar = [];
+  const reservadas = [];
+  for (const dia of viaje.dias) {
+    for (const b of dia.bloques.filter(esActividad)) {
+      const e = estadoDeActividad(b, actividad);
+      if (e === 'requiere-reserva') porReservar.push({ dia, b, e });
+      else if (e === 'reservado') reservadas.push({ dia, b, e });
+    }
+  }
+  const hayContratos = Boolean(viaje.transporte?.length);
+
+  return html`
+    <div class="panel__seccion">
+      <h1 class="titulo-1" data-foco tabindex="-1">Reservas</h1>
+      <p class="secundario" style="margin-top:4px">
+        ${porReservar.length
+          ? `${plural(porReservar.length, 'actividad pide', 'actividades piden')} reserva y ${porReservar.length === 1 ? 'no está marcada' : 'no están marcadas'}.`
+          : reservadas.length ? 'No queda nada por reservar.' : 'Lo que se reserva, en un solo sitio.'}
+      </p>
+    </div>
+
+    ${porReservar.length ? html`
+      <div class="panel__seccion">
+        <h2 class="titulo-2">Por reservar</h2>
+        <div class="reservas">${porReservar.map(({ dia, b, e }) => filaDeReserva(viaje, dia, b, e))}</div>
+      </div>` : ''}
+
+    ${reservadas.length ? html`
+      <div class="panel__seccion">
+        <h2 class="titulo-2">Reservadas</h2>
+        <div class="reservas">${reservadas.map(({ dia, b, e }) => filaDeReserva(viaje, dia, b, e))}</div>
+      </div>` : ''}
+
+    ${pintarContratos(viaje)}
+
+    ${!porReservar.length && !reservadas.length && !hayContratos ? html`
+      <div class="vacio">
+        ${icono('entrada')}
+        <p class="secundario">Ninguna actividad de este viaje pide reserva.</p>
+        <p class="menudo" style="margin-top:8px">
+          Cuando reserves algo, márcalo desde su ficha: tócalo en el itinerario y elige «Reservado».
+        </p>
+      </div>` : !porReservar.length && !reservadas.length ? html`
+      <p class="menudo" style="padding:0 var(--e4) var(--e4)">
+        Ninguna actividad pide reserva. Si reservas alguna, márcala desde su ficha y saldrá aquí.
+      </p>` : ''}
+  `;
 }
 
 // --- Listas ---------------------------------------------------------------

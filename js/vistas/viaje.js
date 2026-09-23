@@ -7,12 +7,13 @@
  * teselas y perdería el encuadre, que es de las cosas que más delatan una web
  * hecha con prisa.
  *
- * **Por qué no hay barra de pestañas.** La tenía, con Itinerario, Transporte,
- * Listas y Viaje como hermanas, y no lo eran: una era un día, dos eran tablas
- * del viaje entero y la cuarta era el viaje que contiene a las otras tres. La
- * propia barra de días lo delataba desapareciendo en tres de las cuatro. Ahora
- * la jerarquía la lleva la cabecera: el título sube a la portada del viaje, y de
- * la portada cuelga todo lo demás.
+ * **Las secciones: Hoy · Itinerario · Mapa · Reservas.** Hasta septiembre de
+ * 2026 no había barra de secciones, y con razón: la que hubo ponía como
+ * hermanas un día, dos tablas del viaje entero y el viaje que las contenía.
+ * Estas cuatro sí son hermanas —las cuatro miran el viaje entero desde un
+ * sitio distinto— y por eso vuelve la barra: abajo en el móvil, donde llega el
+ * pulgar, y en la cabecera en escritorio. La portada sigue colgando de la
+ * maleta y del título, y de ella Transporte y Listas.
  *
  * La portada, Transporte y Listas **no usan el mapa**, pero se pintan igual
  * dentro de esta vista y solo ensanchan el panel por CSS. Sacarlas fuera de
@@ -21,13 +22,13 @@
  */
 
 import { html, esc, icono, crudo, plural, $, $$, alPulsar, muelle, proyectar, gomaElastica, transicion, pulso } from '../ui/dom.js';
-import { cargarViaje, diaPorDefecto, recuadroDe, INTENSIDADES, recomponer, viajeBase, versionNubeDe, fijarVersionNube, origenDe, fijarCapaSubida } from '../datos.js';
+import { cargarViaje, diaPorDefecto, recuadroDe, INTENSIDADES, recomponer, viajeBase, versionNubeDe, fijarVersionNube, origenDe, fijarCapaSubida, pendientesDe } from '../datos.js';
 import { Mapa } from '../mapa.js';
 import { crearHoja, CONSULTA_HOJA } from '../ui/hoja.js';
 import { brindis, actualizarBrindis } from '../ui/brindis.js';
 import * as buscador from '../ui/buscador.js';
 import * as buscarLugar from '../ui/buscar-lugar.js';
-import { lugarDesdeBusqueda, claveEstable, nuevoId, ocultosDelDia, comoJsonDelViaje, capaVacia } from '../personalizacion.js';
+import { lugarDesdeBusqueda, claveEstable, nuevoId, ocultosDelDia, comoJsonDelViaje, capaVacia, fijarEstado } from '../personalizacion.js';
 import { tiempoGuardado, actualizarTiempo } from '../tiempo.js';
 import * as estado from '../estado.js';
 import * as nube from '../nube.js';
@@ -36,12 +37,28 @@ import { esOscuro, alCambiarTema } from '../ui/tema.js';
 import { aIso, aFecha, fechaLarga, CLAVES_DIA, NOMBRE_DIA } from '../horarios.js';
 import {
   pintarDia, pintarFicha, pintarTransporte, pintarListas, pintarPortada,
-  pintarPreparativos, pintarAlVolver,
+  pintarPreparativos, pintarAlVolver, pintarReservas,
 } from './panel.js';
+import { pintarHoy, diaDeHoy } from './hoy.js';
 import { hayPreViaje, hayPostViaje, diaTieneAtencion } from '../agenda.js';
 
 /** Vistas que no necesitan el mapa: el panel se queda con todo el ancho. */
-const ANCHAS = new Set(['portada', 'transporte', 'listas']);
+const ANCHAS = new Set(['portada', 'transporte', 'listas', 'reservas']);
+
+/**
+ * Las cuatro secciones del viaje y qué vistas caen en cada una. La portada,
+ * Transporte y Listas no son de ninguna: cuelgan de la maleta de la cabecera.
+ */
+const SECCIONES = [
+  { id: 'hoy', etiqueta: 'Hoy', icono: 'hoy', vistas: ['hoy'] },
+  { id: 'itinerario', etiqueta: 'Itinerario', icono: 'itinerario', vistas: ['dia', 'lugar', 'pre', 'post'] },
+  { id: 'mapa', etiqueta: 'Mapa', icono: 'mapa', vistas: ['mapa'] },
+  { id: 'reservas', etiqueta: 'Reservas', icono: 'entrada', vistas: ['reservas'] },
+];
+const seccionDe = (vista) => SECCIONES.find((x) => x.vistas.includes(vista))?.id || null;
+
+/** Cada cuánto se repinta Hoy para que «ahora» no se quede viejo. */
+const REFRESCO_HOY_MS = 60 * 1000;
 
 /** Las dos pestañas de la barra de días que no son un día. */
 const PSEUDODIAS = new Set(['pre', 'post']);
@@ -58,9 +75,36 @@ export async function montarViaje(raiz, ruta) {
   estado.fusionarRemoto(ruta.viajeId, estadoRemoto);
 
   const nubeLista = await nube.configurada();
-  let actual = { ...ruta, fecha: ruta.fecha || diaPorDefecto(viaje) };
+  // Sin sección en la URL se entra por lo que se va a mirar: Hoy si el viaje
+  // está en curso, el itinerario si no.
+  const resolver = (r) => (r.vista === 'inicio' ? { ...r, vista: viaje.estadoReal === 'en-curso' ? 'hoy' : 'dia' } : r);
+  let actual = { ...resolver(ruta), fecha: ruta.fecha || diaPorDefecto(viaje) };
   let verTodo = false;
+  /** El filtro de la cronología. Se mantiene al cambiar de día: es una forma de mirar, no un dato del día. */
+  let filtro = 'todas';
   const urlsObjeto = new Set();
+
+  /**
+   * Los enlaces de las cuatro secciones. Itinerario y Mapa llevan el día que se
+   * está mirando, para que cambiar de sección no te cambie de día.
+   */
+  function pintarSecciones() {
+    const fecha = actual.fecha && !PSEUDODIAS.has(actual.fecha) ? actual.fecha : diaPorDefecto(viaje);
+    const url = {
+      hoy: `#/v/${viaje.id}/hoy`,
+      itinerario: `#/v/${viaje.id}/d/${fecha}`,
+      mapa: `#/v/${viaje.id}/mapa?d=${fecha}`,
+      reservas: `#/v/${viaje.id}/reservas`,
+    };
+    const activa = seccionDe(actual.vista);
+    // Devuelve HTML ya montado (`html`), no texto: la plantilla de la vista
+    // escapa todo lo que no lo sea, y la primera versión devolvía un `join('')`.
+    // La barra salía la primera vez como su propio código escrito en pantalla,
+    // 935 px de alto, y el mapa se creaba con 0 px y un encuadre imposible.
+    return html`${SECCIONES.map((x) => html`
+      <a class="seccion" href="${url[x.id]}" data-seccion-nav="${x.id}"
+         aria-current="${activa === x.id ? 'page' : 'false'}">${icono(x.icono)}<span>${x.etiqueta}</span></a>`)}`;
+  }
 
   // Lo último que se descargó del tiempo, leído del navegador y **sin esperar a
   // la red**: así el primer pintado ya lo lleva. La actualización se lanza al
@@ -77,6 +121,7 @@ export async function montarViaje(raiz, ruta) {
           <span class="cabecera__logo">${viaje.titulo}</span>
           <span class="cabecera__contexto menudo">${viaje.subtitulo || ''}</span>
         </a>
+        <nav class="secciones secciones--arriba" aria-label="Secciones del viaje">${pintarSecciones()}</nav>
         <div class="cabecera__acciones">
           <a class="icono-boton" href="#/v/${viaje.id}/portada" data-seccion="portada"
              aria-label="El viaje entero" title="El viaje">${icono('maleta')}</a>
@@ -107,6 +152,8 @@ export async function montarViaje(raiz, ruta) {
           </div>
         </div>
       </div>
+
+      <nav class="secciones secciones--abajo" aria-label="Secciones del viaje">${pintarSecciones()}</nav>
     </div>`;
 
   const barraDias = $('.barra-dias', raiz);
@@ -118,12 +165,32 @@ export async function montarViaje(raiz, ruta) {
   // --- Mapa ---------------------------------------------------------------
   // Cuánto mapa tapa la hoja por abajo. Se define antes de crear el mapa para
   // que el primer encuadre ya la tenga en cuenta y no haya que recolocarlo.
-  const margenInferior = () => (matchMedia(CONSULTA_HOJA).matches
-    ? Math.max(0, Math.round(innerHeight - panel.getBoundingClientRect().top))
-    : 0);
+  // Se mide contra el mapa y no contra la ventana: con la barra de secciones
+  // abajo, lo que tapa la hoja es lo que queda entre su borde y el del mapa. Y
+  // con la hoja escondida —en la sección Mapa— no tapa nada.
+  const margenInferior = () => {
+    if (!matchMedia(CONSULTA_HOJA).matches) return 0;
+    const hojaRect = panel.getBoundingClientRect();
+    if (!hojaRect.height) return 0;
+    return Math.max(0, Math.round(nodoMapa.getBoundingClientRect().bottom - hojaRect.top));
+  };
 
-  const mapa = new Mapa(nodoMapa);
-  const diaInicial = viaje.dias.find((d) => d.fecha === actual.fecha) || viaje.dias[0];
+  // --- Hoja (solo móvil) --------------------------------------------------
+  // Antes que el mapa, a propósito: el primer encuadre necesita saber cuánto
+  // mapa tapa la hoja, y sin hoja el panel está en su sitio de reposo, arriba
+  // del todo. Medido: el encuadre salía a zoom 19 y cada carga tiraba doce
+  // teselas que el encuadre siguiente abortaba.
+  let mapa = null;
+  const hoja = crearHoja(panel, {
+    tirador: $('.tirador', raiz),
+    cuerpo,
+    alCambiar: () => mapa?.refrescarTamano(),
+  });
+
+  mapa = new Mapa(nodoMapa);
+  const diaInicial = actual.vista === 'hoy'
+    ? diaDeHoy(viaje)
+    : viaje.dias.find((d) => d.fecha === actual.fecha) || viaje.dias[0];
   await mapa.iniciar({
     centro: viaje.mapa?.centro || [40, -4],
     zoom: viaje.mapa?.zoom || 8,
@@ -132,17 +199,15 @@ export async function montarViaje(raiz, ruta) {
     margenInferior,
   });
   mapa.alSeleccionar = (lugarId) => {
+    // En la sección Mapa, tocar un marcador abre su globo y ahí se queda: el
+    // mapa es lo que se está mirando. El globo lleva el enlace a la ficha.
+    if (actual.vista === 'mapa') return;
     hoja.asomar();
-    ir(`#/v/${viaje.id}/l/${lugarId}`);
+    ir(`#/v/${viaje.id}/l/${lugarId}?d=${diaDelMapa().fecha}`);
   };
+  mapa.enlaceFicha = (lugarId) => `#/v/${viaje.id}/l/${lugarId}?d=${diaDelMapa().fecha}`;
   const quitarOyenteTema = alCambiarTema((oscuro) => mapa.aplicarTema(oscuro));
 
-  // --- Hoja (solo móvil) --------------------------------------------------
-  const hoja = crearHoja(panel, {
-    tirador: $('.tirador', raiz),
-    cuerpo,
-    alCambiar: () => mapa.refrescarTamano(),
-  });
 
   const ir = (hash) => { location.hash = hash; };
 
@@ -175,9 +240,12 @@ export async function montarViaje(raiz, ruta) {
       const f = aFecha(d.fecha);
       const puntos = (INTENSIDADES[d.intensidad] || INTENSIDADES.suave).puntos;
       const atencion = diaTieneAtencion(viaje, d.fecha, tareas);
+      // En la sección Mapa, elegir un día es mirarlo en el mapa, no volver al
+      // itinerario.
+      const destino = actual.vista === 'mapa' ? `#/v/${viaje.id}/mapa?d=${d.fecha}` : `#/v/${viaje.id}/d/${d.fecha}`;
       return html`
         <a class="dia-tab ${d.fecha === hoy ? 'dia-tab--hoy' : ''} ${atencion ? 'dia-tab--atencion' : ''}"
-           href="#/v/${viaje.id}/d/${d.fecha}" data-dia="${d.fecha}"
+           href="${destino}" data-dia="${d.fecha}"
            aria-current="${d.fecha === actual.fecha ? 'page' : 'false'}"
            aria-label="${d.titulo}${atencion ? ', tiene avisos o lista sin terminar' : ''}">
           <span class="dia-tab__dia" aria-hidden="true">${NOMBRE_DIA[CLAVES_DIA[f.getDay()]].slice(0, 3)}</span>
@@ -202,9 +270,16 @@ export async function montarViaje(raiz, ruta) {
    * reconstruirlo al volver— se esconde y el panel se queda con todo el ancho.
    */
   function repartirEspacio() {
-    const enItinerario = ['dia', 'lugar', 'pre', 'post'].includes(actual.vista);
+    const enItinerario = ['dia', 'lugar', 'pre', 'post', 'mapa'].includes(actual.vista);
     const ancha = ANCHAS.has(actual.vista);
     barraDias.classList.toggle('oculto', !enItinerario);
+    const escenario = $('.escenario', raiz);
+    // Hoy: en escritorio, panel y mapa del día; en el móvil, pantalla completa,
+    // que es lo que se lee andando. Lo decide el CSS con esta clase.
+    escenario.classList.toggle('escenario--hoy', actual.vista === 'hoy');
+    // Mapa: el mapa a pantalla completa y la hoja fuera.
+    escenario.classList.toggle('escenario--mapa', actual.vista === 'mapa');
+    for (const nav of $$('.secciones', raiz)) nav.innerHTML = pintarSecciones().toString();
     // El icono de la cabecera dice si ya estás en la portada, para que no sea un
     // botón que parece llevar a otro sitio cuando ya estás en él.
     $('[data-seccion="portada"]', raiz)?.setAttribute('aria-current', actual.vista === 'portada' ? 'page' : 'false');
@@ -212,7 +287,12 @@ export async function montarViaje(raiz, ruta) {
     panel.classList.toggle('panel--ancho', ancha);
     // Leaflet mide al crearse y al recibir el aviso: sin esto, volver de una
     // vista ancha lo deja pintando con el ancho que tenía escondido.
-    if (!ancha) requestAnimationFrame(() => mapa.refrescarTamano());
+    if (!ancha) requestAnimationFrame(() => {
+      // La hoja se mide otra vez: al volver de Mapa estaba escondida y sus
+      // anclajes se calcularon sobre una altura de cero.
+      if (actual.vista !== 'mapa') hoja.sincronizar();
+      mapa.refrescarTamano();
+    });
   }
 
   // --- Panel --------------------------------------------------------------
@@ -369,14 +449,27 @@ export async function montarViaje(raiz, ruta) {
   function pintarPanelYa({ moverFoco, conTransicion, escalonar, navegando }) {
     limpiarUrls();
     const guardado = estado.estadoDe(viaje.id);
+    const capa = estado.capaDe(viaje.id);
+    // Repintar sin navegar —marcar algo, el reloj de Hoy— no puede cerrar las
+    // bandas que tenías abiertas: se apuntan y se vuelven a abrir.
+    const abiertas = navegando ? [] : $$('details[open][data-banda]', cuerpo).map((d) => d.dataset.banda);
 
-    if (actual.vista === 'lugar') {
+    if (actual.vista === 'mapa') {
+      // La hoja está escondida; lo que se pinte aquí no se ve. Se deja como
+      // estaba, así al volver al itinerario sigue en su sitio.
+    } else if (actual.vista === 'hoy') {
+      cuerpo.innerHTML = pintarHoy(viaje, guardado, { capa, tiempo });
+      if (moverFoco) situarFoco('Hoy');
+    } else if (actual.vista === 'reservas') {
+      cuerpo.innerHTML = pintarReservas(viaje, guardado, { capa });
+      if (moverFoco) situarFoco('Reservas');
+    } else if (actual.vista === 'lugar') {
       const lugar = viaje.porId.get(actual.lugarId);
       if (!lugar) { ir(`#/v/${viaje.id}`); return; }
       // El bloque concreto de este día, para poder quitarlo desde su ficha.
       const dia = diaActual();
       const bloqueActual = dia?.bloques.find((b) => b.tipo === 'visita' && b.lugar?.id === lugar.id) || null;
-      cuerpo.innerHTML = pintarFicha(viaje, lugar, guardado, { fecha: dia?.fecha, bloqueActual });
+      cuerpo.innerHTML = pintarFicha(viaje, lugar, guardado, { fecha: dia?.fecha, bloqueActual, capa });
       hidratarGaleria(lugar);
       if (moverFoco) situarFoco(lugar.nombre);
     } else if (actual.vista === 'transporte') {
@@ -410,9 +503,10 @@ export async function montarViaje(raiz, ruta) {
       const dia = diaActual();
       const base = viajeBase(viaje.id);
       const ocultos = base ? ocultosDelDia(base, estado.capaDe(viaje.id), dia.fecha).length : 0;
-      cuerpo.innerHTML = pintarDia(viaje, dia, guardado, { ocultos, tiempo });
+      cuerpo.innerHTML = pintarDia(viaje, dia, guardado, { ocultos, tiempo, capa, filtro });
       if (moverFoco) situarFoco(`${dia.titulo}, ${fechaLarga(dia.fecha)}`);
     }
+    for (const nombre of abiertas) $(`details[data-banda="${nombre}"]`, cuerpo)?.setAttribute('open', '');
     if (navegando) situarScroll();
     if (celebrarNube) {
       celebrarNube = false;
@@ -446,12 +540,15 @@ export async function montarViaje(raiz, ruta) {
 
   // --- Mapa por vista -----------------------------------------------------
   /** Preparativos y Al volver no son de ningún día: el mapa enseña el viaje entero. */
-  const mapaDeTodo = () => verTodo || PSEUDODIAS.has(actual.fecha);
+  const mapaDeTodo = () => verTodo || (actual.vista !== 'hoy' && PSEUDODIAS.has(actual.fecha));
+
+  /** El día que enseña el mapa: en Hoy, el de hoy; en lo demás, el que se mira. */
+  const diaDelMapa = () => (actual.vista === 'hoy' ? diaDeHoy(viaje) : diaActual());
 
   function refrescarMapa() {
     const visitados = estado.estadoDe(viaje.id).visitados;
     if (mapaDeTodo()) mapa.mostrarTodo(viaje, { visitados });
-    else mapa.mostrarDia(diaActual(), { visitados });
+    else mapa.mostrarDia(diaDelMapa(), { visitados, viaje });
     if (actual.vista === 'lugar') mapa.irA(actual.lugarId, { abrirGlobo: false });
   }
 
@@ -464,7 +561,7 @@ export async function montarViaje(raiz, ruta) {
     repartirEspacio();
     pintarPanel();
 
-    const modo = mapaDeTodo() ? 'todo' : `dia:${diaActual()?.fecha}`;
+    const modo = mapaDeTodo() ? 'todo' : `dia:${diaDelMapa()?.fecha}`;
     if (modo !== modoPintado) { refrescarMapa(); modoPintado = modo; diaPintado = actual.fecha; }
     else if (actual.vista === 'lugar') mapa.irA(actual.lugarId, { abrirGlobo: false });
     else mapa.destacar(null);
@@ -644,6 +741,61 @@ export async function montarViaje(raiz, ruta) {
     // borraría un localizador sin que el botón lo dijera.
     estado.guardarCapa(viaje.id, { ...capa, lugares: [], bloques: [], ocultos: [] });
     trasCambiarCapa('Itinerario devuelto a como estaba');
+  });
+
+  // --- Estado de las actividades ------------------------------------------
+  /**
+   * Marcar o desmarcar «hecho». Es el mismo botón en el raíl de la cronología,
+   * en la lista de Hoy y en su tarjeta grande: los tres llevan `data-hecho`.
+   *
+   * «Hecho» es de cada persona y vive en `visitados`, como siempre. Si la
+   * actividad estaba cancelada, marcarla hecha la descancela: si fuiste, no se
+   * canceló.
+   */
+  alPulsar(cuerpo, '[data-hecho]', (b) => {
+    const lugarId = b.dataset.hecho;
+    const ahora = estado.alternarVisitado(viaje.id, lugarId);
+    mapa.marcarVisitado(lugarId, ahora);
+    pulso(b);
+    pintarPanel({ moverFoco: false });
+    brindis(ahora ? 'Hecho' : 'Ya no está marcado como hecho', { tipo: ahora ? 'ok' : 'info', duracion: 1800 });
+  });
+
+  /**
+   * Elegir un estado con nombre: desde la ficha o desde Reservas.
+   *
+   * Cada opción deja el estado **en ese y solo ese**: elegir «Reservado» en algo
+   * marcado como hecho le quita el hecho, porque el control dice un estado y no
+   * dos. Reservado y cancelado van a la capa —son del viaje compartido y suben
+   * a la nube—; hecho va a `visitados`, que es de cada persona.
+   */
+  alPulsar(cuerpo, '[data-fijar-estado]', (b) => {
+    const nuevo = b.dataset.fijarEstado;
+    const clave = b.dataset.claveActividad;
+    const lugarId = b.dataset.lugar;
+    const visitado = estado.esVisitado(viaje.id, lugarId);
+
+    if ((nuevo === 'hecho') !== visitado) {
+      const ahora = estado.alternarVisitado(viaje.id, lugarId);
+      mapa.marcarVisitado(lugarId, ahora);
+    }
+    const guardado = estado.capaDe(viaje.id).estados[clave]?.estado || null;
+    const queda = nuevo === 'reservado' || nuevo === 'cancelado' ? nuevo : null;
+    if (queda !== guardado) {
+      estado.guardarCapa(viaje.id, fijarEstado(estado.capaDe(viaje.id), clave, queda));
+      viaje.pendientes = pendientesDe(viaje.id);
+    }
+    pintarPanel({ moverFoco: false });
+    const textos = { pendiente: 'Por hacer', reservado: 'Marcada como reservada', hecho: 'Hecho', cancelado: 'Cancelada' };
+    brindis(textos[nuevo] || 'Guardado', { tipo: 'ok', duracion: 1800 });
+  });
+
+  alPulsar(cuerpo, '[data-filtro]', (b) => {
+    filtro = b.dataset.filtro;
+    pintarPanel({ moverFoco: false });
+    // Sin mover el foco: el botón que acabas de pulsar sigue ahí, repintado. Se
+    // le devuelve para que el teclado no aterrice al principio del panel.
+    $(`[data-filtro="${filtro}"]`, cuerpo)?.focus({ preventScroll: true });
   });
 
   // --- Añadir y quitar paradas del itinerario -----------------------------
@@ -879,8 +1031,10 @@ export async function montarViaje(raiz, ruta) {
     // Sin animación de entrada a propósito: una flecha se repite muchas veces
     // seguidas, y animar cada repetición hace que el teclado se sienta lento.
     // El gesto sí anima, porque ahí la animación **continúa** el movimiento.
-    if (e.key === 'ArrowRight' && i < viaje.dias.length - 1) ir(`#/v/${viaje.id}/d/${viaje.dias[i + 1].fecha}`);
-    else if (e.key === 'ArrowLeft' && i > 0) ir(`#/v/${viaje.id}/d/${viaje.dias[i - 1].fecha}`);
+    if (actual.vista === 'hoy' || ANCHAS.has(actual.vista)) return;
+    const destino = (d) => (actual.vista === 'mapa' ? `#/v/${viaje.id}/mapa?d=${d.fecha}` : `#/v/${viaje.id}/d/${d.fecha}`);
+    if (e.key === 'ArrowRight' && i < viaje.dias.length - 1) ir(destino(viaje.dias[i + 1]));
+    else if (e.key === 'ArrowLeft' && i > 0) ir(destino(viaje.dias[i - 1]));
     else if (e.key === 'Escape' && actual.vista === 'lugar') ir(`#/v/${viaje.id}/d/${diaActual().fecha}`);
   }
   addEventListener('keydown', alTeclado);
@@ -999,6 +1153,16 @@ export async function montarViaje(raiz, ruta) {
 
   pintar();
 
+  // --- El reloj de Hoy -----------------------------------------------------
+  // «Ahora» y «Siguiente» dependen de la hora: sin repintar, a las once seguiría
+  // diciendo lo de las diez. Una vez por minuto, y solo si se está mirando Hoy,
+  // la pestaña está a la vista y no estás escribiendo en ella.
+  const reloj = setInterval(() => {
+    if (!vivo || actual.vista !== 'hoy' || document.visibilityState !== 'visible') return;
+    if (cuerpo.contains(document.activeElement) && document.activeElement.matches('input, textarea')) return;
+    pintarPanel({ moverFoco: false });
+  }, REFRESCO_HOY_MS);
+
   // --- El tiempo -----------------------------------------------------------
   // Se pide después de pintar y sin bloquear nada: la guía ya está en pantalla,
   // y lo que se descargó la última vez ya se ha pintado con ella. Si no llega
@@ -1033,7 +1197,7 @@ export async function montarViaje(raiz, ruta) {
     get titulo() { return viaje.titulo; },
     actualizar(nuevaRuta) {
       const antes = actual;
-      actual = { ...nuevaRuta, fecha: nuevaRuta.fecha || actual.fecha || diaPorDefecto(viaje) };
+      actual = { ...resolver(nuevaRuta), fecha: nuevaRuta.fecha || actual.fecha || diaPorDefecto(viaje) };
 
       // Al cambiar de día o de pestaña, la barra de cambios sin guardar deja de
       // estar delante: en Transporte o en Listas no se pinta, y en otro día no
@@ -1050,6 +1214,7 @@ export async function montarViaje(raiz, ruta) {
     },
     destruir() {
       vivo = false;
+      clearInterval(reloj);
       resorteDesliz.parar();
       removeEventListener('keydown', alTeclado);
       quitarOyenteTema();

@@ -14,11 +14,14 @@
  *   #/v/<viaje>/d/post              al volver
  *   #/v/<viaje>/l/<lugar>?d=<día>   la ficha de un lugar
  *   #/v/<viaje>/transporte|listas
+ *   #/v/<viaje>/hoy                 lo que toca hoy, pensado para la calle
+ *   #/v/<viaje>/mapa?d=<día>        el mapa a pantalla completa
+ *   #/v/<viaje>/reservas            lo reservado y lo que falta por reservar
  *
- * Se entra a un viaje por su **día**, no por su portada. La jerarquía dice que
- * el viaje contiene al día, pero durante el viaje se abre esto veinte veces al
- * día para ver qué toca ahora, y ese gesto no puede costar un toque más. A la
- * portada se sube con el icono de la maleta en la cabecera, o tocando el título.
+ * Se entra a un viaje por lo que se va a mirar, no por su portada. Durante el
+ * viaje eso es **Hoy**: se abre veinte veces al día para ver qué toca ahora, y
+ * ese gesto no puede costar un toque más. Antes y después, el primer día del
+ * itinerario. A la portada se sube con la maleta de la cabecera o el título.
  */
 
 import { html, icono, $ } from './ui/dom.js';
@@ -53,8 +56,11 @@ function analizar(hash) {
   // `info` era el nombre viejo de la portada. Se mantiene para no dejar muerto
   // ningún enlace ya compartido.
   if (seccion === 'info') return { nombre: 'viaje', viajeId, vista: 'portada', fecha: null };
-  if (['transporte', 'listas', 'portada'].includes(seccion)) return { nombre: 'viaje', viajeId, vista: seccion, fecha: params.get('d') || null };
-  return { nombre: 'viaje', viajeId, vista: 'dia', fecha: null };
+  if (['transporte', 'listas', 'portada', 'hoy', 'mapa', 'reservas'].includes(seccion)) {
+    return { nombre: 'viaje', viajeId, vista: seccion, fecha: params.get('d') || null };
+  }
+  // Sin sección: la decide la vista del viaje, que es quien sabe si está en curso.
+  return { nombre: 'viaje', viajeId, vista: 'inicio', fecha: null };
 }
 
 function fallo(mensaje, detalle) {

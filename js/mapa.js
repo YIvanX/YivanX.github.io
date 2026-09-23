@@ -78,6 +78,9 @@ export class Mapa {
     this.marcadorYo = null;
     this.destacado = null;
     this.alSeleccionar = () => {};
+    // Si se define, el globo de cada marcador lleva un enlace a su ficha. Lo
+    // pone la vista, que es quien sabe a qué viaje y a qué día apunta.
+    this.enlaceFicha = null;
     // Cuántos píxeles del mapa tapa algo por abajo (la hoja arrastrable del
     // móvil). Sin esto, fitBounds centra en el alto completo y la mitad de los
     // marcadores del día quedan debajo del panel, invisibles.
@@ -139,15 +142,16 @@ export class Mapa {
 
   // --- Marcadores ---------------------------------------------------------
 
-  _icono(lugar, { numero = null, visitado = false, secundario = false } = {}) {
+  _icono(lugar, { numero = null, visitado = false, secundario = false, fondo = false } = {}) {
     const cat = CATEGORIAS[lugar.categoria] || CATEGORIAS.practico;
     const clases = ['pin'];
     if (numero) clases.push('pin--numerado');
-    if (secundario) clases.push('pin--secundario');
+    if (secundario || fondo) clases.push('pin--secundario');
+    if (fondo) clases.push('pin--fondo');
     const interior = numero
       ? String(numero)
       : `<svg aria-hidden="true"><use href="#i-${esc(cat.icono)}"/></svg>`;
-    const tam = secundario ? 15 : numero ? 28 : 26;
+    const tam = fondo ? 11 : secundario ? 15 : numero ? 28 : 26;
 
     return this.L.divIcon({
       className: 'marcador',
@@ -164,9 +168,12 @@ export class Mapa {
       ? `<img class="globo__foto" src="${esc(lugar.imagen.archivo)}" alt="" loading="lazy" decoding="async"
               title="${esc(lugar.imagen.credito)}">`
       : '';
+    const ficha = this.enlaceFicha
+      ? `<a class="globo__enlace" href="${esc(this.enlaceFicha(lugar.id))}">Ver ficha</a>`
+      : '';
     return `${foto}<div class="globo__titulo">${esc(lugar.nombre)}</div>
       <div class="globo__resumen">${esc(lugar.resumen)}</div>
-      <div class="globo__pie"><span class="chip chip--${esc(lugar.categoria)}">${esc(cat.etiqueta)}</span></div>`;
+      <div class="globo__pie"><span class="chip chip--${esc(lugar.categoria)}">${esc(cat.etiqueta)}</span>${ficha}</div>`;
   }
 
   _limpiar() {
@@ -181,7 +188,7 @@ export class Mapa {
    * que las une, y los puntos de traslado en pequeño para que se entienda por
    * dónde se pasa sin competir con las paradas de verdad.
    */
-  mostrarDia(dia, { visitados = {} } = {}) {
+  mostrarDia(dia, { visitados = {}, viaje = null } = {}) {
     if (!this.mapa) return;
     this._limpiar();
 
@@ -232,7 +239,28 @@ export class Mapa {
       }
     }
 
+    // Los sitios de los demás días, atenuados y sin número: dan contexto —dónde
+    // queda el día respecto al resto del viaje— sin competir con la ruta. Van
+    // por debajo de todo y **no cuentan para el encuadre**, o un viaje de
+    // varias ciudades sacaría el día entero de la pantalla.
+    if (viaje) {
+      for (const lugar of viaje.lugaresUsados || []) {
+        if (yaPuestos.has(lugar.id) || !lugar.coords) continue;
+        const m = this.L.marker(lugar.coords, {
+          icon: this._icono(lugar, { fondo: true }),
+          title: `${lugar.nombre} (otro día)`,
+          zIndexOffset: -500,
+          keyboard: false,
+        });
+        m.bindPopup(this._globo(lugar), { closeButton: false });
+        m.addTo(this.capaMarcadores);
+      }
+    }
+
+    // La ruta en dos trazos: un halo del color del mapa debajo y la línea
+    // encima. Sin el halo, sobre calles y ríos la línea se pierde.
     if (puntos.length > 1) {
+      this.L.polyline(puntos, { className: 'ruta-dia__halo', interactive: false }).addTo(this.capaRuta);
       this.L.polyline(puntos, { className: 'ruta-dia', interactive: false }).addTo(this.capaRuta);
     }
     this.encuadrar(dia.paradas.length ? puntos : [...this.marcadores.values()].map((m) => m.getLatLng()));
@@ -258,7 +286,9 @@ export class Mapa {
 
   encuadrar(puntos) {
     if (!puntos?.length || !this.mapa) return;
-    const abajo = this.margenInferior();
+    // Nunca más margen del que cabe: con un relleno mayor que el propio mapa,
+    // Leaflet no encuentra encuadre y se va al zoom máximo.
+    const abajo = Math.min(this.margenInferior(), Math.max(0, this.mapa.getSize().y - 160));
     if (puntos.length === 1) {
       this.mapa.setView(puntos[0], 15, { animate: false });
       if (abajo) this.mapa.panBy([0, abajo / 2], { animate: false });
