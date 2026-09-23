@@ -27,7 +27,7 @@ import { crearHoja, CONSULTA_HOJA } from '../ui/hoja.js';
 import { brindis, actualizarBrindis } from '../ui/brindis.js';
 import * as buscador from '../ui/buscador.js';
 import * as buscarLugar from '../ui/buscar-lugar.js';
-import { lugarDesdeBusqueda, claveEstable, nuevoId, ocultosDelDia, comoJsonDelViaje } from '../personalizacion.js';
+import { lugarDesdeBusqueda, claveEstable, nuevoId, ocultosDelDia, comoJsonDelViaje, capaVacia } from '../personalizacion.js';
 import { tiempoGuardado, actualizarTiempo } from '../tiempo.js';
 import * as estado from '../estado.js';
 import * as nube from '../nube.js';
@@ -593,7 +593,7 @@ export async function montarViaje(raiz, ruta) {
         const yaEsta = await nube.leerViaje(viaje.id);
         if (yaEsta) {
           fijarVersionNube(viaje.id, yaEsta.versionNube);
-          fijarCapaSubida(viaje.id, sincronizacion.separar(yaEsta).capa || { version: 1, lugares: [], bloques: [], ocultos: [] });
+          fijarCapaSubida(viaje.id, sincronizacion.separar(yaEsta).capa || capaVacia());
           trasGuardar();
           await guardarEnNube();
         } else {
@@ -638,8 +638,11 @@ export async function montarViaje(raiz, ruta) {
   alPulsar(cuerpo, '[data-accion="vaciar-capa"]', () => {
     const capa = estado.capaDe(viaje.id);
     const total = capa.bloques.length + capa.ocultos.length;
-    if (!confirm(`Se van a deshacer ${plural(total, 'cambio')} del itinerario. Las notas, las fotos y lo visitado no se tocan.`)) return;
-    estado.guardarCapa(viaje.id, { version: 1, lugares: [], bloques: [], ocultos: [] });
+    if (!confirm(`Se van a deshacer ${plural(total, 'cambio')} del itinerario. Las notas, las fotos, lo visitado, las reservas y los gastos no se tocan.`)) return;
+    // Solo lo que cambia el itinerario. Estados, reservas y gastos viajan en la
+    // misma capa, pero no son «cambios del itinerario» y deshacerlos aquí
+    // borraría un localizador sin que el botón lo dijera.
+    estado.guardarCapa(viaje.id, { ...capa, lugares: [], bloques: [], ocultos: [] });
     trasCambiarCapa('Itinerario devuelto a como estaba');
   });
 

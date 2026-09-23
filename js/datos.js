@@ -136,6 +136,11 @@ function normalizar(viaje, entrada, subida = null) {
       const tipo = bloque.tipo || 'visita';
       const lugar = tipo === 'visita' ? porId.get(bloque.lugar) : null;
       const b = { ...bloque, tipo, indice: i, lugar, clave: `${dia.fecha}#${i}` };
+      // La identidad del bloque para colgarle un estado —reservado, cancelado—.
+      // No es `clave`, que es posicional y se corre en cuanto se añade una
+      // parada: es la misma clave estable que usa la capa para ocultar, o el id
+      // de lo añadido a mano.
+      b.claveActividad = bloque.propio ? `propio|${bloque.idPropio}` : claveEstable(dia.fecha, bloque);
       // `null` cuando no hay nube o cuando el bloque no tiene ciclo de vida en
       // ella, que es el caso de casi todos: vienen del archivo y ahí siguen.
       b.nube = subida ? sincronizacion.estadoDeBloque(b, claveEstable(dia.fecha, bloque), subida) : null;

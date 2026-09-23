@@ -10,7 +10,7 @@
  * ronda los 5 MB y una sola foto de móvil ya se los come.
  */
 
-import { validarCapa } from './personalizacion.js';
+import { validarCapa, normalizarCapa } from './personalizacion.js';
 import { fusionarEstado } from './sincronizacion.js';
 
 const PREFIJO = 'bitacora:v1';
@@ -119,7 +119,9 @@ export function alternarTarea(viajeId, itemId) {
 // Paradas añadidas y paradas ocultadas. Va aparte del resto del estado porque
 // tiene su propio formato, su propia validación y su propia versión.
 
-export const capaDe = (viajeId) => leer(`capa:${viajeId}`, { version: 1, lugares: [], bloques: [], ocultos: [] });
+// Se normaliza al leer: una capa guardada con la versión 1 sale con los campos
+// de la 2 vacíos, y nadie que la use tiene que preguntar qué versión es.
+export const capaDe = (viajeId) => normalizarCapa(leer(`capa:${viajeId}`, null));
 
 export function guardarCapa(viajeId, capa) {
   escribir(`capa:${viajeId}`, capa);

@@ -17,9 +17,56 @@
  * probar entero en Node. Toda la lógica que decide qué se ve vive aquí.
  */
 
-export const VERSION_CAPA = 1;
+/**
+ * Versión 2 (23 de septiembre de 2026): además de paradas añadidas y ocultas,
+ * la capa lleva lo que el viaje **compartido** necesita saber y el JSON del
+ * repositorio no puede guardar, porque es público:
+ *
+ *  · `estados`  — reservado o cancelado, por actividad. Lo «hecho» no va aquí:
+ *                 es de cada persona y sigue viviendo en `visitados`.
+ *  · `reservas` — hotel, vuelo, tren… con su localizador.
+ *  · `gastos`   — lo que se ha pagado de verdad.
+ *
+ * Todo lo que se puede cambiar desde dos móviles a la vez lleva `t`, la marca
+ * de tiempo del cambio: es lo que deja fundir sin preguntar quién gana. Una
+ * capa v1 es una v2 a la que le faltan campos, y `normalizarCapa` los rellena.
+ */
+export const VERSION_CAPA = 2;
 
-export const capaVacia = () => ({ version: VERSION_CAPA, lugares: [], bloques: [], ocultos: [] });
+export const capaVacia = () => ({
+  version: VERSION_CAPA, lugares: [], bloques: [], ocultos: [], estados: {}, reservas: [], gastos: [],
+});
+
+/**
+ * Rellena lo que le falte a una capa, sin tocar lo que trae. Es la migración de
+ * v1 a v2, y por eso **no corrige tipos**: un campo que viene roto tiene que
+ * llegar roto a `validarCapa`, que es quien sabe decir qué le pasa.
+ */
+export function normalizarCapa(capa) {
+  const base = capaVacia();
+  const c = capa && typeof capa === 'object' ? capa : {};
+  const salida = { ...base, ...c, version: VERSION_CAPA };
+  for (const k of Object.keys(base)) if (salida[k] === undefined || salida[k] === null) salida[k] = base[k];
+  return salida;
+}
+
+/** Los dos únicos estados que se guardan. «Por hacer» es no tener ninguno. */
+export const ESTADOS_GUARDABLES = ['reservado', 'cancelado'];
+
+/**
+ * Cambia el estado de una actividad y devuelve una capa **nueva**.
+ *
+ * Volver a «por hacer» no borra la entrada: la deja con `estado: null` y su
+ * marca de tiempo. Si se borrara, al fundir con la nube el «reservado» que
+ * todavía está allí volvería a aparecer, porque no habría nada más reciente que
+ * dijera lo contrario.
+ */
+export function fijarEstado(capa, clave, estado, ahora = new Date().toISOString()) {
+  if (!clave) throw new Error('Falta la clave de la actividad');
+  if (estado !== null && !ESTADOS_GUARDABLES.includes(estado)) throw new Error(`Estado no válido: ${estado}`);
+  const c = normalizarCapa(capa);
+  return { ...c, estados: { ...c.estados, [clave]: { estado, t: ahora } } };
+}
 
 /**
  * Identidad estable de un bloque del JSON base.
@@ -129,7 +176,7 @@ function ordenarPorHora(bloques) {
  * @returns {{viaje:object, resumen:{anadidos:number, ocultos:number, lugares:number}}}
  */
 export function aplicarCapa(viaje, capa) {
-  const c = { ...capaVacia(), ...(capa || {}) };
+  const c = normalizarCapa(capa);
   const ocultos = new Set(c.ocultos || []);
 
   const lugaresPropios = (c.lugares || []).map((l) => ({ ...l, origen: 'propio' }));
@@ -197,6 +244,14 @@ export function validarCapa(capa) {
   if (!Array.isArray(capa.lugares)) fallos.push('lugares debe ser una lista');
   if (!Array.isArray(capa.bloques)) fallos.push('bloques debe ser una lista');
   if (!Array.isArray(capa.ocultos)) fallos.push('ocultos debe ser una lista');
+  // Los campos de la v2 pueden faltar —una capa v1 es válida—, pero si están
+  // tienen que tener su forma.
+  if (capa.estados !== undefined && (!capa.estados || typeof capa.estados !== 'object' || Array.isArray(capa.estados))) {
+    fallos.push('estados debe ser un objeto');
+  }
+  for (const k of ['reservas', 'gastos']) {
+    if (capa[k] !== undefined && !Array.isArray(capa[k])) fallos.push(`${k} debe ser una lista`);
+  }
   // Se sale aquí si la forma no es la que toca. Recorrer un campo que no es una
   // lista lanza un TypeError, y esta función existe justo para lo contrario:
   // para poder decir qué está mal sin reventar. La llama `importar` con un
@@ -217,6 +272,17 @@ export function validarCapa(capa) {
     if (!b?.lugar) fallos.push(`bloques[${i}] sin lugar`);
     else if (!ids.has(b.lugar) && !b.lugarBase) fallos.push(`bloques[${i}] apunta a un lugar propio que no existe: ${b.lugar}`);
     if (b?.inicio && !/^([01]\d|2[0-4]):[0-5]\d$/.test(b.inicio)) fallos.push(`bloques[${i}] hora no válida: ${b.inicio}`);
+  }
+  for (const [clave, e] of Object.entries(capa.estados || {})) {
+    if (!e || typeof e !== 'object') { fallos.push(`estados[${clave}] no es un objeto`); continue; }
+    if (e.estado !== null && !ESTADOS_GUARDABLES.includes(e.estado)) fallos.push(`estados[${clave}] estado no válido: ${e.estado}`);
+    if (typeof e.t !== 'string') fallos.push(`estados[${clave}] sin marca de tiempo`);
+  }
+  for (const k of ['reservas', 'gastos']) {
+    for (const [i, x] of (capa[k] || []).entries()) {
+      if (!x?.id) fallos.push(`${k}[${i}] sin id`);
+      if (typeof x?.t !== 'string') fallos.push(`${k}[${i}] sin marca de tiempo`);
+    }
   }
   return fallos;
 }
