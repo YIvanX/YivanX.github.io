@@ -16,7 +16,7 @@
    de lo que se busca.
    ========================================================================= */
 
-const VERSION = 'v14';
+const VERSION = 'v15';
 const CACHE_APP = `bitacora-app-${VERSION}`;
 // Con nombre del proveedor: al cambiar de CARTO a Stadia, las teselas viejas no
 // valen para nada y se borran al activar, en vez de ocupar sitio hasta que las
@@ -50,6 +50,7 @@ const ESENCIALES = [
   'js/ui/tema.js',
   'js/ui/brindis.js',
   'js/ui/buscador.js',
+  'js/ui/editores.js',
   'js/vistas/perfil.js',
   'js/vistas/registro.js',
   'js/vistas/viaje.js',

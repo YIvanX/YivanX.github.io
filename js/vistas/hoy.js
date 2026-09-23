@@ -245,7 +245,7 @@ function pintarHoyDelViaje(viaje, dia, estado, { capa, tiempo, ahora }) {
           ${listaCorta(viaje, dia, despues, actividad)}
         </section>` : ''}
 
-      ${bandasDelDia(viaje, dia, estado, tiempoDelDia(tiempo, dia.fecha))}
+      ${bandasDelDia(viaje, dia, estado, tiempoDelDia(tiempo, dia.fecha), capa)}
 
       ${hechas.length ? html`
         <details class="hoy-bloque hoy-plegable" data-banda="hechas">
@@ -254,6 +254,7 @@ function pintarHoyDelViaje(viaje, dia, estado, { capa, tiempo, ahora }) {
         </details>` : ''}
 
       <div class="hoy-pie">
+        <button type="button" class="boton" data-nuevo-gasto="" data-fecha="${dia.fecha}">${icono('gasto')}Apuntar un gasto</button>
         <a class="boton" href="#/v/${viaje.id}/d/${dia.fecha}">${icono('itinerario')}El día completo</a>
         ${enlaceRuta(dia)}
       </div>

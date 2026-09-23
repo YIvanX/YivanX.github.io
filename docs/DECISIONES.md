@@ -243,6 +243,82 @@ El centro del mapa sale de buscar el destino en Photon. Sin conexión, el viaje
 se crea igual y el mapa arranca en la vista general hasta que se añade la
 primera actividad.
 
+## Editar una actividad del archivo sin tocar el archivo
+
+El mismo formulario sirve para añadir y para editar, y guarda por tres caminos
+distintos según de dónde venga la actividad:
+
+- **Del archivo:** se guarda **solo lo que cambia**, en `capa.cambios`, bajo su
+  clave estable. El JSON no se toca, igual que al ocultar, y «deshacer» es quitar
+  el cambio. Se puede cambiar la hora, el día, la duración, el coste, la nota, la
+  web, si pide reserva y el tipo.
+- **Añadida a mano:** se reescribe su bloque en la capa, con su marca de tiempo.
+- **Nueva:** un lugar y un bloque nuevos en la capa. Una **nota** es un hito:
+  título, detalle y hora, sin lugar.
+
+**El nombre y la ubicación de una actividad del archivo no se editan en la
+aplicación.** Son del lugar, que lleva su foto, su horario y su valoración
+comprobados; cambiarlos aquí dejaría todo eso hablando de otro sitio. Se cambian
+en el JSON.
+
+**La clave estable lleva la hora, y la hora se puede editar.** Por eso un bloque
+editado lleva `claveBase`, la clave original: su estado, su «quitar» y su icono
+de nube siguen colgados de ella. Sin eso, cambiar la hora de algo reservado lo
+dejaba por reservar. Un bloque **sin** cambios sale idéntico al del archivo, sin
+campos añadidos; hay una prueba que lo exige.
+
+## Reordenar intercambia huecos
+
+Arrastrar el museo antes del restaurante no inventa horas: **las horas se quedan
+donde estaban y las actividades se mueven entre ellas**. Si había palacio a las
+9:00, restaurante a las 12:00 y museo a las 15:00, el museo pasa a las 12:00 y el
+restaurante a las 15:00. Cada una conserva su duración, así que el hueco puede
+quedarle corto o largo, y eso se ve en lugar de corregirlo en silencio.
+
+- Se arrastra por un asa, con las mismas reglas que la hoja (respuesta en
+  `pointerdown`, captura inmediata, seguimiento 1:1), y hay **flechas para
+  teclado** o para quien no arrastra. El gesto nunca es la única vía.
+- **Los traslados del plan que dejan de unir actividades vecinas se marcan como
+  desfasados** y no se pintan, no se suman al resumen ni entran en la ruta de
+  Google Maps: su duración y su distancia eran de otro recorrido. En su lugar
+  sale un «Cómo llegar» **sin duración**.
+- **Solo entre actividades que en el archivo no iban seguidas.** El funicular y
+  la torre están uno junto al otro y nunca tuvieron traslado; ponerles uno por
+  haber movido otra cosa sería ruido. El orden original sale de la propia clave
+  estable, que lleva la fecha y la hora del archivo.
+- «Volver al orden del archivo» deshace las horas. Una actividad añadida no tiene
+  archivo al que volver, y por eso guarda su hora de antes la primera vez que se
+  mueve.
+
+## Reservas con localizador, y gastos
+
+Una reserva es una ficha propia —hotel, vuelo, tren, restaurante, actividad— con
+fecha, hora, dirección, número de reserva, web y notas. **El localizador va en
+grande y con «Copiar»**, porque es lo que se enseña en un mostrador o se pega con
+prisa en la web de la aerolínea.
+
+- **Vincular una reserva a una actividad la marca como reservada.** Pedir además
+  que se marque sería hacer lo mismo dos veces.
+- **Un hotel cubre los días de su estancia**: sale en la banda de reservas de
+  cada día entre la entrada y la salida, que es cuando hace falta la dirección.
+- Borrar es marcar `borrado`, no quitar de la lista: si se quitara, la copia de la
+  nube la haría volver al fundir.
+
+Los gastos son apuntes con importe, concepto, categoría y día. **Se suman en
+céntimos**, porque 0,1 + 0,2 en coma flotante da 0,30000000000000004, y eso
+acaba en pantalla. La vista de gastos es una cifra, un reparto por categoría y el
+día a día. El reparto va en barras finas **de un solo color**: la categoría ya la
+dice su nombre, y cada fila lleva su importe escrito, así que la lista es también
+la tabla y ningún valor depende de pasar el ratón.
+
+## Una categoría más: actividad
+
+Las visitas guiadas, las clases y los espectáculos no son patrimonio ni un sitio
+que se ve: son algo que se hace. Tienen categoría propia, con su color (verde
+azulado, 5,5:1 de contraste en claro y 8,1:1 en oscuro), en la aplicación, en el
+esquema y en el validador. Los tipos de actividad del formulario son una tabla en
+`js/actividades.js`: un tipo nuevo es una fila.
+
 ## El resumen del día solo dice lo que el itinerario sabe
 
 Actividades, horario, cuánto se anda y cuánto se va en transporte, cuánto

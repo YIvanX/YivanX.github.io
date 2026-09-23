@@ -620,3 +620,190 @@
 .crear__error { color: var(--error-t); font-weight: 600; }
 .crear__error:empty { display: none; }
 @media (pointer: coarse) { .crear .campo input, .crear .campo select { min-height: 44px; font-size: 1rem; } }
+
+/* =========================================================================
+   Planificar: editor, ordenar, reservas y gastos
+   ========================================================================= */
+
+/* --- Los formularios --------------------------------------------------------- */
+.editor { max-height: min(90dvh, 760px); }
+.editor__cuerpo { flex: 1 1 auto; min-height: 0; }
+.editor__campos { display: grid; grid-template-columns: 1fr 1fr; gap: var(--e3); padding: 0 var(--e4) var(--e4); }
+.editor__campos [hidden] { display: none !important; }
+.editor__buscar { border: 1px solid var(--borde); border-radius: var(--r-m); padding: 0 var(--e3); margin-top: 4px; }
+.editor__buscar input { min-height: 40px; }
+.editor__elegido { margin-top: 6px; }
+.editor__resultados:empty { display: none; }
+.editor__resultados { margin-top: 4px; border: 1px solid var(--borde); border-radius: var(--r-m); max-height: 220px; overflow-y: auto; }
+.editor__mapa { justify-self: start; margin-top: 4px; padding-left: 0; }
+.editor__fijo { margin-top: 4px; font-size: 0.9375rem; }
+.editor__localizador { font-family: var(--mono); letter-spacing: 0.06em; text-transform: uppercase; }
+.editor__importe { font-size: 1.25rem !important; font-variant-numeric: tabular-nums; }
+.editor .campo textarea {
+  padding: 8px 10px;
+  border: 1px solid var(--borde);
+  border-radius: var(--r-m);
+  background: var(--superficie);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+.editor .campo textarea:focus { outline: none; border-color: var(--acento); }
+.editor .campo input, .editor .campo select { min-width: 0; }
+
+/* Radios con icono: cada opción es un objetivo de 40 px o más, con su nombre escrito. */
+.opciones-icono { border: 0; margin: 0; padding: 0; min-width: 0; }
+.opciones-icono legend { padding: 0; margin-bottom: 6px; color: var(--tinta-suave); }
+.opciones-icono__lista { display: flex; flex-wrap: wrap; gap: 6px; }
+.opcion-icono { position: relative; }
+.opcion-icono input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.opcion-icono span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 6px 12px;
+  border: 1px solid var(--borde);
+  border-radius: var(--r-pill);
+  background: var(--superficie);
+  color: var(--tinta-media);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: background-color var(--t-rapido) ease, border-color var(--t-rapido) ease, color var(--t-rapido) ease;
+}
+.opcion-icono span svg { width: 15px; height: 15px; }
+.opcion-icono input:checked + span { border-color: var(--acento); background: var(--acento-velo); color: var(--acento); }
+.opcion-icono input:focus-visible + span { outline: 2px solid var(--acento); outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) { .opcion-icono:hover span { border-color: var(--borde-fuerte); color: var(--tinta); } }
+@media (pointer: coarse) { .opcion-icono span { min-height: 44px; } }
+
+.casilla { display: inline-flex; align-items: center; gap: var(--e2); margin-top: var(--e3); min-height: 44px; font-size: 0.875rem; cursor: pointer; }
+.casilla input { width: 18px; height: 18px; accent-color: var(--acento); }
+
+/* --- La ficha: su plan ---------------------------------------------------------- */
+.plan { display: grid; gap: var(--e2); margin-bottom: var(--e4); }
+.plan__acciones { display: flex; flex-wrap: wrap; gap: var(--e2); }
+.plan__gastos { display: inline-flex; align-items: center; gap: 6px; }
+.plan__gastos svg { width: 14px; height: 14px; }
+.plan__gastos b { color: var(--tinta); }
+
+/* --- Ordenar ----------------------------------------------------------------------- */
+.filtro--accion { gap: 6px; margin-left: auto; border-style: dashed; }
+.filtro--accion svg { width: 14px; height: 14px; }
+
+.ordenar { padding: 0 var(--e4) var(--e4); }
+.ordenar > .etiqueta { color: var(--tinta-suave); }
+.ordenar > .menudo { margin-top: 4px; }
+.ordenar__lista { display: grid; gap: 6px; margin-top: var(--e3); }
+.ordenar__fila {
+  display: grid;
+  grid-template-columns: 44px 48px 1fr 44px 44px;
+  align-items: center;
+  min-height: 52px;
+  padding-right: 4px;
+  border: 1px solid var(--borde);
+  border-radius: var(--r-m);
+  background: var(--superficie);
+  transition: transform var(--t-medio) var(--sal), box-shadow var(--t-medio) var(--sal);
+}
+.ordenar__fila--arrastrando { position: relative; z-index: 2; transition: none; box-shadow: var(--sombra-3); border-color: var(--acento); }
+.ordenar__asa {
+  display: grid; place-items: center;
+  height: 100%;
+  color: var(--tinta-suave);
+  cursor: grab;
+  touch-action: none;
+}
+.ordenar__fila--arrastrando .ordenar__asa { cursor: grabbing; color: var(--acento); }
+.ordenar__asa svg { width: 18px; height: 18px; }
+.ordenar__hora { font-family: var(--mono); font-size: 0.75rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.ordenar__nombre { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.875rem; font-weight: 600; }
+.ordenar__flecha svg { width: 16px; height: 16px; }
+.ordenar__flecha--sube svg { transform: rotate(180deg); }
+.ordenar__pie { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: var(--e2); margin-top: var(--e4); }
+@media (prefers-reduced-motion: reduce) { .ordenar__fila { transition: none; } }
+
+.bloque--libre .conector { color: var(--tinta-suave); }
+
+/* --- Reservas con localizador ------------------------------------------------------- */
+.reservas-acciones { display: flex; flex-wrap: wrap; gap: var(--e2); margin-top: var(--e3); }
+.reservas-fichas { display: grid; gap: var(--e3); margin-top: var(--e3); }
+.reserva-ficha {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: var(--e3);
+  padding: var(--e3) var(--e4);
+  border: 1px solid var(--borde);
+  border-radius: var(--r-l);
+  background: var(--superficie);
+}
+.reserva-ficha--compacta { padding: var(--e3); border-radius: var(--r-m); }
+.bandas .reserva-ficha + .reserva-ficha { margin-top: var(--e2); }
+.reserva-ficha__icono {
+  display: grid; place-items: center;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--ok-f);
+  color: var(--ok-t);
+}
+.reserva-ficha__icono svg { width: 17px; height: 17px; }
+.reserva-ficha__cuerpo { display: grid; gap: 4px; min-width: 0; }
+.reserva-ficha__tipo { color: var(--tinta-suave); }
+.reserva-ficha__cuerpo .menudo { display: flex; align-items: center; gap: 5px; }
+.reserva-ficha__cuerpo .menudo svg { width: 13px; height: 13px; flex: 0 0 13px; }
+.reserva-ficha__notas { font-size: 0.8125rem; line-height: 1.5; color: var(--tinta-media); }
+.reserva-ficha__acciones { display: flex; flex-wrap: wrap; gap: 4px; margin-left: -12px; }
+.reserva-ficha__acciones .boton { min-height: 36px; }
+
+.localizador {
+  display: flex;
+  align-items: center;
+  gap: var(--e2);
+  margin: 2px 0;
+  padding: 6px 6px 6px 12px;
+  border-radius: var(--r-m);
+  background: var(--superficie-2);
+}
+.localizador__codigo {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-family: var(--mono);
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--tinta);
+  user-select: all;
+}
+.localizador__copiar { min-height: 36px; }
+
+/* --- Gastos --------------------------------------------------------------------------- */
+/* La cifra en la misma sans que el resto y con cifras proporcionales: a este
+   tamaño, las de ancho fijo hacen que «121» parezca suelto. */
+.gastos-cifra { display: grid; gap: 2px; margin-top: var(--e3); }
+.gastos-cifra__valor { font-family: var(--sans); font-size: 2.25rem; font-weight: 650; line-height: 1.1; letter-spacing: -0.02em; }
+
+.reparto { display: grid; gap: var(--e3); margin-top: var(--e3); }
+.reparto__fila { display: grid; grid-template-columns: 1fr auto; gap: 4px var(--e3); align-items: baseline; }
+.reparto__nombre { display: inline-flex; align-items: center; gap: 6px; font-size: 0.875rem; font-weight: 600; }
+.reparto__nombre svg { width: 15px; height: 15px; color: var(--tinta-suave); }
+.reparto__valor { font-size: 0.875rem; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.reparto__barra { grid-column: 1 / -1; display: block; height: 6px; border-radius: var(--r-pill); background: var(--superficie-3); overflow: hidden; }
+.reparto__barra i { display: block; height: 100%; border-radius: var(--r-pill); background: var(--acento); }
+
+.gastos-dias li, .apunte { display: flex; align-items: center; gap: var(--e3); padding: 10px 0; border-bottom: 1px solid var(--borde); }
+.gastos-dias li:last-child, .apunte:last-child { border-bottom: 0; }
+.gastos-dias a { flex: 1; color: inherit; font-size: 0.875rem; }
+.gastos-dias b, .apunte__importe { font-variant-numeric: tabular-nums; font-weight: 650; white-space: nowrap; }
+.apunte__icono { display: grid; place-items: center; width: 32px; height: 32px; flex: 0 0 32px; border-radius: 50%; background: var(--superficie-2); color: var(--tinta-media); }
+.apunte__icono svg { width: 15px; height: 15px; }
+.apunte__texto { display: grid; flex: 1; min-width: 0; }
+.apunte__texto .titulo-3 { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+@media (max-width: 480px) {
+  .editor__campos { grid-template-columns: 1fr; }
+  .editor__campos .campo { grid-column: 1 / -1; }
+}
+
+/* El buscador ya lleva su propio borde: el del campo general sobraba y salía doble. */
+.editor .editor__buscar input { border: 0; padding-left: 0; background: none; min-height: 40px; }

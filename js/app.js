@@ -17,6 +17,7 @@
  *   #/v/<viaje>/hoy                 lo que toca hoy, pensado para la calle
  *   #/v/<viaje>/mapa?d=<día>        el mapa a pantalla completa
  *   #/v/<viaje>/reservas            lo reservado y lo que falta por reservar
+ *   #/v/<viaje>/gastos              lo gastado, por categoría y por día
  *
  * Se entra a un viaje por lo que se va a mirar, no por su portada. Durante el
  * viaje eso es **Hoy**: se abre veinte veces al día para ver qué toca ahora, y
@@ -56,7 +57,7 @@ function analizar(hash) {
   // `info` era el nombre viejo de la portada. Se mantiene para no dejar muerto
   // ningún enlace ya compartido.
   if (seccion === 'info') return { nombre: 'viaje', viajeId, vista: 'portada', fecha: null };
-  if (['transporte', 'listas', 'portada', 'hoy', 'mapa', 'reservas'].includes(seccion)) {
+  if (['transporte', 'listas', 'portada', 'hoy', 'mapa', 'reservas', 'gastos'].includes(seccion)) {
     return { nombre: 'viaje', viajeId, vista: seccion, fecha: params.get('d') || null };
   }
   // Sin sección: la decide la vista del viaje, que es quien sabe si está en curso.

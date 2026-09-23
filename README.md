@@ -26,6 +26,14 @@ destino escrito en el código, así que el siguiente viaje no toca ni una línea
   itinerario: las distancias se leen de los traslados, no se inventan.
 - **Se crea un viaje desde la portada**, con destino y fechas. Vive en el
   navegador y se publica en la nube para compartirlo.
+- **Cada actividad se crea y se edita en un formulario**: tipo (lugar,
+  restaurante, hotel, actividad, transporte, vuelo o nota), sitio, día, hora,
+  duración, coste, web, notas, estado y si pide reserva. Lo que viene del
+  archivo se edita sin tocar el archivo.
+- **Se reordena el día arrastrando** o con flechas: cada actividad toma la hora
+  del hueco al que va, y la ruta y el mapa se rehacen.
+- **Reservas con su número**, a mano o desde una actividad, y **gastos** por
+  categoría y por día.
 - **Cronología del día y mapa sincronizados.** Pasar por un bloque resalta su
   marcador; tocar un marcador lleva al bloque. Las paradas van numeradas en el
   orden real del día y unidas por el trazo del recorrido.
@@ -100,7 +108,7 @@ para las herramientas de línea de comandos.
 ```bash
 node herramientas/servir.mjs                 # http://localhost:8080/
 node herramientas/validar.mjs                # revisa todos los viajes
-npm run probar                               # 159 pruebas: horarios, capa, nube, sincronización, agenda, actividades
+npm run probar                               # 186 pruebas: horarios, capa, nube, sincronización, agenda, actividades, planificación
 
 node herramientas/nuevo-viaje.mjs <id> "<Título>" <inicio> <fin> [--desde <viaje>]
 node herramientas/coordenadas.mjs --area "<ciudad>" "<lugar>"…
@@ -141,7 +149,7 @@ js/
   personalizacion.js    capa de paradas añadidas y quitadas (puro, con pruebas)
   nube.js               Supabase por HTTP plano, sin SDK. Opcional
   vistas/               registro · perfil · viaje · panel · hoy
-  ui/                   dom · hoja arrastrable · buscador · buscar-lugar · tema · avisos
+  ui/                   dom · hoja arrastrable · buscador · buscar-lugar · editores · tema · avisos
                         (dom.js exporta el muelle, la proyección de inercia y la
                          goma elástica que usan la hoja y el gesto de cambiar de día)
 vendor/leaflet/         Leaflet 1.9.4, local
