@@ -684,12 +684,14 @@ export async function montarViaje(raiz, ruta) {
   // del viaje, y viven en `#/perfil`. Lo que queda aquí es lo de **este** viaje.
   alPulsar(cuerpo, '[data-accion="sincronizar"]', async () => {
     try {
-      // Ida y vuelta completa, en este orden a propósito: lo personal sube y
-      // baja —fundiendo, nunca pisando—, y el itinerario compartido sube al
-      // final para que salga con la capa ya fundida dentro.
-      await nube.guardarEstado(viaje.id, estado.estadoDe(viaje.id));
-      estado.fusionarRemoto(viaje.id, await sincronizacion.bajarEstado(viaje.id));
-
+      // Ida y vuelta completa, en este orden a propósito. Primero, que el viaje
+      // exista en la nube: la política de `estado_personal` exige ser miembro
+      // del viaje, y sin fila en `viajes` no hay miembros. Con lo personal
+      // delante, un viaje sin publicar daba «new row violates row-level
+      // security policy» y el error cortaba antes de llegar a publicarlo, así
+      // que no se publicaba nunca. Después lo personal sube y baja —fundiendo,
+      // nunca pisando—, y el itinerario compartido va al final.
+      let recien = null;
       if (versionNubeDe(viaje.id) === null) {
         // No basta con que la carga no trajera versión: pudo rendirse por tiempo
         // con el proyecto despertando, y entonces el viaje SÍ está en la nube.
@@ -699,8 +701,7 @@ export async function montarViaje(raiz, ruta) {
         if (yaEsta) {
           fijarVersionNube(viaje.id, yaEsta.versionNube);
           fijarCapaSubida(viaje.id, sincronizacion.separar(yaEsta).capa || capaVacia());
-          trasGuardar();
-          await guardarEnNube();
+          recien = 'encontrado';
         } else {
           // Publicar el viaje es un acto explícito, y este botón es dónde se hace.
           const capa = estado.capaDe(viaje.id);
@@ -709,9 +710,19 @@ export async function montarViaje(raiz, ruta) {
           );
           fijarVersionNube(viaje.id, creado.versionNube);
           fijarCapaSubida(viaje.id, capa);
-          trasGuardar();
-          brindis('Viaje publicado en la nube. Ya se puede compartir.', { tipo: 'ok', duracion: 5000 });
+          recien = 'publicado';
         }
+      }
+
+      await nube.guardarEstado(viaje.id, estado.estadoDe(viaje.id));
+      estado.fusionarRemoto(viaje.id, await sincronizacion.bajarEstado(viaje.id));
+
+      if (recien === 'publicado') {
+        trasGuardar();
+        brindis('Viaje publicado en la nube. Ya se puede compartir.', { tipo: 'ok', duracion: 5000 });
+      } else if (recien === 'encontrado') {
+        trasGuardar();
+        await guardarEnNube();
       } else if (viaje.pendientes) {
         await guardarEnNube();
       } else {
