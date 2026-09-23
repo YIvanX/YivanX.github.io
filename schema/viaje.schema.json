@@ -155,7 +155,7 @@
       "description": "[latitud, longitud] en grados decimales. Latitud −90..90, longitud −180..180."
     },
     "categoria": {
-      "enum": ["patrimonio", "naturaleza", "comida", "pueblo", "transporte", "alojamiento", "practico"],
+      "enum": ["patrimonio", "naturaleza", "comida", "pueblo", "transporte", "alojamiento", "practico", "actividad"],
       "description": "Determina el color y el icono. El color solo significa categoría: nunca se usa para decorar."
     },
     "modo": {

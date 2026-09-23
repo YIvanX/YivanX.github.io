@@ -15,7 +15,68 @@
  * visita, `lugarDesde` y `lugarHasta` en cada traslado, y `claveActividad`.
  */
 
-import { aMinutos } from './horarios.js';
+import { aMinutos, aHora } from './horarios.js';
+
+// --- Tipos de actividad -----------------------------------------------------
+
+/**
+ * Los tipos con los que se crea una actividad. **Ampliable**: un tipo nuevo es
+ * una entrada aquí, con su icono del juego de `index.html` y la categoría del
+ * lugar que le corresponde, que es la que decide el color en el mapa.
+ *
+ * `bloque` dice qué es en el itinerario: casi todo es una visita —estar en un
+ * sitio—, y una nota es un hito, que no apunta a ningún lugar.
+ * `categoria: null` deja elegirla: un «lugar» puede ser un monumento o un monte.
+ */
+export const TIPOS = {
+  lugar:       { etiqueta: 'Lugar',       icono: 'pin',         bloque: 'visita', categoria: null },
+  restaurante: { etiqueta: 'Restaurante', icono: 'comida',      bloque: 'visita', categoria: 'comida' },
+  hotel:       { etiqueta: 'Hotel',       icono: 'alojamiento', bloque: 'visita', categoria: 'alojamiento' },
+  actividad:   { etiqueta: 'Actividad',   icono: 'entrada',     bloque: 'visita', categoria: 'actividad' },
+  transporte:  { etiqueta: 'Transporte',  icono: 'transporte',  bloque: 'visita', categoria: 'transporte' },
+  vuelo:       { etiqueta: 'Vuelo',       icono: 'avion',       bloque: 'visita', categoria: 'transporte' },
+  nota:        { etiqueta: 'Nota',        icono: 'nota',        bloque: 'hito',   categoria: null },
+};
+
+/**
+ * El tipo de un bloque. El que se eligió al crearlo, si se eligió; si no —todo
+ * lo que viene del archivo—, el que se deduce de la categoría de su lugar.
+ */
+export function tipoDeBloque(b) {
+  if (b?.tipoActividad && TIPOS[b.tipoActividad]) return b.tipoActividad;
+  if (b?.tipo === 'hito') return 'nota';
+  const cat = b?.lugar?.categoria;
+  if (cat === 'comida') return 'restaurante';
+  if (cat === 'alojamiento') return 'hotel';
+  if (cat === 'transporte') return 'transporte';
+  if (cat === 'actividad') return 'actividad';
+  return 'lugar';
+}
+
+/** Cuánto dura: lo que diga la actividad, o si no el tiempo de visita del lugar. */
+export function duracionDeBloque(b) {
+  if (typeof b?.duracionMin === 'number') return b.duracionMin;
+  const span = aMinutos(b?.fin) - aMinutos(b?.inicio);
+  if (b?.propio && Number.isFinite(span) && span > 0) return span;
+  return b?.lugar?.duracionMin ?? (Number.isFinite(span) && span > 0 ? span : null);
+}
+
+/**
+ * Lo guardado que decide el estado de una actividad, sacado de sus dos sitios:
+ * `visitados` del estado personal y estados y reservas de la capa compartida.
+ * Una sola función para que la cronología, Hoy, Reservas y la portada no
+ * puedan discrepar sobre qué está reservado.
+ */
+export function guardadoDe(estadoPersonal, capa) {
+  return {
+    visitados: estadoPersonal?.visitados || {},
+    estados: capa?.estados || {},
+    reservas: vivas(capa?.reservas),
+  };
+}
+
+/** Las entradas de una lista que no están borradas. Borrar es marcar, para poder fundir. */
+export const vivas = (lista) => (lista || []).filter((x) => x && !x.borrado);
 
 // --- Estados ---------------------------------------------------------------
 
@@ -66,11 +127,14 @@ export const necesitaReserva = (b) => Boolean(b?.reserva?.necesaria || b?.lugar?
  * @param {object} visitados  De `estadoDe(viaje).visitados`: por id de lugar.
  * @param {object} estados    De `capa.estados`: por clave de actividad.
  */
-export function estadoDeActividad(bloque, { visitados = {}, estados = {} } = {}) {
+export function estadoDeActividad(bloque, { visitados = {}, estados = {}, reservas = [] } = {}) {
   const guardado = estados?.[bloque?.claveActividad]?.estado || null;
   if (guardado === 'cancelado') return 'cancelado';
   if (bloque?.lugar && visitados?.[bloque.lugar.id]) return 'hecho';
   if (guardado === 'reservado') return 'reservado';
+  // Una reserva apuntada con su localizador y vinculada a la actividad ya dice
+  // que está reservada: pedir además que se marque sería hacer lo mismo dos veces.
+  if (bloque?.claveActividad && reservas.some((r) => !r.borrado && r.actividad === bloque.claveActividad)) return 'reservado';
   if (necesitaReserva(bloque)) return 'requiere-reserva';
   return 'pendiente';
 }
@@ -144,7 +208,7 @@ export function resumenDelDia(dia, guardado = {}) {
   let tramosAPie = 0;
   let metrosAPie = 0;
   let aPieSinDistancia = 0;
-  for (const t of bloques.filter((b) => b.tipo === 'traslado')) {
+  for (const t of bloques.filter((b) => b.tipo === 'traslado' && !b.desfasado)) {
     const min = minutosDe(t);
     const modo = t.modo || 'otro';
     porModo.set(modo, (porModo.get(modo) || 0) + min);
@@ -230,7 +294,7 @@ export function momentoDelDia(dia, minutos, guardado = {}) {
   // Cómo se llega a lo siguiente: el traslado del itinerario que acaba allí y
   // empieza después de lo actual. Da el modo para el enlace de Google Maps.
   const llegada = siguiente
-    ? bloques.find((b) => b.tipo === 'traslado' && b.lugarHasta?.id === siguiente.lugar.id
+    ? bloques.find((b) => b.tipo === 'traslado' && !b.desfasado && b.lugarHasta?.id === siguiente.lugar.id
         && aMinutos(b.inicio) <= aMinutos(siguiente.inicio) && aMinutos(b.fin) >= minutos - 1) || null
     : null;
 
@@ -285,4 +349,98 @@ export function recorridoDelViaje(viaje, max = 3) {
     }
   }
   return { zonas: zonas.slice(0, max), mas: Math.max(0, zonas.length - max) };
+}
+
+// --- Reordenar ----------------------------------------------------------------
+
+/**
+ * Reordena las actividades de un día **intercambiando sus huecos**: las horas
+ * se quedan donde estaban y las actividades se mueven. Si a las 09:00 había
+ * palacio, a las 12:00 restaurante y a las 15:00 museo, y el museo sube al
+ * segundo puesto, a las 12:00 va el museo y a las 15:00 el restaurante.
+ *
+ * Cada actividad conserva su duración, así que el hueco puede quedarle corto o
+ * largo: se dice en pantalla, no se corrige inventando traslados.
+ *
+ * @param {object[]} actividades  Las actividades del día, en su orden actual.
+ * @param {string[]} orden        Sus `claveActividad` en el orden nuevo.
+ * @returns {{bloque:object, inicio:string, fin:?string}[]} Solo las que cambian.
+ */
+export function reordenarPorHuecos(actividades, orden) {
+  const porClave = new Map(actividades.map((b) => [b.claveActividad, b]));
+  if (orden.length !== actividades.length || orden.some((k) => !porClave.has(k))) {
+    throw new Error('El orden nuevo no tiene las mismas actividades que el día');
+  }
+  const huecos = actividades.map((b) => b.inicio).filter(Boolean).sort();
+  if (huecos.length !== actividades.length) throw new Error('Para reordenar, todas las actividades del día necesitan hora');
+
+  const cambios = [];
+  orden.forEach((clave, i) => {
+    const b = porClave.get(clave);
+    const inicio = huecos[i];
+    if (inicio === b.inicio) return;
+    const dura = aMinutos(b.fin) - aMinutos(b.inicio);
+    const fin = Number.isFinite(dura) && dura > 0 ? aHora(aMinutos(inicio) + dura) : null;
+    cambios.push({ bloque: b, inicio, fin });
+  });
+  return cambios;
+}
+
+// --- Reservas -------------------------------------------------------------------
+
+export const TIPOS_RESERVA = {
+  hotel:       { etiqueta: 'Hotel',       icono: 'alojamiento' },
+  vuelo:       { etiqueta: 'Vuelo',       icono: 'avion' },
+  tren:        { etiqueta: 'Tren',        icono: 'tren' },
+  restaurante: { etiqueta: 'Restaurante', icono: 'comida' },
+  actividad:   { etiqueta: 'Actividad',   icono: 'entrada' },
+  otro:        { etiqueta: 'Otra',        icono: 'nota' },
+};
+
+/** Las reservas vivas, ordenadas como se usan: por fecha y hora, lo que no tiene fecha al final. */
+export function reservasOrdenadas(reservas) {
+  return vivas(reservas).sort((a, b) => `${a.fecha || '9'}${a.hora || ''}`.localeCompare(`${b.fecha || '9'}${b.hora || ''}`));
+}
+
+/** Las de un día: las que caen en él, y las de hotel que lo cubren entre la entrada y la salida. */
+export function reservasDelDia(reservas, fecha) {
+  return reservasOrdenadas(reservas).filter((r) => r.fecha === fecha || (r.hasta && r.fecha <= fecha && fecha <= r.hasta));
+}
+
+// --- Gastos -----------------------------------------------------------------------
+
+export const CATEGORIAS_GASTO = {
+  transporte:  { etiqueta: 'Transporte',  icono: 'transporte' },
+  comida:      { etiqueta: 'Comida',      icono: 'comida' },
+  hotel:       { etiqueta: 'Hotel',       icono: 'alojamiento' },
+  actividades: { etiqueta: 'Actividades', icono: 'entrada' },
+  otros:       { etiqueta: 'Otros',       icono: 'nota' },
+};
+
+/**
+ * Lo gastado, sumado por categoría y por día. Si viene `fecha`, solo ese día.
+ * Los importes se suman en céntimos: sumar 0,1 + 0,2 en coma flotante da
+ * 0,30000000000000004, y eso acaba enseñándose.
+ */
+export function resumenDeGastos(gastos, { fecha = null } = {}) {
+  const lista = vivas(gastos).filter((g) => typeof g.importe === 'number' && (!fecha || g.fecha === fecha));
+  const centimos = (n) => Math.round(n * 100);
+  const porCategoria = {};
+  const porDia = {};
+  let total = 0;
+  for (const g of lista) {
+    const c = centimos(g.importe);
+    total += c;
+    const cat = CATEGORIAS_GASTO[g.categoria] ? g.categoria : 'otros';
+    porCategoria[cat] = (porCategoria[cat] || 0) + c;
+    if (g.fecha) porDia[g.fecha] = (porDia[g.fecha] || 0) + c;
+  }
+  const euros = (c) => c / 100;
+  return {
+    total: euros(total),
+    cuantos: lista.length,
+    porCategoria: Object.entries(porCategoria).map(([categoria, c]) => ({ categoria, importe: euros(c) }))
+      .sort((a, b) => b.importe - a.importe),
+    porDia: Object.fromEntries(Object.entries(porDia).map(([f, c]) => [f, euros(c)])),
+  };
 }

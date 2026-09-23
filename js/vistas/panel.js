@@ -26,7 +26,7 @@ import {
   describirCielo, tiempoDelDia, resumenDelTiempo, alcanceDeFecha, desdeCuando, HORIZONTE,
 } from '../tiempo.js';
 import {
-  ESTADOS, FILTROS, estadoDeActividad, pasaFiltro, cuentasPorFiltro, resumenDelDia, esActividad,
+  ESTADOS, FILTROS, estadoDeActividad, pasaFiltro, cuentasPorFiltro, resumenDelDia, esActividad, guardadoDe,
 } from '../actividades.js';
 
 const minutosAhora = () => { const d = new Date(); return d.getHours() * 60 + d.getMinutes(); };
@@ -635,7 +635,7 @@ export function pintarDia(viaje, dia, estado, {
   const intensidad = INTENSIDADES[dia.intensidad] || INTENSIDADES.suave;
   const esHoy = dia.fecha === aIso(new Date());
   const ahora = minutosAhora();
-  const actividad = { visitados: estado.visitados, estados: capa?.estados || {} };
+  const actividad = guardadoDe(estado, capa);
   const resumen = resumenDelDia(dia, actividad);
   const cuentas = cuentasPorFiltro(dia, actividad);
   const filtrando = filtro !== 'todas' && FILTROS[filtro];
@@ -782,7 +782,7 @@ export function pintarFicha(viaje, lugar, estado, { fecha, bloqueActual = null, 
         ${visitado ? crudo('<span class="chip chip--ok">Visitado</span>') : ''}
       </div>
 
-      ${bloqueActual ? selectorDeEstado(bloqueActual, estadoDeActividad(bloqueActual, { visitados: estado.visitados, estados: capa?.estados || {} })) : ''}
+      ${bloqueActual ? selectorDeEstado(bloqueActual, estadoDeActividad(bloqueActual, guardadoDe(estado, capa))) : ''}
 
       <p class="ficha__resumen">${lugar.resumen}</p>
 
@@ -982,7 +982,7 @@ function filaDeReserva(viaje, dia, bloque, e) {
  * el coche de alquiler— van debajo, porque también son algo que se reserva.
  */
 export function pintarReservas(viaje, estado, { capa = null } = {}) {
-  const actividad = { visitados: estado.visitados, estados: capa?.estados || {} };
+  const actividad = guardadoDe(estado, capa);
   const porReservar = [];
   const reservadas = [];
   for (const dia of viaje.dias) {

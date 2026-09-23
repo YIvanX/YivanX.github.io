@@ -73,8 +73,13 @@ export function fusionarCapas(a, b) {
   const lugares = new Map();
   for (const l of [...(A.lugares || []), ...(B.lugares || [])]) if (l?.id) lugares.set(l.id, l);
 
+  // Un bloque añadido se puede editar desde los dos móviles: gana la versión
+  // más reciente. Los que no tienen marca (anteriores a poder editarlos) empatan
+  // y se quedan como estaban.
   const bloques = new Map();
-  for (const x of [...(A.bloques || []), ...(B.bloques || [])]) if (x?.id) bloques.set(x.id, x);
+  for (const x of [...(A.bloques || []), ...(B.bloques || [])]) {
+    if (x?.id) bloques.set(x.id, bloques.has(x.id) ? masReciente(bloques.get(x.id), x) : x);
+  }
 
   // Un lugar que ya no usa ningún bloque sobra: si no se limpia, la lista de
   // lugares crece para siempre a base de fundir.
@@ -88,6 +93,7 @@ export function fusionarCapas(a, b) {
     estados: fusionarPorTiempo(A.estados, B.estados),
     reservas: fusionarListaPorTiempo(A.reservas, B.reservas),
     gastos: fusionarListaPorTiempo(A.gastos, B.gastos),
+    cambios: fusionarPorTiempo(A.cambios, B.cambios),
   };
 }
 
@@ -186,12 +192,17 @@ export function contarPendientes(local, subida) {
   const ocultosLocales = new Set(L.ocultos || []);
 
   const anadidos = (L.bloques || []).filter((b) => !idsSubidos.has(b.id)).length;
+  const editados = (L.bloques || []).filter((b) => {
+    const s = (S.bloques || []).find((x) => x.id === b.id);
+    return s && JSON.stringify(s) !== JSON.stringify(b);
+  }).length;
   const borrados = (S.bloques || []).filter((b) => !(L.bloques || []).some((x) => x.id === b.id)).length;
   const quitados = [...ocultosLocales].filter((c) => !ocultosSubidos.has(c)).length;
   const restaurados = [...ocultosSubidos].filter((c) => !ocultosLocales.has(c)).length;
 
-  return anadidos + borrados + quitados + restaurados
+  return anadidos + editados + borrados + quitados + restaurados
     + difierenPorTiempo(L.estados, S.estados)
+    + difierenPorTiempo(L.cambios, S.cambios)
     + difierenListas(L.reservas, S.reservas)
     + difierenListas(L.gastos, S.gastos);
 }
@@ -209,6 +220,8 @@ export function difieren(a, b) {
   const A = normalizarCapa(a);
   const B = normalizarCapa(b);
   return norm(a) !== norm(b)
+    || difierenListas(A.bloques, B.bloques) > 0
+    || difierenPorTiempo(A.cambios, B.cambios) > 0
     || difierenPorTiempo(A.estados, B.estados) > 0
     || difierenListas(A.reservas, B.reservas) > 0
     || difierenListas(A.gastos, B.gastos) > 0;

@@ -150,6 +150,7 @@
 .chip--transporte  { background: var(--cat-transporte-f);  color: var(--cat-transporte-t); }
 .chip--alojamiento { background: var(--cat-alojamiento-f); color: var(--cat-alojamiento-t); }
 .chip--practico    { background: var(--cat-practico-f);    color: var(--cat-practico-t); }
+.chip--actividad   { background: var(--cat-actividad-f);   color: var(--cat-actividad-t); }
 
 .chip--ok     { background: var(--ok-f);     color: var(--ok-t); }
 .chip--alerta { background: var(--alerta-f); color: var(--alerta-t); }

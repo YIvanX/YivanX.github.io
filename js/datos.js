@@ -6,7 +6,7 @@
 import { estadoPorFecha, diasEntre, aIso } from './horarios.js';
 import { aplicarCapa, capaVacia, claveEstable } from './personalizacion.js';
 import { capaDe, guardarCapa, viajesLocales, viajeLocal, estadoDe } from './estado.js';
-import { progresoDelViaje, recorridoDelViaje } from './actividades.js';
+import { progresoDelViaje, recorridoDelViaje, guardadoDe } from './actividades.js';
 import * as sincronizacion from './sincronizacion.js';
 
 const cache = new Map();
@@ -93,7 +93,7 @@ export async function resumenDeViaje(entrada) {
   if (!bruto) return null;
   const viaje = normalizar(structuredClone(aplicarCapa(bruto, capaDe(entrada.id)).viaje), entrada, null);
   const capa = capaDe(entrada.id);
-  const guardado = { visitados: estadoDe(entrada.id).visitados, estados: capa.estados };
+  const guardado = guardadoDe(estadoDe(entrada.id), capa);
 
   // La foto de la tarjeta: la del primer sitio imprescindible del itinerario, o
   // la del primero que tenga foto. Es un sitio del viaje, no una imagen de
@@ -190,10 +190,13 @@ function normalizar(viaje, entrada, subida = null) {
       // No es `clave`, que es posicional y se corre en cuanto se añade una
       // parada: es la misma clave estable que usa la capa para ocultar, o el id
       // de lo añadido a mano.
-      b.claveActividad = bloque.propio ? `propio|${bloque.idPropio}` : claveEstable(dia.fecha, bloque);
+      // Si se editó, `claveBase` es la del archivo: la hora forma parte de la
+      // clave, y cambiarla no puede dejar el estado colgado de la vieja.
+      const claveBase = bloque.claveBase || claveEstable(dia.fecha, bloque);
+      b.claveActividad = bloque.propio ? `propio|${bloque.idPropio}` : claveBase;
       // `null` cuando no hay nube o cuando el bloque no tiene ciclo de vida en
       // ella, que es el caso de casi todos: vienen del archivo y ahí siguen.
-      b.nube = subida ? sincronizacion.estadoDeBloque(b, claveEstable(dia.fecha, bloque), subida) : null;
+      b.nube = subida ? sincronizacion.estadoDeBloque(b, claveBase, subida) : null;
       if (tipo === 'visita' && lugar) {
         orden += 1;
         b.orden = orden;
@@ -204,6 +207,14 @@ function normalizar(viaje, entrada, subida = null) {
       }
       return b;
     });
+
+    // Un día reordenado a mano deja traslados que ya no unen actividades
+    // vecinas: el que iba del palacio al restaurante, con el museo ahora en
+    // medio. Se marcan y no se pintan ni se suman, porque su duración y su
+    // distancia serían de otro recorrido. En un día sin reordenar no se mira
+    // nada: los traslados a estaciones o al alojamiento son legítimos aunque
+    // no acaben en una actividad.
+    if (bloques.some((b) => b.movido)) marcarDesfasados(bloques);
 
     // Las paradas del día en orden, sin repetir: es lo que numera el mapa y lo
     // que dibuja el trazo. Un lugar visitado dos veces el mismo día se numera
@@ -232,6 +243,28 @@ function normalizar(viaje, entrada, subida = null) {
   return viaje;
 }
 
+/**
+ * Un traslado encaja si sale de la actividad anterior y llega a la siguiente.
+ * Sin anterior —el primero del día, desde el alojamiento— basta con el destino,
+ * y sin siguiente —la vuelta a casa— basta con el origen.
+ */
+export function marcarDesfasados(bloques) {
+  const visitas = (desde, paso) => {
+    for (let i = desde; i >= 0 && i < bloques.length; i += paso) {
+      if (bloques[i].tipo === 'visita' && bloques[i].lugar) return bloques[i];
+    }
+    return null;
+  };
+  bloques.forEach((b, i) => {
+    if (b.tipo !== 'traslado') return;
+    const antes = visitas(i - 1, -1);
+    const despues = visitas(i + 1, 1);
+    const sale = !antes || !b.lugarDesde || b.lugarDesde.id === antes.lugar.id;
+    const llega = !despues || !b.lugarHasta || b.lugarHasta.id === despues.lugar.id;
+    b.desfasado = !(sale && llega);
+  });
+}
+
 /** El día que hay que abrir al entrar: hoy si el viaje está en curso, si no el primero. */
 export function diaPorDefecto(viaje) {
   const hoy = aIso(new Date());
@@ -258,6 +291,8 @@ export const CATEGORIAS = {
   transporte:  { etiqueta: 'Transporte',  icono: 'transporte' },
   alojamiento: { etiqueta: 'Alojamiento', icono: 'alojamiento' },
   practico:    { etiqueta: 'Práctico',    icono: 'practico' },
+  // Visitas guiadas, clases, espectáculos: lo que se hace, no un sitio que se ve.
+  actividad:   { etiqueta: 'Actividad',   icono: 'entrada' },
 };
 
 export const MODOS = {

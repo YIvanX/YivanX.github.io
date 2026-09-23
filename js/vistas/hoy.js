@@ -24,7 +24,7 @@ import {
 } from '../horarios.js';
 import { enlaceComoLlegar, enlaceTramo, enlaceLugar } from '../enlaces-mapa.js';
 import {
-  ESTADOS, estadoDeActividad, resumenDelDia, momentoDelDia, progresoDelViaje, esActividad,
+  ESTADOS, estadoDeActividad, resumenDelDia, momentoDelDia, progresoDelViaje, esActividad, guardadoDe,
 } from '../actividades.js';
 import { listasDe, progresoDeListas } from '../agenda.js';
 import { tiempoDelDia } from '../tiempo.js';
@@ -181,7 +181,7 @@ function listaCorta(viaje, dia, bloques, actividad) {
 
 function pintarHoyDelViaje(viaje, dia, estado, { capa, tiempo, ahora }) {
   const minutos = minutosDe(ahora);
-  const actividad = { visitados: estado.visitados, estados: capa?.estados || {} };
+  const actividad = guardadoDe(estado, capa);
   const momento = momentoDelDia(dia, minutos, actividad);
   const resumen = resumenDelDia(dia, actividad);
   const zonas = [...new Set(dia.bloques.filter(esActividad).map((b) => b.lugar.zona).filter(Boolean))];
@@ -266,7 +266,7 @@ function pintarAntes(viaje, estado, { capa, ahora }) {
   const hoy = aIso(ahora);
   const faltan = diasEntre(hoy, viaje.fechas.inicio).length - 1;
   const primero = viaje.dias[0];
-  const actividad = { visitados: estado.visitados, estados: capa?.estados || {} };
+  const actividad = guardadoDe(estado, capa);
   const progreso = progresoDelViaje(viaje, actividad);
   const listas = progresoDeListas(listasDe(viaje, 'pre'), estado.tareas);
   const primera = primero?.bloques.find((b) => Number.isFinite(aMinutos(b.inicio)));
@@ -317,7 +317,7 @@ function pintarAntes(viaje, estado, { capa, ahora }) {
 }
 
 function pintarDespues(viaje, estado, { capa }) {
-  const actividad = { visitados: estado.visitados, estados: capa?.estados || {} };
+  const actividad = guardadoDe(estado, capa);
   const progreso = progresoDelViaje(viaje, actividad);
   return html`
     <div class="hoy">
