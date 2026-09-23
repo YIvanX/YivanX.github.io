@@ -22,7 +22,7 @@
  */
 
 import { html, esc, icono, crudo, plural, $, $$, alPulsar, muelle, proyectar, gomaElastica, transicion, pulso } from '../ui/dom.js';
-import { cargarViaje, diaPorDefecto, recuadroDe, INTENSIDADES, recomponer, viajeBase, versionNubeDe, fijarVersionNube, origenDe, fijarCapaSubida, pendientesDe } from '../datos.js';
+import { cargarViaje, diaPorDefecto, recuadroDe, INTENSIDADES, recomponer, viajeBase, versionNubeDe, fijarVersionNube, origenDe, fijarCapaSubida, pendientesDe, olvidarRegistro } from '../datos.js';
 import { Mapa } from '../mapa.js';
 import { crearHoja, CONSULTA_HOJA } from '../ui/hoja.js';
 import { brindis, actualizarBrindis } from '../ui/brindis.js';
@@ -490,6 +490,7 @@ export async function montarViaje(raiz, ruta) {
         tareas: guardado.tareas,
         tiempo,
         atencion: (fecha) => diaTieneAtencion(viaje, fecha, guardado.tareas),
+        local: Boolean(estado.viajeLocal(viaje.id)),
         nube: {
           configurada: nubeLista,
           usuario: nube.usuario(),
@@ -730,6 +731,14 @@ export async function montarViaje(raiz, ruta) {
       setTimeout(() => URL.revokeObjectURL(url), 1000);
       brindis('Descargado como archivo', { tipo: 'ok' });
     }
+  });
+
+  alPulsar(cuerpo, '[data-accion="borrar-viaje"]', () => {
+    if (!confirm(`Se va a borrar «${viaje.titulo}» de este navegador, con sus actividades, estados y reservas. Si está publicado en la nube, allí sigue. No se puede deshacer.`)) return;
+    estado.borrarViajeLocal(viaje.id);
+    olvidarRegistro();
+    brindis(`«${viaje.titulo}» borrado de este navegador`, { tipo: 'ok' });
+    ir('#/');
   });
 
   alPulsar(cuerpo, '[data-accion="vaciar-capa"]', () => {

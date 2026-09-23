@@ -138,6 +138,34 @@ export function guardarPrivados(viajeId, datos) {
   avisar(viajeId);
 }
 
+// --- Viajes creados en la aplicación ----------------------------------------
+// Un viaje creado con «Crear viaje» no tiene archivo en el repositorio: su
+// documento vive aquí, con la misma forma que `data/viajes/<id>.json`, y la
+// capa, los estados y lo demás van encima igual que en cualquier otro. Para
+// que lo vea otra persona se publica en la nube desde la portada del viaje.
+
+export const viajesLocales = () => leer('viajes-locales', {});
+
+export function viajeLocal(id) {
+  return viajesLocales()[id] || null;
+}
+
+export function guardarViajeLocal(doc) {
+  const todos = viajesLocales();
+  todos[doc.id] = doc;
+  const ok = escribir('viajes-locales', todos);
+  avisar(doc.id);
+  return ok;
+}
+
+export function borrarViajeLocal(id) {
+  const todos = viajesLocales();
+  delete todos[id];
+  escribir('viajes-locales', todos);
+  try { localStorage.removeItem(`${PREFIJO}:capa:${id}`); } catch { /* nada que borrar */ }
+  avisar(id);
+}
+
 // --- Tema -----------------------------------------------------------------
 
 export const temaGuardado = () => leer('tema', 'auto');

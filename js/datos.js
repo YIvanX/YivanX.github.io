@@ -5,7 +5,8 @@
 
 import { estadoPorFecha, diasEntre, aIso } from './horarios.js';
 import { aplicarCapa, capaVacia, claveEstable } from './personalizacion.js';
-import { capaDe, guardarCapa } from './estado.js';
+import { capaDe, guardarCapa, viajesLocales, viajeLocal, estadoDe } from './estado.js';
+import { progresoDelViaje, recorridoDelViaje } from './actividades.js';
 import * as sincronizacion from './sincronizacion.js';
 
 const cache = new Map();
@@ -50,14 +51,62 @@ async function traer(ruta) {
   return res.json();
 }
 
+/**
+ * Los viajes que se enseñan: los del repositorio y los creados en este
+ * navegador. Un viaje local que choque de id con uno del repositorio se
+ * descarta: manda el archivo, igual que con los lugares de la capa.
+ */
 export async function cargarRegistro() {
   if (cache.has('registro')) return cache.get('registro');
   const registro = await traer('data/viajes.json');
-  registro.viajes = (registro.viajes || [])
+  const delRepositorio = new Set((registro.viajes || []).map((v) => v.id));
+  const locales = Object.values(viajesLocales())
+    .filter((d) => d?.id && d.fechas && !delRepositorio.has(d.id))
+    .map((d) => ({ id: d.id, titulo: d.titulo, subtitulo: d.subtitulo || '', fechas: d.fechas, estado: d.estado, local: true }));
+  registro.viajes = [...(registro.viajes || []), ...locales]
     .map((v) => ({ ...v, estadoReal: estadoPorFecha(v.fechas) }))
     .sort((a, b) => b.fechas.inicio.localeCompare(a.fechas.inicio));
   cache.set('registro', registro);
   return registro;
+}
+
+/** Para que la portada vuelva a leer el registro tras crear o borrar un viaje. */
+export function olvidarRegistro() {
+  cache.delete('registro');
+}
+
+/**
+ * Lo que enseña la tarjeta de un viaje en la portada: su foto, su recorrido y
+ * cómo va. Sale del JSON del repositorio (o del navegador) con la capa local
+ * encima, **sin pedir nada a la nube**: la portada se abre muchas veces y no
+ * puede esperar cuatro segundos por viaje a un proyecto de Supabase dormido.
+ */
+export async function resumenDeViaje(entrada) {
+  // Se guarda el documento y no el resumen: lo marcado como hecho cambia el
+  // progreso, y la portada tiene que decir el de ahora al volver a ella.
+  const clave = `portada:${entrada.id}`;
+  let bruto = entrada.local ? viajeLocal(entrada.id) : cache.get(clave);
+  if (!bruto) {
+    bruto = await traer(entrada.archivo || `data/viajes/${entrada.id}.json`);
+    cache.set(clave, bruto);
+  }
+  if (!bruto) return null;
+  const viaje = normalizar(structuredClone(aplicarCapa(bruto, capaDe(entrada.id)).viaje), entrada, null);
+  const capa = capaDe(entrada.id);
+  const guardado = { visitados: estadoDe(entrada.id).visitados, estados: capa.estados };
+
+  // La foto de la tarjeta: la del primer sitio imprescindible del itinerario, o
+  // la del primero que tenga foto. Es un sitio del viaje, no una imagen de
+  // relleno, y por eso se ve también sin conexión.
+  const conFoto = viaje.lugaresUsados.filter((l) => l.imagen);
+  const portada = conFoto.find((l) => l.nivel === 'obligatorio') || conFoto[0] || null;
+
+  return {
+    dias: viaje.dias.length,
+    progreso: progresoDelViaje(viaje, guardado),
+    recorrido: recorridoDelViaje(viaje),
+    imagen: portada ? { archivo: portada.imagen.archivo, nombre: portada.nombre, credito: portada.imagen.credito } : null,
+  };
 }
 
 export async function cargarViaje(id) {
@@ -73,7 +122,8 @@ export async function cargarViaje(id) {
   // **El repositorio se lee siempre, incluso habiendo nube.** Es el suelo: si
   // Supabase está pausado, caído o sin sesión, el viaje se abre igual. Lo que
   // hace la nube es sustituir ese documento cuando contesta, no ser la única vía.
-  let bruto = await traer(entrada.archivo || `data/viajes/${id}.json`);
+  let bruto = entrada.local ? viajeLocal(id) : await traer(entrada.archivo || `data/viajes/${id}.json`);
+  if (!bruto) throw new Error('Este viaje ya no está en este navegador');
 
   const remoto = await sincronizacion.bajarViaje(id);
   origenes.set(id, remoto.estado === 'ok' ? 'nube' : remoto.estado);

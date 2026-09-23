@@ -1192,7 +1192,7 @@ function filaDeSeccion({ url, nombreIcono, titulo, pista = '' }) {
  * es una pregunta sobre el viaje. Compartiendo caja, ninguna de las dos se leía.
  */
 export function pintarPortada(viaje, {
-  capa = null, nube = null, tareas = {}, atencion = () => false, tiempo = null,
+  capa = null, nube = null, tareas = {}, atencion = () => false, tiempo = null, local = false,
 } = {}) {
   const hoy = aIso(new Date());
   const estadoViaje = ESTADOS_VIAJE[viaje.estadoReal] || ESTADOS_VIAJE.planificado;
@@ -1321,6 +1321,18 @@ export function pintarPortada(viaje, {
           ${icono('importar')}Sincronizar ahora
         </button>`}
     </div>
+
+    ${local ? html`
+      <div class="panel__seccion">
+        <h2 class="titulo-2">Creado en este navegador</h2>
+        <p class="menudo" style="margin-top:4px">
+          Este viaje no tiene archivo en el repositorio: vive aquí${nube.version !== null ? ' y en la nube' : ''}.
+          ${nube.version === null ? 'Para que lo vea quien viaja contigo, publícalo en la nube desde la sección de arriba.' : ''}
+        </p>
+        <button type="button" class="boton boton--peligro" data-accion="borrar-viaje" style="margin-top:var(--e3)">
+          ${icono('papelera')}Borrar este viaje de este navegador
+        </button>
+      </div>` : ''}
 
     ${(() => {
       const conFoto = viaje.lugares.filter((l) => l.imagen);

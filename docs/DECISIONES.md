@@ -121,47 +121,142 @@ Cuando un cambio merezca ser permanente, «Copiar como JSON» lo deja listo para
 pegar en `data/viajes/<id>.json`. Ese es el puente entre lo efímero y el
 repositorio.
 
-## Cuatro pestañas hermanas que no eran hermanas
+## Cuatro secciones, y esta vez sí son hermanas
 
-La primera versión ponía `Itinerario · Transporte · Listas · Viaje` en una barra
-de pestañas, todas al mismo nivel. No lo estaban:
+**Historia, porque explica la decisión.** La primera versión ponía
+`Itinerario · Transporte · Listas · Viaje` en una barra de pestañas, y no eran
+hermanas: una era un día, dos eran tablas del viaje entero y la cuarta era el
+viaje que contenía a las otras tres. La barra de días desaparecía en tres de las
+cuatro, y el 21 de agosto de 2026 se quitó la barra y la jerarquía pasó a la
+cabecera, con la maleta subiendo a la portada del viaje.
 
-- **Itinerario** era **un día**.
-- **Transporte** y **Listas** eran tablas del **viaje entero**.
-- **Viaje** era el viaje que **contiene** a las otras tres, más la cuenta de
-  Supabase, más los créditos de las fotos.
+**El 23 de septiembre de 2026 vuelve una barra, con otras cuatro:
+`Hoy · Itinerario · Mapa · Reservas`.** Estas sí son hermanas: las cuatro miran
+el viaje entero desde un sitio distinto —lo que toca ahora, los días, el
+territorio, lo que hay que tener reservado— y ninguna contiene a otra. Lo decidió
+Yixuan, y la prueba de que esta vez cuadra está en la propia interfaz: la barra
+de días aparece donde tiene sentido elegir un día (Itinerario y Mapa), y ninguna
+sección pierde algo que necesita.
 
-La prueba estaba en la propia interfaz: la barra de días desaparecía en tres de
-las cuatro pestañas. La aplicación ya sabía la jerarquía correcta y la barra la
-negaba.
+- **Abajo en el móvil, arriba en escritorio.** Abajo porque es donde llega el
+  pulgar con una mano, y con la misma consulta que la hoja arrastrable: donde
+  hay hoja, hay barra abajo. En un móvil apaisado cada píxel de alto cuenta, y
+  ahí las secciones se quedan en la cabecera.
+- **La portada del viaje sigue en la maleta**, y de ella cuelgan Transporte,
+  Listas, el presupuesto, la nube y los créditos. No es una sección más: es el
+  viaje en sí.
+- **Se entra por Hoy si el viaje está en curso**, y por el itinerario si no. Es
+  la misma regla de siempre —se entra por lo que se va a mirar— con una vista
+  hecha para eso.
+- **Cada elemento de la barra es un enlace**, igual que la barra de días.
+  Itinerario y Mapa llevan el día que se está mirando, para que cambiar de
+  sección no te cambie de día.
 
-Ahora la jerarquía la lleva la cabecera, con **un icono por destino**: la maleta
-sube a la portada del viaje y la persona lleva a Tus datos. De la portada cuelgan
-el itinerario, Transporte, Listas, Preparativos y Al volver. No hay barra de
-pestañas.
+**Los iconos de la cabecera siguen siendo la corrección de un fallo medido.** La
+primera versión dejaba el acceso a la portada solo en el título: un objetivo
+táctil de **37 × 26 px**, la mitad del mínimo de 44. Ahora el título es un
+objetivo de 44 px de alto y la maleta tiene su propio icono, con
+`aria-current="page"` cuando ya estás en la portada.
 
-**Los iconos no son adorno, son la corrección de un fallo medido.** La primera
-versión dejaba el acceso a la portada solo en el título de la cabecera: un
-objetivo táctil de **37 × 26 px**, la mitad del mínimo de 44. Con su icono
-propio, y con el título convertido en un objetivo de 44 px de alto, el acceso
-pasa a existir de verdad. El icono lleva `aria-current="page"` cuando ya estás
-en la portada, para que no invite a ir a donde ya estás.
+**El tema está en Tus datos.** Un icono que cicla entre automático, claro y
+oscuro obliga a deducir en cuál estás. Allí son tres botones con su nombre.
 
-**El tema se fue a Tus datos.** Cinco objetivos táctiles en una cabecera de 52 px
-no caben, y un icono que cicla entre automático, claro y oscuro obliga a
-**deducir** en cuál de los tres estás. En Tus datos son tres botones con su
-nombre escrito. Se pierde el cambio de tema en un toque; a cambio, «automático»
-—que es el de fábrica— ya sigue al móvil, que de noche cambia solo.
+**Portada, Transporte, Listas y Reservas no montan una vista aparte.** Se pintan
+dentro de `montarViaje` y ensanchan el panel por CSS, y la sección Mapa esconde
+el panel. Desmontar y volver a montar el mapa en cada ida y vuelta es justo lo
+que evita el resto del diseño de esa vista.
 
-**Se entra por el día, no por la portada.** La jerarquía dice que el viaje
-contiene al día, pero durante el viaje esto se abre veinte veces al día para ver
-qué toca ahora, y ese gesto no puede costar un toque más. Subir es lo que cuesta
-un toque, y se hace pocas veces.
+## Hoy es otra pregunta, no otro día
 
-**Portada, Transporte y Listas no montan una vista aparte.** Se pintan dentro de
-`montarViaje` y solo ensanchan el panel por CSS. Sacarlas fuera habría destruido
-y reconstruido el mapa en cada ida y vuelta, que es justo lo que evita el resto
-del diseño de esa vista.
+El itinerario contesta «¿qué hacemos el martes?». Hoy contesta la que se hace
+veinte veces al día con el móvil en la mano: **qué toca ahora, qué viene después
+y cómo se llega**. Por eso no pinta el día con el mismo peso: lo de ahora en
+grande, lo siguiente con «Cómo llegar», y lo demás en una lista corta.
+
+- **De camino a un sitio, el tramo y el sitio van en una sola tarjeta.** La
+  primera versión pintaba «De camino» y «Siguiente» con el mismo destino y dos
+  botones iguales.
+- «Cómo llegar» abre las indicaciones **desde donde estás**, en el modo del tramo
+  del itinerario: de camino, ya no estás en el origen.
+- Lo que ya pasó sin marcarse va plegado y dice cuántas actividades son. A las
+  cinco de la tarde eran ocho filas delante de lo que importa.
+- Se repinta cada minuto, solo si se está mirando y no se está escribiendo.
+- Antes del viaje dice cuánto falta y qué queda por dejar resuelto; después,
+  cómo fue y dónde guardar los recuerdos. Ninguno de los tres casos se queda en
+  blanco.
+
+La lógica —qué es «ahora», qué es «siguiente», qué estado tiene cada cosa— vive
+en `js/actividades.js`, **pura y con pruebas**, por la misma razón que
+`agenda.js`: un fallo ahí no da error, te manda a un sitio donde ya estuviste.
+
+## Estados: uno es tuyo y dos son del viaje
+
+Cada actividad está **por hacer, reservada, hecha o cancelada**, y además puede
+**requerir reserva**, si su sitio la pide y nadie la ha marcado.
+
+- **«Hecho» es de cada persona** y sigue viviendo en `visitados`, como antes.
+  Que tu pareja haya ido al museo no significa que hayas ido tú.
+- **Reservado y cancelado son del viaje** y van en la capa compartida. Si una
+  persona reserva, la otra tiene que verlo.
+- «Por hacer» y «Requiere reserva» no se guardan: se deducen.
+- El orden de las preguntas es la regla: cancelado gana a todo; hecho gana a
+  reservado, porque una vez dentro la reserva ya cumplió; y solo entonces
+  reservado y requiere reserva.
+- **Nunca solo el color.** Cada estado lleva icono y texto para lectores de
+  pantalla, porque «reservado» y «hecho» en verde se confunden con el sol de
+  frente.
+
+Se cambian en dos sitios con trabajos distintos. El punto del raíl marca o
+desmarca «hecho», que es lo que se hace andando. La ficha tiene los cuatro con
+su nombre, que es donde se decide con calma.
+
+## La capa v2, y por qué las reservas sí suben a la nube
+
+La capa pasa a la versión 2 y lleva, además de paradas añadidas y ocultas,
+`estados`, `reservas` y `gastos`. Una capa v1 es una v2 a la que le faltan
+campos: `normalizarCapa` los rellena al leer, sin tocar lo que trae.
+
+**Todo lo que dos personas pueden cambiar a la vez lleva `t`, la hora del
+cambio**, y al fundir gana lo más reciente. Unir sin perder nada basta para las
+paradas añadidas, pero no para «reservado» frente a «por hacer», donde una de
+las dos tiene razón. Volver a «por hacer» no borra la entrada: la deja con
+`estado: null` y su hora, porque si no, el «reservado» que siguiera en la nube
+volvería a aparecer.
+
+**Las reservas, con su localizador, van al navegador y a la nube de los
+miembros, nunca al repositorio.** Es la primera excepción a «los datos privados
+no salen del navegador», y la decidió Yixuan el 23 de septiembre de 2026 por un
+motivo concreto: un localizador que solo ve quien lo apuntó no le sirve a quien
+tiene que enseñarlo en la puerta. En la nube lo protege RLS: solo lo leen los
+miembros del viaje. El repositorio sigue siendo público, y por eso «Copiar como
+JSON» nunca incluye estados, reservas ni gastos.
+
+## Viajes creados en el navegador
+
+«Crear viaje» hace lo mismo que `herramientas/nuevo-viaje.mjs`: un documento con
+la forma de un JSON del repositorio y un día por fecha. **Vive en el navegador**
+(`bitacora:v1:viajes-locales`), y la portada lo lista junto a los del
+repositorio. Si choca de id con uno de ellos, manda el archivo. Para que lo vea
+otra persona, se publica en la nube desde su portada, con lo que ya existía.
+
+El centro del mapa sale de buscar el destino en Photon. Sin conexión, el viaje
+se crea igual y el mapa arranca en la vista general hasta que se añade la
+primera actividad.
+
+## El resumen del día solo dice lo que el itinerario sabe
+
+Actividades, horario, cuánto se anda y cuánto se va en transporte, cuánto
+cuestan las entradas por persona y qué reservas quedan. Todo sale del JSON:
+
+- **El tiempo a pie es la suma real de los traslados**, de su hora de inicio y
+  de fin.
+- **Los kilómetros se leen del texto de los traslados** («800 m por el
+  sendero», «1,2 km bajando por Nerudova»), no se calculan. Y **solo se enseñan
+  si todos los tramos a pie dicen su distancia**: con uno sin ella, la suma
+  saldría menor que lo que se anda y parecería completa. Una línea recta entre
+  dos puntos no es lo que se camina, y enseñarla como tal sería inventar el dato.
+- El coste no cuenta lo que se ve por fuera ni lo cancelado, y dice que es de
+  entradas y por persona, que es lo que guarda el archivo.
 
 ## Un aviso se lee el día que importa, no antes
 
