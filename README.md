@@ -155,7 +155,8 @@ IndexedDB y publicar una es una decisión explícita.
 
 ## Créditos
 
-Mapas de [CARTO](https://carto.com/attributions) sobre datos de
+Mapas de [Stadia Maps](https://stadiamaps.com/) y
+[OpenMapTiles](https://openmaptiles.org/) sobre datos de
 [OpenStreetMap](https://www.openstreetmap.org/copyright).
 [Leaflet](https://leafletjs.com) 1.9.4, BSD-2-Clause.
 El tiempo, de [Open-Meteo](https://open-meteo.com/), CC BY 4.0.

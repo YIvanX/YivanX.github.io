@@ -16,9 +16,12 @@
    de lo que se busca.
    ========================================================================= */
 
-const VERSION = 'v12';
+const VERSION = 'v13';
 const CACHE_APP = `bitacora-app-${VERSION}`;
-const CACHE_TESELAS = 'bitacora-teselas';
+// Con nombre del proveedor: al cambiar de CARTO a Stadia, las teselas viejas no
+// valen para nada y se borran al activar, en vez de ocupar sitio hasta que las
+// expulse el tope.
+const CACHE_TESELAS = 'bitacora-teselas-stadia';
 const MAX_TESELAS = 3000;
 
 const ESENCIALES = [
@@ -58,7 +61,7 @@ const ESENCIALES = [
   'data/nube.json',
 ];
 
-const esTesela = (url) => url.hostname.endsWith('basemaps.cartocdn.com');
+const esTesela = (url) => url.hostname === 'tiles.stadiamaps.com';
 const esPropio = (url) => url.origin === self.location.origin;
 // La configuración de la nube y sus llamadas nunca se cachean: una respuesta
 // guardada de la API o una sesión vieja darían un estado falso.
@@ -100,6 +103,7 @@ self.addEventListener('activate', (evento) => {
   evento.waitUntil((async () => {
     for (const nombre of await caches.keys()) {
       if (nombre.startsWith('bitacora-app-') && nombre !== CACHE_APP) await caches.delete(nombre);
+      if (nombre.startsWith('bitacora-teselas') && nombre !== CACHE_TESELAS) await caches.delete(nombre);
     }
     await self.clients.claim();
   })());
@@ -121,8 +125,10 @@ async function desdeTeselas(peticion) {
   if (guardada) return guardada;
   try {
     const respuesta = await fetch(peticion);
-    // Las teselas vienen de otro origen: la respuesta es opaca y no se puede
-    // leer el estado. Se guarda igual, que es lo que las hace servibles offline.
+    // Stadia contesta con CORS, así que el estado se puede leer: solo se guarda
+    // lo que es un 200. Importa, porque desde un dominio sin dar de alta la
+    // respuesta es una imagen de «401», y guardarla la dejaría pegada al mapa
+    // para siempre. `opaque` queda por si una petición llega sin modo CORS.
     if (respuesta && (respuesta.ok || respuesta.type === 'opaque')) {
       await cache.put(peticion, respuesta.clone());
       puestas += 1;

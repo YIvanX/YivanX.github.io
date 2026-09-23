@@ -8,12 +8,27 @@
 import { CATEGORIAS } from './datos.js';
 import { esc } from './ui/dom.js';
 
+/**
+ * Teselas de Stadia (Alidade Smooth). Sustituyen a las de CARTO, que desde
+ * agosto de 2026 llevan «API KEY REQUIRED» impreso dentro de la propia imagen.
+ *
+ * Sin clave en el código: Stadia autentica por dominio, y `yivanx.github.io`
+ * tiene que estar dado de alta en su panel. Desde `localhost` responde sin
+ * alta; desde un dominio no registrado devuelve una tesela de «401».
+ *
+ * Por qué Stadia y no las otras dos opciones medidas el 23 de septiembre de
+ * 2026: la política de `tile.openstreetmap.org` prohíbe descargar teselas por
+ * adelantado, que es justo lo que hace «Preparar sin conexión», y OpenFreeMap
+ * solo sirve teselas vectoriales, que exigen MapLibre (cientos de KB). Las
+ * condiciones de Stadia permiten guardar pequeñas cantidades para usar sin
+ * conexión, y la descarga ya va acotada a un día.
+ */
 const TESELAS = {
-  claro: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-  oscuro: 'https://{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png',
+  claro: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
+  oscuro: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
 };
 const ATRIBUCION =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
+  '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 
 const MAX_TESELAS_SIN_CONEXION = 420;
 
@@ -97,11 +112,14 @@ export class Mapa {
     if (margenInferior) this.margenInferior = margenInferior;
     if (puntos?.length) this.encuadrar(puntos);
 
+    // Sin `detectRetina`, a propósito. Con él, en una pantalla de alta densidad
+    // Leaflet pide el nivel de zoom **siguiente** a media resolución, y además
+    // `{r}` añade `@2x`: cuatro veces los píxeles necesarios, y unas URL que la
+    // descarga sin conexión no reproducía, porque calculaba el nivel sin el
+    // desplazamiento. `{r}` solo ya da la tesela nítida del nivel correcto.
     this.capaTeselas = L.tileLayer(oscuro ? TESELAS.oscuro : TESELAS.claro, {
       attribution: ATRIBUCION,
-      subdomains: 'abcd',
       maxZoom: 19,
-      detectRetina: true,
       crossOrigin: true,
     }).addTo(this.mapa);
 
@@ -325,21 +343,19 @@ export class Mapa {
     }
     lista = lista.slice(0, MAX_TESELAS_SIN_CONEXION);
 
-    // El subdominio y el sufijo de retina se calculan **exactamente** como los
-    // calcula Leaflet al pedir la tesela. Si no, se descarga `a.basemaps…` y
-    // luego se pide `c.basemaps…`: son URLs distintas, la caché no acierta, y el
-    // mapa aparece en blanco justo el día que no hay cobertura. Esto costó una
-    // ronda entera de depuración.
-    const sub = this.capaTeselas.options.subdomains;           // 'abcd'
-    const escala = this.capaTeselas.options.detectRetina && (globalThis.devicePixelRatio || 1) > 1 ? '@2x' : '';
+    // El sufijo de alta densidad se calcula **exactamente** como lo calcula
+    // Leaflet al pedir la tesela (`L.Browser.retina`). Si la URL descargada y la
+    // pedida difieren en un carácter, la caché no acierta y el mapa aparece en
+    // blanco justo el día que no hay cobertura. Con CARTO costó una ronda de
+    // depuración por el subdominio; Stadia no tiene subdominios.
+    const escala = this.L.Browser.retina ? '@2x' : '';
     const urls = lista.map(({ x, y, z }) =>
       TESELAS.claro
-        .replace('{s}', sub[Math.abs(x + y) % sub.length])
         .replace('{z}', z).replace('{x}', x).replace('{y}', y).replace('{r}', escala));
 
     // Los dos temas, para que cambiar de claro a oscuro sin cobertura no deje
     // el mapa en blanco.
-    const oscuras = urls.map((u) => u.replace('/voyager/', '/dark_all/'));
+    const oscuras = urls.map((u) => u.replace('/alidade_smooth/', '/alidade_smooth_dark/'));
     const todas = urls.concat(oscuras);
 
     let hechas = 0;

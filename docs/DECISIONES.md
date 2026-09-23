@@ -38,18 +38,40 @@ el motivo de existir de media aplicación— y además es una dependencia de red
 puede caerse o cambiar. Se carga bajo demanda: la portada no necesita mapa y no
 paga sus 147 KB.
 
-## Teselas de CARTO, y el subdominio importa
+## Teselas de Stadia, y la URL tiene que ser idéntica
 
-Basemaps de CARTO (Voyager en claro, Dark Matter en oscuro) sobre datos de
-OpenStreetMap. Atribución obligatoria y visible: no se esconde.
+Alidade Smooth de Stadia (clara y oscura) sobre datos de OpenStreetMap y
+OpenMapTiles. Atribución obligatoria y visible: no se esconde.
 
-**El detalle que costó una ronda de depuración:** la descarga para uso sin
-conexión tiene que construir la URL de cada tesela **exactamente** como la
-construye Leaflet al pedirla, subdominio incluido. Leaflet elige el subdominio
-con `(x + y) % n`; la primera versión los repartía en ciclo. Resultado: se
-descargaba `a.basemaps…` y luego se pedía `c.basemaps…`. Son URLs distintas, la
-Cache API no acierta, y el mapa aparecía en blanco justo el día sin cobertura.
-Medido: 0 teselas offline antes del arreglo, 20 después.
+**Hasta septiembre de 2026 eran de CARTO**, y dejaron de servir: desde agosto
+cada tesela llevaba «API KEY REQUIRED» impreso dentro de la imagen, en local y
+en el sitio publicado. Se midieron tres recambios el 23 de septiembre de 2026:
+
+- **`tile.openstreetmap.org`**: su política prohíbe descargar teselas por
+  adelantado, que es exactamente lo que hace «Preparar sin conexión».
+- **OpenFreeMap**: sin clave y sin límites, pero solo vectorial. Exige MapLibre,
+  cientos de KB para sustituir a Leaflet, que pesa 147.
+- **Stadia**: gratis para un sitio personal, **autenticado por dominio** (sin
+  clave en el código, que en un repositorio público sería una clave regalada) y
+  sus condiciones permiten guardar pequeñas cantidades para usar sin conexión.
+  Desde `localhost` responde sin alta; desde un dominio sin dar de alta devuelve
+  una tesela con un «401» dibujado. `yivanx.github.io` tiene que estar en su
+  panel, en *Authentication Configuration*.
+
+**El detalle que costó una ronda de depuración, y que sigue valiendo:** la
+descarga para uso sin conexión tiene que construir la URL de cada tesela
+**exactamente** como la construye Leaflet al pedirla. Con CARTO falló el
+subdominio (`a.` descargado, `c.` pedido). Con Stadia no hay subdominios, pero
+había un segundo fallo del mismo tipo escondido: con `detectRetina`, en una
+pantalla de alta densidad Leaflet pide el nivel de zoom **siguiente** y la
+descarga guardaba el nivel actual. En un móvil, el mapa preparado no coincidía
+con el pedido. Ahora no se usa `detectRetina`: `{r}` añade `@2x` según
+`L.Browser.retina`, y la descarga usa esa misma propiedad.
+
+La caché de teselas lleva el nombre del proveedor (`bitacora-teselas-stadia`) y
+el service worker borra las de otro proveedor al activarse: una tesela de CARTO
+ya no sirve para nada. Tampoco se guarda nunca una respuesta que no sea un 200,
+o la imagen del 401 se quedaría pegada al mapa.
 
 ## La descarga sin conexión va acotada y la lanza el usuario
 
