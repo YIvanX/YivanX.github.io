@@ -1,6 +1,8 @@
 # Bitácora
 
-Guía interactiva durante el viaje y registro de viajes después.
+Planifica, organiza y visualiza tu viaje en un solo sitio: el itinerario por
+días, el mapa y las reservas. Durante el viaje, lo que toca ahora; después, el
+registro de lo que fue.
 
 **https://yivanx.github.io/**
 
@@ -11,6 +13,27 @@ destino escrito en el código, así que el siguiente viaje no toca ni una línea
 
 ## Qué hace
 
+- **Cuatro secciones: Hoy · Itinerario · Mapa · Reservas**, abajo en el móvil y
+  en la cabecera en escritorio. **Hoy** dice qué toca ahora, qué viene después y
+  cómo se llega; el **Itinerario**, el día hora a hora; el **Mapa**, a pantalla
+  completa; **Reservas**, lo que falta por reservar y lo reservado.
+- **Cada actividad tiene estado**: por hacer, reservada, hecha o cancelada, y
+  «requiere reserva» si el sitio la pide. Se marca como hecha tocando su punto
+  en la cronología, y el día se filtra por Todas, Pendientes, Reservadas y
+  Hechas.
+- **Cada día lleva su resumen**: actividades, horario, tiempo y distancia a pie,
+  transporte, coste de las entradas y reservas pendientes. Solo lo que dice el
+  itinerario: las distancias se leen de los traslados, no se inventan.
+- **Se crea un viaje desde la portada**, con destino y fechas. Vive en el
+  navegador y se publica en la nube para compartirlo.
+- **Cada actividad se crea y se edita en un formulario**: tipo (lugar,
+  restaurante, hotel, actividad, transporte, vuelo o nota), sitio, día, hora,
+  duración, coste, web, notas, estado y si pide reserva. Lo que viene del
+  archivo se edita sin tocar el archivo.
+- **Se reordena el día arrastrando** o con flechas: cada actividad toma la hora
+  del hueco al que va, y la ruta y el mapa se rehacen.
+- **Reservas con su número**, a mano o desde una actividad, y **gastos** por
+  categoría y por día.
 - **Cronología del día y mapa sincronizados.** Pasar por un bloque resalta su
   marcador; tocar un marcador lleva al bloque. Las paradas van numeradas en el
   orden real del día y unidas por el trazo del recorrido.
@@ -85,7 +108,7 @@ para las herramientas de línea de comandos.
 ```bash
 node herramientas/servir.mjs                 # http://localhost:8080/
 node herramientas/validar.mjs                # revisa todos los viajes
-npm run probar                               # 101 pruebas: horarios, capa, nube, sincronización, agenda
+npm run probar                               # 186 pruebas: horarios, capa, nube, sincronización, agenda, actividades, planificación
 
 node herramientas/nuevo-viaje.mjs <id> "<Título>" <inicio> <fin> [--desde <viaje>]
 node herramientas/coordenadas.mjs --area "<ciudad>" "<lugar>"…
@@ -112,11 +135,12 @@ Por qué está construido así: **[docs/DECISIONES.md](docs/DECISIONES.md)**.
 
 ```
 index.html              armazón y juego de iconos SVG
-css/                    base (tokens y tipografía) · componentes · mapa
+css/                    base (tokens y tipografía) · componentes · mapa · viaje
 js/
   app.js                enrutado por hash y arranque
   datos.js              carga y normaliza los JSON
   agenda.js             qué aviso, lista o tramo va en qué día (puro, con pruebas)
+  actividades.js        estados, resumen del día y qué toca ahora (puro, con pruebas)
   estado.js             localStorage + IndexedDB (visitados, notas, fotos)
   horarios.js           ¿está abierto? — compartido con el validador
   tiempo.js             el tiempo por día, del itinerario (puro, con pruebas)
@@ -124,8 +148,8 @@ js/
   enlaces-mapa.js       rutas y enlaces de Google Maps
   personalizacion.js    capa de paradas añadidas y quitadas (puro, con pruebas)
   nube.js               Supabase por HTTP plano, sin SDK. Opcional
-  vistas/               registro · perfil · viaje · panel
-  ui/                   dom · hoja arrastrable · buscador · buscar-lugar · tema · avisos
+  vistas/               registro · perfil · viaje · panel · hoy
+  ui/                   dom · hoja arrastrable · buscador · buscar-lugar · editores · tema · avisos
                         (dom.js exporta el muelle, la proyección de inercia y la
                          goma elástica que usan la hoja y el gesto de cambiar de día)
 vendor/leaflet/         Leaflet 1.9.4, local
@@ -155,7 +179,8 @@ IndexedDB y publicar una es una decisión explícita.
 
 ## Créditos
 
-Mapas de [CARTO](https://carto.com/attributions) sobre datos de
+Mapas de [Stadia Maps](https://stadiamaps.com/) y
+[OpenMapTiles](https://openmaptiles.org/) sobre datos de
 [OpenStreetMap](https://www.openstreetmap.org/copyright).
 [Leaflet](https://leafletjs.com) 1.9.4, BSD-2-Clause.
 El tiempo, de [Open-Meteo](https://open-meteo.com/), CC BY 4.0.

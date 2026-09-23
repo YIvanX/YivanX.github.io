@@ -17,7 +17,7 @@ import { revisarBloque, aMinutos, claveDia, diasEntre, NOMBRE_DIA } from '../js/
 
 const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
-const CATEGORIAS = ['patrimonio', 'naturaleza', 'comida', 'pueblo', 'transporte', 'alojamiento', 'practico'];
+const CATEGORIAS = ['patrimonio', 'naturaleza', 'comida', 'pueblo', 'transporte', 'alojamiento', 'practico', 'actividad'];
 const NIVELES = ['obligatorio', 'recomendable', 'opcional'];
 const MODOS = ['a-pie', 'tren', 'bus', 'taxi', 'coche', 'barco', 'avion', 'bici'];
 const ESTADOS = ['planificado', 'en-curso', 'completado'];

@@ -5,7 +5,8 @@
 
 import { estadoPorFecha, diasEntre, aIso } from './horarios.js';
 import { aplicarCapa, capaVacia, claveEstable } from './personalizacion.js';
-import { capaDe, guardarCapa } from './estado.js';
+import { capaDe, guardarCapa, viajesLocales, viajeLocal, estadoDe } from './estado.js';
+import { progresoDelViaje, recorridoDelViaje, guardadoDe } from './actividades.js';
 import * as sincronizacion from './sincronizacion.js';
 
 const cache = new Map();
@@ -50,14 +51,62 @@ async function traer(ruta) {
   return res.json();
 }
 
+/**
+ * Los viajes que se enseñan: los del repositorio y los creados en este
+ * navegador. Un viaje local que choque de id con uno del repositorio se
+ * descarta: manda el archivo, igual que con los lugares de la capa.
+ */
 export async function cargarRegistro() {
   if (cache.has('registro')) return cache.get('registro');
   const registro = await traer('data/viajes.json');
-  registro.viajes = (registro.viajes || [])
+  const delRepositorio = new Set((registro.viajes || []).map((v) => v.id));
+  const locales = Object.values(viajesLocales())
+    .filter((d) => d?.id && d.fechas && !delRepositorio.has(d.id))
+    .map((d) => ({ id: d.id, titulo: d.titulo, subtitulo: d.subtitulo || '', fechas: d.fechas, estado: d.estado, local: true }));
+  registro.viajes = [...(registro.viajes || []), ...locales]
     .map((v) => ({ ...v, estadoReal: estadoPorFecha(v.fechas) }))
     .sort((a, b) => b.fechas.inicio.localeCompare(a.fechas.inicio));
   cache.set('registro', registro);
   return registro;
+}
+
+/** Para que la portada vuelva a leer el registro tras crear o borrar un viaje. */
+export function olvidarRegistro() {
+  cache.delete('registro');
+}
+
+/**
+ * Lo que enseña la tarjeta de un viaje en la portada: su foto, su recorrido y
+ * cómo va. Sale del JSON del repositorio (o del navegador) con la capa local
+ * encima, **sin pedir nada a la nube**: la portada se abre muchas veces y no
+ * puede esperar cuatro segundos por viaje a un proyecto de Supabase dormido.
+ */
+export async function resumenDeViaje(entrada) {
+  // Se guarda el documento y no el resumen: lo marcado como hecho cambia el
+  // progreso, y la portada tiene que decir el de ahora al volver a ella.
+  const clave = `portada:${entrada.id}`;
+  let bruto = entrada.local ? viajeLocal(entrada.id) : cache.get(clave);
+  if (!bruto) {
+    bruto = await traer(entrada.archivo || `data/viajes/${entrada.id}.json`);
+    cache.set(clave, bruto);
+  }
+  if (!bruto) return null;
+  const viaje = normalizar(structuredClone(aplicarCapa(bruto, capaDe(entrada.id)).viaje), entrada, null);
+  const capa = capaDe(entrada.id);
+  const guardado = guardadoDe(estadoDe(entrada.id), capa);
+
+  // La foto de la tarjeta: la del primer sitio imprescindible del itinerario, o
+  // la del primero que tenga foto. Es un sitio del viaje, no una imagen de
+  // relleno, y por eso se ve también sin conexión.
+  const conFoto = viaje.lugaresUsados.filter((l) => l.imagen);
+  const portada = conFoto.find((l) => l.nivel === 'obligatorio') || conFoto[0] || null;
+
+  return {
+    dias: viaje.dias.length,
+    progreso: progresoDelViaje(viaje, guardado),
+    recorrido: recorridoDelViaje(viaje),
+    imagen: portada ? { archivo: portada.imagen.archivo, nombre: portada.nombre, credito: portada.imagen.credito } : null,
+  };
 }
 
 export async function cargarViaje(id) {
@@ -73,7 +122,8 @@ export async function cargarViaje(id) {
   // **El repositorio se lee siempre, incluso habiendo nube.** Es el suelo: si
   // Supabase está pausado, caído o sin sesión, el viaje se abre igual. Lo que
   // hace la nube es sustituir ese documento cuando contesta, no ser la única vía.
-  let bruto = await traer(entrada.archivo || `data/viajes/${id}.json`);
+  let bruto = entrada.local ? viajeLocal(id) : await traer(entrada.archivo || `data/viajes/${id}.json`);
+  if (!bruto) throw new Error('Este viaje ya no está en este navegador');
 
   const remoto = await sincronizacion.bajarViaje(id);
   origenes.set(id, remoto.estado === 'ok' ? 'nube' : remoto.estado);
@@ -136,9 +186,17 @@ function normalizar(viaje, entrada, subida = null) {
       const tipo = bloque.tipo || 'visita';
       const lugar = tipo === 'visita' ? porId.get(bloque.lugar) : null;
       const b = { ...bloque, tipo, indice: i, lugar, clave: `${dia.fecha}#${i}` };
+      // La identidad del bloque para colgarle un estado —reservado, cancelado—.
+      // No es `clave`, que es posicional y se corre en cuanto se añade una
+      // parada: es la misma clave estable que usa la capa para ocultar, o el id
+      // de lo añadido a mano.
+      // Si se editó, `claveBase` es la del archivo: la hora forma parte de la
+      // clave, y cambiarla no puede dejar el estado colgado de la vieja.
+      const claveBase = bloque.claveBase || claveEstable(dia.fecha, bloque);
+      b.claveActividad = bloque.propio ? `propio|${bloque.idPropio}` : claveBase;
       // `null` cuando no hay nube o cuando el bloque no tiene ciclo de vida en
       // ella, que es el caso de casi todos: vienen del archivo y ahí siguen.
-      b.nube = subida ? sincronizacion.estadoDeBloque(b, claveEstable(dia.fecha, bloque), subida) : null;
+      b.nube = subida ? sincronizacion.estadoDeBloque(b, claveBase, subida) : null;
       if (tipo === 'visita' && lugar) {
         orden += 1;
         b.orden = orden;
@@ -149,6 +207,14 @@ function normalizar(viaje, entrada, subida = null) {
       }
       return b;
     });
+
+    // Un día reordenado a mano deja traslados que ya no unen actividades
+    // vecinas: el que iba del palacio al restaurante, con el museo ahora en
+    // medio. Se marcan y no se pintan ni se suman, porque su duración y su
+    // distancia serían de otro recorrido. En un día sin reordenar no se mira
+    // nada: los traslados a estaciones o al alojamiento son legítimos aunque
+    // no acaben en una actividad.
+    if (bloques.some((b) => b.movido)) marcarDesfasados(bloques);
 
     // Las paradas del día en orden, sin repetir: es lo que numera el mapa y lo
     // que dibuja el trazo. Un lugar visitado dos veces el mismo día se numera
@@ -177,6 +243,28 @@ function normalizar(viaje, entrada, subida = null) {
   return viaje;
 }
 
+/**
+ * Un traslado encaja si sale de la actividad anterior y llega a la siguiente.
+ * Sin anterior —el primero del día, desde el alojamiento— basta con el destino,
+ * y sin siguiente —la vuelta a casa— basta con el origen.
+ */
+export function marcarDesfasados(bloques) {
+  const visitas = (desde, paso) => {
+    for (let i = desde; i >= 0 && i < bloques.length; i += paso) {
+      if (bloques[i].tipo === 'visita' && bloques[i].lugar) return bloques[i];
+    }
+    return null;
+  };
+  bloques.forEach((b, i) => {
+    if (b.tipo !== 'traslado') return;
+    const antes = visitas(i - 1, -1);
+    const despues = visitas(i + 1, 1);
+    const sale = !antes || !b.lugarDesde || b.lugarDesde.id === antes.lugar.id;
+    const llega = !despues || !b.lugarHasta || b.lugarHasta.id === despues.lugar.id;
+    b.desfasado = !(sale && llega);
+  });
+}
+
 /** El día que hay que abrir al entrar: hoy si el viaje está en curso, si no el primero. */
 export function diaPorDefecto(viaje) {
   const hoy = aIso(new Date());
@@ -203,6 +291,8 @@ export const CATEGORIAS = {
   transporte:  { etiqueta: 'Transporte',  icono: 'transporte' },
   alojamiento: { etiqueta: 'Alojamiento', icono: 'alojamiento' },
   practico:    { etiqueta: 'Práctico',    icono: 'practico' },
+  // Visitas guiadas, clases, espectáculos: lo que se hace, no un sitio que se ve.
+  actividad:   { etiqueta: 'Actividad',   icono: 'entrada' },
 };
 
 export const MODOS = {

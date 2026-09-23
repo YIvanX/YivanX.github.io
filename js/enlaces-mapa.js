@@ -77,6 +77,9 @@ export function puntosDelDia(dia) {
   };
 
   for (const bloque of dia.bloques || []) {
+    // Un tramo que el reordenado ha dejado sin sentido no dibuja ruta: sus
+    // extremos llevarían a Google por un recorrido que ya no es el del día.
+    if (bloque.desfasado) continue;
     if (bloque.tipo === 'traslado') {
       empujar(bloque.lugarDesde);
       empujar(bloque.lugarHasta);

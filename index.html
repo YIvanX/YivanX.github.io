@@ -3,8 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Bitácora</title>
-<meta name="description" content="Guía interactiva durante el viaje y registro de viajes después.">
+<title>Bitácora — Planifica tu viaje</title>
+<meta name="description" content="Planifica, organiza y visualiza tu viaje en un solo sitio: el itinerario por días, el mapa y las reservas.">
+<!-- Open Graph y X: para que el enlace se vea bien al mandarlo por WhatsApp.
+     El `noindex` de abajo se queda a propósito: un itinerario público dice qué
+     días no hay nadie en casa, y que lo indexe un buscador no aporta nada. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bitácora">
+<meta property="og:title" content="Bitácora — Planifica tu viaje">
+<meta property="og:description" content="Planifica, organiza y visualiza tu viaje en un solo sitio.">
+<meta property="og:url" content="https://yivanx.github.io/">
+<meta property="og:image" content="https://yivanx.github.io/iconos/icono-512.png">
+<meta property="og:image:alt" content="Icono de Bitácora">
+<meta property="og:locale" content="es_ES">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Bitácora — Planifica tu viaje">
+<meta name="twitter:description" content="Planifica, organiza y visualiza tu viaje en un solo sitio.">
+<meta name="twitter:image" content="https://yivanx.github.io/iconos/icono-512.png">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#FBFAF8" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)">
@@ -18,6 +33,7 @@
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/componentes.css">
 <link rel="stylesheet" href="css/mapa.css">
+<link rel="stylesheet" href="css/viaje.css">
 </head>
 <body>
 
@@ -88,6 +104,13 @@
   <symbol id="i-candado" viewBox="0 0 24 24"><g stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5.8 10.6h12.4v9.6H5.8ZM8.6 10.6V7.4a3.4 3.4 0 0 1 6.8 0v3.2"/></g></symbol>
   <symbol id="i-maleta" viewBox="0 0 24 24"><g stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.2h16a1.5 1.5 0 0 1 1.5 1.5v9a1.5 1.5 0 0 1-1.5 1.5H4a1.5 1.5 0 0 1-1.5-1.5v-9A1.5 1.5 0 0 1 4 8.2ZM8.8 8.2V5.4a1.4 1.4 0 0 1 1.4-1.4h3.6a1.4 1.4 0 0 1 1.4 1.4v2.8M9 12.4v4M15 12.4v4"/></g></symbol>
   <symbol id="i-persona" viewBox="0 0 24 24"><g stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11.6a4.05 4.05 0 1 0 0-8.1 4.05 4.05 0 0 0 0 8.1ZM4.4 20.5a7.6 7.6 0 0 1 15.2 0"/></g></symbol>
+  <!-- Estados de una actividad y secciones del viaje. -->
+  <symbol id="i-circulo" viewBox="0 0 24 24"><g stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19.5a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15Z"/></g></symbol>
+  <symbol id="i-hoy" viewBox="0 0 24 24"><g stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 19V7A1.5 1.5 0 0 1 5 5.5ZM3.5 10h17M8 3.5v4M16 3.5v4M12 15.2h.01"/><path d="M12 16.6a1.4 1.4 0 1 0 0-2.8 1.4 1.4 0 0 0 0 2.8Z"/></g></symbol>
+  <symbol id="i-itinerario" viewBox="0 0 24 24"><g stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM6 15.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM6 8.5v7M11 6.5h9M11 17.5h9M11 12h6"/></g></symbol>
+  <symbol id="i-asa" viewBox="0 0 24 24"><g stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"/></g></symbol>
+  <symbol id="i-gasto" viewBox="0 0 24 24"><g stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5h14.5a1.5 1.5 0 0 1 1.5 1.5v9.5a1.5 1.5 0 0 1-1.5 1.5H5.5A1.5 1.5 0 0 1 4 18.5v-12A2 2 0 0 1 6 4.5h10.5V7.5M16 13.8h.01"/></g></symbol>
+  <symbol id="i-flecha-abajo" viewBox="0 0 24 24"><g stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6.5 13.5 12 19l5.5-5.5"/></g></symbol>
   <symbol id="i-mapa" viewBox="0 0 24 24"><g stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m2.8 5.6 6-2.4 6.4 2.4 6-2.4v15.2l-6 2.4-6.4-2.4-6 2.4ZM8.8 3.2v15.2M15.2 5.6v15.2"/></g></symbol>
 </svg>
 

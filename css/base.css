@@ -24,7 +24,7 @@
 
   --tinta:         #1C1917;
   --tinta-media:   #57534E;
-  --tinta-suave:   #8A8279;
+  --tinta-suave:   #736C64;  /* 4,6:1 o más sobre las tres superficies; #8A8279 daba 3,4-3,8 */
 
   --acento:        #96551F;
   --acento-tinta:  #FFFFFF;
@@ -42,6 +42,7 @@
   --cat-transporte-f:   #ECEAE6;  --cat-transporte-t:   #55504A;
   --cat-alojamiento-f:  #EFE9F6;  --cat-alojamiento-t:  #553783;
   --cat-practico-f:     #ECEAE6;  --cat-practico-t:     #55504A;
+  --cat-actividad-f:    #E2F3F1;  --cat-actividad-t:    #1F6B63;
 
   --ok-f:      #E8F1E7;  --ok-t:      #2E5B33;
   --alerta-f:  #FAF0D8;  --alerta-t:  #855700;
@@ -92,7 +93,7 @@
 
     --tinta:        #EDE8E1;
     --tinta-media:  #ABA49B;
-    --tinta-suave:  #7B746B;
+    --tinta-suave:  #908980;
 
     --acento:       #D49B63;
     --acento-tinta: #201A13;
@@ -109,6 +110,7 @@
     --cat-transporte-f:  #29251F;  --cat-transporte-t:  #B3ABA1;
     --cat-alojamiento-f: #251C33;  --cat-alojamiento-t: #B79FDC;
     --cat-practico-f:    #29251F;  --cat-practico-t:    #B3ABA1;
+    --cat-actividad-f:   #16302D;  --cat-actividad-t:   #8FD1C7;
 
     --ok-f:     #1B2A1C;  --ok-t:     #9CC79F;
     --alerta-f: #33280F;  --alerta-t: #E3BC72;
@@ -130,7 +132,7 @@
 
   --tinta:        #EDE8E1;
   --tinta-media:  #ABA49B;
-  --tinta-suave:  #7B746B;
+  --tinta-suave:  #908980;
 
   --acento:       #D49B63;
   --acento-tinta: #201A13;
@@ -147,6 +149,7 @@
   --cat-transporte-f:  #29251F;  --cat-transporte-t:  #B3ABA1;
   --cat-alojamiento-f: #251C33;  --cat-alojamiento-t: #B79FDC;
   --cat-practico-f:    #29251F;  --cat-practico-t:    #B3ABA1;
+  --cat-actividad-f:   #16302D;  --cat-actividad-t:   #8FD1C7;
 
   --ok-f:     #1B2A1C;  --ok-t:     #9CC79F;
   --alerta-f: #33280F;  --alerta-t: #E3BC72;

@@ -150,6 +150,7 @@
 .chip--transporte  { background: var(--cat-transporte-f);  color: var(--cat-transporte-t); }
 .chip--alojamiento { background: var(--cat-alojamiento-f); color: var(--cat-alojamiento-t); }
 .chip--practico    { background: var(--cat-practico-f);    color: var(--cat-practico-t); }
+.chip--actividad   { background: var(--cat-actividad-f);   color: var(--cat-actividad-t); }
 
 .chip--ok     { background: var(--ok-f);     color: var(--ok-t); }
 .chip--alerta { background: var(--alerta-f); color: var(--alerta-t); }
@@ -1455,7 +1456,8 @@ a.cabecera__marca {
   background: var(--acento-velo);
   color: var(--acento);
 }
-.opcion[aria-checked="true"] .opcion__pista { color: inherit; opacity: 0.8; }
+/* Sin opacidad: el acento al 80 % sobre su velo bajaba a 3,3:1 (medido con axe). */
+.opcion[aria-checked="true"] .opcion__pista { color: inherit; }
 
 /* En cuanto hay sitio, las opciones se reparten en fila. */
 @media (min-width: 560px) {

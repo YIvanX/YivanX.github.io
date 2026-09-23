@@ -8,12 +8,27 @@
 import { CATEGORIAS } from './datos.js';
 import { esc } from './ui/dom.js';
 
+/**
+ * Teselas de Stadia (Alidade Smooth). Sustituyen a las de CARTO, que desde
+ * agosto de 2026 llevan «API KEY REQUIRED» impreso dentro de la propia imagen.
+ *
+ * Sin clave en el código: Stadia autentica por dominio, y `yivanx.github.io`
+ * tiene que estar dado de alta en su panel. Desde `localhost` responde sin
+ * alta; desde un dominio no registrado devuelve una tesela de «401».
+ *
+ * Por qué Stadia y no las otras dos opciones medidas el 23 de septiembre de
+ * 2026: la política de `tile.openstreetmap.org` prohíbe descargar teselas por
+ * adelantado, que es justo lo que hace «Preparar sin conexión», y OpenFreeMap
+ * solo sirve teselas vectoriales, que exigen MapLibre (cientos de KB). Las
+ * condiciones de Stadia permiten guardar pequeñas cantidades para usar sin
+ * conexión, y la descarga ya va acotada a un día.
+ */
 const TESELAS = {
-  claro: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-  oscuro: 'https://{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png',
+  claro: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
+  oscuro: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
 };
 const ATRIBUCION =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>';
+  '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 
 const MAX_TESELAS_SIN_CONEXION = 420;
 
@@ -63,6 +78,9 @@ export class Mapa {
     this.marcadorYo = null;
     this.destacado = null;
     this.alSeleccionar = () => {};
+    // Si se define, el globo de cada marcador lleva un enlace a su ficha. Lo
+    // pone la vista, que es quien sabe a qué viaje y a qué día apunta.
+    this.enlaceFicha = null;
     // Cuántos píxeles del mapa tapa algo por abajo (la hoja arrastrable del
     // móvil). Sin esto, fitBounds centra en el alto completo y la mitad de los
     // marcadores del día quedan debajo del panel, invisibles.
@@ -97,11 +115,14 @@ export class Mapa {
     if (margenInferior) this.margenInferior = margenInferior;
     if (puntos?.length) this.encuadrar(puntos);
 
+    // Sin `detectRetina`, a propósito. Con él, en una pantalla de alta densidad
+    // Leaflet pide el nivel de zoom **siguiente** a media resolución, y además
+    // `{r}` añade `@2x`: cuatro veces los píxeles necesarios, y unas URL que la
+    // descarga sin conexión no reproducía, porque calculaba el nivel sin el
+    // desplazamiento. `{r}` solo ya da la tesela nítida del nivel correcto.
     this.capaTeselas = L.tileLayer(oscuro ? TESELAS.oscuro : TESELAS.claro, {
       attribution: ATRIBUCION,
-      subdomains: 'abcd',
       maxZoom: 19,
-      detectRetina: true,
       crossOrigin: true,
     }).addTo(this.mapa);
 
@@ -121,15 +142,16 @@ export class Mapa {
 
   // --- Marcadores ---------------------------------------------------------
 
-  _icono(lugar, { numero = null, visitado = false, secundario = false } = {}) {
+  _icono(lugar, { numero = null, visitado = false, secundario = false, fondo = false } = {}) {
     const cat = CATEGORIAS[lugar.categoria] || CATEGORIAS.practico;
     const clases = ['pin'];
     if (numero) clases.push('pin--numerado');
-    if (secundario) clases.push('pin--secundario');
+    if (secundario || fondo) clases.push('pin--secundario');
+    if (fondo) clases.push('pin--fondo');
     const interior = numero
       ? String(numero)
       : `<svg aria-hidden="true"><use href="#i-${esc(cat.icono)}"/></svg>`;
-    const tam = secundario ? 15 : numero ? 28 : 26;
+    const tam = fondo ? 11 : secundario ? 15 : numero ? 28 : 26;
 
     return this.L.divIcon({
       className: 'marcador',
@@ -146,9 +168,12 @@ export class Mapa {
       ? `<img class="globo__foto" src="${esc(lugar.imagen.archivo)}" alt="" loading="lazy" decoding="async"
               title="${esc(lugar.imagen.credito)}">`
       : '';
+    const ficha = this.enlaceFicha
+      ? `<a class="globo__enlace" href="${esc(this.enlaceFicha(lugar.id))}">Ver ficha</a>`
+      : '';
     return `${foto}<div class="globo__titulo">${esc(lugar.nombre)}</div>
       <div class="globo__resumen">${esc(lugar.resumen)}</div>
-      <div class="globo__pie"><span class="chip chip--${esc(lugar.categoria)}">${esc(cat.etiqueta)}</span></div>`;
+      <div class="globo__pie"><span class="chip chip--${esc(lugar.categoria)}">${esc(cat.etiqueta)}</span>${ficha}</div>`;
   }
 
   _limpiar() {
@@ -163,7 +188,7 @@ export class Mapa {
    * que las une, y los puntos de traslado en pequeño para que se entienda por
    * dónde se pasa sin competir con las paradas de verdad.
    */
-  mostrarDia(dia, { visitados = {} } = {}) {
+  mostrarDia(dia, { visitados = {}, viaje = null } = {}) {
     if (!this.mapa) return;
     this._limpiar();
 
@@ -214,7 +239,28 @@ export class Mapa {
       }
     }
 
+    // Los sitios de los demás días, atenuados y sin número: dan contexto —dónde
+    // queda el día respecto al resto del viaje— sin competir con la ruta. Van
+    // por debajo de todo y **no cuentan para el encuadre**, o un viaje de
+    // varias ciudades sacaría el día entero de la pantalla.
+    if (viaje) {
+      for (const lugar of viaje.lugaresUsados || []) {
+        if (yaPuestos.has(lugar.id) || !lugar.coords) continue;
+        const m = this.L.marker(lugar.coords, {
+          icon: this._icono(lugar, { fondo: true }),
+          title: `${lugar.nombre} (otro día)`,
+          zIndexOffset: -500,
+          keyboard: false,
+        });
+        m.bindPopup(this._globo(lugar), { closeButton: false });
+        m.addTo(this.capaMarcadores);
+      }
+    }
+
+    // La ruta en dos trazos: un halo del color del mapa debajo y la línea
+    // encima. Sin el halo, sobre calles y ríos la línea se pierde.
     if (puntos.length > 1) {
+      this.L.polyline(puntos, { className: 'ruta-dia__halo', interactive: false }).addTo(this.capaRuta);
       this.L.polyline(puntos, { className: 'ruta-dia', interactive: false }).addTo(this.capaRuta);
     }
     this.encuadrar(dia.paradas.length ? puntos : [...this.marcadores.values()].map((m) => m.getLatLng()));
@@ -240,7 +286,9 @@ export class Mapa {
 
   encuadrar(puntos) {
     if (!puntos?.length || !this.mapa) return;
-    const abajo = this.margenInferior();
+    // Nunca más margen del que cabe: con un relleno mayor que el propio mapa,
+    // Leaflet no encuentra encuadre y se va al zoom máximo.
+    const abajo = Math.min(this.margenInferior(), Math.max(0, this.mapa.getSize().y - 160));
     if (puntos.length === 1) {
       this.mapa.setView(puntos[0], 15, { animate: false });
       if (abajo) this.mapa.panBy([0, abajo / 2], { animate: false });
@@ -325,21 +373,19 @@ export class Mapa {
     }
     lista = lista.slice(0, MAX_TESELAS_SIN_CONEXION);
 
-    // El subdominio y el sufijo de retina se calculan **exactamente** como los
-    // calcula Leaflet al pedir la tesela. Si no, se descarga `a.basemaps…` y
-    // luego se pide `c.basemaps…`: son URLs distintas, la caché no acierta, y el
-    // mapa aparece en blanco justo el día que no hay cobertura. Esto costó una
-    // ronda entera de depuración.
-    const sub = this.capaTeselas.options.subdomains;           // 'abcd'
-    const escala = this.capaTeselas.options.detectRetina && (globalThis.devicePixelRatio || 1) > 1 ? '@2x' : '';
+    // El sufijo de alta densidad se calcula **exactamente** como lo calcula
+    // Leaflet al pedir la tesela (`L.Browser.retina`). Si la URL descargada y la
+    // pedida difieren en un carácter, la caché no acierta y el mapa aparece en
+    // blanco justo el día que no hay cobertura. Con CARTO costó una ronda de
+    // depuración por el subdominio; Stadia no tiene subdominios.
+    const escala = this.L.Browser.retina ? '@2x' : '';
     const urls = lista.map(({ x, y, z }) =>
       TESELAS.claro
-        .replace('{s}', sub[Math.abs(x + y) % sub.length])
         .replace('{z}', z).replace('{x}', x).replace('{y}', y).replace('{r}', escala));
 
     // Los dos temas, para que cambiar de claro a oscuro sin cobertura no deje
     // el mapa en blanco.
-    const oscuras = urls.map((u) => u.replace('/voyager/', '/dark_all/'));
+    const oscuras = urls.map((u) => u.replace('/alidade_smooth/', '/alidade_smooth_dark/'));
     const todas = urls.concat(oscuras);
 
     let hechas = 0;

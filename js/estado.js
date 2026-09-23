@@ -10,7 +10,7 @@
  * ronda los 5 MB y una sola foto de móvil ya se los come.
  */
 
-import { validarCapa } from './personalizacion.js';
+import { validarCapa, normalizarCapa } from './personalizacion.js';
 import { fusionarEstado } from './sincronizacion.js';
 
 const PREFIJO = 'bitacora:v1';
@@ -119,7 +119,9 @@ export function alternarTarea(viajeId, itemId) {
 // Paradas añadidas y paradas ocultadas. Va aparte del resto del estado porque
 // tiene su propio formato, su propia validación y su propia versión.
 
-export const capaDe = (viajeId) => leer(`capa:${viajeId}`, { version: 1, lugares: [], bloques: [], ocultos: [] });
+// Se normaliza al leer: una capa guardada con la versión 1 sale con los campos
+// de la 2 vacíos, y nadie que la use tiene que preguntar qué versión es.
+export const capaDe = (viajeId) => normalizarCapa(leer(`capa:${viajeId}`, null));
 
 export function guardarCapa(viajeId, capa) {
   escribir(`capa:${viajeId}`, capa);
@@ -134,6 +136,34 @@ export const privadosDe = (viajeId) => leer(`privado:${viajeId}`, { campos: [] }
 export function guardarPrivados(viajeId, datos) {
   escribir(`privado:${viajeId}`, datos);
   avisar(viajeId);
+}
+
+// --- Viajes creados en la aplicación ----------------------------------------
+// Un viaje creado con «Crear viaje» no tiene archivo en el repositorio: su
+// documento vive aquí, con la misma forma que `data/viajes/<id>.json`, y la
+// capa, los estados y lo demás van encima igual que en cualquier otro. Para
+// que lo vea otra persona se publica en la nube desde la portada del viaje.
+
+export const viajesLocales = () => leer('viajes-locales', {});
+
+export function viajeLocal(id) {
+  return viajesLocales()[id] || null;
+}
+
+export function guardarViajeLocal(doc) {
+  const todos = viajesLocales();
+  todos[doc.id] = doc;
+  const ok = escribir('viajes-locales', todos);
+  avisar(doc.id);
+  return ok;
+}
+
+export function borrarViajeLocal(id) {
+  const todos = viajesLocales();
+  delete todos[id];
+  escribir('viajes-locales', todos);
+  try { localStorage.removeItem(`${PREFIJO}:capa:${id}`); } catch { /* nada que borrar */ }
+  avisar(id);
 }
 
 // --- Tema -----------------------------------------------------------------

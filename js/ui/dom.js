@@ -120,7 +120,12 @@ export const plural = (n, singular, muchos = `${singular}s`) =>
 export function dinero(importe, moneda = 'EUR') {
   if (importe === 0) return 'Gratis';
   try {
-    return new Intl.NumberFormat('es-ES', { style: 'currency', currency: moneda, maximumFractionDigits: 2 }).format(importe);
+    // Sin decimales si el importe es entero: «300 CZK» y no «300,00 CZK». Con
+    // decimales, los dos: «7,50 €» y no «7,5 €».
+    const decimales = Number.isInteger(importe) ? 0 : 2;
+    return new Intl.NumberFormat('es-ES', {
+      style: 'currency', currency: moneda, minimumFractionDigits: decimales, maximumFractionDigits: decimales,
+    }).format(importe);
   } catch {
     return `${importe} ${moneda}`;
   }

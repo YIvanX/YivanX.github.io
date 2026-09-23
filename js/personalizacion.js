@@ -17,9 +17,93 @@
  * probar entero en Node. Toda la lógica que decide qué se ve vive aquí.
  */
 
-export const VERSION_CAPA = 1;
+/**
+ * Versión 2 (23 de septiembre de 2026): además de paradas añadidas y ocultas,
+ * la capa lleva lo que el viaje **compartido** necesita saber y el JSON del
+ * repositorio no puede guardar, porque es público:
+ *
+ *  · `estados`  — reservado o cancelado, por actividad. Lo «hecho» no va aquí:
+ *                 es de cada persona y sigue viviendo en `visitados`.
+ *  · `reservas` — hotel, vuelo, tren… con su localizador.
+ *  · `gastos`   — lo que se ha pagado de verdad.
+ *  · `cambios`  — lo editado en una actividad del archivo (hora, nota, coste,
+ *                 URL, si pide reserva, incluso el día), por su clave estable.
+ *                 El JSON no se toca: se superpone, igual que se oculta.
+ *
+ * Todo lo que se puede cambiar desde dos móviles a la vez lleva `t`, la marca
+ * de tiempo del cambio: es lo que deja fundir sin preguntar quién gana. Una
+ * capa v1 es una v2 a la que le faltan campos, y `normalizarCapa` los rellena.
+ */
+export const VERSION_CAPA = 2;
 
-export const capaVacia = () => ({ version: VERSION_CAPA, lugares: [], bloques: [], ocultos: [] });
+export const capaVacia = () => ({
+  version: VERSION_CAPA, lugares: [], bloques: [], ocultos: [], estados: {}, reservas: [], gastos: [], cambios: {},
+});
+
+/**
+ * Lo que se puede cambiar de una actividad del archivo. El nombre y la
+ * ubicación no están, a propósito: son del lugar, que tiene su foto, su horario
+ * y su valoración verificados, y cambiarlos en la aplicación dejaría todo eso
+ * hablando de otro sitio. Eso se cambia en el JSON.
+ */
+export const CAMPOS_EDITABLES = ['fecha', 'inicio', 'fin', 'nota', 'coste', 'url', 'reserva', 'tipoActividad', 'duracionMin'];
+
+/**
+ * Guarda lo editado en una actividad del archivo y devuelve una capa nueva.
+ * Se funde con lo que ya hubiera: editar la nota no borra la hora cambiada
+ * antes. Un campo a `null` vuelve a lo que dice el archivo.
+ */
+export function fijarCambio(capa, clave, campos, ahora = new Date().toISOString()) {
+  if (!clave) throw new Error('Falta la clave de la actividad');
+  const c = normalizarCapa(capa);
+  const previo = { ...(c.cambios[clave] || {}) };
+  delete previo.t;
+  for (const [k, v] of Object.entries(campos || {})) {
+    if (!CAMPOS_EDITABLES.includes(k)) throw new Error(`No se puede cambiar «${k}» de una actividad del archivo`);
+    if (v === null || v === undefined) delete previo[k];
+    else previo[k] = v;
+  }
+  return { ...c, cambios: { ...c.cambios, [clave]: { ...previo, t: ahora } } };
+}
+
+/** Deshace lo editado en una actividad del archivo: vuelve a ser como dice el JSON. */
+export function quitarCambio(capa, clave, ahora = new Date().toISOString()) {
+  const c = normalizarCapa(capa);
+  // Con marca de tiempo y vacío, no borrado: si no, al fundir con la nube el
+  // cambio que siguiera allí volvería a aparecer.
+  return { ...c, cambios: { ...c.cambios, [clave]: { t: ahora } } };
+}
+
+/**
+ * Rellena lo que le falte a una capa, sin tocar lo que trae. Es la migración de
+ * v1 a v2, y por eso **no corrige tipos**: un campo que viene roto tiene que
+ * llegar roto a `validarCapa`, que es quien sabe decir qué le pasa.
+ */
+export function normalizarCapa(capa) {
+  const base = capaVacia();
+  const c = capa && typeof capa === 'object' ? capa : {};
+  const salida = { ...base, ...c, version: VERSION_CAPA };
+  for (const k of Object.keys(base)) if (salida[k] === undefined || salida[k] === null) salida[k] = base[k];
+  return salida;
+}
+
+/** Los dos únicos estados que se guardan. «Por hacer» es no tener ninguno. */
+export const ESTADOS_GUARDABLES = ['reservado', 'cancelado'];
+
+/**
+ * Cambia el estado de una actividad y devuelve una capa **nueva**.
+ *
+ * Volver a «por hacer» no borra la entrada: la deja con `estado: null` y su
+ * marca de tiempo. Si se borrara, al fundir con la nube el «reservado» que
+ * todavía está allí volvería a aparecer, porque no habría nada más reciente que
+ * dijera lo contrario.
+ */
+export function fijarEstado(capa, clave, estado, ahora = new Date().toISOString()) {
+  if (!clave) throw new Error('Falta la clave de la actividad');
+  if (estado !== null && !ESTADOS_GUARDABLES.includes(estado)) throw new Error(`Estado no válido: ${estado}`);
+  const c = normalizarCapa(capa);
+  return { ...c, estados: { ...c.estados, [clave]: { estado, t: ahora } } };
+}
 
 /**
  * Identidad estable de un bloque del JSON base.
@@ -55,7 +139,7 @@ export function idDesdeNombre(nombre, usados = new Set()) {
   return `${base}-${nuevoId()}`;
 }
 
-const CATEGORIAS_VALIDAS = ['patrimonio', 'naturaleza', 'comida', 'pueblo', 'transporte', 'alojamiento', 'practico'];
+const CATEGORIAS_VALIDAS = ['patrimonio', 'naturaleza', 'comida', 'pueblo', 'transporte', 'alojamiento', 'practico', 'actividad'];
 
 /**
  * Adivina la categoría a partir de las etiquetas de OpenStreetMap.
@@ -129,45 +213,56 @@ function ordenarPorHora(bloques) {
  * @returns {{viaje:object, resumen:{anadidos:number, ocultos:number, lugares:number}}}
  */
 export function aplicarCapa(viaje, capa) {
-  const c = { ...capaVacia(), ...(capa || {}) };
+  const c = normalizarCapa(capa);
   const ocultos = new Set(c.ocultos || []);
+  const cambios = c.cambios || {};
 
   const lugaresPropios = (c.lugares || []).map((l) => ({ ...l, origen: 'propio' }));
   const idsBase = new Set((viaje.lugares || []).map((l) => l.id));
   // Un lugar propio que choque con uno del JSON se descarta: manda el archivo.
   const propiosSinChoque = lugaresPropios.filter((l) => !idsBase.has(l.id));
 
+  const fechas = new Set((viaje.dias || []).map((d) => d.fecha));
   const porFecha = new Map();
-  for (const b of c.bloques || []) {
-    if (!porFecha.has(b.fecha)) porFecha.set(b.fecha, []);
-    porFecha.get(b.fecha).push(b);
-  }
+  const meter = (fecha, b) => {
+    if (!porFecha.has(fecha)) porFecha.set(fecha, []);
+    porFecha.get(fecha).push(b);
+  };
 
   let anadidos = 0;
   let escondidos = 0;
 
-  const dias = (viaje.dias || []).map((dia) => {
-    const base = (dia.bloques || []).filter((b) => {
-      const fuera = ocultos.has(claveEstable(dia.fecha, b));
-      if (fuera) escondidos += 1;
-      return !fuera;
-    });
+  // Primera pasada: los bloques del archivo, con lo editado encima. Va aparte
+  // porque un cambio puede mover una actividad a **otro** día, y ese día puede
+  // venir antes en la lista.
+  for (const dia of viaje.dias || []) {
+    for (const b of dia.bloques || []) {
+      const clave = claveEstable(dia.fecha, b);
+      if (ocultos.has(clave)) { escondidos += 1; continue; }
+      const cambio = cambios[clave];
+      const campos = cambio ? camposDeCambio(cambio) : null;
+      if (!campos || !Object.keys(campos).length) { meter(dia.fecha, b); continue; }
+      // Sin cambios, el bloque sale **idéntico** al del archivo. Con ellos
+      // lleva su clave original: la hora forma parte de la clave, y un estado o
+      // un «quitar» colgados de ella se perderían al moverla.
+      const editado = { ...b, ...campos, claveBase: clave, editado: true };
+      if (campos.nota === '') delete editado.nota;
+      if (campos.inicio && campos.inicio !== b.inicio) editado.movido = true;
+      delete editado.fecha;
+      const destino = campos.fecha && fechas.has(campos.fecha) ? campos.fecha : dia.fecha;
+      if (destino !== dia.fecha) editado.movido = true;
+      meter(destino, editado);
+    }
+  }
 
-    const propios = (porFecha.get(dia.fecha) || []).map((b) => {
-      anadidos += 1;
-      return {
-        tipo: b.tipo || 'visita',
-        inicio: b.inicio,
-        ...(b.fin ? { fin: b.fin } : {}),
-        lugar: b.lugar,
-        ...(b.nota ? { nota: b.nota } : {}),
-        propio: true,
-        idPropio: b.id,
-      };
-    });
+  // Segunda pasada: lo añadido a mano.
+  for (const b of c.bloques || []) {
+    if (!fechas.has(b.fecha)) continue;
+    anadidos += 1;
+    meter(b.fecha, bloqueDesdePropio(b));
+  }
 
-    return { ...dia, bloques: ordenarPorHora([...base, ...propios]) };
-  });
+  const dias = (viaje.dias || []).map((dia) => ({ ...dia, bloques: ordenarPorHora(porFecha.get(dia.fecha) || []) }));
 
   return {
     viaje: {
@@ -176,6 +271,37 @@ export function aplicarCapa(viaje, capa) {
       dias,
     },
     resumen: { anadidos, ocultos: escondidos, lugares: propiosSinChoque.length },
+  };
+}
+
+/** Solo lo que un cambio puede tocar, sin su marca de tiempo. */
+function camposDeCambio(cambio) {
+  const salida = {};
+  for (const k of CAMPOS_EDITABLES) if (cambio[k] !== undefined) salida[k] = cambio[k];
+  return salida;
+}
+
+/**
+ * Un bloque añadido a mano, con la forma de un bloque del archivo. Una nota
+ * (`tipo: 'hito'`) no apunta a ningún lugar: lleva título y detalle.
+ */
+function bloqueDesdePropio(b) {
+  const tipo = b.tipo || 'visita';
+  const opcional = (k) => (b[k] !== undefined && b[k] !== null && b[k] !== '' ? { [k]: b[k] } : {});
+  return {
+    tipo,
+    inicio: b.inicio,
+    ...opcional('fin'),
+    ...(tipo === 'hito' ? { titulo: b.titulo, ...opcional('detalle') } : { lugar: b.lugar }),
+    ...opcional('nota'),
+    ...opcional('coste'),
+    ...opcional('url'),
+    ...opcional('reserva'),
+    ...opcional('tipoActividad'),
+    ...opcional('duracionMin'),
+    ...(b.movido ? { movido: true } : {}),
+    propio: true,
+    idPropio: b.id,
   };
 }
 
@@ -197,6 +323,16 @@ export function validarCapa(capa) {
   if (!Array.isArray(capa.lugares)) fallos.push('lugares debe ser una lista');
   if (!Array.isArray(capa.bloques)) fallos.push('bloques debe ser una lista');
   if (!Array.isArray(capa.ocultos)) fallos.push('ocultos debe ser una lista');
+  // Los campos de la v2 pueden faltar —una capa v1 es válida—, pero si están
+  // tienen que tener su forma.
+  for (const k of ['estados', 'cambios']) {
+    if (capa[k] !== undefined && (!capa[k] || typeof capa[k] !== 'object' || Array.isArray(capa[k]))) {
+      fallos.push(`${k} debe ser un objeto`);
+    }
+  }
+  for (const k of ['reservas', 'gastos']) {
+    if (capa[k] !== undefined && !Array.isArray(capa[k])) fallos.push(`${k} debe ser una lista`);
+  }
   // Se sale aquí si la forma no es la que toca. Recorrer un campo que no es una
   // lista lanza un TypeError, y esta función existe justo para lo contrario:
   // para poder decir qué está mal sin reventar. La llama `importar` con un
@@ -214,9 +350,27 @@ export function validarCapa(capa) {
   }
   for (const [i, b] of (capa.bloques || []).entries()) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(b?.fecha || '')) fallos.push(`bloques[${i}] fecha no válida`);
-    if (!b?.lugar) fallos.push(`bloques[${i}] sin lugar`);
+    if (b?.tipo === 'hito') {
+      if (!b.titulo) fallos.push(`bloques[${i}] es una nota sin título`);
+    } else if (!b?.lugar) fallos.push(`bloques[${i}] sin lugar`);
     else if (!ids.has(b.lugar) && !b.lugarBase) fallos.push(`bloques[${i}] apunta a un lugar propio que no existe: ${b.lugar}`);
     if (b?.inicio && !/^([01]\d|2[0-4]):[0-5]\d$/.test(b.inicio)) fallos.push(`bloques[${i}] hora no válida: ${b.inicio}`);
+  }
+  for (const [clave, e] of Object.entries(capa.estados || {})) {
+    if (!e || typeof e !== 'object') { fallos.push(`estados[${clave}] no es un objeto`); continue; }
+    if (e.estado !== null && !ESTADOS_GUARDABLES.includes(e.estado)) fallos.push(`estados[${clave}] estado no válido: ${e.estado}`);
+    if (typeof e.t !== 'string') fallos.push(`estados[${clave}] sin marca de tiempo`);
+  }
+  for (const [clave, x] of Object.entries(capa.cambios || {})) {
+    if (!x || typeof x !== 'object') { fallos.push(`cambios[${clave}] no es un objeto`); continue; }
+    if (typeof x.t !== 'string') fallos.push(`cambios[${clave}] sin marca de tiempo`);
+    if (x.inicio && !/^([01]\d|2[0-4]):[0-5]\d$/.test(x.inicio)) fallos.push(`cambios[${clave}] hora no válida: ${x.inicio}`);
+  }
+  for (const k of ['reservas', 'gastos']) {
+    for (const [i, x] of (capa[k] || []).entries()) {
+      if (!x?.id) fallos.push(`${k}[${i}] sin id`);
+      if (typeof x?.t !== 'string') fallos.push(`${k}[${i}] sin marca de tiempo`);
+    }
   }
   return fallos;
 }
@@ -233,14 +387,20 @@ export function comoJsonDelViaje(capa) {
   return {
     lugares: (capa?.lugares || []).map(limpio),
     bloquesPorDia: (capa?.bloques || []).reduce((acc, b) => {
-      (acc[b.fecha] ||= []).push({
-        inicio: b.inicio,
-        ...(b.fin ? { fin: b.fin } : {}),
-        lugar: b.lugar,
-        ...(b.nota ? { nota: b.nota } : {}),
-      });
+      const bloque = bloqueDesdePropio(b);
+      delete bloque.propio;
+      delete bloque.idPropio;
+      delete bloque.movido;
+      delete bloque.tipoActividad;
+      if (bloque.tipo === 'visita') delete bloque.tipo;
+      (acc[b.fecha] ||= []).push(bloque);
       return acc;
     }, {}),
     ocultos: capa?.ocultos || [],
+    // Lo editado en actividades del archivo, sin sus marcas de tiempo, que
+    // solo sirven para fundir entre móviles.
+    cambios: Object.fromEntries(Object.entries(capa?.cambios || {})
+      .map(([k, v]) => [k, camposDeCambio(v)])
+      .filter(([, v]) => Object.keys(v).length)),
   };
 }

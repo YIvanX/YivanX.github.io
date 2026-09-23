@@ -89,6 +89,7 @@
 .pin[data-cat="transporte"]  { background: var(--cat-transporte-f);  color: var(--cat-transporte-t);  border-color: var(--cat-transporte-t); }
 .pin[data-cat="alojamiento"] { background: var(--cat-alojamiento-f); color: var(--cat-alojamiento-t); border-color: var(--cat-alojamiento-t); }
 .pin[data-cat="practico"]    { background: var(--cat-practico-f);    color: var(--cat-practico-t);    border-color: var(--cat-practico-t); }
+.pin[data-cat="actividad"]   { background: var(--cat-actividad-f);   color: var(--cat-actividad-t);   border-color: var(--cat-actividad-t); }
 
 /* Solo cambia el tamaño: el color sigue siendo el de la categoría, que es lo
    que deja leer de un vistazo si la parada es monumento, monte o mesa. */

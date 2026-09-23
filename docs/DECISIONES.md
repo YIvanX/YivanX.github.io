@@ -38,18 +38,40 @@ el motivo de existir de media aplicación— y además es una dependencia de red
 puede caerse o cambiar. Se carga bajo demanda: la portada no necesita mapa y no
 paga sus 147 KB.
 
-## Teselas de CARTO, y el subdominio importa
+## Teselas de Stadia, y la URL tiene que ser idéntica
 
-Basemaps de CARTO (Voyager en claro, Dark Matter en oscuro) sobre datos de
-OpenStreetMap. Atribución obligatoria y visible: no se esconde.
+Alidade Smooth de Stadia (clara y oscura) sobre datos de OpenStreetMap y
+OpenMapTiles. Atribución obligatoria y visible: no se esconde.
 
-**El detalle que costó una ronda de depuración:** la descarga para uso sin
-conexión tiene que construir la URL de cada tesela **exactamente** como la
-construye Leaflet al pedirla, subdominio incluido. Leaflet elige el subdominio
-con `(x + y) % n`; la primera versión los repartía en ciclo. Resultado: se
-descargaba `a.basemaps…` y luego se pedía `c.basemaps…`. Son URLs distintas, la
-Cache API no acierta, y el mapa aparecía en blanco justo el día sin cobertura.
-Medido: 0 teselas offline antes del arreglo, 20 después.
+**Hasta septiembre de 2026 eran de CARTO**, y dejaron de servir: desde agosto
+cada tesela llevaba «API KEY REQUIRED» impreso dentro de la imagen, en local y
+en el sitio publicado. Se midieron tres recambios el 23 de septiembre de 2026:
+
+- **`tile.openstreetmap.org`**: su política prohíbe descargar teselas por
+  adelantado, que es exactamente lo que hace «Preparar sin conexión».
+- **OpenFreeMap**: sin clave y sin límites, pero solo vectorial. Exige MapLibre,
+  cientos de KB para sustituir a Leaflet, que pesa 147.
+- **Stadia**: gratis para un sitio personal, **autenticado por dominio** (sin
+  clave en el código, que en un repositorio público sería una clave regalada) y
+  sus condiciones permiten guardar pequeñas cantidades para usar sin conexión.
+  Desde `localhost` responde sin alta; desde un dominio sin dar de alta devuelve
+  una tesela con un «401» dibujado. `yivanx.github.io` tiene que estar en su
+  panel, en *Authentication Configuration*.
+
+**El detalle que costó una ronda de depuración, y que sigue valiendo:** la
+descarga para uso sin conexión tiene que construir la URL de cada tesela
+**exactamente** como la construye Leaflet al pedirla. Con CARTO falló el
+subdominio (`a.` descargado, `c.` pedido). Con Stadia no hay subdominios, pero
+había un segundo fallo del mismo tipo escondido: con `detectRetina`, en una
+pantalla de alta densidad Leaflet pide el nivel de zoom **siguiente** y la
+descarga guardaba el nivel actual. En un móvil, el mapa preparado no coincidía
+con el pedido. Ahora no se usa `detectRetina`: `{r}` añade `@2x` según
+`L.Browser.retina`, y la descarga usa esa misma propiedad.
+
+La caché de teselas lleva el nombre del proveedor (`bitacora-teselas-stadia`) y
+el service worker borra las de otro proveedor al activarse: una tesela de CARTO
+ya no sirve para nada. Tampoco se guarda nunca una respuesta que no sea un 200,
+o la imagen del 401 se quedaría pegada al mapa.
 
 ## La descarga sin conexión va acotada y la lanza el usuario
 
@@ -99,47 +121,239 @@ Cuando un cambio merezca ser permanente, «Copiar como JSON» lo deja listo para
 pegar en `data/viajes/<id>.json`. Ese es el puente entre lo efímero y el
 repositorio.
 
-## Cuatro pestañas hermanas que no eran hermanas
+## Cuatro secciones, y esta vez sí son hermanas
 
-La primera versión ponía `Itinerario · Transporte · Listas · Viaje` en una barra
-de pestañas, todas al mismo nivel. No lo estaban:
+**Historia, porque explica la decisión.** La primera versión ponía
+`Itinerario · Transporte · Listas · Viaje` en una barra de pestañas, y no eran
+hermanas: una era un día, dos eran tablas del viaje entero y la cuarta era el
+viaje que contenía a las otras tres. La barra de días desaparecía en tres de las
+cuatro, y el 21 de agosto de 2026 se quitó la barra y la jerarquía pasó a la
+cabecera, con la maleta subiendo a la portada del viaje.
 
-- **Itinerario** era **un día**.
-- **Transporte** y **Listas** eran tablas del **viaje entero**.
-- **Viaje** era el viaje que **contiene** a las otras tres, más la cuenta de
-  Supabase, más los créditos de las fotos.
+**El 23 de septiembre de 2026 vuelve una barra, con otras cuatro:
+`Hoy · Itinerario · Mapa · Reservas`.** Estas sí son hermanas: las cuatro miran
+el viaje entero desde un sitio distinto —lo que toca ahora, los días, el
+territorio, lo que hay que tener reservado— y ninguna contiene a otra. Lo decidió
+Yixuan, y la prueba de que esta vez cuadra está en la propia interfaz: la barra
+de días aparece donde tiene sentido elegir un día (Itinerario y Mapa), y ninguna
+sección pierde algo que necesita.
 
-La prueba estaba en la propia interfaz: la barra de días desaparecía en tres de
-las cuatro pestañas. La aplicación ya sabía la jerarquía correcta y la barra la
-negaba.
+- **Abajo en el móvil, arriba en escritorio.** Abajo porque es donde llega el
+  pulgar con una mano, y con la misma consulta que la hoja arrastrable: donde
+  hay hoja, hay barra abajo. En un móvil apaisado cada píxel de alto cuenta, y
+  ahí las secciones se quedan en la cabecera.
+- **La portada del viaje sigue en la maleta**, y de ella cuelgan Transporte,
+  Listas, el presupuesto, la nube y los créditos. No es una sección más: es el
+  viaje en sí.
+- **Se entra por Hoy si el viaje está en curso**, y por el itinerario si no. Es
+  la misma regla de siempre —se entra por lo que se va a mirar— con una vista
+  hecha para eso.
+- **Cada elemento de la barra es un enlace**, igual que la barra de días.
+  Itinerario y Mapa llevan el día que se está mirando, para que cambiar de
+  sección no te cambie de día.
 
-Ahora la jerarquía la lleva la cabecera, con **un icono por destino**: la maleta
-sube a la portada del viaje y la persona lleva a Tus datos. De la portada cuelgan
-el itinerario, Transporte, Listas, Preparativos y Al volver. No hay barra de
-pestañas.
+**Los iconos de la cabecera siguen siendo la corrección de un fallo medido.** La
+primera versión dejaba el acceso a la portada solo en el título: un objetivo
+táctil de **37 × 26 px**, la mitad del mínimo de 44. Ahora el título es un
+objetivo de 44 px de alto y la maleta tiene su propio icono, con
+`aria-current="page"` cuando ya estás en la portada.
 
-**Los iconos no son adorno, son la corrección de un fallo medido.** La primera
-versión dejaba el acceso a la portada solo en el título de la cabecera: un
-objetivo táctil de **37 × 26 px**, la mitad del mínimo de 44. Con su icono
-propio, y con el título convertido en un objetivo de 44 px de alto, el acceso
-pasa a existir de verdad. El icono lleva `aria-current="page"` cuando ya estás
-en la portada, para que no invite a ir a donde ya estás.
+**El tema está en Tus datos.** Un icono que cicla entre automático, claro y
+oscuro obliga a deducir en cuál estás. Allí son tres botones con su nombre.
 
-**El tema se fue a Tus datos.** Cinco objetivos táctiles en una cabecera de 52 px
-no caben, y un icono que cicla entre automático, claro y oscuro obliga a
-**deducir** en cuál de los tres estás. En Tus datos son tres botones con su
-nombre escrito. Se pierde el cambio de tema en un toque; a cambio, «automático»
-—que es el de fábrica— ya sigue al móvil, que de noche cambia solo.
+**Portada, Transporte, Listas y Reservas no montan una vista aparte.** Se pintan
+dentro de `montarViaje` y ensanchan el panel por CSS, y la sección Mapa esconde
+el panel. Desmontar y volver a montar el mapa en cada ida y vuelta es justo lo
+que evita el resto del diseño de esa vista.
 
-**Se entra por el día, no por la portada.** La jerarquía dice que el viaje
-contiene al día, pero durante el viaje esto se abre veinte veces al día para ver
-qué toca ahora, y ese gesto no puede costar un toque más. Subir es lo que cuesta
-un toque, y se hace pocas veces.
+## Hoy es otra pregunta, no otro día
 
-**Portada, Transporte y Listas no montan una vista aparte.** Se pintan dentro de
-`montarViaje` y solo ensanchan el panel por CSS. Sacarlas fuera habría destruido
-y reconstruido el mapa en cada ida y vuelta, que es justo lo que evita el resto
-del diseño de esa vista.
+El itinerario contesta «¿qué hacemos el martes?». Hoy contesta la que se hace
+veinte veces al día con el móvil en la mano: **qué toca ahora, qué viene después
+y cómo se llega**. Por eso no pinta el día con el mismo peso: lo de ahora en
+grande, lo siguiente con «Cómo llegar», y lo demás en una lista corta.
+
+- **De camino a un sitio, el tramo y el sitio van en una sola tarjeta.** La
+  primera versión pintaba «De camino» y «Siguiente» con el mismo destino y dos
+  botones iguales.
+- «Cómo llegar» abre las indicaciones **desde donde estás**, en el modo del tramo
+  del itinerario: de camino, ya no estás en el origen.
+- Lo que ya pasó sin marcarse va plegado y dice cuántas actividades son. A las
+  cinco de la tarde eran ocho filas delante de lo que importa.
+- Se repinta cada minuto, solo si se está mirando y no se está escribiendo.
+- Antes del viaje dice cuánto falta y qué queda por dejar resuelto; después,
+  cómo fue y dónde guardar los recuerdos. Ninguno de los tres casos se queda en
+  blanco.
+
+La lógica —qué es «ahora», qué es «siguiente», qué estado tiene cada cosa— vive
+en `js/actividades.js`, **pura y con pruebas**, por la misma razón que
+`agenda.js`: un fallo ahí no da error, te manda a un sitio donde ya estuviste.
+
+## Estados: uno es tuyo y dos son del viaje
+
+Cada actividad está **por hacer, reservada, hecha o cancelada**, y además puede
+**requerir reserva**, si su sitio la pide y nadie la ha marcado.
+
+- **«Hecho» es de cada persona** y sigue viviendo en `visitados`, como antes.
+  Que tu pareja haya ido al museo no significa que hayas ido tú.
+- **Reservado y cancelado son del viaje** y van en la capa compartida. Si una
+  persona reserva, la otra tiene que verlo.
+- «Por hacer» y «Requiere reserva» no se guardan: se deducen.
+- El orden de las preguntas es la regla: cancelado gana a todo; hecho gana a
+  reservado, porque una vez dentro la reserva ya cumplió; y solo entonces
+  reservado y requiere reserva.
+- **Nunca solo el color.** Cada estado lleva icono y texto para lectores de
+  pantalla, porque «reservado» y «hecho» en verde se confunden con el sol de
+  frente.
+
+Se cambian en dos sitios con trabajos distintos. El punto del raíl marca o
+desmarca «hecho», que es lo que se hace andando. La ficha tiene los cuatro con
+su nombre, que es donde se decide con calma.
+
+## La capa v2, y por qué las reservas sí suben a la nube
+
+La capa pasa a la versión 2 y lleva, además de paradas añadidas y ocultas,
+`estados`, `reservas` y `gastos`. Una capa v1 es una v2 a la que le faltan
+campos: `normalizarCapa` los rellena al leer, sin tocar lo que trae.
+
+**Todo lo que dos personas pueden cambiar a la vez lleva `t`, la hora del
+cambio**, y al fundir gana lo más reciente. Unir sin perder nada basta para las
+paradas añadidas, pero no para «reservado» frente a «por hacer», donde una de
+las dos tiene razón. Volver a «por hacer» no borra la entrada: la deja con
+`estado: null` y su hora, porque si no, el «reservado» que siguiera en la nube
+volvería a aparecer.
+
+**Las reservas, con su localizador, van al navegador y a la nube de los
+miembros, nunca al repositorio.** Es la primera excepción a «los datos privados
+no salen del navegador», y la decidió Yixuan el 23 de septiembre de 2026 por un
+motivo concreto: un localizador que solo ve quien lo apuntó no le sirve a quien
+tiene que enseñarlo en la puerta. En la nube lo protege RLS: solo lo leen los
+miembros del viaje. El repositorio sigue siendo público, y por eso «Copiar como
+JSON» nunca incluye estados, reservas ni gastos.
+
+## Viajes creados en el navegador
+
+«Crear viaje» hace lo mismo que `herramientas/nuevo-viaje.mjs`: un documento con
+la forma de un JSON del repositorio y un día por fecha. **Vive en el navegador**
+(`bitacora:v1:viajes-locales`), y la portada lo lista junto a los del
+repositorio. Si choca de id con uno de ellos, manda el archivo. Para que lo vea
+otra persona, se publica en la nube desde su portada, con lo que ya existía.
+
+El centro del mapa sale de buscar el destino en Photon. Sin conexión, el viaje
+se crea igual y el mapa arranca en la vista general hasta que se añade la
+primera actividad.
+
+## Editar una actividad del archivo sin tocar el archivo
+
+El mismo formulario sirve para añadir y para editar, y guarda por tres caminos
+distintos según de dónde venga la actividad:
+
+- **Del archivo:** se guarda **solo lo que cambia**, en `capa.cambios`, bajo su
+  clave estable. El JSON no se toca, igual que al ocultar, y «deshacer» es quitar
+  el cambio. Se puede cambiar la hora, el día, la duración, el coste, la nota, la
+  web, si pide reserva y el tipo.
+- **Añadida a mano:** se reescribe su bloque en la capa, con su marca de tiempo.
+- **Nueva:** un lugar y un bloque nuevos en la capa. Una **nota** es un hito:
+  título, detalle y hora, sin lugar.
+
+**El nombre y la ubicación de una actividad del archivo no se editan en la
+aplicación.** Son del lugar, que lleva su foto, su horario y su valoración
+comprobados; cambiarlos aquí dejaría todo eso hablando de otro sitio. Se cambian
+en el JSON.
+
+**La clave estable lleva la hora, y la hora se puede editar.** Por eso un bloque
+editado lleva `claveBase`, la clave original: su estado, su «quitar» y su icono
+de nube siguen colgados de ella. Sin eso, cambiar la hora de algo reservado lo
+dejaba por reservar. Un bloque **sin** cambios sale idéntico al del archivo, sin
+campos añadidos; hay una prueba que lo exige.
+
+## Reordenar intercambia huecos
+
+Arrastrar el museo antes del restaurante no inventa horas: **las horas se quedan
+donde estaban y las actividades se mueven entre ellas**. Si había palacio a las
+9:00, restaurante a las 12:00 y museo a las 15:00, el museo pasa a las 12:00 y el
+restaurante a las 15:00. Cada una conserva su duración, así que el hueco puede
+quedarle corto o largo, y eso se ve en lugar de corregirlo en silencio.
+
+- Se arrastra por un asa, con las mismas reglas que la hoja (respuesta en
+  `pointerdown`, captura inmediata, seguimiento 1:1), y hay **flechas para
+  teclado** o para quien no arrastra. El gesto nunca es la única vía.
+- **Los traslados del plan que dejan de unir actividades vecinas se marcan como
+  desfasados** y no se pintan, no se suman al resumen ni entran en la ruta de
+  Google Maps: su duración y su distancia eran de otro recorrido. En su lugar
+  sale un «Cómo llegar» **sin duración**.
+- **Solo entre actividades que en el archivo no iban seguidas.** El funicular y
+  la torre están uno junto al otro y nunca tuvieron traslado; ponerles uno por
+  haber movido otra cosa sería ruido. El orden original sale de la propia clave
+  estable, que lleva la fecha y la hora del archivo.
+- «Volver al orden del archivo» deshace las horas. Una actividad añadida no tiene
+  archivo al que volver, y por eso guarda su hora de antes la primera vez que se
+  mueve.
+
+## Reservas con localizador, y gastos
+
+Una reserva es una ficha propia —hotel, vuelo, tren, restaurante, actividad— con
+fecha, hora, dirección, número de reserva, web y notas. **El localizador va en
+grande y con «Copiar»**, porque es lo que se enseña en un mostrador o se pega con
+prisa en la web de la aerolínea.
+
+- **Vincular una reserva a una actividad la marca como reservada.** Pedir además
+  que se marque sería hacer lo mismo dos veces.
+- **Un hotel cubre los días de su estancia**: sale en la banda de reservas de
+  cada día entre la entrada y la salida, que es cuando hace falta la dirección.
+- Borrar es marcar `borrado`, no quitar de la lista: si se quitara, la copia de la
+  nube la haría volver al fundir.
+
+Los gastos son apuntes con importe, concepto, categoría y día. **Se suman en
+céntimos**, porque 0,1 + 0,2 en coma flotante da 0,30000000000000004, y eso
+acaba en pantalla. La vista de gastos es una cifra, un reparto por categoría y el
+día a día. El reparto va en barras finas **de un solo color**: la categoría ya la
+dice su nombre, y cada fila lleva su importe escrito, así que la lista es también
+la tabla y ningún valor depende de pasar el ratón.
+
+## Una categoría más: actividad
+
+Las visitas guiadas, las clases y los espectáculos no son patrimonio ni un sitio
+que se ve: son algo que se hace. Tienen categoría propia, con su color (verde
+azulado, 5,5:1 de contraste en claro y 8,1:1 en oscuro), en la aplicación, en el
+esquema y en el validador. Los tipos de actividad del formulario son una tabla en
+`js/actividades.js`: un tipo nuevo es una fila.
+
+## Accesibilidad medida, no supuesta
+
+El 23 de septiembre de 2026 se pasó axe-core (WCAG 2.2 A y AA) por trece vistas,
+en claro y en oscuro, a 1440 y 390 px. Lo que encontró y lo que se hizo:
+
+- **El gris de los textos pequeños no llegaba a 4,5:1** en ninguno de los dos
+  modos: 3,4-3,8 en claro y 3,5-4,1 en oscuro, según la superficie. Venía de
+  antes del rediseño. `--tinta-suave` pasa a `#736C64` y a `#908980`, los grises
+  más cercanos a los de antes que dan 4,6:1 o más en las tres superficies. La
+  jerarquía se mantiene porque el gris medio sigue en 6,5-7,6:1.
+- **La pista de la opción de tema elegida** llevaba `opacity: 0.8` y bajaba a
+  3,3:1. Sin la opacidad da 4,8:1 y 5,7:1.
+- **Los diálogos nuevos atrapan el tabulador.** `aria-modal` lo declara pero no
+  lo hace: el foco salía a la página tapada. Escape cierra y el foco vuelve al
+  botón que abrió el diálogo.
+- **Queda un aviso, y es a sabiendas:** marcadores del mapa que se tapan entre sí
+  cuando dos sitios están muy juntos. La WCAG 2.5.8 lo exime cuando la misma
+  acción está en otro control que cumple, y aquí cada marcador es una fila de la
+  cronología de 44 px de alto. Separarlos a la fuerza movería los puntos de su
+  coordenada real, y en un mapa eso sí es un fallo.
+
+## El resumen del día solo dice lo que el itinerario sabe
+
+Actividades, horario, cuánto se anda y cuánto se va en transporte, cuánto
+cuestan las entradas por persona y qué reservas quedan. Todo sale del JSON:
+
+- **El tiempo a pie es la suma real de los traslados**, de su hora de inicio y
+  de fin.
+- **Los kilómetros se leen del texto de los traslados** («800 m por el
+  sendero», «1,2 km bajando por Nerudova»), no se calculan. Y **solo se enseñan
+  si todos los tramos a pie dicen su distancia**: con uno sin ella, la suma
+  saldría menor que lo que se anda y parecería completa. Una línea recta entre
+  dos puntos no es lo que se camina, y enseñarla como tal sería inventar el dato.
+- El coste no cuenta lo que se ve por fuera ni lo cancelado, y dice que es de
+  entradas y por persona, que es lo que guarda el archivo.
 
 ## Un aviso se lee el día que importa, no antes
 

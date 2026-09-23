@@ -7,12 +7,13 @@
  * teselas y perdería el encuadre, que es de las cosas que más delatan una web
  * hecha con prisa.
  *
- * **Por qué no hay barra de pestañas.** La tenía, con Itinerario, Transporte,
- * Listas y Viaje como hermanas, y no lo eran: una era un día, dos eran tablas
- * del viaje entero y la cuarta era el viaje que contiene a las otras tres. La
- * propia barra de días lo delataba desapareciendo en tres de las cuatro. Ahora
- * la jerarquía la lleva la cabecera: el título sube a la portada del viaje, y de
- * la portada cuelga todo lo demás.
+ * **Las secciones: Hoy · Itinerario · Mapa · Reservas.** Hasta septiembre de
+ * 2026 no había barra de secciones, y con razón: la que hubo ponía como
+ * hermanas un día, dos tablas del viaje entero y el viaje que las contenía.
+ * Estas cuatro sí son hermanas —las cuatro miran el viaje entero desde un
+ * sitio distinto— y por eso vuelve la barra: abajo en el móvil, donde llega el
+ * pulgar, y en la cabecera en escritorio. La portada sigue colgando de la
+ * maleta y del título, y de ella Transporte y Listas.
  *
  * La portada, Transporte y Listas **no usan el mapa**, pero se pintan igual
  * dentro de esta vista y solo ensanchan el panel por CSS. Sacarlas fuera de
@@ -21,27 +22,45 @@
  */
 
 import { html, esc, icono, crudo, plural, $, $$, alPulsar, muelle, proyectar, gomaElastica, transicion, pulso } from '../ui/dom.js';
-import { cargarViaje, diaPorDefecto, recuadroDe, INTENSIDADES, recomponer, viajeBase, versionNubeDe, fijarVersionNube, origenDe, fijarCapaSubida } from '../datos.js';
+import { cargarViaje, diaPorDefecto, recuadroDe, INTENSIDADES, recomponer, viajeBase, versionNubeDe, fijarVersionNube, origenDe, fijarCapaSubida, pendientesDe, olvidarRegistro } from '../datos.js';
 import { Mapa } from '../mapa.js';
 import { crearHoja, CONSULTA_HOJA } from '../ui/hoja.js';
 import { brindis, actualizarBrindis } from '../ui/brindis.js';
 import * as buscador from '../ui/buscador.js';
 import * as buscarLugar from '../ui/buscar-lugar.js';
-import { lugarDesdeBusqueda, claveEstable, nuevoId, ocultosDelDia, comoJsonDelViaje } from '../personalizacion.js';
+import { lugarDesdeBusqueda, claveEstable, nuevoId, ocultosDelDia, comoJsonDelViaje, capaVacia, fijarEstado, fijarCambio } from '../personalizacion.js';
+import { TIPOS, guardadoDe, estadoDeActividad, esActividad, duracionDeBloque, necesitaReserva, reordenarPorHuecos } from '../actividades.js';
+import * as editores from '../ui/editores.js';
 import { tiempoGuardado, actualizarTiempo } from '../tiempo.js';
 import * as estado from '../estado.js';
 import * as nube from '../nube.js';
 import * as sincronizacion from '../sincronizacion.js';
 import { esOscuro, alCambiarTema } from '../ui/tema.js';
-import { aIso, aFecha, fechaLarga, CLAVES_DIA, NOMBRE_DIA } from '../horarios.js';
+import { aIso, aFecha, fechaLarga, CLAVES_DIA, NOMBRE_DIA, aMinutos, aHora } from '../horarios.js';
 import {
   pintarDia, pintarFicha, pintarTransporte, pintarListas, pintarPortada,
-  pintarPreparativos, pintarAlVolver,
+  pintarPreparativos, pintarAlVolver, pintarReservas, pintarGastos,
 } from './panel.js';
+import { pintarHoy, diaDeHoy } from './hoy.js';
 import { hayPreViaje, hayPostViaje, diaTieneAtencion } from '../agenda.js';
 
 /** Vistas que no necesitan el mapa: el panel se queda con todo el ancho. */
-const ANCHAS = new Set(['portada', 'transporte', 'listas']);
+const ANCHAS = new Set(['portada', 'transporte', 'listas', 'reservas', 'gastos']);
+
+/**
+ * Las cuatro secciones del viaje y qué vistas caen en cada una. La portada,
+ * Transporte y Listas no son de ninguna: cuelgan de la maleta de la cabecera.
+ */
+const SECCIONES = [
+  { id: 'hoy', etiqueta: 'Hoy', icono: 'hoy', vistas: ['hoy'] },
+  { id: 'itinerario', etiqueta: 'Itinerario', icono: 'itinerario', vistas: ['dia', 'lugar', 'pre', 'post'] },
+  { id: 'mapa', etiqueta: 'Mapa', icono: 'mapa', vistas: ['mapa'] },
+  { id: 'reservas', etiqueta: 'Reservas', icono: 'entrada', vistas: ['reservas', 'gastos'] },
+];
+const seccionDe = (vista) => SECCIONES.find((x) => x.vistas.includes(vista))?.id || null;
+
+/** Cada cuánto se repinta Hoy para que «ahora» no se quede viejo. */
+const REFRESCO_HOY_MS = 60 * 1000;
 
 /** Las dos pestañas de la barra de días que no son un día. */
 const PSEUDODIAS = new Set(['pre', 'post']);
@@ -58,9 +77,38 @@ export async function montarViaje(raiz, ruta) {
   estado.fusionarRemoto(ruta.viajeId, estadoRemoto);
 
   const nubeLista = await nube.configurada();
-  let actual = { ...ruta, fecha: ruta.fecha || diaPorDefecto(viaje) };
+  // Sin sección en la URL se entra por lo que se va a mirar: Hoy si el viaje
+  // está en curso, el itinerario si no.
+  const resolver = (r) => (r.vista === 'inicio' ? { ...r, vista: viaje.estadoReal === 'en-curso' ? 'hoy' : 'dia' } : r);
+  let actual = { ...resolver(ruta), fecha: ruta.fecha || diaPorDefecto(viaje) };
   let verTodo = false;
+  /** El filtro de la cronología. Se mantiene al cambiar de día: es una forma de mirar, no un dato del día. */
+  let filtro = 'todas';
+  /** El modo de ordenar. Se apaga al cambiar de día: ordenar es algo que se hace con un día concreto. */
+  let ordenando = false;
   const urlsObjeto = new Set();
+
+  /**
+   * Los enlaces de las cuatro secciones. Itinerario y Mapa llevan el día que se
+   * está mirando, para que cambiar de sección no te cambie de día.
+   */
+  function pintarSecciones() {
+    const fecha = actual.fecha && !PSEUDODIAS.has(actual.fecha) ? actual.fecha : diaPorDefecto(viaje);
+    const url = {
+      hoy: `#/v/${viaje.id}/hoy`,
+      itinerario: `#/v/${viaje.id}/d/${fecha}`,
+      mapa: `#/v/${viaje.id}/mapa?d=${fecha}`,
+      reservas: `#/v/${viaje.id}/reservas`,
+    };
+    const activa = seccionDe(actual.vista);
+    // Devuelve HTML ya montado (`html`), no texto: la plantilla de la vista
+    // escapa todo lo que no lo sea, y la primera versión devolvía un `join('')`.
+    // La barra salía la primera vez como su propio código escrito en pantalla,
+    // 935 px de alto, y el mapa se creaba con 0 px y un encuadre imposible.
+    return html`${SECCIONES.map((x) => html`
+      <a class="seccion" href="${url[x.id]}" data-seccion-nav="${x.id}"
+         aria-current="${activa === x.id ? 'page' : 'false'}">${icono(x.icono)}<span>${x.etiqueta}</span></a>`)}`;
+  }
 
   // Lo último que se descargó del tiempo, leído del navegador y **sin esperar a
   // la red**: así el primer pintado ya lo lleva. La actualización se lanza al
@@ -77,6 +125,7 @@ export async function montarViaje(raiz, ruta) {
           <span class="cabecera__logo">${viaje.titulo}</span>
           <span class="cabecera__contexto menudo">${viaje.subtitulo || ''}</span>
         </a>
+        <nav class="secciones secciones--arriba" aria-label="Secciones del viaje">${pintarSecciones()}</nav>
         <div class="cabecera__acciones">
           <a class="icono-boton" href="#/v/${viaje.id}/portada" data-seccion="portada"
              aria-label="El viaje entero" title="El viaje">${icono('maleta')}</a>
@@ -107,6 +156,8 @@ export async function montarViaje(raiz, ruta) {
           </div>
         </div>
       </div>
+
+      <nav class="secciones secciones--abajo" aria-label="Secciones del viaje">${pintarSecciones()}</nav>
     </div>`;
 
   const barraDias = $('.barra-dias', raiz);
@@ -118,12 +169,32 @@ export async function montarViaje(raiz, ruta) {
   // --- Mapa ---------------------------------------------------------------
   // Cuánto mapa tapa la hoja por abajo. Se define antes de crear el mapa para
   // que el primer encuadre ya la tenga en cuenta y no haya que recolocarlo.
-  const margenInferior = () => (matchMedia(CONSULTA_HOJA).matches
-    ? Math.max(0, Math.round(innerHeight - panel.getBoundingClientRect().top))
-    : 0);
+  // Se mide contra el mapa y no contra la ventana: con la barra de secciones
+  // abajo, lo que tapa la hoja es lo que queda entre su borde y el del mapa. Y
+  // con la hoja escondida —en la sección Mapa— no tapa nada.
+  const margenInferior = () => {
+    if (!matchMedia(CONSULTA_HOJA).matches) return 0;
+    const hojaRect = panel.getBoundingClientRect();
+    if (!hojaRect.height) return 0;
+    return Math.max(0, Math.round(nodoMapa.getBoundingClientRect().bottom - hojaRect.top));
+  };
 
-  const mapa = new Mapa(nodoMapa);
-  const diaInicial = viaje.dias.find((d) => d.fecha === actual.fecha) || viaje.dias[0];
+  // --- Hoja (solo móvil) --------------------------------------------------
+  // Antes que el mapa, a propósito: el primer encuadre necesita saber cuánto
+  // mapa tapa la hoja, y sin hoja el panel está en su sitio de reposo, arriba
+  // del todo. Medido: el encuadre salía a zoom 19 y cada carga tiraba doce
+  // teselas que el encuadre siguiente abortaba.
+  let mapa = null;
+  const hoja = crearHoja(panel, {
+    tirador: $('.tirador', raiz),
+    cuerpo,
+    alCambiar: () => mapa?.refrescarTamano(),
+  });
+
+  mapa = new Mapa(nodoMapa);
+  const diaInicial = actual.vista === 'hoy'
+    ? diaDeHoy(viaje)
+    : viaje.dias.find((d) => d.fecha === actual.fecha) || viaje.dias[0];
   await mapa.iniciar({
     centro: viaje.mapa?.centro || [40, -4],
     zoom: viaje.mapa?.zoom || 8,
@@ -132,17 +203,15 @@ export async function montarViaje(raiz, ruta) {
     margenInferior,
   });
   mapa.alSeleccionar = (lugarId) => {
+    // En la sección Mapa, tocar un marcador abre su globo y ahí se queda: el
+    // mapa es lo que se está mirando. El globo lleva el enlace a la ficha.
+    if (actual.vista === 'mapa') return;
     hoja.asomar();
-    ir(`#/v/${viaje.id}/l/${lugarId}`);
+    ir(`#/v/${viaje.id}/l/${lugarId}?d=${diaDelMapa().fecha}`);
   };
+  mapa.enlaceFicha = (lugarId) => `#/v/${viaje.id}/l/${lugarId}?d=${diaDelMapa().fecha}`;
   const quitarOyenteTema = alCambiarTema((oscuro) => mapa.aplicarTema(oscuro));
 
-  // --- Hoja (solo móvil) --------------------------------------------------
-  const hoja = crearHoja(panel, {
-    tirador: $('.tirador', raiz),
-    cuerpo,
-    alCambiar: () => mapa.refrescarTamano(),
-  });
 
   const ir = (hash) => { location.hash = hash; };
 
@@ -175,9 +244,12 @@ export async function montarViaje(raiz, ruta) {
       const f = aFecha(d.fecha);
       const puntos = (INTENSIDADES[d.intensidad] || INTENSIDADES.suave).puntos;
       const atencion = diaTieneAtencion(viaje, d.fecha, tareas);
+      // En la sección Mapa, elegir un día es mirarlo en el mapa, no volver al
+      // itinerario.
+      const destino = actual.vista === 'mapa' ? `#/v/${viaje.id}/mapa?d=${d.fecha}` : `#/v/${viaje.id}/d/${d.fecha}`;
       return html`
         <a class="dia-tab ${d.fecha === hoy ? 'dia-tab--hoy' : ''} ${atencion ? 'dia-tab--atencion' : ''}"
-           href="#/v/${viaje.id}/d/${d.fecha}" data-dia="${d.fecha}"
+           href="${destino}" data-dia="${d.fecha}"
            aria-current="${d.fecha === actual.fecha ? 'page' : 'false'}"
            aria-label="${d.titulo}${atencion ? ', tiene avisos o lista sin terminar' : ''}">
           <span class="dia-tab__dia" aria-hidden="true">${NOMBRE_DIA[CLAVES_DIA[f.getDay()]].slice(0, 3)}</span>
@@ -202,9 +274,16 @@ export async function montarViaje(raiz, ruta) {
    * reconstruirlo al volver— se esconde y el panel se queda con todo el ancho.
    */
   function repartirEspacio() {
-    const enItinerario = ['dia', 'lugar', 'pre', 'post'].includes(actual.vista);
+    const enItinerario = ['dia', 'lugar', 'pre', 'post', 'mapa'].includes(actual.vista);
     const ancha = ANCHAS.has(actual.vista);
     barraDias.classList.toggle('oculto', !enItinerario);
+    const escenario = $('.escenario', raiz);
+    // Hoy: en escritorio, panel y mapa del día; en el móvil, pantalla completa,
+    // que es lo que se lee andando. Lo decide el CSS con esta clase.
+    escenario.classList.toggle('escenario--hoy', actual.vista === 'hoy');
+    // Mapa: el mapa a pantalla completa y la hoja fuera.
+    escenario.classList.toggle('escenario--mapa', actual.vista === 'mapa');
+    for (const nav of $$('.secciones', raiz)) nav.innerHTML = pintarSecciones().toString();
     // El icono de la cabecera dice si ya estás en la portada, para que no sea un
     // botón que parece llevar a otro sitio cuando ya estás en él.
     $('[data-seccion="portada"]', raiz)?.setAttribute('aria-current', actual.vista === 'portada' ? 'page' : 'false');
@@ -212,7 +291,12 @@ export async function montarViaje(raiz, ruta) {
     panel.classList.toggle('panel--ancho', ancha);
     // Leaflet mide al crearse y al recibir el aviso: sin esto, volver de una
     // vista ancha lo deja pintando con el ancho que tenía escondido.
-    if (!ancha) requestAnimationFrame(() => mapa.refrescarTamano());
+    if (!ancha) requestAnimationFrame(() => {
+      // La hoja se mide otra vez: al volver de Mapa estaba escondida y sus
+      // anclajes se calcularon sobre una altura de cero.
+      if (actual.vista !== 'mapa') hoja.sincronizar();
+      mapa.refrescarTamano();
+    });
   }
 
   // --- Panel --------------------------------------------------------------
@@ -369,14 +453,30 @@ export async function montarViaje(raiz, ruta) {
   function pintarPanelYa({ moverFoco, conTransicion, escalonar, navegando }) {
     limpiarUrls();
     const guardado = estado.estadoDe(viaje.id);
+    const capa = estado.capaDe(viaje.id);
+    // Repintar sin navegar —marcar algo, el reloj de Hoy— no puede cerrar las
+    // bandas que tenías abiertas: se apuntan y se vuelven a abrir.
+    const abiertas = navegando ? [] : $$('details[open][data-banda]', cuerpo).map((d) => d.dataset.banda);
 
-    if (actual.vista === 'lugar') {
+    if (actual.vista === 'mapa') {
+      // La hoja está escondida; lo que se pinte aquí no se ve. Se deja como
+      // estaba, así al volver al itinerario sigue en su sitio.
+    } else if (actual.vista === 'hoy') {
+      cuerpo.innerHTML = pintarHoy(viaje, guardado, { capa, tiempo });
+      if (moverFoco) situarFoco('Hoy');
+    } else if (actual.vista === 'reservas') {
+      cuerpo.innerHTML = pintarReservas(viaje, guardado, { capa });
+      if (moverFoco) situarFoco('Reservas');
+    } else if (actual.vista === 'gastos') {
+      cuerpo.innerHTML = pintarGastos(viaje, guardado, { capa });
+      if (moverFoco) situarFoco('Gastos');
+    } else if (actual.vista === 'lugar') {
       const lugar = viaje.porId.get(actual.lugarId);
       if (!lugar) { ir(`#/v/${viaje.id}`); return; }
       // El bloque concreto de este día, para poder quitarlo desde su ficha.
       const dia = diaActual();
       const bloqueActual = dia?.bloques.find((b) => b.tipo === 'visita' && b.lugar?.id === lugar.id) || null;
-      cuerpo.innerHTML = pintarFicha(viaje, lugar, guardado, { fecha: dia?.fecha, bloqueActual });
+      cuerpo.innerHTML = pintarFicha(viaje, lugar, guardado, { fecha: dia?.fecha, bloqueActual, capa });
       hidratarGaleria(lugar);
       if (moverFoco) situarFoco(lugar.nombre);
     } else if (actual.vista === 'transporte') {
@@ -397,6 +497,7 @@ export async function montarViaje(raiz, ruta) {
         tareas: guardado.tareas,
         tiempo,
         atencion: (fecha) => diaTieneAtencion(viaje, fecha, guardado.tareas),
+        local: Boolean(estado.viajeLocal(viaje.id)),
         nube: {
           configurada: nubeLista,
           usuario: nube.usuario(),
@@ -410,9 +511,10 @@ export async function montarViaje(raiz, ruta) {
       const dia = diaActual();
       const base = viajeBase(viaje.id);
       const ocultos = base ? ocultosDelDia(base, estado.capaDe(viaje.id), dia.fecha).length : 0;
-      cuerpo.innerHTML = pintarDia(viaje, dia, guardado, { ocultos, tiempo });
+      cuerpo.innerHTML = pintarDia(viaje, dia, guardado, { ocultos, tiempo, capa, filtro, ordenando });
       if (moverFoco) situarFoco(`${dia.titulo}, ${fechaLarga(dia.fecha)}`);
     }
+    for (const nombre of abiertas) $(`details[data-banda="${nombre}"]`, cuerpo)?.setAttribute('open', '');
     if (navegando) situarScroll();
     if (celebrarNube) {
       celebrarNube = false;
@@ -446,12 +548,15 @@ export async function montarViaje(raiz, ruta) {
 
   // --- Mapa por vista -----------------------------------------------------
   /** Preparativos y Al volver no son de ningún día: el mapa enseña el viaje entero. */
-  const mapaDeTodo = () => verTodo || PSEUDODIAS.has(actual.fecha);
+  const mapaDeTodo = () => verTodo || (actual.vista !== 'hoy' && PSEUDODIAS.has(actual.fecha));
+
+  /** El día que enseña el mapa: en Hoy, el de hoy; en lo demás, el que se mira. */
+  const diaDelMapa = () => (actual.vista === 'hoy' ? diaDeHoy(viaje) : diaActual());
 
   function refrescarMapa() {
     const visitados = estado.estadoDe(viaje.id).visitados;
     if (mapaDeTodo()) mapa.mostrarTodo(viaje, { visitados });
-    else mapa.mostrarDia(diaActual(), { visitados });
+    else mapa.mostrarDia(diaDelMapa(), { visitados, viaje });
     if (actual.vista === 'lugar') mapa.irA(actual.lugarId, { abrirGlobo: false });
   }
 
@@ -464,7 +569,7 @@ export async function montarViaje(raiz, ruta) {
     repartirEspacio();
     pintarPanel();
 
-    const modo = mapaDeTodo() ? 'todo' : `dia:${diaActual()?.fecha}`;
+    const modo = mapaDeTodo() ? 'todo' : `dia:${diaDelMapa()?.fecha}`;
     if (modo !== modoPintado) { refrescarMapa(); modoPintado = modo; diaPintado = actual.fecha; }
     else if (actual.vista === 'lugar') mapa.irA(actual.lugarId, { abrirGlobo: false });
     else mapa.destacar(null);
@@ -593,7 +698,7 @@ export async function montarViaje(raiz, ruta) {
         const yaEsta = await nube.leerViaje(viaje.id);
         if (yaEsta) {
           fijarVersionNube(viaje.id, yaEsta.versionNube);
-          fijarCapaSubida(viaje.id, sincronizacion.separar(yaEsta).capa || { version: 1, lugares: [], bloques: [], ocultos: [] });
+          fijarCapaSubida(viaje.id, sincronizacion.separar(yaEsta).capa || capaVacia());
           trasGuardar();
           await guardarEnNube();
         } else {
@@ -635,12 +740,79 @@ export async function montarViaje(raiz, ruta) {
     }
   });
 
+  alPulsar(cuerpo, '[data-accion="borrar-viaje"]', () => {
+    if (!confirm(`Se va a borrar «${viaje.titulo}» de este navegador, con sus actividades, estados y reservas. Si está publicado en la nube, allí sigue. No se puede deshacer.`)) return;
+    estado.borrarViajeLocal(viaje.id);
+    olvidarRegistro();
+    brindis(`«${viaje.titulo}» borrado de este navegador`, { tipo: 'ok' });
+    ir('#/');
+  });
+
   alPulsar(cuerpo, '[data-accion="vaciar-capa"]', () => {
     const capa = estado.capaDe(viaje.id);
     const total = capa.bloques.length + capa.ocultos.length;
-    if (!confirm(`Se van a deshacer ${plural(total, 'cambio')} del itinerario. Las notas, las fotos y lo visitado no se tocan.`)) return;
-    estado.guardarCapa(viaje.id, { version: 1, lugares: [], bloques: [], ocultos: [] });
+    if (!confirm(`Se van a deshacer ${plural(total, 'cambio')} del itinerario. Las notas, las fotos, lo visitado, las reservas y los gastos no se tocan.`)) return;
+    // Solo lo que cambia el itinerario. Estados, reservas y gastos viajan en la
+    // misma capa, pero no son «cambios del itinerario» y deshacerlos aquí
+    // borraría un localizador sin que el botón lo dijera.
+    estado.guardarCapa(viaje.id, { ...capa, lugares: [], bloques: [], ocultos: [] });
     trasCambiarCapa('Itinerario devuelto a como estaba');
+  });
+
+  // --- Estado de las actividades ------------------------------------------
+  /**
+   * Marcar o desmarcar «hecho». Es el mismo botón en el raíl de la cronología,
+   * en la lista de Hoy y en su tarjeta grande: los tres llevan `data-hecho`.
+   *
+   * «Hecho» es de cada persona y vive en `visitados`, como siempre. Si la
+   * actividad estaba cancelada, marcarla hecha la descancela: si fuiste, no se
+   * canceló.
+   */
+  alPulsar(cuerpo, '[data-hecho]', (b) => {
+    const lugarId = b.dataset.hecho;
+    const ahora = estado.alternarVisitado(viaje.id, lugarId);
+    mapa.marcarVisitado(lugarId, ahora);
+    pulso(b);
+    pintarPanel({ moverFoco: false });
+    brindis(ahora ? 'Hecho' : 'Ya no está marcado como hecho', { tipo: ahora ? 'ok' : 'info', duracion: 1800 });
+  });
+
+  /**
+   * Elegir un estado con nombre: desde la ficha o desde Reservas.
+   *
+   * Cada opción deja el estado **en ese y solo ese**: elegir «Reservado» en algo
+   * marcado como hecho le quita el hecho, porque el control dice un estado y no
+   * dos. Reservado y cancelado van a la capa —son del viaje compartido y suben
+   * a la nube—; hecho va a `visitados`, que es de cada persona.
+   */
+  function fijarEstadoActividad(clave, lugarId, nuevo, { repintar = true } = {}) {
+    const visitado = estado.esVisitado(viaje.id, lugarId);
+    if ((nuevo === 'hecho') !== visitado) {
+      const ahora = estado.alternarVisitado(viaje.id, lugarId);
+      mapa.marcarVisitado(lugarId, ahora);
+    }
+    const guardado = estado.capaDe(viaje.id).estados[clave]?.estado || null;
+    const queda = nuevo === 'reservado' || nuevo === 'cancelado' ? nuevo : null;
+    if (queda !== guardado) {
+      estado.guardarCapa(viaje.id, fijarEstado(estado.capaDe(viaje.id), clave, queda));
+      viaje.pendientes = pendientesDe(viaje.id);
+    }
+    if (repintar) pintarPanel({ moverFoco: false });
+  }
+
+  alPulsar(cuerpo, '[data-fijar-estado]', (b) => {
+    const nuevo = b.dataset.fijarEstado;
+    fijarEstadoActividad(b.dataset.claveActividad, b.dataset.lugar, nuevo);
+    const textos = { pendiente: 'Por hacer', reservado: 'Marcada como reservada', hecho: 'Hecho', cancelado: 'Cancelada' };
+    brindis(textos[nuevo] || 'Guardado', { tipo: 'ok', duracion: 1800 });
+  });
+
+  alPulsar(cuerpo, '[data-filtro]', (b) => {
+    filtro = b.dataset.filtro;
+    pintarPanel({ moverFoco: false });
+    // Sin mover el foco: el botón que acabas de pulsar sigue ahí, repintado. Se
+    // le devuelve para que el teclado no aterrice al principio del panel.
+    $(`[data-filtro="${filtro}"]`, cuerpo)?.focus({ preventScroll: true });
   });
 
   // --- Añadir y quitar paradas del itinerario -----------------------------
@@ -726,68 +898,392 @@ export async function montarViaje(raiz, ruta) {
 
   alPulsar(cuerpo, '[data-accion="guardar-nube"]', guardarEnNube);
 
-  function anadirParada({ resultado, fecha, inicio, fin, nota }) {
-    const capa = estado.capaDe(viaje.id);
-    const usados = new Set([...viaje.porId.keys(), ...capa.lugares.map((l) => l.id)]);
-    let lugar;
-    try {
-      lugar = lugarDesdeBusqueda(resultado, usados);
-    } catch (e) {
-      brindis(e.message, { tipo: 'error' });
-      return;
+  // --- Añadir, editar y quitar actividades ----------------------------------
+  /** Busca un bloque del viaje montado por su clave de actividad. */
+  const bloquePorClave = (clave) => viaje.dias.flatMap((d) => d.bloques.map((b) => ({ b, d })))
+    .find(({ b }) => b.claveActividad === clave) || null;
+
+  /** Deja un campo fuera si no tiene valor: una actividad sin coste no lleva `coste: null`. */
+  const sinVacios = (o) => Object.fromEntries(Object.entries(o).filter(([, v]) => v !== undefined && v !== null && v !== ''));
+
+  /**
+   * Guarda lo que devuelve el editor. Tres caminos, y la diferencia importa:
+   *
+   *  · **Actividad del archivo**: se guarda solo lo que ha cambiado, como cambio
+   *    en la capa. El JSON no se toca, y deshacer es quitar el cambio.
+   *  · **Actividad o nota añadida a mano**: se reescribe su bloque en la capa.
+   *  · **Nueva**: un lugar y un bloque nuevos en la capa.
+   *
+   * El estado se aplica después y por el mismo camino que el selector de la
+   * ficha: hecho a `visitados`, reservado y cancelado a la capa.
+   */
+  function guardarActividad(d, bloque, fechaOriginal) {
+    let capa = estado.capaDe(viaje.id);
+    const ahora = new Date().toISOString();
+    const esNota = d.tipo === 'nota';
+    const tipoActividad = d.tipo !== 'lugar' && !esNota ? d.tipo : undefined;
+    let clave = bloque?.claveActividad || null;
+    let lugarId = bloque?.lugar?.id || null;
+    let nombre = d.nombre;
+
+    if (d.delArchivo) {
+      const cambio = {};
+      if (d.fecha !== fechaOriginal) cambio.fecha = d.fecha;
+      if (d.inicio !== bloque.inicio) cambio.inicio = d.inicio;
+      const durAntes = duracionDeBloque(bloque);
+      if (d.duracion !== durAntes) {
+        cambio.duracionMin = d.duracion;
+        cambio.fin = d.fin;
+      } else if (cambio.inicio && bloque.fin) {
+        // Misma duración, otra hora: el final se mueve lo mismo que el principio.
+        cambio.fin = aHora(aMinutos(bloque.fin) + (aMinutos(d.inicio) - aMinutos(bloque.inicio)));
+      }
+      if ((d.coste ?? null) !== (bloque.coste ?? null)) cambio.coste = d.coste;
+      if ((d.url || null) !== (bloque.url || null)) cambio.url = d.url || null;
+      // Una nota vacía borra la del archivo; `null` volvería a ella.
+      if ((d.nota || '') !== (bloque.nota || '')) cambio.nota = d.nota || '';
+      if (d.reserva !== necesitaReserva(bloque)) cambio.reserva = { necesaria: d.reserva };
+      if (Object.keys(cambio).length) capa = fijarCambio(capa, bloque.claveBase || bloque.claveActividad, cambio, ahora);
+    } else if (bloque?.propio) {
+      const i = capa.bloques.findIndex((x) => x.id === bloque.idPropio);
+      if (i < 0) { brindis('Esa actividad ya no está en este dispositivo', { tipo: 'error' }); return; }
+      const previo = capa.bloques[i];
+      if (!esNota && d.elegido?.coords) {
+        // El lugar de una actividad añadida es tuyo: se puede renombrar y mover.
+        capa.lugares = capa.lugares.map((l) => (l.id === previo.lugar ? {
+          ...l,
+          nombre: String(d.nombre || l.nombre).slice(0, 120),
+          coords: d.elegido.coords.map((n) => Number(Number(n).toFixed(5))),
+          ...(d.elegido.zona ? { zona: String(d.elegido.zona).slice(0, 80) } : {}),
+          categoria: TIPOS[d.tipo]?.categoria || d.categoria || l.categoria,
+        } : l));
+      }
+      capa.bloques[i] = sinVacios({
+        id: previo.id,
+        fecha: d.fecha,
+        ...(esNota ? { tipo: 'hito', titulo: d.nombre, detalle: d.nota } : { lugar: previo.lugar, nota: d.nota }),
+        inicio: d.inicio,
+        fin: esNota ? null : d.fin,
+        duracionMin: esNota ? null : d.duracion,
+        coste: esNota ? null : d.coste,
+        url: esNota ? null : d.url,
+        reserva: !esNota && d.reserva ? { necesaria: true } : null,
+        tipoActividad,
+        movido: previo.movido,
+        t: ahora,
+      });
+    } else {
+      const id = nuevoId('bloque');
+      if (esNota) {
+        capa.bloques.push(sinVacios({ id, fecha: d.fecha, tipo: 'hito', inicio: d.inicio, titulo: d.nombre, detalle: d.nota, t: ahora }));
+      } else {
+        const usados = new Set([...viaje.porId.keys(), ...capa.lugares.map((l) => l.id)]);
+        let lugar;
+        try {
+          lugar = lugarDesdeBusqueda({
+            ...d.elegido, nombre: d.nombre || d.elegido.nombre, categoria: TIPOS[d.tipo]?.categoria || d.categoria || d.elegido.categoria,
+          }, usados);
+        } catch (e) {
+          brindis(e.message, { tipo: 'error' });
+          return;
+        }
+        capa.lugares.push(lugar);
+        capa.bloques.push(sinVacios({
+          id, fecha: d.fecha, lugar: lugar.id, inicio: d.inicio, fin: d.fin, duracionMin: d.duracion,
+          coste: d.coste, url: d.url, nota: d.nota, reserva: d.reserva ? { necesaria: true } : null, tipoActividad, t: ahora,
+        }));
+        lugarId = lugar.id;
+        nombre = lugar.nombre;
+      }
+      clave = `propio|${id}`;
     }
-    capa.lugares.push(lugar);
-    capa.bloques.push({ id: nuevoId('bloque'), fecha, lugar: lugar.id, inicio, ...(fin ? { fin } : {}), ...(nota ? { nota } : {}) });
+
     estado.guardarCapa(viaje.id, capa);
-    trasCambiarCapa(`${lugar.nombre} añadido al día`);
+    if (!esNota && clave && lugarId) fijarEstadoActividad(clave, lugarId, d.estado, { repintar: false });
+
+    // Si se ha movido de día, se va con ella: lo que acabas de editar tiene que
+    // verse, no quedarse en un día que ya no la tiene.
+    if (d.fecha !== fechaOriginal || d.nueva) {
+      if (actual.vista === 'lugar' || actual.fecha !== d.fecha) ir(`#/v/${viaje.id}/d/${d.fecha}`);
+    }
+    trasCambiarCapa(d.nueva ? `${nombre} añadido` : 'Guardado');
   }
 
-  function abrirAnadir() {
-    const dia = diaActual();
-    const centro = dia.paradas[0]?.lugar.coords || viaje.mapa?.centro || [40, -4];
-
-    const dialogo = buscarLugar.abrirAnadir({
-      dia,
-      centro,
-      alGuardar: anadirParada,
-      alElegirEnMapa() {
-        brindis('Toca un punto del mapa. Escape para cancelar.', { duracion: 6000 });
-        if (hoja.activa) hoja.ir('colapsada');
-        mapa.elegirPunto((coords) => {
-          const nuevo = buscarLugar.abrirAnadir({
-            dia, centro, alGuardar: anadirParada, alElegirEnMapa: () => {},
-          });
-          nuevo.conPunto(coords);
-          hoja.asomar();
-        });
-      },
-    });
-    return dialogo;
-  }
-
-  alPulsar(cuerpo, '[data-accion="anadir-parada"]', abrirAnadir);
-
-  alPulsar(cuerpo, '[data-accion="quitar-parada"]', (b) => {
+  /**
+   * Quita una actividad del día. Lo añadido se borra de verdad; lo del archivo
+   * solo se oculta, y se restaura desde el día. Si estaba editada, se oculta por
+   * su clave original: la hora editada no es la que conoce el archivo.
+   */
+  function quitarBloque(bloque, fecha) {
     const capa = estado.capaDe(viaje.id);
-    const bloque = viaje.dias.flatMap((d) => d.bloques).find((x) => x.clave === b.dataset.clave);
-    if (!bloque) return;
-
     if (bloque.propio) {
-      // Lo añadido se borra de verdad; lo del JSON solo se oculta.
       capa.bloques = capa.bloques.filter((x) => x.id !== bloque.idPropio);
       const sigueUsado = capa.bloques.some((x) => x.lugar === bloque.lugar?.id);
       if (!sigueUsado) capa.lugares = capa.lugares.filter((l) => l.id !== bloque.lugar?.id);
     } else {
-      const clave = claveEstable(diaActual().fecha, {
+      const clave = bloque.claveBase || claveEstable(fecha, {
         lugar: bloque.lugar?.id, desde: bloque.desde, hasta: bloque.hasta,
         titulo: bloque.titulo, inicio: bloque.inicio, tipo: bloque.tipo,
       });
       if (!capa.ocultos.includes(clave)) capa.ocultos.push(clave);
     }
     estado.guardarCapa(viaje.id, capa);
-    ir(`#/v/${viaje.id}/d/${diaActual().fecha}`);
+    ir(`#/v/${viaje.id}/d/${fecha}`);
     trasCambiarCapa('Quitado del itinerario');
+  }
+
+  /**
+   * Abre el editor. Sin `bloque`, para añadir en el día que se está mirando.
+   * «Elegir en el mapa» cierra el editor, espera el toque y lo vuelve a abrir
+   * con lo que había escrito y el punto elegido: nada de lo escrito se pierde.
+   */
+  function abrirEditor({ bloque = null, fecha = diaActual().fecha, borrador = null } = {}) {
+    const dia = viaje.dias.find((x) => x.fecha === fecha) || diaActual();
+    const centro = dia.paradas[0]?.lugar.coords || viaje.mapa?.centro || [40, -4];
+    const guardado = guardadoDe(estado.estadoDe(viaje.id), estado.capaDe(viaje.id));
+    editores.editarActividad({
+      viaje,
+      fecha: dia.fecha,
+      bloque,
+      estado: bloque && esActividad(bloque) ? estadoDeActividad(bloque, guardado) : 'pendiente',
+      centro,
+      borrador,
+      alGuardar: (d) => guardarActividad(d, bloque, dia.fecha),
+      alQuitar: bloque ? () => quitarBloque(bloque, dia.fecha) : null,
+      alElegirEnMapa(b) {
+        brindis('Toca un punto del mapa. Escape para cancelar.', { duracion: 6000 });
+        if (hoja.activa) hoja.ir('colapsada');
+        mapa.elegirPunto((coords) => {
+          hoja.asomar();
+          abrirEditor({
+            bloque,
+            fecha: b.fecha || dia.fecha,
+            borrador: { ...b, elegido: { nombre: b.nombre || 'Punto elegido en el mapa', zona: '', coords, categoria: b.categoria } },
+          });
+        });
+      },
+    });
+  }
+
+  alPulsar(cuerpo, '[data-accion="anadir-parada"]', () => abrirEditor());
+
+  alPulsar(cuerpo, '[data-editar]', (b) => {
+    const hallado = bloquePorClave(b.dataset.editar);
+    if (hallado) abrirEditor({ bloque: hallado.b, fecha: hallado.d.fecha });
   });
+
+  alPulsar(cuerpo, '[data-accion="quitar-parada"]', (b) => {
+    const bloque = viaje.dias.flatMap((d) => d.bloques).find((x) => x.clave === b.dataset.clave);
+    if (bloque) quitarBloque(bloque, diaActual().fecha);
+  });
+
+  // --- Reservas y gastos -----------------------------------------------------
+  /**
+   * Guarda una entrada de una lista de la capa —reservas o gastos— con su marca
+   * de tiempo. Borrar es marcarla `borrado`: si se quitara de la lista, la copia
+   * de la nube la haría volver al fundir.
+   */
+  function guardarEnLista(lista, id, datos, { borrar = false } = {}) {
+    const capa = estado.capaDe(viaje.id);
+    const t = new Date().toISOString();
+    const previa = capa[lista].find((x) => x.id === id);
+    const entrada = borrar ? { id, borrado: true, t } : { ...datos, id: id || nuevoId(lista === 'reservas' ? 'reserva' : 'gasto'), t };
+    capa[lista] = previa ? capa[lista].map((x) => (x.id === id ? entrada : x)) : [...capa[lista], entrada];
+    estado.guardarCapa(viaje.id, capa);
+    viaje.pendientes = pendientesDe(viaje.id);
+    pintarPanel({ moverFoco: false });
+  }
+
+  const fechaDeActividad = (clave) => bloquePorClave(clave)?.d.fecha || null;
+
+  alPulsar(cuerpo, '[data-nueva-reserva]', (b) => {
+    const clave = b.dataset.nuevaReserva || null;
+    const hallado = clave ? bloquePorClave(clave) : null;
+    const previa = hallado ? {
+      actividad: clave,
+      fecha: hallado.d.fecha,
+      hora: hallado.b.inicio,
+      nombre: hallado.b.lugar.nombre,
+      tipo: hallado.b.lugar.categoria === 'comida' ? 'restaurante' : hallado.b.lugar.categoria === 'alojamiento' ? 'hotel' : 'actividad',
+    } : {};
+    editores.editarReserva({
+      viaje, previa,
+      alGuardar: (d) => { guardarEnLista('reservas', null, d); brindis('Reserva guardada', { tipo: 'ok' }); },
+    });
+  });
+
+  alPulsar(cuerpo, '[data-editar-reserva]', (b) => {
+    const r = estado.capaDe(viaje.id).reservas.find((x) => x.id === b.dataset.editarReserva);
+    if (!r) return;
+    editores.editarReserva({
+      viaje, reserva: r,
+      alGuardar: (d) => { guardarEnLista('reservas', r.id, d); brindis('Reserva guardada', { tipo: 'ok' }); },
+      alBorrar: () => {
+        if (!confirm(`Se va a borrar la reserva «${r.nombre}»${r.localizador ? `, con su número ${r.localizador}` : ''}.`)) return;
+        guardarEnLista('reservas', r.id, null, { borrar: true });
+        brindis('Reserva borrada');
+      },
+    });
+  });
+
+  alPulsar(cuerpo, '[data-nuevo-gasto]', (b) => {
+    const clave = b.dataset.nuevoGasto || null;
+    const previa = {
+      ...(clave ? { actividad: clave, fecha: fechaDeActividad(clave) } : {}),
+      ...(b.dataset.fecha ? { fecha: b.dataset.fecha } : {}),
+    };
+    editores.editarGasto({
+      viaje, previa,
+      alGuardar: (d) => { guardarEnLista('gastos', null, d); brindis('Gasto apuntado', { tipo: 'ok' }); },
+    });
+  });
+
+  alPulsar(cuerpo, '[data-editar-gasto]', (b) => {
+    const g = estado.capaDe(viaje.id).gastos.find((x) => x.id === b.dataset.editarGasto);
+    if (!g) return;
+    editores.editarGasto({
+      viaje, gasto: g,
+      alGuardar: (d) => { guardarEnLista('gastos', g.id, d); brindis('Gasto guardado', { tipo: 'ok' }); },
+      alBorrar: () => { guardarEnLista('gastos', g.id, null, { borrar: true }); brindis('Gasto borrado'); },
+    });
+  });
+
+  alPulsar(cuerpo, '[data-copiar]', async (b) => {
+    try {
+      await navigator.clipboard.writeText(b.dataset.copiar);
+      brindis(`Copiado: ${b.dataset.copiar}`, { tipo: 'ok', duracion: 2000 });
+    } catch {
+      brindis('No se ha podido copiar. Mantén pulsado el número para seleccionarlo.', { tipo: 'error' });
+    }
+  });
+
+  // --- Ordenar el día --------------------------------------------------------
+  /**
+   * Aplica un orden nuevo intercambiando huecos (`reordenarPorHuecos`). En una
+   * actividad del archivo, la hora nueva es un cambio de la capa; en una
+   * añadida, se reescribe su bloque. Todo lo demás —la ruta del mapa, los
+   * números, los traslados que dejan de encajar— sale de volver a montar el día.
+   */
+  function aplicarOrden(orden) {
+    const actividades = diaActual().bloques.filter(esActividad);
+    let cambios;
+    try {
+      cambios = reordenarPorHuecos(actividades, orden);
+    } catch (e) {
+      brindis(e.message, { tipo: 'error' });
+      return;
+    }
+    if (!cambios.length) { pintarPanel({ moverFoco: false }); return; }
+    let capa = estado.capaDe(viaje.id);
+    const t = new Date().toISOString();
+    for (const { bloque, inicio, fin } of cambios) {
+      if (bloque.propio) {
+        // La hora de antes se apunta la primera vez que se mueve: una actividad
+        // añadida no tiene archivo al que volver, y «volver al orden» tiene que
+        // saber dónde estaba.
+        capa.bloques = capa.bloques.map((x) => (x.id === bloque.idPropio ? {
+          ...x,
+          inicioPrevio: x.inicioPrevio ?? x.inicio,
+          ...(x.fin && x.finPrevio === undefined ? { finPrevio: x.fin } : {}),
+          inicio,
+          ...(fin ? { fin } : {}),
+          movido: true,
+          t,
+        } : x));
+      } else {
+        capa = fijarCambio(capa, bloque.claveBase || bloque.claveActividad, fin ? { inicio, fin } : { inicio }, t);
+      }
+    }
+    estado.guardarCapa(viaje.id, capa);
+    trasCambiarCapa();
+    anuncio.textContent = 'Orden guardado. Cada actividad toma la hora de su hueco.';
+  }
+
+  const ordenActual = () => $$('[data-clave-orden]', cuerpo).map((f) => f.dataset.claveOrden);
+
+  alPulsar(cuerpo, '[data-accion="ordenar"]', () => { ordenando = true; pintarPanel({ moverFoco: false }); $('[data-asa]', cuerpo)?.focus(); });
+  alPulsar(cuerpo, '[data-accion="ordenar-listo"]', () => { ordenando = false; pintarPanel({ moverFoco: false }); });
+  alPulsar(cuerpo, '[data-accion="orden-original"]', () => {
+    let capa = estado.capaDe(viaje.id);
+    const t = new Date().toISOString();
+    for (const b of diaActual().bloques.filter((x) => x.movido)) {
+      if (b.propio) {
+        capa.bloques = capa.bloques.map((x) => {
+          if (x.id !== b.idPropio || x.inicioPrevio === undefined) return x;
+          const { inicioPrevio, finPrevio, movido, ...resto } = x;
+          return { ...resto, inicio: inicioPrevio, ...(finPrevio ? { fin: finPrevio } : {}), t };
+        });
+      } else {
+        capa = fijarCambio(capa, b.claveBase || b.claveActividad, { inicio: null, fin: null }, t);
+      }
+    }
+    estado.guardarCapa(viaje.id, capa);
+    trasCambiarCapa('Orden del archivo recuperado');
+  });
+
+  // Con teclado, o para quien no arrastra: las flechas mueven un puesto. El foco
+  // se queda en la misma actividad, en su sitio nuevo.
+  alPulsar(cuerpo, '[data-mover]', (b) => {
+    const orden = ordenActual();
+    const clave = b.closest('[data-clave-orden]').dataset.claveOrden;
+    const i = orden.indexOf(clave);
+    const j = i + Number(b.dataset.mover);
+    if (j < 0 || j >= orden.length) return;
+    [orden[i], orden[j]] = [orden[j], orden[i]];
+    aplicarOrden(orden);
+    const fila = $(`[data-clave-orden="${CSS.escape(clave)}"]`, cuerpo);
+    const siguiente = $(`[data-mover="${b.dataset.mover}"]:not(:disabled)`, fila) || $('[data-asa]', fila);
+    siguiente?.focus();
+  });
+
+  /**
+   * Arrastrar por el asa. Con las mismas reglas que la hoja: responder en el
+   * `pointerdown`, capturar el puntero en ese momento (el asa es pequeña y el
+   * primer movimiento ya se sale de ella), y que la fila siga al dedo 1:1. Las
+   * demás se apartan para enseñar dónde caerá. Se decide al soltar.
+   */
+  let arrastre = null;
+  cuerpo.addEventListener('pointerdown', (e) => {
+    const asa = e.target.closest('[data-asa]');
+    if (!asa || arrastre) return;
+    const fila = asa.closest('[data-clave-orden]');
+    const filas = $$('[data-clave-orden]', cuerpo);
+    arrastre = {
+      id: e.pointerId, fila, filas, y: e.clientY, desde: filas.indexOf(fila), hasta: filas.indexOf(fila),
+      alto: fila.getBoundingClientRect().height + 6,
+    };
+    fila.classList.add('ordenar__fila--arrastrando');
+    try { asa.setPointerCapture(e.pointerId); } catch { /* sin captura se sigue */ }
+    e.preventDefault();
+  });
+  cuerpo.addEventListener('pointermove', (e) => {
+    if (!arrastre || e.pointerId !== arrastre.id) return;
+    const dy = e.clientY - arrastre.y;
+    arrastre.fila.style.transform = `translate3d(0, ${dy}px, 0)`;
+    const hasta = Math.max(0, Math.min(arrastre.filas.length - 1, arrastre.desde + Math.round(dy / arrastre.alto)));
+    if (hasta === arrastre.hasta) return;
+    arrastre.hasta = hasta;
+    arrastre.filas.forEach((f, i) => {
+      if (f === arrastre.fila) return;
+      let mover = 0;
+      if (arrastre.desde < hasta && i > arrastre.desde && i <= hasta) mover = -arrastre.alto;
+      if (arrastre.desde > hasta && i < arrastre.desde && i >= hasta) mover = arrastre.alto;
+      f.style.transform = mover ? `translate3d(0, ${mover}px, 0)` : '';
+    });
+  });
+  const soltarArrastre = (e) => {
+    if (!arrastre || e.pointerId !== arrastre.id) return;
+    const { desde, hasta, filas } = arrastre;
+    arrastre = null;
+    filas.forEach((f) => { f.style.transform = ''; f.classList.remove('ordenar__fila--arrastrando'); });
+    if (desde === hasta) return;
+    const orden = filas.map((f) => f.dataset.claveOrden);
+    const [movida] = orden.splice(desde, 1);
+    orden.splice(hasta, 0, movida);
+    aplicarOrden(orden);
+  };
+  cuerpo.addEventListener('pointerup', soltarArrastre);
+  cuerpo.addEventListener('pointercancel', soltarArrastre);
 
   alPulsar(cuerpo, '[data-accion="restaurar"]', () => {
     const capa = estado.capaDe(viaje.id);
@@ -876,8 +1372,10 @@ export async function montarViaje(raiz, ruta) {
     // Sin animación de entrada a propósito: una flecha se repite muchas veces
     // seguidas, y animar cada repetición hace que el teclado se sienta lento.
     // El gesto sí anima, porque ahí la animación **continúa** el movimiento.
-    if (e.key === 'ArrowRight' && i < viaje.dias.length - 1) ir(`#/v/${viaje.id}/d/${viaje.dias[i + 1].fecha}`);
-    else if (e.key === 'ArrowLeft' && i > 0) ir(`#/v/${viaje.id}/d/${viaje.dias[i - 1].fecha}`);
+    if (actual.vista === 'hoy' || ANCHAS.has(actual.vista)) return;
+    const destino = (d) => (actual.vista === 'mapa' ? `#/v/${viaje.id}/mapa?d=${d.fecha}` : `#/v/${viaje.id}/d/${d.fecha}`);
+    if (e.key === 'ArrowRight' && i < viaje.dias.length - 1) ir(destino(viaje.dias[i + 1]));
+    else if (e.key === 'ArrowLeft' && i > 0) ir(destino(viaje.dias[i - 1]));
     else if (e.key === 'Escape' && actual.vista === 'lugar') ir(`#/v/${viaje.id}/d/${diaActual().fecha}`);
   }
   addEventListener('keydown', alTeclado);
@@ -919,8 +1417,8 @@ export async function montarViaje(raiz, ruta) {
 
   cuerpo.addEventListener('pointerdown', (e) => {
     if (e.pointerType !== 'touch' || actual.vista !== 'dia' || desliz) return;
-    // Dentro de un campo o de una banda, el arrastre es de ellos.
-    if (e.target.closest('input, textarea, summary')) return;
+    // Dentro de un campo, de una banda o del modo ordenar, el arrastre es de ellos.
+    if (e.target.closest('input, textarea, summary, [data-ordenar]')) return;
     resorteDesliz.parar();
     desliz = { id: e.pointerId, x: e.clientX, y: e.clientY, decidido: false, activo: false, historial: [] };
   });
@@ -996,6 +1494,16 @@ export async function montarViaje(raiz, ruta) {
 
   pintar();
 
+  // --- El reloj de Hoy -----------------------------------------------------
+  // «Ahora» y «Siguiente» dependen de la hora: sin repintar, a las once seguiría
+  // diciendo lo de las diez. Una vez por minuto, y solo si se está mirando Hoy,
+  // la pestaña está a la vista y no estás escribiendo en ella.
+  const reloj = setInterval(() => {
+    if (!vivo || actual.vista !== 'hoy' || document.visibilityState !== 'visible') return;
+    if (cuerpo.contains(document.activeElement) && document.activeElement.matches('input, textarea')) return;
+    pintarPanel({ moverFoco: false });
+  }, REFRESCO_HOY_MS);
+
   // --- El tiempo -----------------------------------------------------------
   // Se pide después de pintar y sin bloquear nada: la guía ya está en pantalla,
   // y lo que se descargó la última vez ya se ha pintado con ella. Si no llega
@@ -1030,7 +1538,7 @@ export async function montarViaje(raiz, ruta) {
     get titulo() { return viaje.titulo; },
     actualizar(nuevaRuta) {
       const antes = actual;
-      actual = { ...nuevaRuta, fecha: nuevaRuta.fecha || actual.fecha || diaPorDefecto(viaje) };
+      actual = { ...resolver(nuevaRuta), fecha: nuevaRuta.fecha || actual.fecha || diaPorDefecto(viaje) };
 
       // Al cambiar de día o de pestaña, la barra de cambios sin guardar deja de
       // estar delante: en Transporte o en Listas no se pinta, y en otro día no
@@ -1038,6 +1546,7 @@ export async function montarViaje(raiz, ruta) {
       // **una sola vez por tanda**: repetirlo en cada navegación lo convierte en
       // algo que se ignora, que es peor que no avisar.
       const cambioDeSitio = antes.fecha !== actual.fecha || antes.vista !== actual.vista;
+      if (cambioDeSitio) ordenando = false;
       if (cambioDeSitio && viaje.pendientes && !avisadoDePendientes) {
         avisadoDePendientes = true;
         brindis(`Te dejas ${viaje.pendientes} cambio${viaje.pendientes === 1 ? '' : 's'} sin guardar en la nube. Están a salvo aquí; súbelos cuando quieras desde el itinerario.`,
@@ -1047,11 +1556,13 @@ export async function montarViaje(raiz, ruta) {
     },
     destruir() {
       vivo = false;
+      clearInterval(reloj);
       resorteDesliz.parar();
       removeEventListener('keydown', alTeclado);
       quitarOyenteTema();
       buscador.cerrar();
       buscarLugar.cerrar();
+      editores.cerrarEditores();
       limpiarUrls();
       mapa.destruir();
     },
