@@ -3,6 +3,17 @@
   "descripcion": "Guía interactiva durante el viaje y registro de viajes después.",
   "viajes": [
     {
+      "id": "edimburgo-2026-10",
+      "archivo": "data/viajes/edimburgo-2026-10.json",
+      "titulo": "Birmingham y Edimburgo",
+      "subtitulo": "",
+      "fechas": {
+        "inicio": "2026-10-19",
+        "fin": "2026-10-24"
+      },
+      "estado": "planificado"
+    },
+    {
       "id": "praga-2026-10",
       "archivo": "data/viajes/praga-2026-10.json",
       "titulo": "Praga",

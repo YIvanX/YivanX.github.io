@@ -1,0 +1,3002 @@
+{
+  "id": "edimburgo-2026-10",
+  "version": 1,
+  "titulo": "Birmingham y Edimburgo",
+  "subtitulo": "Una tarde en Birmingham, cuatro días en Edimburgo y uno en las Highlands",
+  "estado": "planificado",
+  "fechas": {
+    "inicio": "2026-10-19",
+    "fin": "2026-10-24"
+  },
+  "viajeros": [
+    "La pareja de Yixuan",
+    "Su madre"
+  ],
+  "moneda": "GBP",
+  "base": "Una noche junto a Broad Street, en Birmingham, y cuatro junto a Haymarket, en Edimburgo",
+  "resumen": "Se aterriza en Birmingham el lunes a las 11:00 y hay una tarde para los canales, la biblioteca y un balti para cenar. El martes, vuelo de madrugada a Edimburgo y día tranquilo por Dean Village y la Ciudad Nueva. El miércoles toca la Ciudad Vieja entera, del castillo al museo nacional pasando por los rincones de Harry Potter. El jueves se va a las Highlands y al lago Ness, porque es el día con mejor previsión allí arriba. El viernes, Holyrood y la falda de Arthur's Seat, y el sábado, el jardín botánico antes de volar a las 16:00. Holyrood va el viernes porque el martes y el miércoles está cerrado.",
+  "mapa": {
+    "centro": [
+      55.95,
+      -3.195
+    ],
+    "zoom": 13
+  },
+  "avisos": [
+    {
+      "nivel": "alto",
+      "titulo": "Sin la ETA no se embarca",
+      "texto": "Desde el 2 de abril de 2025, quien viaja al Reino Unido con pasaporte español o de otro país europeo necesita una autorización electrónica, la ETA. Cuesta 20 £ por persona y se pide en la app oficial «UK ETA» o en gov.uk/eta, nunca en webs intermediarias, que cobran más. Casi todas se aprueban en minutos, pero alguna tarda hasta tres días laborables, así que si no está pedida, hay que pedirla hoy mismo. Dura dos años. Y hace falta el pasaporte: el DNI ya no vale para entrar.",
+      "dias": [
+        "2026-10-19"
+      ],
+      "momento": "pre"
+    },
+    {
+      "nivel": "alto",
+      "titulo": "El martes se sale del hotel a las 6:00",
+      "texto": "El vuelo a Edimburgo aterriza a las 9:00, así que despega hacia las 7:50 (hay que mirar la hora exacta en el billete). Con el aeropuerto a media hora en taxi, lo sensato es salir a las 6:00 y estar allí a las 6:35. El taxi conviene pedirlo el lunes por la noche en recepción o dejar el Uber programado. La factura del hotel, mejor dejarla pagada la víspera.",
+      "dias": [
+        "2026-10-19",
+        "2026-10-20"
+      ]
+    },
+    {
+      "nivel": "alto",
+      "titulo": "Las entradas del castillo, compradas antes",
+      "texto": "Se compran por internet con hora de entrada, y cuando se agotan en la web ya no venden en la puerta. Cuestan 23,50 £ por internet y 26 £ en taquilla; los mayores de 65 pagan 19 £. El plan cuenta con la franja de las 9:30, que es la más tranquila. Abre de 9:30 a 17:00 y la última entrada es a las 16:00.",
+      "dias": [
+        "2026-10-21"
+      ],
+      "momento": "pre"
+    },
+    {
+      "nivel": "alto",
+      "titulo": "La excursión a las Highlands hay que reservarla ya",
+      "texto": "Va el jueves porque la previsión del 18 de octubre daba 20-22 mm de lluvia el miércoles en Glencoe y en el lago Ness, y apenas 1 mm el jueves. El viernes también sale seco. Si la previsión cambia, la excursión se puede pasar al viernes y Holyrood al jueves, que también abre. Antes de pagar, mirar las condiciones de cancelación.",
+      "dias": [
+        "2026-10-22",
+        "2026-10-23"
+      ],
+      "momento": "pre"
+    },
+    {
+      "nivel": "medio",
+      "titulo": "Holyrood cierra los martes y los miércoles",
+      "texto": "Del 10 de septiembre al 31 de octubre abre de jueves a lunes, de 9:30 a 18:00, con la última entrada a las 16:30. Por eso va el viernes. Es palacio real en uso, así que puede cerrar con poco aviso: conviene mirar la web de la Royal Collection la víspera.",
+      "dias": [
+        "2026-10-23"
+      ]
+    },
+    {
+      "nivel": "medio",
+      "titulo": "San Giles cobra entrada desde el 5 de octubre",
+      "texto": "La catedral empezó a cobrar 12 £ a los visitantes que no viven en Escocia el 5 de octubre de 2026, según la prensa local; la web de la catedral no lo detallaba aún. El plan la deja como parada corta: la fachada, el mosaico del corazón en el suelo y, si apetece, entrar.",
+      "dias": [
+        "2026-10-21"
+      ]
+    },
+    {
+      "nivel": "medio",
+      "titulo": "El sábado: maletas y aeropuerto",
+      "texto": "El check-out es a las 11:00 y el vuelo sale a las 16:00. Las maletas se dejan en recepción por la mañana y se recogen a las 12:20. El tranvía al aeropuerto sale de Haymarket, a cinco minutos del hotel, y tarda unos 20-25 minutos: con cogerlo a las 13:10 se llega con más de dos horas de margen.",
+      "dias": [
+        "2026-10-24"
+      ],
+      "momento": "pre"
+    },
+    {
+      "nivel": "info",
+      "titulo": "El museo de Birmingham cierra los lunes",
+      "texto": "Desde julio de 2026 abre seis días a la semana en periodo escolar, y el lunes 19 no es vacaciones allí. Por eso no está en el plan, aunque esté en la misma plaza que la biblioteca.",
+      "dias": [
+        "2026-10-19"
+      ]
+    },
+    {
+      "nivel": "info",
+      "titulo": "Se paga en libras, y casi todo con tarjeta",
+      "texto": "1 € = 0,84385 £ según el Banco Central Europeo el 16 de octubre de 2026, así que 1 £ son unos 1,19 €. Se paga con tarjeta sin contacto en casi todas partes, también en los autobuses. Cuando el datáfono ofrezca cobrar en euros, hay que elegir libras: el cambio del comercio siempre es peor."
+    },
+    {
+      "nivel": "info",
+      "titulo": "Cómo se ha clasificado cada sitio",
+      "texto": "Esta vez TripAdvisor bloqueó la consulta, así que no hay notas de reseñas. Obligatorio = lo más visitado de Escocia según las cifras de ALVA de 2025, o lo que está en el centro de lo que se pidió: historia y castillos, miradores, Harry Potter y comida. Recomendable = lo que encaja con eso y se puede saltar si el día se tuerce. Opcional = lo demás. Salvo los que citan a ALVA, los niveles son criterio, no un dato."
+    }
+  ],
+  "lugares": [
+    {
+      "id": "aeropuerto-bhx",
+      "nombre": "Aeropuerto de Birmingham",
+      "categoria": "transporte",
+      "zona": "Aeropuerto de Birmingham",
+      "coords": [
+        52.45418,
+        -1.74387
+      ],
+      "resumen": "Se llega el lunes y se vuelve a salir de aquí el martes de madrugada, rumbo a Edimburgo.",
+      "descripcion": "El lunes se aterriza en un vuelo internacional, así que hay control de pasaportes: con eso y las maletas, se sale hacia las 11:45.\n\nPara ir al centro, el **Air-Rail Link** es un tren automático y gratuito que en dos minutos deja en la estación de **Birmingham International**. Desde allí, los trenes a **New Street** tardan unos 10-20 minutos. El taxi directo al hotel cuesta unas 25-40 £ y tarda entre 25 y 40 minutos, según el tráfico.\n\nEl martes el vuelo a Edimburgo es nacional: no hay control de pasaportes, pero la aerolínea pide un documento con foto, y el que vale es el pasaporte.",
+      "duracionMin": 45,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "No es un destino",
+        "fuente": "Es el medio para llegar, no una visita"
+      },
+      "consejos": [
+        "El billete de tren a New Street se saca en la máquina de Birmingham International o en la app Trainline; ronda las 4-8 £ por persona.",
+        "El martes conviene llegar a las 6:35 para un vuelo hacia las 7:50: la facturación de equipaje cierra mucho antes que la puerta."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/aeropuerto-bhx.jpg",
+        "credito": "No se ha podido leer automáticamente información sobre el autor; se as",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Birmingham_airport_entrance.JPG"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "Guías de transporte del aeropuerto (airconnect.live) y OpenStreetMap (aeroway=aerodrome)"
+      }
+    },
+    {
+      "id": "new-street",
+      "nombre": "Estación de New Street",
+      "categoria": "transporte",
+      "zona": "Centro de Birmingham",
+      "coords": [
+        52.47765,
+        -1.89869
+      ],
+      "resumen": "La estación central, con el tranvía en la puerta para ir a Broad Street.",
+      "descripcion": "Encima de la estación está el centro comercial **Grand Central**, y en su puerta para el tranvía del **West Midlands Metro**. En ocho o diez minutos deja en la parada de **Brindleyplace**, en Broad Street, al lado del hotel. Andando son unos 20 minutos.",
+      "duracionMin": 10,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "No es un destino",
+        "fuente": "Es un punto de paso"
+      },
+      "consejos": [
+        "El billete sencillo del tranvía cuesta 2,50 £ desde enero de 2026, y se paga con la tarjeta sin contacto al validar."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/new-street.jpg",
+        "credito": "Fatih Renkligil",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Birmingham%20Grand%20Central%20Exterior.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "westmidlandsmetro.com (tarifas de 2026) y OpenStreetMap (railway=station)"
+      }
+    },
+    {
+      "id": "hotel-birmingham",
+      "nombre": "Hotel de Birmingham",
+      "categoria": "alojamiento",
+      "zona": "Broad Street",
+      "coords": [
+        52.4774,
+        -1.91145
+      ],
+      "resumen": "Broad Street, la calle de los canales y del centro de congresos.",
+      "descripcion": "Las coordenadas son las de la calle, no las del hotel. El nombre y la reserva **no van aquí**, porque este repositorio es público: están en «Datos privados» de la aplicación.\n\nEl check-in es a partir de las 15:00 y el check-out hasta las 11:00. La recepción está abierta las 24 horas, así que salir a las 6:00 no es problema.",
+      "duracionMin": 20,
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "Preguntas frecuentes de la web del hotel; ubicación aproximada a propósito"
+      }
+    },
+    {
+      "id": "brindleyplace",
+      "nombre": "Brindleyplace",
+      "categoria": "comida",
+      "zona": "Broad Street",
+      "coords": [
+        52.4784,
+        -1.91188
+      ],
+      "resumen": "Plazas de ladrillo junto al canal, llenas de sitios para comer a dos pasos del hotel.",
+      "descripcion": "Un barrio de oficinas y restaurantes levantado sobre antiguos almacenes del canal. Es el sitio cómodo para la primera comida: está al lado del hotel y hay de todo, desde cadenas hasta pubs con terraza sobre el agua.",
+      "duracionMin": 50,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Es una zona para comer, no una visita"
+      },
+      "consejos": [
+        "Si llueve, los restaurantes de la orilla tienen la mejor vista del canal desde dentro."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/brindleyplace.jpg",
+        "credito": "Fatih Renkligil",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Brindleyplace%20Canalside%20Birmingham%20England.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "OpenStreetMap"
+      }
+    },
+    {
+      "id": "gas-street-basin",
+      "nombre": "Gas Street Basin",
+      "categoria": "patrimonio",
+      "zona": "Centro de Birmingham",
+      "coords": [
+        52.47751,
+        -1.90967
+      ],
+      "resumen": "El cruce de canales donde Birmingham amarraba sus barcazas de carbón; hoy, casas flotantes de colores.",
+      "descripcion": "Birmingham creció a base de canales, y este era su nudo: aquí se encontraban el canal de Birmingham y el de Worcester. Los almacenes de ladrillo siguen en pie, y las **narrowboats**, esas barcazas estrechas y largas, siguen amarradas en la orilla, muchas convertidas en casa.\n\nSon diez minutos de paseo, a cinco del hotel.",
+      "duracionMin": 20,
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: encaja con historia; a cinco minutos del hotel"
+      },
+      "queMirar": [
+        {
+          "que": "Las barcazas pintadas",
+          "porque": "Llevan rosas y castillos a mano en los costados: es la decoración tradicional de los barqueros ingleses."
+        },
+        {
+          "que": "La barra de Worcester",
+          "porque": "Una franja de tierra de apenas unos metros separaba los dos canales, porque sus compañías no se ponían de acuerdo y la mercancía había que pasarla a mano de un lado a otro."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Más canal que Venecia",
+          "texto": "En Birmingham presumen de tener más kilómetros de canal que Venecia, aunque aquí nadie llega a casa en góndola."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/gas-street-basin.jpg",
+        "credito": "DS Pugh",
+        "licencia": "CC BY-SA 2.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Narrowboats%20at%20Gas%20Street%20Basin%20-%20geograph.org.uk%20-%203473805.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "OpenStreetMap (leisure=marina)"
+      }
+    },
+    {
+      "id": "biblioteca-birmingham",
+      "nombre": "Biblioteca de Birmingham",
+      "categoria": "patrimonio",
+      "zona": "Centro de Birmingham",
+      "coords": [
+        52.47969,
+        -1.90848
+      ],
+      "resumen": "Una caja de anillos dorados con jardines en la azotea y una sala de Shakespeare en lo alto.",
+      "descripcion": "Abrió en 2013. La fachada son anillos de metal entrelazados, un guiño a los joyeros del barrio de al lado. Dentro, las escaleras mecánicas suben entre estanterías hasta las **terrazas** de la tercera y la séptima planta, que son jardines con la ciudad debajo.\n\nArriba del todo está la **Shakespeare Memorial Room**, una sala victoriana de madera tallada de 1882 que se desmontó del edificio viejo y se volvió a montar aquí, pieza a pieza.\n\nLa entrada es gratis.",
+      "duracionMin": 50,
+      "horarios": {
+        "lun": [
+          [
+            "11:00",
+            "19:00"
+          ]
+        ],
+        "mar": [
+          [
+            "11:00",
+            "19:00"
+          ]
+        ]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: gratis, a cubierto si llueve y con la mejor vista del centro"
+      },
+      "queMirar": [
+        {
+          "que": "La vista desde la terraza de la séptima planta",
+          "porque": "Se ve la plaza Centenary entera, los canales y, en un día claro, las colinas del sur."
+        },
+        {
+          "que": "La sala de Shakespeare",
+          "porque": "Paneles de nogal, vidrieras y los nombres de las obras grabados: es una biblioteca dentro de la biblioteca."
+        },
+        {
+          "que": "La fachada al caer la tarde",
+          "porque": "Con las luces de dentro encendidas, los anillos se recortan sobre el cristal."
+        }
+      ],
+      "consejos": [
+        "Las terrazas solo abren de 11:00 a 15:00: hay que subir primero y bajar después.",
+        "Los horarios del resto de la semana no están puestos: al viaje solo le importa el lunes."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/biblioteca-birmingham.jpg",
+        "credito": "The wub",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Library_of_Birmingham_2024-07-19_-_1.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "birmingham.gov.uk, página de la Library of Birmingham (actualizada el 13 de marzo de 2026)"
+      }
+    },
+    {
+      "id": "victoria-square",
+      "nombre": "Victoria Square y la Council House",
+      "categoria": "patrimonio",
+      "zona": "Centro de Birmingham",
+      "coords": [
+        52.47979,
+        -1.90309
+      ],
+      "resumen": "La plaza del ayuntamiento victoriano, con una fuente a la que la ciudad le puso mote.",
+      "descripcion": "La **Council House**, de 1879, es el ayuntamiento: piedra, columnas y una cúpula que dice muy claro que Birmingham fue rica. Delante, la fuente **The River**, una mujer gigante tumbada en el agua.\n\nSe ve por fuera y de paso, camino de la catedral.",
+      "duracionMin": 15,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: está de camino"
+      },
+      "curiosidades": [
+        {
+          "titulo": "La de la bañera",
+          "texto": "A la estatua de la fuente la llaman «the floozie in the jacuzzi», algo así como «la frescales del jacuzzi». El nombre oficial no lo usa nadie."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/victoria-square.jpg",
+        "credito": "GavinWarrins",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:BirminghamTownHallVictoriaSquare.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "OpenStreetMap (amenity=townhall)"
+      }
+    },
+    {
+      "id": "catedral-st-philip",
+      "nombre": "Catedral de San Felipe",
+      "categoria": "patrimonio",
+      "zona": "Centro de Birmingham",
+      "coords": [
+        52.48118,
+        -1.89891
+      ],
+      "resumen": "Una iglesia barroca pequeña con cuatro vidrieras de Burne-Jones que se comen la luz del día.",
+      "descripcion": "Desde fuera parece una iglesia sin más, en medio de un parque con oficinas alrededor. Lo que hay que ver está dentro: **cuatro vidrieras de Edward Burne-Jones**, el pintor prerrafaelita, que nació en Birmingham y fue bautizado en esta misma iglesia.\n\nTres están detrás del altar, la Natividad, la Crucifixión y la Ascensión, y la cuarta, el Juicio Final, encima de la puerta. Los rojos y los azules son tan intensos que no parecen vidrio.",
+      "duracionMin": 30,
+      "horarios": {
+        "lun": [
+          [
+            "07:30",
+            "18:30"
+          ]
+        ],
+        "mar": [
+          [
+            "07:30",
+            "18:30"
+          ]
+        ],
+        "mie": [
+          [
+            "07:30",
+            "18:30"
+          ]
+        ],
+        "jue": [
+          [
+            "07:30",
+            "18:30"
+          ]
+        ],
+        "vie": [
+          [
+            "07:30",
+            "18:30"
+          ]
+        ],
+        "sab": [
+          [
+            "08:30",
+            "17:00"
+          ]
+        ],
+        "dom": [
+          [
+            "08:10",
+            "17:15"
+          ]
+        ]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: gratis y con las vidrieras más famosas de la ciudad"
+      },
+      "queMirar": [
+        {
+          "que": "La Ascensión, en el centro del ábside",
+          "porque": "Es la más alta de las tres, y con el cielo gris de Birmingham es cuando mejor se ve el rojo."
+        },
+        {
+          "que": "El Juicio Final, al darse la vuelta hacia la puerta",
+          "porque": "Casi todo el mundo pasa por debajo sin verla."
+        }
+      ],
+      "consejos": [
+        "La entrada es gratis; si hay oficio, se espera al fondo en silencio."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/catedral-st-philip.jpg",
+        "credito": "Wikimedia Commons",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Birmingham%20St%20Philip's%20Cathedral.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "Fichas de visitantes (airial.travel y whatsonlive); la web oficial no dio horario por día"
+      }
+    },
+    {
+      "id": "bullring",
+      "nombre": "Bullring y la iglesia de San Martín",
+      "categoria": "patrimonio",
+      "zona": "Centro de Birmingham",
+      "coords": [
+        52.47694,
+        -1.89498
+      ],
+      "resumen": "Donde había mercado desde el siglo XII, hoy un centro comercial con una iglesia victoriana a sus pies.",
+      "descripcion": "Aquí estaba el mercado de Birmingham desde 1166, y aquí sigue el comercio: el **Bullring** es un centro comercial enorme, y lo que merece la pena es su borde. Por un lado, el edificio de **Selfridges**, una burbuja azul cubierta de discos de aluminio. Por el otro, bajando la escalinata, la **iglesia de San Martín**, la parroquia antigua de la ciudad.\n\nCon lluvia, es la hora a cubierto del día.",
+      "duracionMin": 55,
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: a cubierto si llueve y con los dos edificios más reconocibles del centro"
+      },
+      "queMirar": [
+        {
+          "que": "Selfridges desde la escalinata de San Martín",
+          "porque": "Desde abajo se ve la curva entera del edificio, con la torre de la iglesia delante."
+        },
+        {
+          "que": "El toro de bronce",
+          "porque": "Está en la entrada principal, y casi todo el que pasa se hace la foto con él."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "15.000 discos",
+          "texto": "La fachada de Selfridges lleva unos 15.000 discos de aluminio. Se inauguró en 2003, y la idea salió de un vestido de lentejuelas de Paco Rabanne."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/bullring.jpg",
+        "credito": "Tony Foster",
+        "licencia": "CC BY-SA 2.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Selfridges%20and%20St%20Martin's%20in%20the%20Bullring%20-%20geograph.org.uk%20-%201548435.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "OpenStreetMap (landuse=retail, Bullring); las coordenadas son las del centro comercial"
+      }
+    },
+    {
+      "id": "adils",
+      "nombre": "Adil's",
+      "categoria": "comida",
+      "zona": "Balti Triangle",
+      "coords": [
+        52.4544,
+        -1.87339
+      ],
+      "resumen": "El balti es de Birmingham, y esta casa lleva sirviéndolo desde los años setenta.",
+      "descripcion": "El **balti** es un curry que se cocina a fuego vivo y se sirve en el mismo cuenco de acero en el que se ha hecho, todavía chisporroteando. Se inventó en Birmingham en los setenta, en el barrio paquistaní del sur que hoy llaman el **Balti Triangle**, y Adil's es de las casas que reclaman haber sido la primera.\n\nSe come con naan, arrancando trozos con la mano, y se elige la base, el ingrediente y el picante.",
+      "duracionMin": 80,
+      "horarios": {
+        "lun": [
+          [
+            "17:00",
+            "24:00"
+          ]
+        ],
+        "mar": [
+          [
+            "17:00",
+            "24:00"
+          ]
+        ],
+        "mie": [
+          [
+            "17:00",
+            "24:00"
+          ]
+        ],
+        "jue": [
+          [
+            "17:00",
+            "24:00"
+          ]
+        ],
+        "vie": [
+          [
+            "17:00",
+            "24:00"
+          ]
+        ],
+        "sab": [
+          [
+            "12:00",
+            "24:00"
+          ]
+        ],
+        "dom": [
+          [
+            "12:00",
+            "24:00"
+          ]
+        ]
+      },
+      "precio": {
+        "importe": 20,
+        "detalle": "Unas 15-25 £ por persona con naan y bebida (estimación)"
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "nota": 4.5,
+        "resenas": 223,
+        "puesto": "Time Out lo cuenta entre los mejores balti de la ciudad",
+        "fuente": "TripAdvisor según el agregador Sluurpy, consultado el 18 de octubre de 2026"
+      },
+      "queMirar": [
+        {
+          "que": "El naan de mesa",
+          "porque": "Es un pan del tamaño de una bandeja que se pide para compartir en el centro de la mesa."
+        }
+      ],
+      "consejos": [
+        "Está a 4 km del hotel: taxi o Uber, unos 15-20 minutos y 10-15 £ por trayecto.",
+        "El picante «medium» de aquí ya pica bastante para lo que se acostumbra en España.",
+        "Es un sitio sencillo: no hay que arreglarse."
+      ],
+      "enlaces": [
+        {
+          "texto": "Ficha de Time Out",
+          "url": "https://www.timeout.com/birmingham/restaurants-and-cafes/adils-balti"
+        }
+      ],
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "Time Out (horario sin fecha: conviene mirarlo en Google Maps antes de ir) y OpenStreetMap"
+      }
+    },
+    {
+      "id": "aeropuerto-edi",
+      "nombre": "Aeropuerto de Edimburgo",
+      "categoria": "transporte",
+      "zona": "Aeropuerto de Edimburgo",
+      "coords": [
+        55.95026,
+        -3.35939
+      ],
+      "resumen": "Se llega el martes a las 9:00 y se vuelve el sábado a las 16:00. El tranvía sale de la puerta.",
+      "descripcion": "El **tranvía** sale de delante de la terminal y para en **Haymarket**, a cinco minutos andando del hotel. Tarda unos 20-25 minutos hasta allí y pasa cada 7-10 minutos.\n\nEl aeropuerto es una zona de tarifa aparte: el billete normal de ciudad **no vale** para llegar o salir de aquí. El sencillo de aeropuerto cuesta 7,90 £ y la ida y vuelta abierta, 9,50 £.",
+      "duracionMin": 30,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "No es un destino",
+        "fuente": "Es el medio para llegar, no una visita"
+      },
+      "consejos": [
+        "Con la ida y vuelta de 9,50 £ comprada el martes, el sábado ya está pagado el viaje de vuelta. Se compra en la máquina de la parada o en la app Transport for Edinburgh, antes de subir."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/aeropuerto-edi.jpg",
+        "credito": "Herbert Frank from Wien (Vienna), AT",
+        "licencia": "CC BY 2.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Edinburgh_Airport.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "edinburghtrams.com (cambios de tarifa de 2026) y guías que citan la tarifa de aeropuerto de julio de 2026"
+      }
+    },
+    {
+      "id": "hotel-edimburgo",
+      "nombre": "Hotel de Edimburgo",
+      "categoria": "alojamiento",
+      "zona": "Haymarket",
+      "coords": [
+        55.94598,
+        -3.21713
+      ],
+      "resumen": "Haymarket: tranvía al aeropuerto y al centro en la puerta, y Dean Village a quince minutos.",
+      "descripcion": "Las coordenadas son las del barrio, no las del hotel. El nombre y la reserva **no van aquí**, porque este repositorio es público: están en «Datos privados» de la aplicación.\n\nEl check-in es a partir de las 15:00 y el check-out hasta las 11:00. La recepción está abierta las 24 horas y guarda maletas.",
+      "duracionMin": 20,
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "Preguntas frecuentes de la web del hotel; ubicación aproximada a propósito"
+      }
+    },
+    {
+      "id": "dean-village",
+      "nombre": "Dean Village",
+      "categoria": "patrimonio",
+      "zona": "Dean Village",
+      "coords": [
+        55.95226,
+        -3.21822
+      ],
+      "resumen": "Un pueblo de molineros metido en una hondonada del río, a quince minutos del centro y como si no lo estuviera.",
+      "descripcion": "Durante siglos, aquí abajo se molía el grano de la ciudad con la fuerza del **Water of Leith**, el riachuelo que cruza Edimburgo. Quedan las casas de piedra, los tejados picudos y un puente de piedra sobre el agua, y el ruido de la ciudad se queda arriba, en la carretera.\n\nSe baja por una cuesta corta desde Bell's Brae y se sale andando por la orilla, río abajo, hacia Stockbridge.",
+      "duracionMin": 40,
+      "nivel": "obligatorio",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: miradores y paseo, gratis y a quince minutos del hotel"
+      },
+      "queMirar": [
+        {
+          "que": "Well Court desde el puente",
+          "porque": "Es el edificio rojo con torre del reloj, levantado para los trabajadores en la década de 1880. Con el río delante es la postal del sitio."
+        },
+        {
+          "que": "Las piedras de molino en las paredes",
+          "porque": "Hay ruedas de molino viejas empotradas en muros y portales; son lo que queda de los once molinos que llegó a tener el valle."
+        },
+        {
+          "que": "El puente de Dean, mirando hacia arriba",
+          "porque": "Desde el sendero del río se ve el viaducto de Telford a 30 metros de altura."
+        }
+      ],
+      "consejos": [
+        "Es zona de viviendas: se pasea en voz baja.",
+        "El sendero del río puede estar embarrado si ha llovido; las suelas lisas resbalan."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/dean-village.jpg",
+        "credito": "Iain Lees",
+        "licencia": "CC BY-SA 2.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Looking%20over%20the%20Water%20of%20Leith%20to%20Well%20Court%20-%20geograph.org.uk%20-%208338900.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "OpenStreetMap (place=suburb)"
+      }
+    },
+    {
+      "id": "pantry",
+      "nombre": "The Pantry",
+      "categoria": "comida",
+      "zona": "Stockbridge",
+      "coords": [
+        55.95722,
+        -3.20563
+      ],
+      "resumen": "Brunch de barrio en Stockbridge, para recuperar el madrugón con tostadas y huevos.",
+      "descripcion": "Un café pequeño en la esquina de Stockbridge, el barrio de las tiendas de segunda mano y las librerías. Sirven desayuno hasta las 11:00 y brunch todo el día, con el **desayuno escocés** completo en la carta: huevos, bacon, salchicha, morcilla y tostadas.\n\nNo reservan, así que a veces hay que esperar un poco; un martes a mediodía, poco.",
+      "duracionMin": 60,
+      "horarios": {
+        "lun": [
+          [
+            "09:00",
+            "15:00"
+          ]
+        ],
+        "mar": [
+          [
+            "09:00",
+            "15:00"
+          ]
+        ],
+        "mie": [
+          [
+            "09:00",
+            "15:00"
+          ]
+        ],
+        "jue": [
+          [
+            "09:00",
+            "15:00"
+          ]
+        ],
+        "vie": [
+          [
+            "09:00",
+            "15:00"
+          ]
+        ],
+        "sab": [
+          [
+            "09:00",
+            "15:00"
+          ]
+        ],
+        "dom": [
+          [
+            "09:00",
+            "15:00"
+          ]
+        ]
+      },
+      "precio": {
+        "importe": 15,
+        "detalle": "Unas 12-18 £ por persona con café (estimación)"
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: comida; Time Out y la web oficial de turismo de Edimburgo lo recomiendan para brunch"
+      },
+      "consejos": [
+        "La morcilla escocesa (black pudding) es más suave que la española; merece la pena probarla."
+      ],
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "SquareMeal (horario) y OpenStreetMap"
+      }
+    },
+    {
+      "id": "circus-lane",
+      "nombre": "Circus Lane",
+      "categoria": "patrimonio",
+      "zona": "Stockbridge",
+      "coords": [
+        55.9581,
+        -3.205
+      ],
+      "resumen": "Un callejón curvo de antiguas cocheras, con macetas en las puertas y la torre de una iglesia al fondo.",
+      "descripcion": "Las casas de esta calle eran las cuadras y cocheras de las mansiones de delante. Hoy son viviendas pequeñas con flores en la puerta, y la calle hace una curva que remata en la torre de la iglesia de St Stephen's.\n\nEs una parada de diez minutos, pero es de las calles más bonitas de la ciudad.",
+      "duracionMin": 15,
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: está a dos minutos del brunch"
+      },
+      "consejos": [
+        "Es una calle donde vive gente: fotos sí, sentarse en los escalones no."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/circus-lane.jpg",
+        "credito": "Ralf Steinberger from Milan, Berlin + Munich, Italy + Germany",
+        "licencia": "CC BY 2.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Circus%20Lane%2C%20Edinburgh%20(50461017443).jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "OpenStreetMap"
+      }
+    },
+    {
+      "id": "galeria-nacional",
+      "nombre": "Galería Nacional de Escocia",
+      "categoria": "patrimonio",
+      "zona": "The Mound",
+      "coords": [
+        55.95088,
+        -3.19561
+      ],
+      "resumen": "Gratis, a cubierto, y con el ciervo más famoso de Escocia colgado en la pared.",
+      "descripcion": "La pinacoteca de Escocia, ahora llamada **The National**, en un templo griego al pie del castillo. Tiene Velázquez, Rembrandt, Monet y Van Gogh, pero lo que no se ve en otro sitio son las **salas escocesas**: retratos, paisajes de las Highlands y escenas de la vida de aquí.\n\nLa entrada es gratis. Con lluvia, es el plan perfecto de primera hora de la tarde.",
+      "duracionMin": 75,
+      "horarios": {
+        "lun": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "mar": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "mie": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "jue": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "vie": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sab": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "dom": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "2.004.777 visitas en 2025, su récord",
+        "fuente": "ALVA, cifras de 2025 (publicadas en marzo de 2026)"
+      },
+      "queMirar": [
+        {
+          "que": "«El monarca de la cañada», de Landseer",
+          "porque": "Un ciervo enorme sobre un fondo de montañas. Es la imagen de Escocia que sale en latas de galletas y etiquetas de whisky."
+        },
+        {
+          "que": "«El reverendo patinando», de Raeburn",
+          "porque": "Un pastor vestido de negro patinando sobre un lago helado, muy serio. Es el cuadro favorito de la ciudad."
+        },
+        {
+          "que": "La vista desde la puerta de las salas escocesas",
+          "porque": "Dan a los jardines de Princes Street, con el castillo encima."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/galeria-nacional.jpg",
+        "credito": "Maciek Szczepaniak",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Scottish_National_Gallery.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "nationalgalleries.org (abre todos los días de 10:00 a 17:00, gratis)"
+      }
+    },
+    {
+      "id": "scott-monument",
+      "nombre": "Monumento a Walter Scott",
+      "categoria": "patrimonio",
+      "zona": "Princes Street",
+      "coords": [
+        55.95236,
+        -3.19326
+      ],
+      "resumen": "Una aguja gótica de 61 metros, negra de hollín, levantada a un novelista.",
+      "descripcion": "Parece la torre de una catedral sin catedral. La ciudad la levantó en la década de 1840 en honor de **Walter Scott**, el autor de *Ivanhoe*, que está sentado abajo, en mármol blanco, con su perro a los pies.\n\nEl plan la ve por fuera. Se puede subir por dentro, pero son 287 escalones de caracol muy estrechos.",
+      "duracionMin": 15,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: está de camino; la subida no compensa al ritmo elegido"
+      },
+      "curiosidades": [
+        {
+          "titulo": "La estación se llama como un libro",
+          "texto": "La estación de tren de al lado, Waverley, se llama así por una novela de Scott. Es de las pocas estaciones del mundo con nombre de novela."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/scott-monument.jpg",
+        "credito": "No se ha podido leer automáticamente información sobre el autor; se as",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Schottland-Edinburgh-Sir_Walter_Scott_Monument.JPG"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "OpenStreetMap (man_made=tower)"
+      }
+    },
+    {
+      "id": "calton-hill",
+      "nombre": "Calton Hill",
+      "categoria": "naturaleza",
+      "zona": "Calton Hill",
+      "coords": [
+        55.95556,
+        -3.18226
+      ],
+      "resumen": "La colina de las columnas griegas, para ver ponerse el sol detrás del castillo.",
+      "descripcion": "Una colina en pleno centro, con una subida corta por escaleras o por la cuesta de Regent Road, y arriba la mejor vista de Edimburgo: el castillo, la Royal Mile bajando, Arthur's Seat y el mar al norte.\n\nArriba hay monumentos sueltos que le dan un aire de Atenas, y por eso a Edimburgo la llamaban «la Atenas del norte».\n\nEl martes el sol se pone a las 17:59, y desde aquí se pone por el lado del castillo.",
+      "duracionMin": 60,
+      "nivel": "obligatorio",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: el mirador más accesible de la ciudad, gratis"
+      },
+      "queMirar": [
+        {
+          "que": "El monumento a Dugald Stewart, con la ciudad detrás",
+          "porque": "Es el templete redondo de la foto más famosa de Edimburgo: desde ahí sale el castillo y la torre del hotel Balmoral en el mismo encuadre."
+        },
+        {
+          "que": "El Monumento Nacional, el «Partenón» a medias",
+          "porque": "Doce columnas y nada más. Se empezó en 1826 y se acabó el dinero."
+        },
+        {
+          "que": "La bola del Nelson Monument",
+          "porque": "Encima de la torre hay una bola que baja a las 13:00 en punto, para que los barcos del puerto pusieran en hora los relojes."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "La vergüenza de Edimburgo",
+          "texto": "Al Monumento Nacional sin terminar lo llamaron durante años «la vergüenza de Edimburgo». Con el tiempo se le cogió cariño y se quedó así."
+        }
+      ],
+      "consejos": [
+        "Arriba sopla siempre más que abajo: llevar una capa de más.",
+        "Si el martes llueve, cambiarlo al viernes por la tarde, que sale seco."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/calton-hill.jpg",
+        "credito": "N Chadwick",
+        "licencia": "CC BY-SA 2.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Dugald%20Stewart%20Monument%2C%20Calton%20Hill%20-%20geograph.org.uk%20-%202396596.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "OpenStreetMap (natural=peak); puesta de sol de Open-Meteo"
+      }
+    },
+    {
+      "id": "castillo",
+      "nombre": "Castillo de Edimburgo",
+      "categoria": "patrimonio",
+      "zona": "Ciudad Vieja",
+      "coords": [
+        55.94869,
+        -3.20042
+      ],
+      "resumen": "Una fortaleza encima de un volcán apagado, con las joyas de la corona escocesa dentro.",
+      "descripcion": "La roca sobre la que está es lo que queda de un volcán, y por eso el castillo se ve desde casi cualquier calle. Dentro hay mil años de historia de Escocia unos encima de otros: una capilla del siglo XII, el palacio donde nació el rey que unió Escocia e Inglaterra, cañones, cárceles y cuarteles.\n\nLo imprescindible son las **Honours of Scotland**, la corona, el cetro y la espada de los reyes de Escocia, las joyas de la corona más antiguas de las islas británicas. Hay que contar con dos horas y media.",
+      "duracionMin": 150,
+      "horarios": {
+        "lun": [
+          [
+            "09:30",
+            "17:00"
+          ]
+        ],
+        "mar": [
+          [
+            "09:30",
+            "17:00"
+          ]
+        ],
+        "mie": [
+          [
+            "09:30",
+            "17:00"
+          ]
+        ],
+        "jue": [
+          [
+            "09:30",
+            "17:00"
+          ]
+        ],
+        "vie": [
+          [
+            "09:30",
+            "17:00"
+          ]
+        ],
+        "sab": [
+          [
+            "09:30",
+            "17:00"
+          ]
+        ],
+        "dom": [
+          [
+            "09:30",
+            "17:00"
+          ]
+        ]
+      },
+      "precio": {
+        "importe": 23.5,
+        "detalle": "Por internet; 26 £ en taquilla. Mayores de 65: 19 £ por internet"
+      },
+      "reserva": {
+        "necesaria": true,
+        "nota": "Con hora de entrada, en edinburghcastle.scot. Si se agotan en la web, no venden en la puerta."
+      },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "puesto": "N.º 1 de pago en Escocia: 2.044.963 visitas en 2025",
+        "fuente": "ALVA, cifras de 2025 (publicadas en marzo de 2026)"
+      },
+      "queMirar": [
+        {
+          "que": "Las Honours of Scotland",
+          "porque": "La corona tiene oro escocés de verdad, sacado de las minas del país en el siglo XVI. Se forma cola, así que mejor ir nada más entrar."
+        },
+        {
+          "que": "La capilla de Santa Margarita",
+          "porque": "Es el edificio más antiguo de Edimburgo, de hacia 1130, y es diminuta."
+        },
+        {
+          "que": "Mons Meg",
+          "porque": "Un cañón del siglo XV que disparaba bolas de piedra de casi 180 kilos a unos tres kilómetros."
+        },
+        {
+          "que": "La vista desde la muralla norte, en la Argyle Battery",
+          "porque": "Se ve la Ciudad Nueva en cuadrícula, el puerto de Leith y el mar."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "El cañonazo de la una",
+          "texto": "Desde 1861, todos los días menos el domingo se dispara un cañón a las 13:00 en punto. Servía para que los barcos pusieran en hora los relojes. Si se oye un estruendo comiendo por el centro, es eso."
+        },
+        {
+          "titulo": "La piedra que ya no está",
+          "texto": "La Piedra del Destino, sobre la que se coronaba a los reyes escoceses, estuvo aquí desde 1996. En 2024 se la llevaron al nuevo museo de Perth, así que en el castillo ya no está."
+        }
+      ],
+      "consejos": [
+        "Hay audioguía en español por unas pocas libras más; merece la pena.",
+        "La subida desde Haymarket son unos 25 minutos con la cuesta final de la explanada. Si apetece ahorrarla, un taxi cuesta unas 10 £."
+      ],
+      "enlaces": [
+        {
+          "texto": "Entradas y horarios",
+          "url": "https://www.historicenvironment.scot/visit-a-place/places/edinburgh-castle/prices-and-times/"
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/castillo.jpg",
+        "credito": "Godot13",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Scotland-2016-Aerial-Edinburgh_Castle_(cropped).jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "historicenvironment.scot (precios y horario de octubre) y edinburghcastle.scot"
+      }
+    },
+    {
+      "id": "victoria-street",
+      "nombre": "Victoria Street",
+      "categoria": "patrimonio",
+      "zona": "Ciudad Vieja",
+      "coords": [
+        55.94865,
+        -3.19377
+      ],
+      "resumen": "La calle curva de fachadas de colores que, dicen, inspiró el callejón Diagon.",
+      "descripcion": "Baja en curva desde George IV Bridge hasta el Grassmarket, con las tiendas pintadas de rojo, azul y amarillo y una terraza corrida por encima. Se dice que J. K. Rowling se inspiró en ella para el **callejón Diagon**, y las tiendas de Harry Potter de la calle se encargan de que nadie lo olvide.\n\nSe baja despacio, entrando en las tiendas, y se come al final.",
+      "duracionMin": 30,
+      "nivel": "obligatorio",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: Harry Potter, gratis y de paso"
+      },
+      "queMirar": [
+        {
+          "que": "La calle entera desde la terraza de arriba",
+          "porque": "Se sube por las escaleras del lado norte; desde ahí se ve la curva completa con los colores."
+        },
+        {
+          "que": "Las tiendas de Harry Potter",
+          "porque": "Varitas, bufandas de las casas y caramelos de la saga; aunque no se compre nada, son un museo pequeño."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/victoria-street.jpg",
+        "credito": "Iain Lees",
+        "licencia": "CC BY-SA 2.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:The%20colourful%20Victoria%20Street%20in%20Edinburgh%20-%20geograph.org.uk%20-%208247813.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "OpenStreetMap"
+      }
+    },
+    {
+      "id": "oink",
+      "nombre": "Oink",
+      "categoria": "comida",
+      "zona": "Ciudad Vieja",
+      "coords": [
+        55.94859,
+        -3.19425
+      ],
+      "resumen": "Un cerdo asado entero en el escaparate y bocadillos de su carne con chicharrón.",
+      "descripcion": "Tienen un cerdo asado entero en el escaparate y lo van desmigando a cuchillo. El bocadillo lleva la carne, salsa de manzana o de mostaza y, si se pide, **haggis** por encima, que es la forma más fácil de probarlo por primera vez.\n\nSe come de pie o en un par de taburetes. Sale barato y se come rápido.",
+      "duracionMin": 35,
+      "horarios": {
+        "lun": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "mar": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "mie": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "jue": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "vie": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sab": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "dom": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ]
+      },
+      "precio": {
+        "importe": 8,
+        "detalle": "Unas 6-10 £ el bocadillo, según el tamaño (estimación)"
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: comida barata y escocesa en mitad de la ruta"
+      },
+      "consejos": [
+        "Cierran cuando se acaba el cerdo, a veces antes de las 15:00: por eso va a la hora de comer y no más tarde.",
+        "El crackling, la piel crujiente, se pide aparte."
+      ],
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "SquareMeal y edinburgh247 (de 11:00 a 17:00 todos los días, o hasta que se acaba) y OpenStreetMap"
+      }
+    },
+    {
+      "id": "marys-milk-bar",
+      "nombre": "Mary's Milk Bar",
+      "categoria": "comida",
+      "zona": "Grassmarket",
+      "coords": [
+        55.94684,
+        -3.19739
+      ],
+      "resumen": "Helado artesano en el Grassmarket, con el castillo justo encima.",
+      "descripcion": "Una heladería diminuta que hace los sabores cada día, y alguno tan de aquí que hay que preguntar qué lleva. Está en el **Grassmarket**, la plaza larga donde se hacía el mercado de ganado y, hasta 1784, las ejecuciones.\n\nCon frío también apetece: se come mirando la roca del castillo.",
+      "duracionMin": 25,
+      "horarios": {
+        "mie": [
+          [
+            "11:00",
+            "19:30"
+          ]
+        ],
+        "jue": [
+          [
+            "11:00",
+            "19:30"
+          ]
+        ],
+        "vie": [
+          [
+            "11:00",
+            "19:30"
+          ]
+        ],
+        "sab": [
+          [
+            "11:00",
+            "19:30"
+          ]
+        ],
+        "dom": [
+          [
+            "11:00",
+            "19:30"
+          ]
+        ]
+      },
+      "precio": {
+        "importe": 5,
+        "detalle": "Unas 4-6 £ el helado (estimación)"
+      },
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: el postre de la comida de pie"
+      },
+      "consejos": [
+        "Abre de miércoles a domingo: el miércoles 21 está abierto. El horario sale de una guía sin fecha, así que conviene mirar su Instagram."
+      ],
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "Champagne Tastes (horario de febrero a diciembre, sin fecha) y OpenStreetMap"
+      }
+    },
+    {
+      "id": "greyfriars",
+      "nombre": "Cementerio de Greyfriars",
+      "categoria": "patrimonio",
+      "zona": "Ciudad Vieja",
+      "coords": [
+        55.94683,
+        -3.19289
+      ],
+      "resumen": "El cementerio donde está enterrado un tal Thomas Riddell, y donde un perro esperó catorce años.",
+      "descripcion": "Un cementerio del siglo XVI de lápidas negras y musgo, en plena Ciudad Vieja. Es famoso por dos cosas. Una es **Greyfriars Bobby**, el perrito que, según la historia, pasó catorce años junto a la tumba de su amo. La otra, las lápidas cuyos nombres acabaron en Harry Potter, empezando por la de **Thomas Riddell**.\n\nLa entrada es gratis y abre de día.",
+      "duracionMin": 40,
+      "nivel": "obligatorio",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: Harry Potter e historia, gratis"
+      },
+      "queMirar": [
+        {
+          "que": "La tumba de Thomas Riddell",
+          "porque": "Un militar muerto en 1806. Con una letra de diferencia, es el nombre real de Voldemort, y la gente le deja notas."
+        },
+        {
+          "que": "La lápida de Bobby, en la entrada",
+          "porque": "Siempre tiene palos encima: la gente le deja ramitas, como para que juegue."
+        },
+        {
+          "que": "El colegio George Heriot's, por encima de la tapia sur",
+          "porque": "Torres y torrecillas de un colegio del siglo XVII. Mucha gente lo señala como el modelo de Hogwarts."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Otro nombre conocido",
+          "texto": "Aquí también está enterrado William McGonagall, al que muchos consideran el peor poeta de la historia. Su apellido es el de la profesora de Gryffindor."
+        },
+        {
+          "titulo": "No le toquéis la nariz",
+          "texto": "La estatua de Bobby, a la salida, tiene la nariz dorada de tanto frotarla para que dé suerte. El ayuntamiento pide que no se haga, porque la está desgastando."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/greyfriars.jpg",
+        "credito": "Aneza Palaiou",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Greyfriars%20Kirkyard%20gravestones%20and%20historic%20building%20Edinburgh.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "everythingedinburgh.com y edinburgh.org; horario de día sin cifra oficial"
+      }
+    },
+    {
+      "id": "elephant-house",
+      "nombre": "The Elephant House",
+      "categoria": "comida",
+      "zona": "Ciudad Vieja",
+      "coords": [
+        55.94757,
+        -3.19179
+      ],
+      "resumen": "El café donde Rowling escribió parte de Harry Potter, reabierto en 2026 tras cuatro años quemado.",
+      "descripcion": "Un incendio lo cerró en agosto de 2021 y volvió a abrir a principios de 2026, después de una reforma de unas 500.000 £. En la ventana sigue el cartel de «lugar de nacimiento de Harry Potter»: J. K. Rowling escribió aquí parte de los primeros libros, con el castillo en la ventana del fondo.\n\nEl plan lo deja como parada para verlo por fuera, o para un café si no hay cola.",
+      "duracionMin": 15,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: Harry Potter, aunque hoy es sobre todo un café con cola"
+      },
+      "consejos": [
+        "No confundirlo con el Elephant House de Victoria Street, abierto en 2024: es otro local, temático."
+      ],
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "STV News y Scottish Business News (reapertura en enero de 2026) y OpenStreetMap"
+      }
+    },
+    {
+      "id": "museo-nacional",
+      "nombre": "Museo Nacional de Escocia",
+      "categoria": "patrimonio",
+      "zona": "Ciudad Vieja",
+      "coords": [
+        55.94707,
+        -3.18934
+      ],
+      "resumen": "Gratis, inmenso, con la oveja Dolly dentro y una azotea con el castillo de frente.",
+      "descripcion": "Es el museo gratis más visitado de Escocia. Dentro cabe de todo, de los reyes pictos a la oveja Dolly, y el edificio victoriano de la entrada, un patio de hierro blanco y cristal, ya vale la visita.\n\nNo hay que verlo entero: con el patio, las salas de historia de Escocia y la azotea, sobra para dos horas.",
+      "duracionMin": 105,
+      "horarios": {
+        "lun": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "mar": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "mie": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "jue": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "vie": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sab": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "dom": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ]
+      },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "puesto": "N.º 1 gratuito de Escocia: 2.318.305 visitas en 2025",
+        "fuente": "ALVA, cifras de 2025 (publicadas en marzo de 2026)"
+      },
+      "queMirar": [
+        {
+          "que": "La Grand Gallery, nada más entrar",
+          "porque": "Tres pisos de galerías de hierro blanco y un techo de cristal: parece un invernadero victoriano lleno de vitrinas."
+        },
+        {
+          "que": "La oveja Dolly",
+          "porque": "El primer mamífero clonado, de 1996. Está disecada, en una vitrina."
+        },
+        {
+          "que": "Las piezas de ajedrez de Lewis",
+          "porque": "Reyes y alfiles vikingos de marfil del siglo XII, con cara de aburrimiento infinito. Son los mismos de la primera película de Harry Potter."
+        },
+        {
+          "que": "La terraza de la azotea",
+          "porque": "Se sube en ascensor, es gratis y tiene el castillo de frente."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/museo-nacional.jpg",
+        "credito": "No se ha podido leer automáticamente información sobre el autor; se as",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Museum_of_Scotland.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "nms.ac.uk (abre todos los días de 10:00 a 17:00, gratis)"
+      }
+    },
+    {
+      "id": "st-giles",
+      "nombre": "Catedral de San Giles",
+      "categoria": "patrimonio",
+      "zona": "Royal Mile",
+      "coords": [
+        55.94948,
+        -3.19085
+      ],
+      "resumen": "La catedral de la Royal Mile, con una torre en forma de corona y un corazón en el suelo al que se escupe.",
+      "descripcion": "La iglesia principal de Edimburgo desde hace casi 900 años, y la de John Knox, el reformador que cambió la religión de Escocia. La torre acaba en una **corona de piedra** que se reconoce desde toda la ciudad.\n\nDesde el 5 de octubre de 2026 cobra 12 £ a quien no vive en Escocia. El plan la ve por fuera y deja dentro como opción: lo mejor del interior es la **capilla del Cardo**, toda de madera tallada.",
+      "duracionMin": 30,
+      "horarios": {
+        "lun": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "mar": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "mie": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "jue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "vie": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sab": [
+          [
+            "09:00",
+            "17:00"
+          ]
+        ],
+        "dom": [
+          [
+            "13:00",
+            "17:00"
+          ]
+        ]
+      },
+      "precio": {
+        "importe": 12,
+        "detalle": "Visitantes de fuera de Escocia, desde el 5 de octubre de 2026. Por fuera, gratis"
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: historia, pero desde octubre cuesta 12 £ y el presupuesto es ajustado"
+      },
+      "queMirar": [
+        {
+          "que": "El corazón de Midlothian, en el adoquinado de la calle",
+          "porque": "Un corazón de piedras incrustado en el suelo, junto a la puerta oeste, donde estaba la cárcel. Los de aquí escupen encima, por tradición."
+        },
+        {
+          "que": "La corona de la torre",
+          "porque": "Se ve mejor desde unos metros calle abajo, mirando hacia atrás."
+        },
+        {
+          "que": "En la capilla del Cardo, el ángel de la gaita",
+          "porque": "Entre las tallas del techo hay un ángel tocando la gaita. Hay que buscarlo."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/st-giles.jpg",
+        "credito": "Christopher Steinle",
+        "licencia": "CC BY 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:St._Giles_Cathedral_-_panoramio.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "stgilescathedral.org.uk (horario) y Edinburgh Evening News (entrada desde el 5 de octubre de 2026)"
+      }
+    },
+    {
+      "id": "berties",
+      "nombre": "Bertie's",
+      "categoria": "comida",
+      "zona": "Ciudad Vieja",
+      "coords": [
+        55.94854,
+        -3.19364
+      ],
+      "resumen": "Pescado frito con patatas como se hace aquí, con eglefino, y para comer en mesa.",
+      "descripcion": "En Escocia el **fish and chips** se hace con **eglefino** (haddock), un pescado blanco más sabroso que el bacalao, rebozado en una masa fina que cruje. Bertie's lo sirve en mesa, en Victoria Street, y sale el primero en varias listas de los mejores de la ciudad.\n\nEs la cena del día largo: está a cinco minutos de San Giles y todo cuesta abajo.",
+      "duracionMin": 70,
+      "horarios": {
+        "lun": [
+          [
+            "17:00",
+            "22:00"
+          ]
+        ],
+        "mar": [
+          [
+            "17:00",
+            "22:00"
+          ]
+        ],
+        "mie": [
+          [
+            "17:00",
+            "22:00"
+          ]
+        ],
+        "jue": [
+          [
+            "17:00",
+            "22:00"
+          ]
+        ],
+        "vie": [
+          [
+            "12:00",
+            "22:00"
+          ]
+        ],
+        "sab": [
+          [
+            "12:00",
+            "22:00"
+          ]
+        ],
+        "dom": [
+          [
+            "12:00",
+            "22:00"
+          ]
+        ]
+      },
+      "precio": {
+        "importe": 18,
+        "detalle": "Unas 15-22 £ el plato de pescado con patatas"
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Primero en la lista de fish and chips de Edimburgo por reseñas de TripAdvisor",
+        "fuente": "Edinburgh Tourism, guía de 2026, y Midlothian Advertiser"
+      },
+      "consejos": [
+        "Pedir «mushy peas», el puré de guisantes, que es el acompañamiento de siempre.",
+        "Los horarios vienen de una guía de 2021: conviene mirar Google Maps antes de ir."
+      ],
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "Harden's (horario de 2021), edinburghtourism.org (precios de 2026) y OpenStreetMap"
+      }
+    },
+    {
+      "id": "estacion-autobuses",
+      "nombre": "Estación de autobuses de Edimburgo",
+      "categoria": "transporte",
+      "zona": "Ciudad Nueva",
+      "coords": [
+        55.95538,
+        -3.19168
+      ],
+      "resumen": "De aquí sale el autocar a las Highlands el jueves a las 7:45.",
+      "descripcion": "Está detrás de St Andrew Square, a dos minutos de la parada de tranvía del mismo nombre. Es el punto de salida de las excursiones de **Rabbie's**. Otras empresas salen de otros sitios de la ciudad: el punto exacto viene en la reserva.",
+      "duracionMin": 10,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "No es un destino",
+        "fuente": "Es un punto de paso"
+      },
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/estacion-autobuses.jpg",
+        "credito": "Kim Traynor",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Edinburgh%20Bus%20Station.JPG"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "Fichas de la excursión de Rabbie's en Expedia y Travelocity, y OpenStreetMap"
+      }
+    },
+    {
+      "id": "glencoe",
+      "nombre": "Glencoe",
+      "categoria": "naturaleza",
+      "zona": "Highlands",
+      "coords": [
+        56.66121,
+        -4.99586
+      ],
+      "resumen": "El valle de las Tres Hermanas, tres moles de roca que caen casi sobre la carretera.",
+      "descripcion": "Después de cruzar el páramo de **Rannoch**, una llanura de turba y lagunas sin un árbol, la carretera se mete entre montañas y aparece Glencoe. Las **Tres Hermanas** son los tres contrafuertes de roca que bajan casi hasta el asfalto.\n\nEs también un valle con historia triste: en 1692, soldados del Gobierno mataron aquí a una treintena de MacDonald que les habían dado cobijo.",
+      "duracionMin": 45,
+      "nivel": "obligatorio",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: el paisaje que da sentido a la excursión"
+      },
+      "queMirar": [
+        {
+          "que": "Las Tres Hermanas desde el aparcamiento del mirador",
+          "porque": "Es la vista de las postales; con nubes bajas, mejor todavía."
+        },
+        {
+          "que": "El páramo de Rannoch, por la ventanilla, antes de llegar",
+          "porque": "Se cruza durante un buen rato sin ver una casa."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Aquí vivía Hagrid",
+          "texto": "En «El prisionero de Azkaban» la cabaña de Hagrid se construyó en Glencoe. Ya no está, pero el paisaje de detrás es este."
+        },
+        {
+          "titulo": "Y pasó James Bond",
+          "texto": "En «Skyfall», Bond y M paran el coche en la carretera de Glencoe para mirar el valle. Es la misma carretera por la que va el autocar."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/glencoe.jpg",
+        "credito": "Wojsyl",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Scotland_Glencoe.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "OpenStreetMap (The Three Sisters, place=locality)"
+      }
+    },
+    {
+      "id": "fort-augustus",
+      "nombre": "Fort Augustus y el lago Ness",
+      "categoria": "naturaleza",
+      "zona": "Lago Ness",
+      "coords": [
+        57.14478,
+        -4.68142
+      ],
+      "resumen": "El pueblo de esclusas en la punta sur del lago Ness, donde se come y se sale en barco.",
+      "descripcion": "Un pueblo pequeño en el extremo sur del lago, cruzado por el **canal de Caledonia**: una escalera de cinco esclusas por la que los barcos suben y bajan en mitad del pueblo.\n\nAquí se para a comer y, si se quiere, se hace el **crucero por el lago**, que en casi todas las excursiones se paga aparte. El lago es largo, estrecho y oscuro como el té, por la turba del agua.",
+      "duracionMin": 90,
+      "nivel": "obligatorio",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: es el lago Ness"
+      },
+      "queMirar": [
+        {
+          "que": "Las esclusas, si pasa un barco",
+          "porque": "Ver subir un velero esclusa a esclusa, en plena calle, es de lo más bonito de la parada."
+        },
+        {
+          "que": "El agua del lago de cerca",
+          "porque": "Desde el embarcadero se ve el color marrón oscuro; a un metro de profundidad ya no se ve nada."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "Más agua que toda Inglaterra",
+          "texto": "El lago Ness tiene más agua dulce que todos los lagos de Inglaterra y Gales juntos. Llega a unos 230 metros de fondo, y ahí cabe mucho monstruo."
+        }
+      ],
+      "consejos": [
+        "El crucero cuesta aparte, normalmente una veintena de libras; se decide en la reserva o allí mismo, según la empresa.",
+        "Aquí arriba hace tres o cuatro grados menos que en Edimburgo: gorro y guantes."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/fort-augustus.jpg",
+        "credito": "Chris Downer",
+        "licencia": "CC BY-SA 2.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Fort%20Augustus%2C%20locks%20on%20the%20Caledonian%20Canal%20-%20geograph.org.uk%20-%203399551.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "OpenStreetMap (place=village); previsión de Open-Meteo para el 22 de octubre"
+      }
+    },
+    {
+      "id": "holyrood",
+      "nombre": "Palacio de Holyrood",
+      "categoria": "patrimonio",
+      "zona": "Holyrood",
+      "coords": [
+        55.95269,
+        -3.17161
+      ],
+      "resumen": "El palacio de los reyes en Escocia, con la habitación de María Estuardo y la cena en la que mataron a su secretario.",
+      "descripcion": "Es la residencia oficial del rey cuando está en Escocia, al pie de la Royal Mile, con Arthur's Seat detrás. Se visita con audioguía, también en español, incluida en la entrada.\n\nLo que se viene a ver es el ala de **María Estuardo**: sus habitaciones, por una escalera de caracol, y la salita donde en 1566 apuñalaron delante de ella a su secretario, **David Rizzio**, mientras cenaban.",
+      "duracionMin": 120,
+      "horarios": {
+        "lun": [
+          [
+            "09:30",
+            "18:00"
+          ]
+        ],
+        "jue": [
+          [
+            "09:30",
+            "18:00"
+          ]
+        ],
+        "vie": [
+          [
+            "09:30",
+            "18:00"
+          ]
+        ],
+        "sab": [
+          [
+            "09:30",
+            "18:00"
+          ]
+        ],
+        "dom": [
+          [
+            "09:30",
+            "18:00"
+          ]
+        ]
+      },
+      "precio": {
+        "importe": 22,
+        "detalle": "Adulto por internet; en taquilla, más. Audioguía incluida"
+      },
+      "reserva": {
+        "necesaria": false,
+        "nota": "No suele agotarse en octubre, pero por internet sale más barata (rct.uk)."
+      },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: es el otro gran edificio histórico de la ciudad, y lo pidieron"
+      },
+      "queMirar": [
+        {
+          "que": "Las habitaciones de María Estuardo, en la torre",
+          "porque": "Techos de madera pintada y la escalera estrecha por la que subieron los asesinos de Rizzio."
+        },
+        {
+          "que": "La Gran Galería",
+          "porque": "Ochenta y nueve retratos de reyes de Escocia pintados en dos años por el mismo pintor. Muchos de esos reyes no existieron, y se nota que se parecen bastante entre sí."
+        }
+      ],
+      "consejos": [
+        "La última entrada es a las 16:30.",
+        "Una guía avisaba de que la abadía y los jardines podían estar cerrados; lo dice la taquilla."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/holyrood.jpg",
+        "credito": "XtoF",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Holyroodhouse%2C%20front%20view.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "Horario de la Royal Collection según Golden Tours y Prioticket (de jueves a lunes del 10 o el 17 de septiembre al 31 de octubre); precio de thebettervacation.com. La web oficial devolvió 403"
+      }
+    },
+    {
+      "id": "st-anthony",
+      "nombre": "Capilla de San Antonio",
+      "categoria": "naturaleza",
+      "zona": "Holyrood Park",
+      "coords": [
+        55.95094,
+        -3.16143
+      ],
+      "resumen": "Las ruinas de una capilla en la ladera de Arthur's Seat, con un lago y cisnes a sus pies.",
+      "descripcion": "Desde el palacio se cruza el parque hasta el lago de **St Margaret** y se sube una cuesta corta de hierba hasta los muros de una capilla del siglo XV. Son diez minutos de subida, y la vista ya merece la pena: el palacio, el Parlamento y la Ciudad Vieja trepando hacia el castillo.",
+      "duracionMin": 40,
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: miradores, al ritmo elegido"
+      },
+      "consejos": [
+        "Con lluvia la hierba resbala: mejor el sendero de tierra del lateral."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/st-anthony.jpg",
+        "credito": "Johnson twj",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:St%20Anthony's%20Chapel%2C%20Holyrood%20Park%2C%20Edinburgh.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "OpenStreetMap (tourism=attraction)"
+      }
+    },
+    {
+      "id": "arthurs-seat",
+      "nombre": "Arthur's Seat",
+      "categoria": "naturaleza",
+      "zona": "Holyrood Park",
+      "coords": [
+        55.94407,
+        -3.1616
+      ],
+      "resumen": "Un volcán apagado en mitad de la ciudad, con la mejor vista de Edimburgo desde 251 metros.",
+      "descripcion": "La cima de la montaña que se ve desde toda la ciudad. Desde la capilla de San Antonio son unos 45 minutos más de cuesta, y el último tramo es de roca y piedra suelta.\n\nAl ritmo que se eligió, es **opcional**: solo si hace bueno, hay piernas y apetece. Arriba se ve la ciudad entera, el mar y, en un día claro, las montañas del norte.",
+      "duracionMin": 75,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: miradores, pero la subida es de esfuerzo alto para un ritmo medio"
+      },
+      "consejos": [
+        "Con viento fuerte o niebla, mejor no: en la cima no hay nada que pare el aire.",
+        "Hace falta calzado con suela de verdad."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/arthurs-seat.jpg",
+        "credito": "No se ha podido leer automáticamente información sobre el autor; se as",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Salisbury_Crags_and_Arthur's_Seat_in_Edinburgh.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "OpenStreetMap (natural=peak)"
+      }
+    },
+    {
+      "id": "museo-edimburgo",
+      "nombre": "Museo de Edimburgo",
+      "categoria": "patrimonio",
+      "zona": "Canongate",
+      "coords": [
+        55.95121,
+        -3.1795
+      ],
+      "resumen": "Una casa del siglo XVI en el Canongate donde se guardan el collar y el cuenco de Bobby.",
+      "descripcion": "Un museo pequeño y gratis sobre la historia de la ciudad, metido en una casa de colores ocre del Canongate, la parte baja de la Royal Mile. Se ve en media hora larga.\n\nEs el remate de la historia de Greyfriars Bobby: aquí están **su collar y su cuenco**. Y también un original del **Pacto Nacional de 1638**, firmado por miles de escoceses, algunos con su sangre, según se dice.",
+      "duracionMin": 45,
+      "horarios": {
+        "lun": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "mar": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "mie": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "jue": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "vie": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sab": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: historia, gratis y de camino"
+      },
+      "queMirar": [
+        {
+          "que": "El collar de Bobby",
+          "porque": "Está en una vitrina pequeña de la planta baja, con la licencia que le pagó el alcalde para que no lo sacrificaran."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/museo-edimburgo.jpg",
+        "credito": "Stewart Lamb Cromar",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Museum%20of%20Edinburgh%20(formerly%20Huntly%20House%20Museum).jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "edinburgh.gov.uk, ficha del Museum of Edinburgh (de lunes a sábado, de 10:00 a 17:00, gratis)"
+      }
+    },
+    {
+      "id": "makars",
+      "nombre": "Makars Mash Bar",
+      "categoria": "comida",
+      "zona": "Ciudad Vieja",
+      "coords": [
+        55.94992,
+        -3.1931
+      ],
+      "resumen": "Puré de patata con todo lo que lleve encima, y el haggis de verdad con nabo y patata.",
+      "descripcion": "Un restaurante escocés sencillo, a un paso de la Royal Mile, que gira entero alrededor del puré de patata: se elige el puré y lo que va encima, desde guisos a salchichas de jabalí. Aquí está el **haggis, neeps and tatties**, el plato nacional: haggis con puré de nabo y de patata.\n\nEl haggis es picadillo de cordero con avena y especias. Suena peor de lo que sabe, que es bastante bien.",
+      "duracionMin": 75,
+      "horarios": {
+        "lun": [
+          [
+            "12:00",
+            "20:00"
+          ]
+        ],
+        "mar": [
+          [
+            "12:00",
+            "20:00"
+          ]
+        ],
+        "mie": [
+          [
+            "12:00",
+            "20:00"
+          ]
+        ],
+        "jue": [
+          [
+            "12:00",
+            "20:00"
+          ]
+        ],
+        "vie": [
+          [
+            "12:00",
+            "21:00"
+          ]
+        ],
+        "sab": [
+          [
+            "12:00",
+            "21:00"
+          ]
+        ],
+        "dom": [
+          [
+            "12:00",
+            "19:30"
+          ]
+        ]
+      },
+      "precio": {
+        "importe": 18,
+        "detalle": "Unas 14-20 £ por plato (estimación)"
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra de reseñas",
+        "fuente": "Criterio: comida escocesa a buen precio"
+      },
+      "queMirar": [
+        {
+          "que": "La degustación de haggis",
+          "porque": "Una ración pequeña de haggis, nabo y patata, para probarlo sin jugarse la cena."
+        }
+      ],
+      "consejos": [
+        "Tiene otro local en Shandwick Place, a cinco minutos del hotel, por si apetece repetir.",
+        "Un viernes por la noche se llena: mejor reservar."
+      ],
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "ScotRail, ficha de Makars Gourmet Mash Bar, y OpenStreetMap"
+      }
+    },
+    {
+      "id": "jardin-botanico",
+      "nombre": "Real Jardín Botánico de Edimburgo",
+      "categoria": "naturaleza",
+      "zona": "Inverleith",
+      "coords": [
+        55.96529,
+        -3.20886
+      ],
+      "resumen": "Veintiocho hectáreas de árboles en pleno otoño, gratis, con el castillo asomando por encima.",
+      "descripcion": "Un jardín inmenso, fundado en 1670 como huerto de plantas medicinales, con árboles traídos de medio mundo. En la segunda quincena de octubre los arces y las hayas están en pleno cambio de color.\n\nLa entrada al jardín es gratis. Los invernaderos están en obras desde hace años; los dos de palmeras, los victorianos, tenían prevista la reapertura para el otoño de 2026, pero no estaba confirmada.",
+      "duracionMin": 105,
+      "horarios": {
+        "lun": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "mar": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "mie": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "jue": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "vie": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sab": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "dom": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "El sitio al aire libre más visitado de Escocia en 2024: 1.041.767 visitas",
+        "fuente": "ALVA, cifras de 2024; no hay cifra de 2025"
+      },
+      "queMirar": [
+        {
+          "que": "La vista del castillo desde el césped de la casa de Inverleith",
+          "porque": "Desde lo alto del jardín se ve la silueta entera de la Ciudad Vieja por encima de los árboles."
+        },
+        {
+          "que": "El jardín de rocas",
+          "porque": "Una ladera de piedras y arroyos con plantas de montaña de todo el mundo."
+        }
+      ],
+      "consejos": [
+        "Está a unos 2,5 km del hotel: taxi, unas 10 £, o autobús; para volver a las maletas sin agobios, mejor taxi.",
+        "La última entrada es a las 16:15, pero el plan solo usa la mañana."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/edimburgo-2026-10/fotos/jardin-botanico.jpg",
+        "credito": "Steve nova de Wikipedia en inglés.",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Palmhouse.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "rbge.org.uk (octubre, de 10:00 a 17:00; invernaderos cerrados por Edinburgh Biomes)"
+      }
+    }
+  ],
+  "dias": [
+    {
+      "fecha": "2026-10-19",
+      "titulo": "Birmingham, de los canales al balti",
+      "intensidad": "llegada",
+      "resumen": "Aterrizaje a las 11:00 y maletas en el hotel. Tarde por el centro: los canales, la biblioteca con sus terrazas (que cierran a las 15:00), la catedral de las vidrieras y el Bullring. Para cenar, un balti en el barrio donde se inventó, y a dormir pronto, que el martes se sale a las 6:00. La previsión da lluvia, y por eso casi todo está a cubierto.",
+      "bloques": [
+        {
+          "tipo": "hito",
+          "inicio": "11:00",
+          "titulo": "Aterrizaje en Birmingham",
+          "detalle": "Vuelo internacional: control de pasaportes y ETA. Con las maletas, fuera hacia las 11:45"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "11:45",
+          "fin": "12:25",
+          "modo": "tren",
+          "desde": "aeropuerto-bhx",
+          "hasta": "new-street",
+          "detalle": "Air-Rail Link gratis hasta Birmingham International y tren a New Street, 10-20 minutos. Unas 4-8 £ por persona. Si se prefiere, taxi directo al hotel: 25-40 £"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "12:25",
+          "fin": "12:45",
+          "modo": "tren",
+          "desde": "new-street",
+          "hasta": "hotel-birmingham",
+          "detalle": "Tranvía desde Grand Central hasta Brindleyplace, 2,50 £ con tarjeta sin contacto. Andando, unos 20 minutos"
+        },
+        {
+          "inicio": "12:45",
+          "fin": "13:00",
+          "lugar": "hotel-birmingham",
+          "nota": "Dejar las maletas en recepción: el check-in es a las 15:00."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "13:00",
+          "fin": "13:05",
+          "modo": "a-pie",
+          "desde": "hotel-birmingham",
+          "hasta": "brindleyplace",
+          "detalle": "200 m"
+        },
+        {
+          "inicio": "13:05",
+          "fin": "13:50",
+          "lugar": "brindleyplace",
+          "nota": "Comida junto al canal."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "13:50",
+          "fin": "13:55",
+          "modo": "a-pie",
+          "desde": "brindleyplace",
+          "hasta": "gas-street-basin",
+          "detalle": "300 m por la orilla del canal"
+        },
+        {
+          "inicio": "13:55",
+          "fin": "14:15",
+          "lugar": "gas-street-basin"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "14:15",
+          "fin": "14:25",
+          "modo": "a-pie",
+          "desde": "gas-street-basin",
+          "hasta": "biblioteca-birmingham",
+          "detalle": "400 m hasta Centenary Square"
+        },
+        {
+          "inicio": "14:25",
+          "fin": "15:15",
+          "lugar": "biblioteca-birmingham",
+          "nota": "Subir primero a las terrazas, que cierran a las 15:00, y bajar por la sala de Shakespeare."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "15:15",
+          "fin": "15:22",
+          "modo": "a-pie",
+          "desde": "biblioteca-birmingham",
+          "hasta": "victoria-square",
+          "detalle": "400 m"
+        },
+        {
+          "inicio": "15:22",
+          "fin": "15:37",
+          "lugar": "victoria-square",
+          "exterior": true,
+          "opcional": true
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "15:37",
+          "fin": "15:47",
+          "modo": "a-pie",
+          "desde": "victoria-square",
+          "hasta": "catedral-st-philip",
+          "detalle": "400 m por Colmore Row"
+        },
+        {
+          "inicio": "15:47",
+          "fin": "16:17",
+          "lugar": "catedral-st-philip"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "16:17",
+          "fin": "16:32",
+          "modo": "a-pie",
+          "desde": "catedral-st-philip",
+          "hasta": "bullring",
+          "detalle": "800 m, bajando por New Street"
+        },
+        {
+          "inicio": "16:32",
+          "fin": "17:27",
+          "lugar": "bullring",
+          "nota": "Bajar la escalinata hasta San Martín y mirar Selfridges desde abajo."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "17:27",
+          "fin": "17:50",
+          "modo": "tren",
+          "desde": "bullring",
+          "hasta": "hotel-birmingham",
+          "detalle": "Cinco minutos andando hasta Grand Central y tranvía a Brindleyplace"
+        },
+        {
+          "inicio": "17:50",
+          "fin": "18:30",
+          "lugar": "hotel-birmingham",
+          "nota": "Check-in y un rato de descanso. Y pedir ya el taxi del martes a las 6:00."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "18:30",
+          "fin": "18:50",
+          "modo": "taxi",
+          "desde": "hotel-birmingham",
+          "hasta": "adils",
+          "detalle": "4 km al sur, unos 15-20 minutos y 10-15 £"
+        },
+        {
+          "inicio": "18:50",
+          "fin": "20:10",
+          "lugar": "adils",
+          "nota": "Cena: un balti por persona y un naan grande para compartir."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "20:10",
+          "fin": "20:30",
+          "modo": "taxi",
+          "desde": "adils",
+          "hasta": "hotel-birmingham",
+          "detalle": "Unas 10-15 £"
+        },
+        {
+          "tipo": "hito",
+          "inicio": "21:30",
+          "titulo": "A dormir",
+          "detalle": "El martes suena el despertador a las 5:15"
+        }
+      ]
+    },
+    {
+      "fecha": "2026-10-20",
+      "titulo": "Vuelo a Edimburgo, Dean Village y Calton Hill",
+      "intensidad": "media",
+      "resumen": "Madrugón para el vuelo de las 7:50 y aterrizaje a las 9:00. Las maletas se quedan en el hotel y la mañana es de paseo llano: Dean Village, el río hasta Stockbridge y un brunch para recuperar. La galería nacional cubre la hora de lluvia, por la tarde se descansa en el hotel y el día se cierra con la puesta de sol en Calton Hill, a las 17:59.",
+      "bloques": [
+        {
+          "tipo": "hito",
+          "inicio": "05:15",
+          "titulo": "Despertador",
+          "detalle": "Con la factura del hotel pagada la víspera, se baja y se sale"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "06:00",
+          "fin": "06:35",
+          "modo": "taxi",
+          "desde": "hotel-birmingham",
+          "hasta": "aeropuerto-bhx",
+          "detalle": "Taxi o Uber pedido la víspera, unas 25-40 £. A esa hora no hay tráfico"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "07:50",
+          "fin": "09:00",
+          "modo": "avion",
+          "desde": "aeropuerto-bhx",
+          "hasta": "aeropuerto-edi",
+          "detalle": "Hora de salida aproximada: la buena es la del billete. Vuelo nacional, sin control de pasaportes al llegar"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "09:20",
+          "fin": "10:00",
+          "modo": "tren",
+          "desde": "aeropuerto-edi",
+          "hasta": "hotel-edimburgo",
+          "detalle": "Tranvía hasta Haymarket, 20-25 minutos, y cinco minutos andando. Ida y vuelta de aeropuerto: 9,50 £ por persona, comprada antes de subir"
+        },
+        {
+          "inicio": "10:00",
+          "fin": "10:20",
+          "lugar": "hotel-edimburgo",
+          "nota": "Dejar las maletas: el check-in es a las 15:00."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "10:20",
+          "fin": "10:35",
+          "modo": "a-pie",
+          "desde": "hotel-edimburgo",
+          "hasta": "dean-village",
+          "detalle": "1 km hasta Bell's Brae, con una bajada corta al final"
+        },
+        {
+          "inicio": "10:35",
+          "fin": "11:15",
+          "lugar": "dean-village"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "11:15",
+          "fin": "11:40",
+          "modo": "a-pie",
+          "desde": "dean-village",
+          "hasta": "pantry",
+          "detalle": "1,2 km llanos por el sendero del Water of Leith, río abajo, hasta Stockbridge"
+        },
+        {
+          "inicio": "11:40",
+          "fin": "12:40",
+          "lugar": "pantry",
+          "nota": "Brunch. Si hay cola, Stockbridge está lleno de cafés alrededor."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "12:40",
+          "fin": "12:45",
+          "modo": "a-pie",
+          "desde": "pantry",
+          "hasta": "circus-lane",
+          "detalle": "100 m"
+        },
+        {
+          "inicio": "12:45",
+          "fin": "13:00",
+          "lugar": "circus-lane"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "13:00",
+          "fin": "13:30",
+          "modo": "a-pie",
+          "desde": "circus-lane",
+          "hasta": "galeria-nacional",
+          "detalle": "1,5 km por la Ciudad Nueva, con la cuesta de Howe Street. También hay autobuses por Frederick Street"
+        },
+        {
+          "inicio": "13:30",
+          "fin": "14:40",
+          "lugar": "galeria-nacional"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "14:40",
+          "fin": "14:45",
+          "modo": "a-pie",
+          "desde": "galeria-nacional",
+          "hasta": "scott-monument",
+          "detalle": "300 m por los jardines de Princes Street"
+        },
+        {
+          "inicio": "14:45",
+          "fin": "15:00",
+          "lugar": "scott-monument",
+          "exterior": true,
+          "opcional": true
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "15:00",
+          "fin": "15:25",
+          "modo": "tren",
+          "desde": "scott-monument",
+          "hasta": "hotel-edimburgo",
+          "detalle": "Tranvía desde Princes Street hasta Haymarket, unos 10 minutos. Sencillo de ciudad: 2,40 £"
+        },
+        {
+          "inicio": "15:25",
+          "fin": "16:45",
+          "lugar": "hotel-edimburgo",
+          "nota": "Check-in y descanso, que el día empezó a las 5:15."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "16:45",
+          "fin": "17:15",
+          "modo": "tren",
+          "desde": "hotel-edimburgo",
+          "hasta": "calton-hill",
+          "detalle": "Tranvía hasta St Andrew Square y diez minutos andando por Waterloo Place, con las escaleras finales"
+        },
+        {
+          "inicio": "17:15",
+          "fin": "18:20",
+          "lugar": "calton-hill",
+          "nota": "La puesta de sol es a las 17:59. Si llueve, se cambia por el viernes."
+        },
+        {
+          "tipo": "hito",
+          "inicio": "18:30",
+          "titulo": "Cena por la Ciudad Nueva",
+          "detalle": "Alrededor de St Andrew Square y Rose Street hay de todo. Para volver, tranvía a Haymarket"
+        }
+      ]
+    },
+    {
+      "fecha": "2026-10-21",
+      "titulo": "La Ciudad Vieja, del castillo a Harry Potter",
+      "intensidad": "fuerte",
+      "resumen": "El día fuerte. Castillo a las 9:30, antes que los grupos, y después bajada por Victoria Street, comida de pie en Oink y helado en el Grassmarket. Por la tarde, el cementerio de Greyfriars y sus nombres de Harry Potter, el museo nacional, que es gratis y a cubierto, y San Giles. Cena de pescado frito en Victoria Street. La previsión da lluvia ligera: lo largo del día es a cubierto.",
+      "bloques": [
+        {
+          "tipo": "traslado",
+          "inicio": "08:55",
+          "fin": "09:25",
+          "modo": "a-pie",
+          "desde": "hotel-edimburgo",
+          "hasta": "castillo",
+          "detalle": "1,6 km por Lothian Road y Johnston Terrace, con la cuesta de la explanada al final. Taxi, unas 10 £"
+        },
+        {
+          "inicio": "09:30",
+          "fin": "12:00",
+          "lugar": "castillo",
+          "nota": "Entrada de las 9:30 comprada antes. Lo primero, las joyas de la corona, antes de que se forme cola."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "12:00",
+          "fin": "12:10",
+          "modo": "a-pie",
+          "desde": "castillo",
+          "hasta": "victoria-street",
+          "detalle": "500 m bajando por Castlehill y George IV Bridge"
+        },
+        {
+          "inicio": "12:10",
+          "fin": "12:40",
+          "lugar": "victoria-street"
+        },
+        {
+          "inicio": "12:40",
+          "fin": "13:15",
+          "lugar": "oink",
+          "nota": "Comida. Mejor no dejarlo para más tarde: cierran cuando se acaba el cerdo."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "13:15",
+          "fin": "13:20",
+          "modo": "a-pie",
+          "desde": "oink",
+          "hasta": "marys-milk-bar",
+          "detalle": "200 m, al pie de Victoria Street"
+        },
+        {
+          "inicio": "13:20",
+          "fin": "13:45",
+          "lugar": "marys-milk-bar",
+          "opcional": true
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "13:45",
+          "fin": "13:55",
+          "modo": "a-pie",
+          "desde": "marys-milk-bar",
+          "hasta": "greyfriars",
+          "detalle": "400 m subiendo por Candlemaker Row"
+        },
+        {
+          "inicio": "13:55",
+          "fin": "14:35",
+          "lugar": "greyfriars"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "14:35",
+          "fin": "14:40",
+          "modo": "a-pie",
+          "desde": "greyfriars",
+          "hasta": "elephant-house",
+          "detalle": "200 m por George IV Bridge"
+        },
+        {
+          "inicio": "14:40",
+          "fin": "14:55",
+          "lugar": "elephant-house",
+          "exterior": true,
+          "opcional": true
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "14:55",
+          "fin": "15:00",
+          "modo": "a-pie",
+          "desde": "elephant-house",
+          "hasta": "museo-nacional",
+          "detalle": "200 m, doblando por Chambers Street"
+        },
+        {
+          "inicio": "15:00",
+          "fin": "16:45",
+          "lugar": "museo-nacional",
+          "nota": "Cierra a las 17:00: subir a la azotea antes de las 16:30."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "16:45",
+          "fin": "16:55",
+          "modo": "a-pie",
+          "desde": "museo-nacional",
+          "hasta": "st-giles",
+          "detalle": "500 m por George IV Bridge hasta la Royal Mile"
+        },
+        {
+          "inicio": "16:55",
+          "fin": "17:35",
+          "lugar": "st-giles",
+          "nota": "El corazón del suelo, la torre desde calle abajo y, si apetece pagar las 12 £, la capilla del Cardo. Después, un paseo por la Royal Mile asomándose a los callejones."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "17:35",
+          "fin": "17:45",
+          "modo": "a-pie",
+          "desde": "st-giles",
+          "hasta": "berties",
+          "detalle": "400 m, bajando otra vez por Victoria Street"
+        },
+        {
+          "inicio": "17:45",
+          "fin": "18:55",
+          "lugar": "berties",
+          "nota": "Cena."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "18:55",
+          "fin": "19:25",
+          "modo": "a-pie",
+          "desde": "berties",
+          "hasta": "hotel-edimburgo",
+          "detalle": "1,8 km por el Grassmarket y West Port, unos 25 minutos. Taxi, unas 10 £"
+        }
+      ]
+    },
+    {
+      "fecha": "2026-10-22",
+      "titulo": "Las Highlands y el lago Ness",
+      "intensidad": "media",
+      "resumen": "Excursión de doce horas en autocar con guía: el páramo de Rannoch, el valle de Glencoe y el lago Ness en Fort Augustus, donde se come y se puede salir en barco. Va hoy porque es el día con mejor previsión allí arriba. Las paradas exactas y los horarios dependen de la empresa; los de aquí son los de Rabbie's. Se anda poco y se mira mucho por la ventanilla.",
+      "bloques": [
+        {
+          "tipo": "traslado",
+          "inicio": "07:05",
+          "fin": "07:35",
+          "modo": "tren",
+          "desde": "hotel-edimburgo",
+          "hasta": "estacion-autobuses",
+          "detalle": "Tranvía de Haymarket a St Andrew Square, unos 10 minutos, y dos minutos andando. Pasa cada 7-10 minutos"
+        },
+        {
+          "inicio": "07:35",
+          "fin": "07:45",
+          "lugar": "estacion-autobuses",
+          "nota": "Salida a las 7:45. Si la reserva es con otra empresa, el punto y la hora son los de su confirmación."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "07:45",
+          "fin": "11:30",
+          "modo": "bus",
+          "desde": "estacion-autobuses",
+          "hasta": "glencoe",
+          "detalle": "Hacia el noroeste por el campo de Stirling y el páramo de Rannoch, con una parada para el café por el camino"
+        },
+        {
+          "inicio": "11:30",
+          "fin": "12:15",
+          "lugar": "glencoe"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "12:15",
+          "fin": "13:45",
+          "modo": "bus",
+          "desde": "glencoe",
+          "hasta": "fort-augustus",
+          "detalle": "Por Fort William, al pie del Ben Nevis, la montaña más alta de las islas británicas"
+        },
+        {
+          "inicio": "13:45",
+          "fin": "15:15",
+          "lugar": "fort-augustus",
+          "nota": "Comida y, si se ha contratado, el crucero por el lago."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "15:15",
+          "fin": "20:00",
+          "modo": "bus",
+          "desde": "fort-augustus",
+          "hasta": "estacion-autobuses",
+          "detalle": "Vuelta por las Highlands centrales, con alguna parada más según la empresa. Llegada hacia las 20:00"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "20:00",
+          "fin": "20:20",
+          "modo": "tren",
+          "desde": "estacion-autobuses",
+          "hasta": "hotel-edimburgo",
+          "detalle": "Tranvía de St Andrew Square a Haymarket"
+        },
+        {
+          "tipo": "hito",
+          "inicio": "20:30",
+          "titulo": "Cena cerca del hotel",
+          "detalle": "Algo rápido por Haymarket o Shandwick Place, que el día ha sido largo"
+        }
+      ]
+    },
+    {
+      "fecha": "2026-10-23",
+      "titulo": "Holyrood, el parque y la Royal Mile cuesta arriba",
+      "intensidad": "media",
+      "resumen": "El palacio de Holyrood a primera hora, porque el martes y el miércoles estaba cerrado. Después, el parque: las ruinas de San Antonio y, si hay piernas y no llueve, la cima de Arthur's Seat. Por la tarde se sube la Royal Mile desde abajo, con parada en el museo del collar de Bobby, y la cena es de haggis.",
+      "bloques": [
+        {
+          "tipo": "traslado",
+          "inicio": "09:00",
+          "fin": "09:30",
+          "modo": "tren",
+          "desde": "hotel-edimburgo",
+          "hasta": "holyrood",
+          "detalle": "Tranvía hasta St Andrew Square y 1,3 km andando, casi todo cuesta abajo por Calton Road. Taxi, unas 12 £"
+        },
+        {
+          "inicio": "09:30",
+          "fin": "11:30",
+          "lugar": "holyrood",
+          "nota": "Audioguía en español, incluida. Lo primero, las habitaciones de María Estuardo."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "11:30",
+          "fin": "11:50",
+          "modo": "a-pie",
+          "desde": "holyrood",
+          "hasta": "st-anthony",
+          "detalle": "1 km por el parque hasta el lago de St Margaret y una cuesta corta de hierba"
+        },
+        {
+          "inicio": "11:50",
+          "fin": "12:30",
+          "lugar": "st-anthony"
+        },
+        {
+          "inicio": "12:30",
+          "fin": "13:45",
+          "lugar": "arthurs-seat",
+          "opcional": true,
+          "nota": "Solo si hace bueno y apetece: 45 minutos más de subida y la bajada. Si no, se baja directamente al Canongate."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "13:45",
+          "fin": "14:15",
+          "modo": "a-pie",
+          "desde": "arthurs-seat",
+          "hasta": "museo-edimburgo",
+          "detalle": "Bajada por el parque y 1,5 km hasta el Canongate"
+        },
+        {
+          "tipo": "hito",
+          "inicio": "14:15",
+          "titulo": "Comida por el Canongate",
+          "detalle": "La parte baja de la Royal Mile tiene cafés y pubs más tranquilos que la de arriba"
+        },
+        {
+          "inicio": "15:00",
+          "fin": "15:45",
+          "lugar": "museo-edimburgo"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "15:45",
+          "fin": "16:45",
+          "modo": "a-pie",
+          "desde": "museo-edimburgo",
+          "hasta": "makars",
+          "detalle": "1,1 km de Royal Mile cuesta arriba, sin prisa, asomándose a los callejones (closes) que bajan a los lados"
+        },
+        {
+          "tipo": "hito",
+          "inicio": "16:45",
+          "titulo": "Tarde libre",
+          "detalle": "Princes Street y sus jardines para las compras, o un té. Si el martes llovió en Calton Hill, el sol se pone hoy a las 17:52"
+        },
+        {
+          "inicio": "18:15",
+          "fin": "19:30",
+          "lugar": "makars",
+          "nota": "Cena: haggis, neeps and tatties. Viernes: mejor con reserva."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "19:30",
+          "fin": "20:00",
+          "modo": "tren",
+          "desde": "makars",
+          "hasta": "hotel-edimburgo",
+          "detalle": "Bajando a Princes Street y tranvía a Haymarket"
+        }
+      ]
+    },
+    {
+      "fecha": "2026-10-24",
+      "titulo": "El jardín botánico y vuelta a casa",
+      "intensidad": "salida",
+      "resumen": "Check-out temprano con las maletas en recepción, y la última mañana entre árboles de otoño en el jardín botánico, que es gratis. Vuelta al hotel a las 12:20 a por las maletas, y tranvía al aeropuerto a las 13:10 para el vuelo de las 16:00.",
+      "bloques": [
+        {
+          "tipo": "hito",
+          "inicio": "08:30",
+          "titulo": "Desayuno y check-out",
+          "detalle": "El check-out es a las 11:00, pero se hace ya y las maletas se quedan en recepción"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "09:40",
+          "fin": "10:00",
+          "modo": "taxi",
+          "desde": "hotel-edimburgo",
+          "hasta": "jardin-botanico",
+          "detalle": "2,5 km, unas 10 £. En autobús, mirar la línea en la app de Lothian Buses"
+        },
+        {
+          "inicio": "10:00",
+          "fin": "11:45",
+          "lugar": "jardin-botanico",
+          "nota": "Abre a las 10:00. Si llueve fuerte, el plan B es volver a la galería nacional o al museo."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "11:45",
+          "fin": "12:20",
+          "modo": "taxi",
+          "desde": "jardin-botanico",
+          "hasta": "hotel-edimburgo",
+          "detalle": "Taxi, unas 10 £; se para en la puerta de Inverleith Row"
+        },
+        {
+          "inicio": "12:20",
+          "fin": "13:05",
+          "lugar": "hotel-edimburgo",
+          "nota": "Recoger las maletas y comer algo rápido por Haymarket."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "13:10",
+          "fin": "13:40",
+          "modo": "tren",
+          "desde": "hotel-edimburgo",
+          "hasta": "aeropuerto-edi",
+          "detalle": "Tranvía desde Haymarket, 20-25 minutos. Con la ida y vuelta del martes ya está pagado"
+        },
+        {
+          "tipo": "hito",
+          "inicio": "16:00",
+          "titulo": "Despega el vuelo de vuelta",
+          "detalle": "Vuelo internacional: pasaporte a mano y más de dos horas de margen"
+        }
+      ]
+    }
+  ],
+  "transporte": [
+    {
+      "tramo": "Vuelo Birmingham → Edimburgo",
+      "modo": "avion",
+      "servicio": "Martes 20, llegada a las 9:00",
+      "duracion": "1 h 10",
+      "frecuencia": "Ya comprado",
+      "precio": "—",
+      "nota": "La hora de salida del plan (7:50) es una estimación a partir de la llegada. La buena es la del billete, y con ella se ajusta el taxi de las 6:00."
+    },
+    {
+      "tramo": "Tranvía de Edimburgo",
+      "modo": "tren",
+      "servicio": "Edinburgh Trams: aeropuerto, Haymarket, Princes Street y St Andrew Square",
+      "duracion": "Del aeropuerto a Haymarket, 20-25 min",
+      "frecuencia": "Cada 7-10 minutos de día",
+      "precio": "Aeropuerto: 7,90 £ el sencillo o 9,50 £ ida y vuelta. Ciudad: 2,40 £ el sencillo y 6 £ el día entero",
+      "nota": "Las tarifas de ciudad subieron el 22 de febrero de 2026; las de aeropuerto se quedaron igual. El billete de ciudad no vale para el aeropuerto. Se compra en la máquina de la parada o en la app Transport for Edinburgh, siempre antes de subir. Los autobuses de Lothian se pagan con tarjeta sin contacto al subir."
+    },
+    {
+      "tramo": "Excursión a las Highlands",
+      "modo": "bus",
+      "servicio": "Autocar con guía: Rabbie's (minibús de 16 plazas) u otra empresa de autocar grande, que sale algo más barata",
+      "duracion": "Unas 12 h, de 7:45 a 20:00",
+      "frecuencia": "Diaria",
+      "precio": "Rabbie's, desde 69 £ por persona; las de autocar grande, unas 55-65 £. Crucero por el lago, aparte",
+      "nota": "Hay que reservar ya. El precio de Rabbie's es el de su web; los de las demás, de guías y revendedores."
+    }
+  ],
+  "listas": [
+    {
+      "titulo": "Antes de salir",
+      "momento": "pre",
+      "items": [
+        {
+          "id": "eta",
+          "texto": "Tener aprobadas las dos ETA",
+          "detalle": "App oficial «UK ETA» o gov.uk/eta, 20 £ por persona. Si no está pedida, hoy mismo: casi siempre llega en minutos, pero puede tardar hasta tres días laborables."
+        },
+        {
+          "id": "pasaporte",
+          "texto": "Pasaporte en vigor, el mismo con el que se pidió la ETA",
+          "detalle": "El DNI no vale para entrar en el Reino Unido. La ETA va asociada al pasaporte."
+        },
+        {
+          "id": "entradas-castillo",
+          "texto": "Comprar las entradas del castillo para el miércoles a las 9:30",
+          "detalle": "En edinburghcastle.scot. 23,50 £ por internet, 19 £ los mayores de 65."
+        },
+        {
+          "id": "reserva-excursion",
+          "texto": "Reservar la excursión a las Highlands para el jueves",
+          "detalle": "Mirar la previsión antes: si el jueves se estropea, cambiarla al viernes y pasar Holyrood al jueves."
+        },
+        {
+          "id": "entradas-holyrood",
+          "texto": "Opcional: comprar las entradas de Holyrood para el viernes",
+          "detalle": "En rct.uk. Por internet sale más barato que en taquilla."
+        },
+        {
+          "id": "reserva-makars",
+          "texto": "Reservar en Makars para el viernes a las 18:15",
+          "detalle": "Un viernes por la noche se llena."
+        },
+        {
+          "id": "taxi-martes",
+          "texto": "Dejar pedido el taxi del martes a las 6:00",
+          "detalle": "En recepción el lunes por la noche, o un Uber programado."
+        },
+        {
+          "id": "datos-privados",
+          "texto": "Meter los dos hoteles en «Datos privados» de la aplicación",
+          "detalle": "La portada del viaje → Datos privados. Se guarda solo en el móvil y no sale del navegador."
+        },
+        {
+          "id": "abrir-guia",
+          "texto": "Abrir la guía antes de salir y descargar los mapas sin conexión",
+          "detalle": "Botón de descarga en cada día. Así el mapa funciona aunque no haya datos en el móvil."
+        },
+        {
+          "id": "tarjeta-sanitaria",
+          "texto": "Tarjeta Sanitaria Europea",
+          "detalle": "Sigue valiendo en el Reino Unido para la atención que haga falta durante la estancia. Se pide gratis en la Seguridad Social."
+        },
+        {
+          "id": "tarjeta-sin-comision",
+          "texto": "Una tarjeta que no cobre por pagar en libras",
+          "detalle": "Y pagar siempre en GBP: si el datáfono ofrece euros, decir que no."
+        }
+      ]
+    },
+    {
+      "titulo": "Qué llevar",
+      "items": [
+        {
+          "id": "adaptador",
+          "texto": "Adaptador de enchufe británico (tipo G)",
+          "detalle": "Los enchufes de tres patas rectangulares. Sin adaptador, no se carga el móvil."
+        },
+        {
+          "id": "calzado",
+          "texto": "Calzado cómodo, con buena suela y que aguante agua",
+          "detalle": "La Ciudad Vieja es cuesta y adoquín, y con lluvia resbala. El sendero de Dean Village puede tener barro."
+        },
+        {
+          "id": "abrigo",
+          "texto": "Abrigo, gorro y guantes",
+          "detalle": "La previsión del 18 de octubre daba de 4 a 11 °C en Edimburgo, y tres o cuatro grados menos en las Highlands."
+        },
+        {
+          "id": "impermeable",
+          "texto": "Chubasquero o paraguas plegable",
+          "detalle": "Se espera lluvia el lunes en Birmingham y el martes y el miércoles en Edimburgo. Con viento, mejor chubasquero."
+        },
+        {
+          "id": "powerbank",
+          "texto": "Batería externa",
+          "detalle": "El móvil es guía, mapa, billete y cámara a la vez, y el jueves son doce horas fuera."
+        }
+      ]
+    }
+  ],
+  "presupuesto": {
+    "nota": "Estimación para dos personas, sin vuelos ni hoteles. En libras, con el cambio del Banco Central Europeo del 16 de octubre de 2026: 1 € = 0,84385 £. Las entradas y los billetes son precios consultados; las comidas, una estimación de gasto ajustado-medio.",
+    "partidas": [
+      {
+        "concepto": "Transporte × 2 (tren y tranvía en Birmingham, tranvía y autobús en Edimburgo)",
+        "importe": "≈75 £ · ≈90 €"
+      },
+      {
+        "concepto": "Taxis (aeropuerto de Birmingham, el balti, el jardín botánico)",
+        "importe": "≈75-100 £ · ≈90-120 €"
+      },
+      {
+        "concepto": "Entradas × 2 (castillo y Holyrood)",
+        "importe": "≈91 £ · ≈108 €"
+      },
+      {
+        "concepto": "Excursión a las Highlands × 2",
+        "importe": "≈110-138 £ · ≈130-164 €"
+      },
+      {
+        "concepto": "Opcionales × 2 (crucero por el lago Ness, San Giles)",
+        "importe": "0-64 £ · 0-76 €"
+      },
+      {
+        "concepto": "Comidas, cenas y cafés, 6 días × 2",
+        "importe": "≈400-550 £ · ≈475-650 €"
+      },
+      {
+        "concepto": "Total estimado",
+        "importe": "≈750-1.020 £ · ≈890-1.210 €",
+        "destacado": true
+      }
+    ]
+  },
+  "fuentes": [
+    {
+      "texto": "GOV.UK · ETA para visitar el Reino Unido",
+      "url": "https://www.gov.uk/eta"
+    },
+    {
+      "texto": "Historic Environment Scotland · castillo de Edimburgo, precios y horarios",
+      "url": "https://www.historicenvironment.scot/visit-a-place/places/edinburgh-castle/prices-and-times/"
+    },
+    {
+      "texto": "Castillo de Edimburgo · horario",
+      "url": "https://www.edinburghcastle.scot/visit/opening-hours"
+    },
+    {
+      "texto": "Royal Collection Trust · palacio de Holyrood",
+      "url": "https://www.rct.uk/visit/palace-of-holyroodhouse"
+    },
+    {
+      "texto": "Museo Nacional de Escocia · visita",
+      "url": "https://www.nms.ac.uk/national-museum-of-scotland/plan-your-visit"
+    },
+    {
+      "texto": "National Galleries of Scotland · The National",
+      "url": "https://www.nationalgalleries.org/visit/national"
+    },
+    {
+      "texto": "Real Jardín Botánico de Edimburgo",
+      "url": "https://www.rbge.org.uk/edinburgh"
+    },
+    {
+      "texto": "Catedral de San Giles",
+      "url": "https://www.stgilescathedral.org.uk/"
+    },
+    {
+      "texto": "Edinburgh Evening News · San Giles cobra entrada",
+      "url": "https://www.edinburghnews.scotsman.com/news/st-giles-cathedral-entry-fee-visitors-9268490"
+    },
+    {
+      "texto": "Edinburgh Trams · tarifas de 2026",
+      "url": "https://edinburghtrams.com/news/changes-tram-fares-2026"
+    },
+    {
+      "texto": "Rabbie's · excursiones de un día desde Edimburgo",
+      "url": "https://www.rabbies.com/en"
+    },
+    {
+      "texto": "Library of Birmingham · horario",
+      "url": "https://www.birmingham.gov.uk/lob"
+    },
+    {
+      "texto": "West Midlands Metro · tarifas de 2026",
+      "url": "https://www.westmidlandsmetro.com/metro-fare-changes-to-reinvest-in-your-network/"
+    },
+    {
+      "texto": "Museums Association · horario del museo de Birmingham desde julio de 2026",
+      "url": "https://www.museumsassociation.org/museums-journal/news/2026/07/birmingham-museums-extend-opening-hours-after-council-budget-boost/"
+    },
+    {
+      "texto": "ALVA · visitas de 2025",
+      "url": "https://scottishfinancialreview.com/2026/03/21/national-gallery-edinburgh-gets-record-2m-visitors/"
+    },
+    {
+      "texto": "Banco Central Europeo · cambios de referencia",
+      "url": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html"
+    },
+    {
+      "texto": "Open-Meteo · previsión",
+      "url": "https://open-meteo.com/"
+    }
+  ]
+}
