@@ -169,15 +169,14 @@ function validarViaje(viaje, nombreArchivo) {
   }
 
   // Coordenada descolocada: el error de geocodificación típico, y no se ve leyendo el JSON.
+  // Se mide contra el lugar más cercano del viaje, no contra el centro medio: en un viaje
+  // de dos ciudades el centro cae entre las dos y da por equivocados los lugares buenos
+  // (Birmingham y Edimburgo, octubre de 2026). Una coordenada errónea queda aislada igual.
   if (coordsValidas.length >= 3) {
-    const centro = [
-      coordsValidas.reduce((s, l) => s + l.coords[0], 0) / coordsValidas.length,
-      coordsValidas.reduce((s, l) => s + l.coords[1], 0) / coordsValidas.length,
-    ];
     for (const l of coordsValidas) {
-      const d = distanciaKm(centro, l.coords);
-      if (d > 300) inf.error(`lugares ${l.id}`, `a ${Math.round(d)} km del centro del viaje: ¿coordenada equivocada?`);
-      else if (d > 150) inf.aviso(`lugares ${l.id}`, `a ${Math.round(d)} km del centro del viaje: comprobar que es correcto`);
+      const d = Math.min(...coordsValidas.filter((o) => o !== l).map((o) => distanciaKm(o.coords, l.coords)));
+      if (d > 300) inf.error(`lugares ${l.id}`, `a ${Math.round(d)} km del lugar más cercano del viaje: ¿coordenada equivocada?`);
+      else if (d > 150) inf.aviso(`lugares ${l.id}`, `a ${Math.round(d)} km del lugar más cercano del viaje: comprobar que es correcto`);
     }
   }
 

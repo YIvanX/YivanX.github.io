@@ -14,7 +14,7 @@
   ],
   "moneda": "GBP",
   "base": "Una noche junto a Broad Street, en Birmingham, y cuatro junto a Haymarket, en Edimburgo",
-  "resumen": "Se aterriza en Birmingham el lunes a las 11:00 y hay una tarde para los canales, la biblioteca y un balti para cenar. El martes, vuelo de madrugada a Edimburgo y día tranquilo por Dean Village y la Ciudad Nueva. El miércoles toca la Ciudad Vieja entera, del castillo al museo nacional pasando por los rincones de Harry Potter. El jueves se va a las Highlands y al lago Ness, porque es el día con mejor previsión allí arriba. El viernes, Holyrood y la falda de Arthur's Seat, y el sábado, el jardín botánico antes de volar a las 16:00. Holyrood va el viernes porque el martes y el miércoles está cerrado.",
+  "resumen": "Se aterriza en Birmingham el lunes a las 11:00 y hay una tarde para los canales, la biblioteca y un balti para cenar. El martes, vuelo de madrugada a Edimburgo, la galería nacional y un free tour hasta Dean Village. El miércoles, el castillo y el free tour de Harry Potter por la Ciudad Vieja. El jueves, Holyrood, el parque y un free tour de fantasmas al anochecer. El viernes, excursión en español a las Highlands y al lago Ness, y el sábado, el jardín botánico antes de volar a las 16:00. Los tres free tours y la excursión son de Civitatis.",
   "mapa": {
     "centro": [
       55.95,
@@ -51,11 +51,21 @@
       "momento": "pre"
     },
     {
-      "nivel": "alto",
-      "titulo": "La excursión a las Highlands hay que reservarla ya",
-      "texto": "Va el jueves porque la previsión del 18 de octubre daba 20-22 mm de lluvia el miércoles en Glencoe y en el lago Ness, y apenas 1 mm el jueves. El viernes también sale seco. Si la previsión cambia, la excursión se puede pasar al viernes y Holyrood al jueves, que también abre. Antes de pagar, mirar las condiciones de cancelación.",
+      "nivel": "medio",
+      "titulo": "Los free tours: reservar y llevar propina",
+      "texto": "Son tres, todos de Civitatis y en español: Dean Village el martes a las 14:30, Harry Potter el miércoles a las 13:30 y fantasmas el jueves a las 18:00. La reserva es gratis y al final se paga lo que se quiera; Civitatis recomienda 10-15 € por persona. Algunos guías solo aceptan efectivo, así que conviene llevar unas 40 £ en billetes. Si al final no se va, hay que cancelar, porque el guía espera.",
       "dias": [
-        "2026-10-22",
+        "2026-10-20",
+        "2026-10-21",
+        "2026-10-22"
+      ],
+      "momento": "pre"
+    },
+    {
+      "nivel": "alto",
+      "titulo": "La excursión a las Highlands va el viernes, y en español",
+      "texto": "Es la «Excursión por lo mejor de las Highlands» de Civitatis, con guía en español: 77,10 € por persona, salida a las 7:15 de St Andrew's House (2 Regent Road) y unas 13 horas. Iba a ir el jueves, pero ese día no tiene salida: solo sale el 20, el 21, el 23 y el 24. El viernes es además el día con mejor previsión allí arriba: 0,1 mm en Glencoe y nada en el lago Ness, según Open-Meteo el 18 de octubre. Se cancela gratis hasta 48 horas antes. El crucero por el lago Ness se paga aparte: 21 £, o 19 £ los mayores de 65.",
+      "dias": [
         "2026-10-23"
       ],
       "momento": "pre"
@@ -63,9 +73,9 @@
     {
       "nivel": "medio",
       "titulo": "Holyrood cierra los martes y los miércoles",
-      "texto": "Del 10 de septiembre al 31 de octubre abre de jueves a lunes, de 9:30 a 18:00, con la última entrada a las 16:30. Por eso va el viernes. Es palacio real en uso, así que puede cerrar con poco aviso: conviene mirar la web de la Royal Collection la víspera.",
+      "texto": "Del 10 de septiembre al 31 de octubre abre de jueves a lunes, de 9:30 a 18:00, con la última entrada a las 16:30. Por eso va el jueves. Es palacio real en uso, así que puede cerrar con poco aviso: conviene mirar la web de la Royal Collection la víspera.",
       "dias": [
-        "2026-10-23"
+        "2026-10-22"
       ]
     },
     {
@@ -101,7 +111,7 @@
     {
       "nivel": "info",
       "titulo": "Cómo se ha clasificado cada sitio",
-      "texto": "Esta vez TripAdvisor bloqueó la consulta, así que no hay notas de reseñas. Obligatorio = lo más visitado de Escocia según las cifras de ALVA de 2025, o lo que está en el centro de lo que se pidió: historia y castillos, miradores, Harry Potter y comida. Recomendable = lo que encaja con eso y se puede saltar si el día se tuerce. Opcional = lo demás. Salvo los que citan a ALVA, los niveles son criterio, no un dato."
+      "texto": "Esta vez TripAdvisor bloqueó la consulta, así que no hay notas de reseñas. Obligatorio = lo más visitado de Escocia según las cifras de ALVA de 2025, o lo que está en el centro de lo que se pidió: historia y castillos, miradores, Harry Potter y comida. Recomendable = lo que encaja con eso y se puede saltar si el día se tuerce. Opcional = lo demás. Salvo los que citan a ALVA, los niveles son criterio, no un dato. Los free tours y la excursión llevan la nota de Civitatis, sobre 10."
     }
   ],
   "lugares": [
@@ -675,8 +685,8 @@
         55.95722,
         -3.20563
       ],
-      "resumen": "Brunch de barrio en Stockbridge, para recuperar el madrugón con tostadas y huevos.",
-      "descripcion": "Un café pequeño en la esquina de Stockbridge, el barrio de las tiendas de segunda mano y las librerías. Sirven desayuno hasta las 11:00 y brunch todo el día, con el **desayuno escocés** completo en la carta: huevos, bacon, salchicha, morcilla y tostadas.\n\nNo reservan, así que a veces hay que esperar un poco; un martes a mediodía, poco.",
+      "resumen": "Desayuno de barrio en Stockbridge, camino del jardín botánico.",
+      "descripcion": "Un café pequeño en la esquina de Stockbridge, el barrio de las tiendas de segunda mano y las librerías. Sirven desayuno hasta las 11:00 y brunch todo el día, con el **desayuno escocés** completo en la carta: huevos, bacon, salchicha, morcilla y tostadas.\n\nNo reservan, así que lo más seguro es llegar a la hora de abrir.",
       "duracionMin": 60,
       "horarios": {
         "lun": [
@@ -780,7 +790,7 @@
         -3.19561
       ],
       "resumen": "Gratis, a cubierto, y con el ciervo más famoso de Escocia colgado en la pared.",
-      "descripcion": "La pinacoteca de Escocia, ahora llamada **The National**, en un templo griego al pie del castillo. Tiene Velázquez, Rembrandt, Monet y Van Gogh, pero lo que no se ve en otro sitio son las **salas escocesas**: retratos, paisajes de las Highlands y escenas de la vida de aquí.\n\nLa entrada es gratis. Con lluvia, es el plan perfecto de primera hora de la tarde.",
+      "descripcion": "La pinacoteca de Escocia, ahora llamada **The National**, en un templo griego al pie del castillo. Tiene Velázquez, Rembrandt, Monet y Van Gogh, pero lo que no se ve en otro sitio son las **salas escocesas**: retratos, paisajes de las Highlands y escenas de la vida de aquí.\n\nLa entrada es gratis. Con lluvia, es el plan perfecto para la primera mañana.",
       "duracionMin": 75,
       "horarios": {
         "lun": [
@@ -900,7 +910,7 @@
         -3.18226
       ],
       "resumen": "La colina de las columnas griegas, para ver ponerse el sol detrás del castillo.",
-      "descripcion": "Una colina en pleno centro, con una subida corta por escaleras o por la cuesta de Regent Road, y arriba la mejor vista de Edimburgo: el castillo, la Royal Mile bajando, Arthur's Seat y el mar al norte.\n\nArriba hay monumentos sueltos que le dan un aire de Atenas, y por eso a Edimburgo la llamaban «la Atenas del norte».\n\nEl martes el sol se pone a las 17:59, y desde aquí se pone por el lado del castillo.",
+      "descripcion": "Una colina en pleno centro, con una subida corta por escaleras o por la cuesta de Regent Road, y arriba la mejor vista de Edimburgo: el castillo, la Royal Mile bajando, Arthur's Seat y el mar al norte.\n\nArriba hay monumentos sueltos que le dan un aire de Atenas, y por eso a Edimburgo la llamaban «la Atenas del norte».\n\nSe llega el jueves al final del tour de fantasmas, ya de noche, con la ciudad iluminada debajo.",
       "duracionMin": 60,
       "nivel": "obligatorio",
       "valoracion": {
@@ -928,8 +938,7 @@
         }
       ],
       "consejos": [
-        "Arriba sopla siempre más que abajo: llevar una capa de más.",
-        "Si el martes llueve, cambiarlo al viernes por la tarde, que sale seco."
+        "Arriba sopla siempre más que abajo: llevar una capa de más."
       ],
       "imagen": {
         "archivo": "data/viajes/edimburgo-2026-10/fotos/calton-hill.jpg",
@@ -1070,7 +1079,7 @@
         -3.19377
       ],
       "resumen": "La calle curva de fachadas de colores que, dicen, inspiró el callejón Diagon.",
-      "descripcion": "Baja en curva desde George IV Bridge hasta el Grassmarket, con las tiendas pintadas de rojo, azul y amarillo y una terraza corrida por encima. Se dice que J. K. Rowling se inspiró en ella para el **callejón Diagon**, y las tiendas de Harry Potter de la calle se encargan de que nadie lo olvide.\n\nSe baja despacio, entrando en las tiendas, y se come al final.",
+      "descripcion": "Baja en curva desde George IV Bridge hasta el Grassmarket, con las tiendas pintadas de rojo, azul y amarillo y una terraza corrida por encima. Se dice que J. K. Rowling se inspiró en ella para el **callejón Diagon**, y las tiendas de Harry Potter de la calle se encargan de que nadie lo olvide.\n\nEl tour de Harry Potter empieza por aquí.",
       "duracionMin": 30,
       "nivel": "obligatorio",
       "valoracion": {
@@ -1565,31 +1574,145 @@
       }
     },
     {
-      "id": "estacion-autobuses",
-      "nombre": "Estación de autobuses de Edimburgo",
+      "id": "tour-dean-village",
+      "nombre": "Free tour: Dean Village, Stockbridge y Princes Street",
+      "categoria": "patrimonio",
+      "zona": "Royal Mile",
+      "coords": [
+        55.94955,
+        -3.19244
+      ],
+      "resumen": "Dos horas y media con guía en español, de la Royal Mile al río y hasta Stockbridge.",
+      "descripcion": "Sale de la estatua de David Hume, en la Royal Mile, baja a los jardines de Princes Street, cruza la Ciudad Nueva y llega a **Dean Village**. Desde allí sigue el sendero del **Water of Leith** hasta **Stockbridge**, donde termina.\n\nEs un free tour: la reserva es gratis y al final cada uno paga lo que quiere. Civitatis recomienda 10-15 € por persona.",
+      "duracionMin": 150,
+      "precio": {
+        "importe": 0,
+        "detalle": "Propina al final; se recomiendan 10-15 € por persona"
+      },
+      "reserva": {
+        "necesaria": true,
+        "nota": "En Civitatis, para el martes a las 14:30. Ese día solo hay salidas a las 11:00 y a las 14:30."
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "9,6 sobre 10 con 3.269 opiniones",
+        "fuente": "Civitatis, consultado el 18 de octubre de 2026"
+      },
+      "consejos": [
+        "Llegar diez minutos antes a la estatua.",
+        "No se admiten más de seis personas por reserva."
+      ],
+      "enlaces": [
+        {
+          "texto": "Reservar en Civitatis",
+          "url": "https://www.civitatis.com/es/edimburgo/tour-dean-village-water-leith/"
+        }
+      ],
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "civitatis.com (ruta y horas del 20 de octubre) y la API de disponibilidad de GuruWalk"
+      }
+    },
+    {
+      "id": "tour-harry-potter",
+      "nombre": "Free tour de Harry Potter",
+      "categoria": "patrimonio",
+      "zona": "Royal Mile",
+      "coords": [
+        55.94955,
+        -3.19244
+      ],
+      "resumen": "Hora y media con guía en español por los rincones que inspiraron a J. K. Rowling.",
+      "descripcion": "Sale de la estatua de David Hume y recorre **Victoria Street**, el café **The Elephant House** y el **cementerio de Greyfriars**, con la tumba de Thomas Riddell. Termina delante del colegio **George Heriot's**, al lado del cementerio.\n\nLa reserva es gratis y al final cada uno paga lo que quiere. Civitatis recomienda 10-15 € por persona.",
+      "duracionMin": 90,
+      "precio": {
+        "importe": 0,
+        "detalle": "Propina al final; se recomiendan 10-15 € por persona"
+      },
+      "reserva": {
+        "necesaria": true,
+        "nota": "En Civitatis, para el miércoles a las 13:30. Ese día también sale a las 10:30, 12:00, 15:00 y 16:00."
+      },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "puesto": "9,6 sobre 10 con 5.209 opiniones",
+        "fuente": "Civitatis, consultado el 18 de octubre de 2026"
+      },
+      "consejos": [
+        "Llegar diez minutos antes: según la fecha, el punto de encuentro puede cambiar, y lo dice la confirmación.",
+        "Algunos guías solo aceptan la propina en efectivo."
+      ],
+      "enlaces": [
+        {
+          "texto": "Reservar en Civitatis",
+          "url": "https://www.civitatis.com/es/edimburgo/free-tour-harry-potter/"
+        }
+      ],
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "civitatis.com (ruta y horas del 21 de octubre)"
+      }
+    },
+    {
+      "id": "tour-fantasmas",
+      "nombre": "Free tour de los fantasmas de Edimburgo",
+      "categoria": "patrimonio",
+      "zona": "Royal Mile",
+      "coords": [
+        55.9498,
+        -3.18971
+      ],
+      "resumen": "Dos horas de historias negras de la Ciudad Vieja, ya de noche, hasta lo alto de Calton Hill.",
+      "descripcion": "Sale del 190 de High Street, a la entrada del callejón Old Fishmarket Close. Recorre los closes de la Royal Mile, la iglesia de Tron y el **cementerio de Calton**, donde se cuenta la historia de **Burke y Hare**, que mataban para vender los cadáveres a un profesor de anatomía. Termina en **Calton Hill**, con la ciudad iluminada debajo.\n\nLa reserva es gratis y al final cada uno paga lo que quiere. Civitatis recomienda 10-15 € por persona.",
+      "duracionMin": 120,
+      "precio": {
+        "importe": 0,
+        "detalle": "Propina al final; se recomiendan 10-15 € por persona"
+      },
+      "reserva": {
+        "necesaria": true,
+        "nota": "En Civitatis, para el jueves a las 18:00. Ese día también hay salidas a las 19:00 y a las 20:00."
+      },
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "9 sobre 10 con 8.337 opiniones",
+        "fuente": "Civitatis, consultado el 18 de octubre de 2026"
+      },
+      "consejos": [
+        "Arriba, en Calton Hill, sopla: una capa de más.",
+        "No se admiten más de seis personas por reserva."
+      ],
+      "enlaces": [
+        {
+          "texto": "Reservar en Civitatis",
+          "url": "https://www.civitatis.com/es/edimburgo/free-tour-fantasmas-edimburgo/"
+        }
+      ],
+      "verificado": {
+        "fecha": "2026-10-18",
+        "fuente": "civitatis.com (ruta y horas del 22 de octubre) y OpenStreetMap (Old Fishmarket Close)"
+      }
+    },
+    {
+      "id": "salida-excursion",
+      "nombre": "Salida de la excursión a las Highlands",
       "categoria": "transporte",
       "zona": "Ciudad Nueva",
       "coords": [
-        55.95538,
-        -3.19168
+        55.95352,
+        -3.18344
       ],
-      "resumen": "De aquí sale el autocar a las Highlands el jueves a las 7:45.",
-      "descripcion": "Está detrás de St Andrew Square, a dos minutos de la parada de tranvía del mismo nombre. Es el punto de salida de las excursiones de **Rabbie's**. Otras empresas salen de otros sitios de la ciudad: el punto exacto viene en la reserva.",
+      "resumen": "St Andrew's House, en el 2 de Regent Road: de aquí sale la excursión del viernes a las 7:15.",
+      "descripcion": "El punto de encuentro de la excursión de Civitatis está delante de **St Andrew's House**, el edificio del Gobierno escocés al principio de Regent Road. Está a unos cinco minutos andando de la parada de tranvía de St Andrew Square.",
       "duracionMin": 10,
       "nivel": "opcional",
       "valoracion": {
         "puesto": "No es un destino",
         "fuente": "Es un punto de paso"
       },
-      "imagen": {
-        "archivo": "data/viajes/edimburgo-2026-10/fotos/estacion-autobuses.jpg",
-        "credito": "Kim Traynor",
-        "licencia": "CC BY-SA 3.0",
-        "fuente": "https://commons.wikimedia.org/wiki/File:Edinburgh%20Bus%20Station.JPG"
-      },
       "verificado": {
         "fecha": "2026-10-18",
-        "fuente": "Fichas de la excursión de Rabbie's en Expedia y Travelocity, y OpenStreetMap"
+        "fuente": "civitatis.com (punto de encuentro: 2 Regent Rd) y Nominatim (St Andrew's House, 2-6 Regent Road)"
       }
     },
     {
@@ -1674,7 +1797,7 @@
         }
       ],
       "consejos": [
-        "El crucero cuesta aparte, normalmente una veintena de libras; se decide en la reserva o allí mismo, según la empresa.",
+        "El crucero por el lago dura unos 50 minutos y se paga aparte: 21 £, o 19 £ los mayores de 65.",
         "Aquí arriba hace tres o cuatro grados menos que en Edimburgo: gorro y guantes."
       ],
       "imagen": {
@@ -1978,7 +2101,7 @@
       ],
       "consejos": [
         "Tiene otro local en Shandwick Place, a cinco minutos del hotel, por si apetece repetir.",
-        "Un viernes por la noche se llena: mejor reservar."
+        "A mediodía de un martes no hace falta reservar."
       ],
       "verificado": {
         "fecha": "2026-10-18",
@@ -2247,9 +2370,9 @@
     },
     {
       "fecha": "2026-10-20",
-      "titulo": "Vuelo a Edimburgo, Dean Village y Calton Hill",
+      "titulo": "Vuelo a Edimburgo y free tour hasta Dean Village",
       "intensidad": "media",
-      "resumen": "Madrugón para el vuelo de las 7:50 y aterrizaje a las 9:00. Las maletas se quedan en el hotel y la mañana es de paseo llano: Dean Village, el río hasta Stockbridge y un brunch para recuperar. La galería nacional cubre la hora de lluvia, por la tarde se descansa en el hotel y el día se cierra con la puesta de sol en Calton Hill, a las 17:59.",
+      "resumen": "Madrugón para el vuelo de las 7:50 y aterrizaje a las 9:00. Las maletas se quedan en el hotel, la mañana es para la galería nacional, que es gratis y a cubierto, y se come haggis en Makars, al lado del punto de salida del tour. A las 14:30, free tour en español: de la Royal Mile a Dean Village y por el río hasta Stockbridge. Vuelta al hotel a las 17:45, check-in y descanso.",
       "bloques": [
         {
           "tipo": "hito",
@@ -2293,119 +2416,122 @@
         {
           "tipo": "traslado",
           "inicio": "10:20",
-          "fin": "10:35",
-          "modo": "a-pie",
+          "fin": "10:40",
+          "modo": "tren",
           "desde": "hotel-edimburgo",
-          "hasta": "dean-village",
-          "detalle": "1 km hasta Bell's Brae, con una bajada corta al final"
-        },
-        {
-          "inicio": "10:35",
-          "fin": "11:15",
-          "lugar": "dean-village"
-        },
-        {
-          "tipo": "traslado",
-          "inicio": "11:15",
-          "fin": "11:40",
-          "modo": "a-pie",
-          "desde": "dean-village",
-          "hasta": "pantry",
-          "detalle": "1,2 km llanos por el sendero del Water of Leith, río abajo, hasta Stockbridge"
-        },
-        {
-          "inicio": "11:40",
-          "fin": "12:40",
-          "lugar": "pantry",
-          "nota": "Brunch. Si hay cola, Stockbridge está lleno de cafés alrededor."
-        },
-        {
-          "tipo": "traslado",
-          "inicio": "12:40",
-          "fin": "12:45",
-          "modo": "a-pie",
-          "desde": "pantry",
-          "hasta": "circus-lane",
-          "detalle": "100 m"
-        },
-        {
-          "inicio": "12:45",
-          "fin": "13:00",
-          "lugar": "circus-lane"
-        },
-        {
-          "tipo": "traslado",
-          "inicio": "13:00",
-          "fin": "13:30",
-          "modo": "a-pie",
-          "desde": "circus-lane",
           "hasta": "galeria-nacional",
-          "detalle": "1,5 km por la Ciudad Nueva, con la cuesta de Howe Street. También hay autobuses por Frederick Street"
+          "detalle": "Tranvía de Haymarket a Princes Street, unos 10 minutos, y cinco andando. Sencillo de ciudad: 2,40 £"
         },
         {
-          "inicio": "13:30",
-          "fin": "14:40",
+          "inicio": "10:40",
+          "fin": "12:00",
           "lugar": "galeria-nacional"
         },
         {
           "tipo": "traslado",
-          "inicio": "14:40",
-          "fin": "14:45",
+          "inicio": "12:00",
+          "fin": "12:05",
           "modo": "a-pie",
           "desde": "galeria-nacional",
           "hasta": "scott-monument",
           "detalle": "300 m por los jardines de Princes Street"
         },
         {
-          "inicio": "14:45",
-          "fin": "15:00",
+          "inicio": "12:05",
+          "fin": "12:15",
           "lugar": "scott-monument",
           "exterior": true,
           "opcional": true
         },
         {
           "tipo": "traslado",
-          "inicio": "15:00",
-          "fin": "15:25",
-          "modo": "tren",
+          "inicio": "12:15",
+          "fin": "12:30",
+          "modo": "a-pie",
           "desde": "scott-monument",
-          "hasta": "hotel-edimburgo",
-          "detalle": "Tranvía desde Princes Street hasta Haymarket, unos 10 minutos. Sencillo de ciudad: 2,40 £"
+          "hasta": "makars",
+          "detalle": "Subida por The Mound, 600 m de cuesta"
         },
         {
-          "inicio": "15:25",
-          "fin": "16:45",
+          "inicio": "12:30",
+          "fin": "13:50",
+          "lugar": "makars",
+          "nota": "Comida: haggis, neeps and tatties."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "13:50",
+          "fin": "14:00",
+          "modo": "a-pie",
+          "desde": "makars",
+          "hasta": "tour-dean-village",
+          "detalle": "200 m hasta la estatua de David Hume, en el Lawnmarket"
+        },
+        {
+          "inicio": "14:15",
+          "fin": "14:30",
+          "lugar": "tour-dean-village",
+          "nota": "Salida a las 14:30, con reserva hecha en Civitatis."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "14:30",
+          "fin": "15:50",
+          "modo": "a-pie",
+          "desde": "tour-dean-village",
+          "hasta": "dean-village",
+          "detalle": "Con el guía: bajada a los jardines de Princes Street y paseo por la Ciudad Nueva"
+        },
+        {
+          "inicio": "15:50",
+          "fin": "16:20",
+          "lugar": "dean-village",
+          "nota": "Con el tour."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "16:20",
+          "fin": "16:55",
+          "modo": "a-pie",
+          "desde": "dean-village",
+          "hasta": "circus-lane",
+          "detalle": "Con el guía, río abajo por el sendero del Water of Leith hasta Stockbridge, donde termina el tour hacia las 17:00"
+        },
+        {
+          "inicio": "17:00",
+          "fin": "17:15",
+          "lugar": "circus-lane",
+          "opcional": true,
+          "nota": "A dos minutos de donde acaba el tour. Antes, la propina."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "17:15",
+          "fin": "17:45",
+          "modo": "a-pie",
+          "desde": "circus-lane",
+          "hasta": "hotel-edimburgo",
+          "detalle": "1,8 km de vuelta por Dean Village, o taxi"
+        },
+        {
+          "inicio": "17:45",
+          "fin": "19:00",
           "lugar": "hotel-edimburgo",
           "nota": "Check-in y descanso, que el día empezó a las 5:15."
         },
         {
-          "tipo": "traslado",
-          "inicio": "16:45",
-          "fin": "17:15",
-          "modo": "tren",
-          "desde": "hotel-edimburgo",
-          "hasta": "calton-hill",
-          "detalle": "Tranvía hasta St Andrew Square y diez minutos andando por Waterloo Place, con las escaleras finales"
-        },
-        {
-          "inicio": "17:15",
-          "fin": "18:20",
-          "lugar": "calton-hill",
-          "nota": "La puesta de sol es a las 17:59. Si llueve, se cambia por el viernes."
-        },
-        {
           "tipo": "hito",
-          "inicio": "18:30",
-          "titulo": "Cena por la Ciudad Nueva",
-          "detalle": "Alrededor de St Andrew Square y Rose Street hay de todo. Para volver, tranvía a Haymarket"
+          "inicio": "19:15",
+          "titulo": "Cena cerca del hotel",
+          "detalle": "Por Haymarket o Shandwick Place"
         }
       ]
     },
     {
       "fecha": "2026-10-21",
-      "titulo": "La Ciudad Vieja, del castillo a Harry Potter",
+      "titulo": "El castillo y el free tour de Harry Potter",
       "intensidad": "fuerte",
-      "resumen": "El día fuerte. Castillo a las 9:30, antes que los grupos, y después bajada por Victoria Street, comida de pie en Oink y helado en el Grassmarket. Por la tarde, el cementerio de Greyfriars y sus nombres de Harry Potter, el museo nacional, que es gratis y a cubierto, y San Giles. Cena de pescado frito en Victoria Street. La previsión da lluvia ligera: lo largo del día es a cubierto.",
+      "resumen": "El día fuerte. Castillo a las 9:30, antes que los grupos, y comida de pie en Oink. A las 13:30, free tour de Harry Potter en español: Victoria Street, el Elephant House y el cementerio de Greyfriars. Después, el museo nacional, que es gratis y a cubierto, San Giles y cena de pescado frito en Victoria Street. La previsión da lluvia ligera: lo largo del día es a cubierto.",
       "bloques": [
         {
           "tipo": "traslado",
@@ -2425,97 +2551,96 @@
         {
           "tipo": "traslado",
           "inicio": "12:00",
-          "fin": "12:10",
+          "fin": "12:15",
           "modo": "a-pie",
           "desde": "castillo",
-          "hasta": "victoria-street",
-          "detalle": "500 m bajando por Castlehill y George IV Bridge"
+          "hasta": "oink",
+          "detalle": "500 m bajando por Castlehill y Victoria Street"
         },
         {
-          "inicio": "12:10",
-          "fin": "12:40",
-          "lugar": "victoria-street"
-        },
-        {
-          "inicio": "12:40",
-          "fin": "13:15",
+          "inicio": "12:15",
+          "fin": "12:55",
           "lugar": "oink",
           "nota": "Comida. Mejor no dejarlo para más tarde: cierran cuando se acaba el cerdo."
         },
         {
           "tipo": "traslado",
-          "inicio": "13:15",
-          "fin": "13:20",
+          "inicio": "12:55",
+          "fin": "13:15",
           "modo": "a-pie",
           "desde": "oink",
-          "hasta": "marys-milk-bar",
-          "detalle": "200 m, al pie de Victoria Street"
+          "hasta": "tour-harry-potter",
+          "detalle": "Subida por Victoria Street hasta la estatua de David Hume, 400 m"
         },
         {
-          "inicio": "13:20",
-          "fin": "13:45",
+          "inicio": "13:15",
+          "fin": "13:35",
+          "lugar": "tour-harry-potter",
+          "nota": "Salida a las 13:30, con reserva hecha en Civitatis."
+        },
+        {
+          "inicio": "13:35",
+          "fin": "14:00",
+          "lugar": "victoria-street",
+          "nota": "Con el tour."
+        },
+        {
+          "inicio": "14:00",
+          "fin": "14:15",
+          "lugar": "elephant-house",
+          "exterior": true,
+          "nota": "Con el tour."
+        },
+        {
+          "inicio": "14:15",
+          "fin": "15:00",
+          "lugar": "greyfriars",
+          "nota": "Con el tour, que termina delante del colegio George Heriot's. Antes de irse, la propina."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "15:00",
+          "fin": "15:10",
+          "modo": "a-pie",
+          "desde": "greyfriars",
+          "hasta": "marys-milk-bar",
+          "detalle": "300 m bajando por Candlemaker Row"
+        },
+        {
+          "inicio": "15:10",
+          "fin": "15:30",
           "lugar": "marys-milk-bar",
           "opcional": true
         },
         {
           "tipo": "traslado",
-          "inicio": "13:45",
-          "fin": "13:55",
+          "inicio": "15:30",
+          "fin": "15:40",
           "modo": "a-pie",
           "desde": "marys-milk-bar",
-          "hasta": "greyfriars",
-          "detalle": "400 m subiendo por Candlemaker Row"
-        },
-        {
-          "inicio": "13:55",
-          "fin": "14:35",
-          "lugar": "greyfriars"
-        },
-        {
-          "tipo": "traslado",
-          "inicio": "14:35",
-          "fin": "14:40",
-          "modo": "a-pie",
-          "desde": "greyfriars",
-          "hasta": "elephant-house",
-          "detalle": "200 m por George IV Bridge"
-        },
-        {
-          "inicio": "14:40",
-          "fin": "14:55",
-          "lugar": "elephant-house",
-          "exterior": true,
-          "opcional": true
-        },
-        {
-          "tipo": "traslado",
-          "inicio": "14:55",
-          "fin": "15:00",
-          "modo": "a-pie",
-          "desde": "elephant-house",
           "hasta": "museo-nacional",
-          "detalle": "200 m, doblando por Chambers Street"
+          "detalle": "400 m subiendo por Candlemaker Row y Chambers Street"
         },
         {
-          "inicio": "15:00",
-          "fin": "16:45",
+          "inicio": "15:40",
+          "fin": "16:50",
           "lugar": "museo-nacional",
-          "nota": "Cierra a las 17:00: subir a la azotea antes de las 16:30."
+          "nota": "Cierra a las 17:00: subir a la azotea lo primero."
         },
         {
           "tipo": "traslado",
-          "inicio": "16:45",
-          "fin": "16:55",
+          "inicio": "16:50",
+          "fin": "17:00",
           "modo": "a-pie",
           "desde": "museo-nacional",
           "hasta": "st-giles",
           "detalle": "500 m por George IV Bridge hasta la Royal Mile"
         },
         {
-          "inicio": "16:55",
+          "inicio": "17:00",
           "fin": "17:35",
           "lugar": "st-giles",
-          "nota": "El corazón del suelo, la torre desde calle abajo y, si apetece pagar las 12 £, la capilla del Cardo. Después, un paseo por la Royal Mile asomándose a los callejones."
+          "nota": "El corazón del suelo, la torre desde calle abajo y, si apetece pagar las 12 £, la capilla del Cardo."
         },
         {
           "tipo": "traslado",
@@ -2545,85 +2670,9 @@
     },
     {
       "fecha": "2026-10-22",
-      "titulo": "Las Highlands y el lago Ness",
+      "titulo": "Holyrood, el parque y el free tour de fantasmas",
       "intensidad": "media",
-      "resumen": "Excursión de doce horas en autocar con guía: el páramo de Rannoch, el valle de Glencoe y el lago Ness en Fort Augustus, donde se come y se puede salir en barco. Va hoy porque es el día con mejor previsión allí arriba. Las paradas exactas y los horarios dependen de la empresa; los de aquí son los de Rabbie's. Se anda poco y se mira mucho por la ventanilla.",
-      "bloques": [
-        {
-          "tipo": "traslado",
-          "inicio": "07:05",
-          "fin": "07:35",
-          "modo": "tren",
-          "desde": "hotel-edimburgo",
-          "hasta": "estacion-autobuses",
-          "detalle": "Tranvía de Haymarket a St Andrew Square, unos 10 minutos, y dos minutos andando. Pasa cada 7-10 minutos"
-        },
-        {
-          "inicio": "07:35",
-          "fin": "07:45",
-          "lugar": "estacion-autobuses",
-          "nota": "Salida a las 7:45. Si la reserva es con otra empresa, el punto y la hora son los de su confirmación."
-        },
-        {
-          "tipo": "traslado",
-          "inicio": "07:45",
-          "fin": "11:30",
-          "modo": "bus",
-          "desde": "estacion-autobuses",
-          "hasta": "glencoe",
-          "detalle": "Hacia el noroeste por el campo de Stirling y el páramo de Rannoch, con una parada para el café por el camino"
-        },
-        {
-          "inicio": "11:30",
-          "fin": "12:15",
-          "lugar": "glencoe"
-        },
-        {
-          "tipo": "traslado",
-          "inicio": "12:15",
-          "fin": "13:45",
-          "modo": "bus",
-          "desde": "glencoe",
-          "hasta": "fort-augustus",
-          "detalle": "Por Fort William, al pie del Ben Nevis, la montaña más alta de las islas británicas"
-        },
-        {
-          "inicio": "13:45",
-          "fin": "15:15",
-          "lugar": "fort-augustus",
-          "nota": "Comida y, si se ha contratado, el crucero por el lago."
-        },
-        {
-          "tipo": "traslado",
-          "inicio": "15:15",
-          "fin": "20:00",
-          "modo": "bus",
-          "desde": "fort-augustus",
-          "hasta": "estacion-autobuses",
-          "detalle": "Vuelta por las Highlands centrales, con alguna parada más según la empresa. Llegada hacia las 20:00"
-        },
-        {
-          "tipo": "traslado",
-          "inicio": "20:00",
-          "fin": "20:20",
-          "modo": "tren",
-          "desde": "estacion-autobuses",
-          "hasta": "hotel-edimburgo",
-          "detalle": "Tranvía de St Andrew Square a Haymarket"
-        },
-        {
-          "tipo": "hito",
-          "inicio": "20:30",
-          "titulo": "Cena cerca del hotel",
-          "detalle": "Algo rápido por Haymarket o Shandwick Place, que el día ha sido largo"
-        }
-      ]
-    },
-    {
-      "fecha": "2026-10-23",
-      "titulo": "Holyrood, el parque y la Royal Mile cuesta arriba",
-      "intensidad": "media",
-      "resumen": "El palacio de Holyrood a primera hora, porque el martes y el miércoles estaba cerrado. Después, el parque: las ruinas de San Antonio y, si hay piernas y no llueve, la cima de Arthur's Seat. Por la tarde se sube la Royal Mile desde abajo, con parada en el museo del collar de Bobby, y la cena es de haggis.",
+      "resumen": "Holyrood a primera hora; va hoy porque el martes y el miércoles estaba cerrado. Después, el parque: las ruinas de San Antonio y, si hay piernas y no llueve, la cima de Arthur's Seat. Por la tarde se sube la Royal Mile desde abajo, con parada en el museo del collar de Bobby. A las 18:00, free tour de fantasmas en español, que termina de noche en Calton Hill.",
       "bloques": [
         {
           "tipo": "traslado",
@@ -2656,15 +2705,15 @@
         },
         {
           "inicio": "12:30",
-          "fin": "13:45",
+          "fin": "13:40",
           "lugar": "arthurs-seat",
           "opcional": true,
           "nota": "Solo si hace bueno y apetece: 45 minutos más de subida y la bajada. Si no, se baja directamente al Canongate."
         },
         {
           "tipo": "traslado",
-          "inicio": "13:45",
-          "fin": "14:15",
+          "inicio": "13:40",
+          "fin": "14:10",
           "modo": "a-pie",
           "desde": "arthurs-seat",
           "hasta": "museo-edimburgo",
@@ -2672,7 +2721,7 @@
         },
         {
           "tipo": "hito",
-          "inicio": "14:15",
+          "inicio": "14:10",
           "titulo": "Comida por el Canongate",
           "detalle": "La parte baja de la Royal Mile tiene cafés y pubs más tranquilos que la de arriba"
         },
@@ -2684,32 +2733,130 @@
         {
           "tipo": "traslado",
           "inicio": "15:45",
-          "fin": "16:45",
+          "fin": "16:30",
           "modo": "a-pie",
           "desde": "museo-edimburgo",
-          "hasta": "makars",
-          "detalle": "1,1 km de Royal Mile cuesta arriba, sin prisa, asomándose a los callejones (closes) que bajan a los lados"
+          "hasta": "tour-fantasmas",
+          "detalle": "800 m de Royal Mile cuesta arriba, sin prisa, asomándose a los callejones (closes) que bajan a los lados"
         },
         {
           "tipo": "hito",
-          "inicio": "16:45",
-          "titulo": "Tarde libre",
-          "detalle": "Princes Street y sus jardines para las compras, o un té. Si el martes llovió en Calton Hill, el sol se pone hoy a las 17:52"
+          "inicio": "16:30",
+          "titulo": "Rato libre",
+          "detalle": "Un té o compras por la Royal Mile. El sol se pone a las 17:55"
         },
         {
-          "inicio": "18:15",
-          "fin": "19:30",
-          "lugar": "makars",
-          "nota": "Cena: haggis, neeps and tatties. Viernes: mejor con reserva."
+          "inicio": "17:50",
+          "fin": "18:05",
+          "lugar": "tour-fantasmas",
+          "nota": "Salida a las 18:00 en el 190 de High Street, con reserva hecha en Civitatis."
         },
         {
           "tipo": "traslado",
-          "inicio": "19:30",
+          "inicio": "18:05",
+          "fin": "19:40",
+          "modo": "a-pie",
+          "desde": "tour-fantasmas",
+          "hasta": "calton-hill",
+          "detalle": "Con el guía: callejones de la Royal Mile, la iglesia de Tron y el cementerio de Calton"
+        },
+        {
+          "inicio": "19:40",
           "fin": "20:00",
+          "lugar": "calton-hill",
+          "nota": "Fin del tour, ya de noche. Antes de bajar, la propina."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "20:00",
+          "fin": "20:25",
           "modo": "tren",
-          "desde": "makars",
+          "desde": "calton-hill",
           "hasta": "hotel-edimburgo",
-          "detalle": "Bajando a Princes Street y tranvía a Haymarket"
+          "detalle": "Diez minutos andando hasta St Andrew Square y tranvía a Haymarket"
+        },
+        {
+          "tipo": "hito",
+          "inicio": "20:30",
+          "titulo": "Cena cerca del hotel",
+          "detalle": "Por Haymarket o Shandwick Place"
+        }
+      ]
+    },
+    {
+      "fecha": "2026-10-23",
+      "titulo": "Las Highlands y el lago Ness",
+      "intensidad": "media",
+      "resumen": "Excursión de trece horas con guía en español: Callander, el valle de Glencoe, Fort William, el lago Ness en Fort Augustus, Inverness y Pitlochry. Va hoy porque el jueves no sale y porque es el día con mejor previsión allí arriba. Las horas de cada parada son aproximadas: las marca el guía. Se anda poco y se mira mucho por la ventanilla.",
+      "bloques": [
+        {
+          "tipo": "traslado",
+          "inicio": "06:45",
+          "fin": "07:05",
+          "modo": "tren",
+          "desde": "hotel-edimburgo",
+          "hasta": "salida-excursion",
+          "detalle": "Tranvía de Haymarket a St Andrew Square y cinco minutos andando hasta Regent Road. A esa hora pasa menos a menudo: si no viene, taxi"
+        },
+        {
+          "inicio": "07:05",
+          "fin": "07:15",
+          "lugar": "salida-excursion",
+          "nota": "Salida a las 7:15, delante de St Andrew's House."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "07:15",
+          "fin": "11:30",
+          "modo": "bus",
+          "desde": "salida-excursion",
+          "hasta": "glencoe",
+          "detalle": "Por Callander (media hora de parada) y el parque nacional de Loch Lomond y los Trossachs, con parada para ver las vacas de las Highlands"
+        },
+        {
+          "inicio": "11:30",
+          "fin": "12:30",
+          "lugar": "glencoe",
+          "nota": "Tres paradas por el valle."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "12:30",
+          "fin": "13:45",
+          "modo": "bus",
+          "desde": "glencoe",
+          "hasta": "fort-augustus",
+          "detalle": "Por Fort William, al pie del Ben Nevis, la montaña más alta de las islas británicas"
+        },
+        {
+          "inicio": "13:45",
+          "fin": "15:15",
+          "lugar": "fort-augustus",
+          "nota": "Hora y media libre: comida y, si se quiere, el crucero por el lago."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "15:15",
+          "fin": "20:15",
+          "modo": "bus",
+          "desde": "fort-augustus",
+          "hasta": "salida-excursion",
+          "detalle": "Por Inverness (hora y media libre) y Pitlochry (media hora). Llegada hacia las 20:15"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "20:15",
+          "fin": "20:40",
+          "modo": "tren",
+          "desde": "salida-excursion",
+          "hasta": "hotel-edimburgo",
+          "detalle": "Tranvía de St Andrew Square a Haymarket"
+        },
+        {
+          "tipo": "hito",
+          "inicio": "20:45",
+          "titulo": "Cena cerca del hotel",
+          "detalle": "Algo rápido por Haymarket o Shandwick Place, que el día ha sido largo"
         }
       ]
     },
@@ -2717,28 +2864,43 @@
       "fecha": "2026-10-24",
       "titulo": "El jardín botánico y vuelta a casa",
       "intensidad": "salida",
-      "resumen": "Check-out temprano con las maletas en recepción, y la última mañana entre árboles de otoño en el jardín botánico, que es gratis. Vuelta al hotel a las 12:20 a por las maletas, y tranvía al aeropuerto a las 13:10 para el vuelo de las 16:00.",
+      "resumen": "Check-out temprano con las maletas en recepción, desayuno en Stockbridge y la última mañana entre árboles de otoño en el jardín botánico, que es gratis. Vuelta al hotel a las 12:20 a por las maletas, y tranvía al aeropuerto a las 13:10 para el vuelo de las 16:00.",
       "bloques": [
         {
           "tipo": "hito",
-          "inicio": "08:30",
-          "titulo": "Desayuno y check-out",
+          "inicio": "08:20",
+          "titulo": "Check-out",
           "detalle": "El check-out es a las 11:00, pero se hace ya y las maletas se quedan en recepción"
         },
         {
           "tipo": "traslado",
-          "inicio": "09:40",
-          "fin": "10:00",
-          "modo": "taxi",
+          "inicio": "08:30",
+          "fin": "09:00",
+          "modo": "a-pie",
           "desde": "hotel-edimburgo",
-          "hasta": "jardin-botanico",
-          "detalle": "2,5 km, unas 10 £. En autobús, mirar la línea en la app de Lothian Buses"
+          "hasta": "pantry",
+          "detalle": "1,8 km por Dean Village, unos 25 minutos. Taxi, unas 8-10 £"
         },
         {
-          "inicio": "10:00",
+          "inicio": "09:00",
+          "fin": "09:50",
+          "lugar": "pantry",
+          "nota": "Desayuno. Abre a las 9:00."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "09:50",
+          "fin": "10:05",
+          "modo": "a-pie",
+          "desde": "pantry",
+          "hasta": "jardin-botanico",
+          "detalle": "1 km por Stockbridge hasta la entrada este, en Inverleith Row"
+        },
+        {
+          "inicio": "10:05",
           "fin": "11:45",
           "lugar": "jardin-botanico",
-          "nota": "Abre a las 10:00. Si llueve fuerte, el plan B es volver a la galería nacional o al museo."
+          "nota": "Si llueve fuerte, el plan B es la galería nacional, en taxi."
         },
         {
           "tipo": "traslado",
@@ -2795,11 +2957,11 @@
     {
       "tramo": "Excursión a las Highlands",
       "modo": "bus",
-      "servicio": "Autocar con guía: Rabbie's (minibús de 16 plazas) u otra empresa de autocar grande, que sale algo más barata",
-      "duracion": "Unas 12 h, de 7:45 a 20:00",
-      "frecuencia": "Diaria",
-      "precio": "Rabbie's, desde 69 £ por persona; las de autocar grande, unas 55-65 £. Crucero por el lago, aparte",
-      "nota": "Hay que reservar ya. El precio de Rabbie's es el de su web; los de las demás, de guías y revendedores."
+      "servicio": "Civitatis: «Excursión por lo mejor de las Highlands», con guía en español",
+      "duracion": "13 h, de 7:15 a unas 20:15",
+      "frecuencia": "Del 20 al 24, todos los días menos el jueves 22",
+      "precio": "77,10 € por persona; crucero opcional por el lago Ness, 21 £ (19 £ los mayores de 65)",
+      "nota": "Sale de St Andrew's House, en el 2 de Regent Road. Paradas: Callander, Glencoe, Fort William, Fort Augustus, Inverness y Pitlochry. Cancelación gratis hasta 48 horas antes. Nota en Civitatis: 9,3 sobre 10 con 701 opiniones."
     }
   ],
   "listas": [
@@ -2824,18 +2986,28 @@
         },
         {
           "id": "reserva-excursion",
-          "texto": "Reservar la excursión a las Highlands para el jueves",
-          "detalle": "Mirar la previsión antes: si el jueves se estropea, cambiarla al viernes y pasar Holyrood al jueves."
+          "texto": "Reservar la excursión a las Highlands del viernes en Civitatis",
+          "detalle": "«Excursión por lo mejor de las Highlands», 77,10 € por persona, salida a las 7:15. Se cancela gratis hasta 48 horas antes."
+        },
+        {
+          "id": "reserva-tour-dean",
+          "texto": "Reservar el free tour de Dean Village del martes a las 14:30",
+          "detalle": "En Civitatis, gratis. Sale de la estatua de David Hume, en la Royal Mile."
+        },
+        {
+          "id": "reserva-tour-hp",
+          "texto": "Reservar el free tour de Harry Potter del miércoles a las 13:30",
+          "detalle": "En Civitatis, gratis. Sale de la estatua de David Hume."
+        },
+        {
+          "id": "reserva-tour-fantasmas",
+          "texto": "Reservar el free tour de fantasmas del jueves a las 18:00",
+          "detalle": "En Civitatis, gratis. Sale del 190 de High Street."
         },
         {
           "id": "entradas-holyrood",
-          "texto": "Opcional: comprar las entradas de Holyrood para el viernes",
+          "texto": "Opcional: comprar las entradas de Holyrood para el jueves",
           "detalle": "En rct.uk. Por internet sale más barato que en taquilla."
-        },
-        {
-          "id": "reserva-makars",
-          "texto": "Reservar en Makars para el viernes a las 18:15",
-          "detalle": "Un viernes por la noche se llena."
         },
         {
           "id": "taxi-martes",
@@ -2891,6 +3063,11 @@
           "id": "powerbank",
           "texto": "Batería externa",
           "detalle": "El móvil es guía, mapa, billete y cámara a la vez, y el jueves son doce horas fuera."
+        },
+        {
+          "id": "efectivo-propinas",
+          "texto": "Unas 40 £ en efectivo",
+          "detalle": "Para las propinas de los tres free tours: algunos guías no aceptan tarjeta."
         }
       ]
     }
@@ -2903,20 +3080,24 @@
         "importe": "≈75 £ · ≈90 €"
       },
       {
-        "concepto": "Taxis (aeropuerto de Birmingham, el balti, el jardín botánico)",
-        "importe": "≈75-100 £ · ≈90-120 €"
+        "concepto": "Taxis (aeropuerto de Birmingham, el balti, vuelta del jardín botánico)",
+        "importe": "≈65-90 £ · ≈77-107 €"
       },
       {
         "concepto": "Entradas × 2 (castillo y Holyrood)",
         "importe": "≈91 £ · ≈108 €"
       },
       {
-        "concepto": "Excursión a las Highlands × 2",
-        "importe": "≈110-138 £ · ≈130-164 €"
+        "concepto": "Excursión a las Highlands × 2 (Civitatis)",
+        "importe": "≈130 £ · 154,20 €"
+      },
+      {
+        "concepto": "Propinas de los tres free tours × 2 (10-15 € por persona y tour)",
+        "importe": "≈51-76 £ · 60-90 €"
       },
       {
         "concepto": "Opcionales × 2 (crucero por el lago Ness, San Giles)",
-        "importe": "0-64 £ · 0-76 €"
+        "importe": "0-66 £ · 0-78 €"
       },
       {
         "concepto": "Comidas, cenas y cafés, 6 días × 2",
@@ -2924,7 +3105,7 @@
       },
       {
         "concepto": "Total estimado",
-        "importe": "≈750-1.020 £ · ≈890-1.210 €",
+        "importe": "≈810-1.080 £ · ≈960-1.280 €",
         "destacado": true
       }
     ]
@@ -2971,10 +3152,6 @@
       "url": "https://edinburghtrams.com/news/changes-tram-fares-2026"
     },
     {
-      "texto": "Rabbie's · excursiones de un día desde Edimburgo",
-      "url": "https://www.rabbies.com/en"
-    },
-    {
       "texto": "Library of Birmingham · horario",
       "url": "https://www.birmingham.gov.uk/lob"
     },
@@ -2997,6 +3174,22 @@
     {
       "texto": "Open-Meteo · previsión",
       "url": "https://open-meteo.com/"
+    },
+    {
+      "texto": "Civitatis · excursión por lo mejor de las Highlands",
+      "url": "https://www.civitatis.com/es/edimburgo/excursion-highlands/"
+    },
+    {
+      "texto": "Civitatis · free tour de Dean Village, Stockbridge y Princes Street",
+      "url": "https://www.civitatis.com/es/edimburgo/tour-dean-village-water-leith/"
+    },
+    {
+      "texto": "Civitatis · free tour de Harry Potter",
+      "url": "https://www.civitatis.com/es/edimburgo/free-tour-harry-potter/"
+    },
+    {
+      "texto": "Civitatis · free tour de los fantasmas de Edimburgo",
+      "url": "https://www.civitatis.com/es/edimburgo/free-tour-fantasmas-edimburgo/"
     }
   ]
 }
