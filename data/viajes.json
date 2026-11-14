@@ -3,6 +3,17 @@
   "descripcion": "Guía interactiva durante el viaje y registro de viajes después.",
   "viajes": [
     {
+      "id": "bilbao-2027-01",
+      "archivo": "data/viajes/bilbao-2027-01.json",
+      "titulo": "Bilbao",
+      "subtitulo": "",
+      "fechas": {
+        "inicio": "2027-01-04",
+        "fin": "2027-01-09"
+      },
+      "estado": "planificado"
+    },
+    {
       "id": "edimburgo-2026-10",
       "archivo": "data/viajes/edimburgo-2026-10.json",
       "titulo": "Birmingham y Edimburgo",

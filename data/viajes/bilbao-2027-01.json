@@ -1,0 +1,2723 @@
+{
+  "id": "bilbao-2027-01",
+  "version": 1,
+  "titulo": "Bilbao",
+  "subtitulo": "Cuatro días a pie y en metro, con Donostia y la costa de Getxo",
+  "estado": "planificado",
+  "fechas": {
+    "inicio": "2027-01-04",
+    "fin": "2027-01-09"
+  },
+  "viajeros": ["Yixuan", "Su pareja"],
+  "moneda": "EUR",
+  "base": "Cinco noches en el Arenal, junto al teatro Arriaga y el Casco Viejo",
+  "resumen": "Se llega el lunes por la noche y se vuelve el sábado por la tarde, sin coche y comiendo bien por menos de 60 € por persona. El martes, el Casco Viejo y el Guggenheim. El miércoles, que es festivo, Donostia de barra en barra y el anochecer desde Igueldo. El jueves, la costa en metro: el Puente Colgante y los acantilados de Getxo. El viernes, el Euskal Museoa, el Bellas Artes, un chuletón en Kerren y Artxanda. El sábado, la Ribera y la Gran Vía antes de volar.",
+  "mapa": {
+    "centro": [43.262, -2.93],
+    "zoom": 13
+  },
+  "avisos": [
+    {
+      "nivel": "alto",
+      "titulo": "El Bellas Artes cierra el 6 y el martes abre a medias",
+      "texto": "Cierra el 6 de enero, igual que el 25 de diciembre y el 1 de enero. Los martes la entrada es gratis, pero solo abren algunas salas y el edificio nuevo, Agravitas, se queda cerrado. Por eso va el viernes, que abre de 10:00 a 19:00.",
+      "dias": ["2027-01-05", "2027-01-08"]
+    },
+    {
+      "nivel": "alto",
+      "titulo": "El 6 de enero es festivo",
+      "texto": "Los autobuses a Donostia van con horario de festivo: hay que mirar las salidas de ese día en la web o la app del operador antes de ir a Termibus. En los bares, las guías dan el horario de un miércoles normal, y Nestor, Borda Berri y La Cuchara de San Telmo abren los miércoles. Aun así, alguno puede cerrar por el festivo. Bar Sport y Atari, en la Parte Vieja, abren todos los días.",
+      "dias": ["2027-01-06"],
+      "momento": "pre"
+    },
+    {
+      "nivel": "alto",
+      "titulo": "Vuelta: salir del hotel a las 15:20",
+      "texto": "El vuelo sale a las 17:30. En taxi, el aeropuerto queda a unos 18 minutos; en metro hasta Moyua y luego el A3247, a unos 40. Llegando a las 15:40 sobra tiempo para un vuelo nacional.",
+      "dias": ["2027-01-09"]
+    },
+    {
+      "nivel": "medio",
+      "titulo": "Una sola Barik para los dos",
+      "texto": "La Barik anónima, la que venden las máquinas del metro, vale para varias personas a la vez: se pasa por el lector una vez por cada uno, hasta diez personas y en menos de tres minutos. Sirve en el metro, el Bizkaibus, el Euskotren y el funicular de Artxanda. En el metro hay que pasarla también al salir, o se cobra el trayecto más caro. La Barik del móvil es personal y no permite esto.",
+      "dias": ["2027-01-04"]
+    },
+    {
+      "nivel": "medio",
+      "titulo": "Entrada combinada del Guggenheim y el Bellas Artes",
+      "texto": "Por separado son 15 € y 12 € por persona; juntas, 20 €. Se compra el martes en el Guggenheim y el viernes se entra en el Bellas Artes sin pagar otra vez. Antes de comprarla, conviene preguntar en taquilla cuántos días vale.",
+      "dias": ["2027-01-05", "2027-01-08"]
+    },
+    {
+      "nivel": "medio",
+      "titulo": "La costa necesita un día seco",
+      "texto": "El jueves casi todo es al aire libre, y la pasarela del Puente Colgante cierra si hace mucho viento. Si la previsión da lluvia para el jueves y no para el viernes, se cambian los dos días: el Euskal Museoa, el Bellas Artes, Kerren y el funicular de Artxanda abren también el jueves.",
+      "dias": ["2027-01-07", "2027-01-08"]
+    },
+    {
+      "nivel": "medio",
+      "titulo": "Comer por menos de 60 € por persona",
+      "texto": "Es el tope del viaje. Los pintxos salen a 2,50-5 € cada uno en Bilbao y a 3-8 € en Donostia, así que una comida de barra se queda bastante por debajo. El único sitio que se acerca es Kerren: con una chuleta de unos 1,2 kg para los dos, un entrante y el vino de la casa, ronda los 55 € por persona. Con la chuleta de simmental o con una segunda botella, se pasa.",
+      "dias": ["2027-01-08"]
+    },
+    {
+      "nivel": "info",
+      "titulo": "La cabalgata acaba cerca del hotel",
+      "texto": "En 2025 y 2026 salió a las 18:00 de la Gran Vía y llegó al Ayuntamiento hacia las 19:30, donde los Reyes saludan desde el balcón. El recorrido de 2027 todavía no está publicado. En 2026 se cortó el servicio entre el Arriaga y Pío Baroja de 17:00 a 21:00, justo al lado del hotel, así que esa tarde se vuelve andando.",
+      "dias": ["2027-01-05"]
+    },
+    {
+      "nivel": "info",
+      "titulo": "El viernes toca Fito en el Euskalduna",
+      "texto": "Fito y Fitipaldis, viernes 8 a las 21:00 en el Palacio Euskalduna, con la gira «Aullidos». No hay entradas compradas; si apetece ir, mejor mirarlo cuanto antes. Esa misma noche tocan Sidecars en la sala Santana 27 (28 € en anticipada). El Euskalduna queda a media hora andando del hotel.",
+      "dias": ["2027-01-08"]
+    }
+  ],
+  "lugares": [
+    {
+      "id": "aeropuerto-bio",
+      "nombre": "Aeropuerto de Bilbao",
+      "categoria": "transporte",
+      "zona": "Loiu",
+      "coords": [43.30478, -2.90644],
+      "resumen": "Se aterriza el lunes hacia las 21:00 y se despega el sábado a las 17:30.",
+      "descripcion": "La terminal blanca de Calatrava, a la que en Bilbao llaman «La Paloma» por la forma. Es un vuelo nacional, sin control de pasaportes: con la maleta recogida, se sale en veinte minutos.\n\nAl centro se va en el **Bizkaibus A3247**, que para a la salida de llegadas, pasa cada 15-20 minutos y tarda entre 20 y 30. Cuesta 5 € en efectivo, al conductor. Para en Termibus, en la Gran Vía y en la plaza Moyua. El taxi hasta el hotel tarda unos 18 minutos.",
+      "duracionMin": 20,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "No es un destino",
+        "fuente": "Es el medio para llegar, no una visita"
+      },
+      "consejos": [
+        "El sábado basta con llegar a las 15:45: es un vuelo nacional.",
+        "Para volver, el A3247 sale de la plaza Moyua; el taxi desde el hotel tarda unos 18 minutos."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/aeropuerto-bio.jpg",
+        "credito": "Basotxerri",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Aeropuerto_Bilbao_Loiu_01.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "Tarifas de Bizkaibus (bizkaia.eus), guías de transporte del aeropuerto, OpenStreetMap (aeroway=terminal) y OSRM para el tiempo en taxi"
+      }
+    },
+    {
+      "id": "moyua",
+      "nombre": "Plaza Moyua",
+      "categoria": "transporte",
+      "zona": "Ensanche",
+      "coords": [43.26267, -2.9354],
+      "resumen": "La parada del bus del aeropuerto, en la plaza elíptica que hace de centro del Ensanche.",
+      "descripcion": "Aquí para el A3247, y debajo está la estación de metro de Moyua. Sus bocas de cristal curvo son de Norman Foster, y en Bilbao las llaman «fosteritos».\n\nDel metro de Moyua al del Casco Viejo hay dos paradas. Andando, 1,1 km por la Gran Vía y el puente del Arenal.",
+      "duracionMin": 5,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "No es un destino",
+        "fuente": "Es una parada de transporte"
+      },
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/moyua.jpg",
+        "credito": "Xabier",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Plaza_de_Federico_Moy%C3%BAa.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap (highway=bus_stop, Plaza Eliptikoa) y tarifas de Bizkaibus"
+      }
+    },
+    {
+      "id": "metro-casco-viejo",
+      "nombre": "Metro Casco Viejo",
+      "categoria": "transporte",
+      "zona": "Casco Viejo",
+      "coords": [43.25989, -2.92293],
+      "resumen": "La estación de metro que queda a dos minutos del hotel.",
+      "descripcion": "Aquí se cruzan las tres líneas: la 1, que va a Getxo y a Plentzia; la 2, que también pasa por San Mamés; y la 3, la de Euskotren. Casi todos los trayectos del viaje salen de aquí.\n\nEn las máquinas se compra la **Barik anónima**, la que vale para los dos a la vez.",
+      "duracionMin": 5,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "No es un destino",
+        "fuente": "Es una estación de metro"
+      },
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/metro-casco-viejo.jpg",
+        "credito": "Xabier",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Estaci%C3%B3n_de_Zazpikaleak_Casco_Viejo_22.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap (railway=subway, L1-L2 Metro Bilbao)"
+      }
+    },
+    {
+      "id": "hotel-bilbao",
+      "nombre": "Hotel de Bilbao",
+      "categoria": "alojamiento",
+      "zona": "El Arenal",
+      "coords": [43.25938, -2.92426],
+      "resumen": "En el Arenal, junto al teatro Arriaga, entre la ría y el Casco Viejo.",
+      "descripcion": "Las coordenadas son las de la calle, no las del hotel. El nombre y la reserva **no van aquí**, porque este repositorio es público: están en «Datos privados» de la aplicación.\n\nQueda a dos minutos del metro del Casco Viejo y a cinco de la Plaza Nueva, así que casi todas las noches se vuelve andando.",
+      "duracionMin": 20,
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "Ubicación aproximada a propósito (OpenStreetMap, Areatza kalea)"
+      }
+    },
+    {
+      "id": "plaza-nueva",
+      "nombre": "Plaza Nueva",
+      "categoria": "comida",
+      "zona": "Casco Viejo",
+      "coords": [43.25901, -2.92269],
+      "resumen": "Una plaza cerrada de soportales con una barra de pintxos detrás de casi cada arco.",
+      "descripcion": "Es la plaza neoclásica del Casco Viejo, del siglo XIX, cuadrada y rodeada de arcos. Por la noche se llena de gente de pie con un txakoli en la mano, y lo normal es pedir uno o dos pintxos en cada barra y pasar a la siguiente.\n\nLos bares se llenan de 13:00 a 14:00 y de 20:00 a 21:30. Antes o después de esas horas se está mucho más a gusto.",
+      "duracionMin": 75,
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: es la plaza de los pintxos del Casco Viejo; las guías de 2025 y 2026 ponen aquí a Gure Toki y a Sorginzulo"
+      },
+      "queMirar": [
+        {
+          "que": "El huevo a baja temperatura con trufa de Gure Toki",
+          "porque": "Es su pintxo más citado. La pizarra de la pared cambia con la temporada."
+        },
+        {
+          "que": "Las croquetas de Sorginzulo",
+          "porque": "De jamón o de bacalao, en un bar diminuto donde se come codo con codo."
+        },
+        {
+          "que": "La tortilla del Café Bar Bilbao",
+          "porque": "Muy jugosa por dentro. En Bilbao se discute en serio cómo de cuajada tiene que estar."
+        }
+      ],
+      "consejos": [
+        "Gure Toki abre de lunes a jueves hasta las 23:00, y viernes y sábado hasta medianoche, según las guías.",
+        "Algún bar de la plaza vive de estar donde está: si una barra tiene los pintxos con cara de cansados, a la siguiente."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/plaza-nueva.jpg",
+        "credito": "Jose Luis Filpo Cabana",
+        "licencia": "CC BY 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Euskaltzaindia._Plaza_Nueva_(Bilbao).jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "Guías de pintxos de Do Eat Better y de Planomato; los bares no publican horario oficial"
+      }
+    },
+    {
+      "id": "siete-calles",
+      "nombre": "Las Siete Calles",
+      "categoria": "patrimonio",
+      "zona": "Casco Viejo",
+      "coords": [43.25675, -2.92361],
+      "resumen": "Las siete calles paralelas con las que nació Bilbao en 1300.",
+      "descripcion": "Somera, Artekale, Tendería, Belostikale, Carnicería Vieja, Barrenkale y Barrenkale Barrena. Son las calles de la villa que fundó Diego López de Haro, y siguen igual de estrechas, con tiendas de toda la vida en los bajos.\n\nConviene recorrerlas a primera hora, mientras van subiendo las persianas.",
+      "duracionMin": 45,
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: es el núcleo fundacional de Bilbao y lo primero que se recorre del Casco Viejo"
+      },
+      "queMirar": [
+        {
+          "que": "Los miradores acristalados de los pisos altos",
+          "porque": "Se ven mejor desde el centro de la calle, levantando la cabeza."
+        },
+        {
+          "que": "Las tiendas antiguas de la calle Tendería",
+          "porque": "La calle debe el nombre a ellas, y algunas siguen con el mostrador de madera."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/siete-calles.jpg",
+        "credito": "Andrea Bocchino www.andreabocchino.it",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Casco_viejo.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap (Dendarikale kalea)"
+      }
+    },
+    {
+      "id": "catedral-santiago",
+      "nombre": "Catedral de Santiago",
+      "categoria": "patrimonio",
+      "zona": "Casco Viejo",
+      "coords": [43.25721, -2.9237],
+      "resumen": "Gótica por dentro y con una fachada del XIX que la hace parecer más nueva de lo que es.",
+      "descripcion": "Es el templo principal de la villa y catedral desde 1949. El interior es gótico, de piedra oscura y bastante sobrio. La fachada y la torre, en cambio, son neogóticas del siglo XIX, y por eso desde la plaza engaña.\n\nEstá en el Camino de Santiago del Norte, y es normal cruzarse con peregrinos sellando la credencial.",
+      "duracionMin": 40,
+      "precio": {
+        "importe": 5,
+        "detalle": "Entrada conjunta con la iglesia de San Antón, según Inspain; confirmar en la puerta"
+      },
+      "horarios": {
+        "lun": [["10:00", "13:00"], ["17:00", "19:30"]],
+        "mar": [["10:00", "13:00"], ["17:00", "19:30"]],
+        "mie": [["10:00", "13:00"], ["17:00", "19:30"]],
+        "jue": [["10:00", "13:00"], ["17:00", "19:30"]],
+        "vie": [["10:00", "13:00"], ["17:00", "19:30"]],
+        "sab": [["10:00", "13:00"], ["17:00", "19:30"]],
+        "dom": [["11:00", "13:00"], ["18:00", "20:00"]]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: catedral de la diócesis y templo principal del Casco Viejo"
+      },
+      "queMirar": [
+        {
+          "que": "El claustro",
+          "porque": "Pequeño y silencioso, a dos pasos del ruido de la calle."
+        },
+        {
+          "que": "La puerta del Ángel, en el lateral",
+          "porque": "La entrada gótica que la fachada nueva dejó en segundo plano."
+        }
+      ],
+      "consejos": [
+        "Las guías no se ponen de acuerdo en el horario: unas dicen de 10:00 a 20:00 seguido y otras lo parten a mediodía. El plan va a las 10:25, que encaja con los dos."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/catedral-santiago.jpg",
+        "credito": "Zarateman",
+        "licencia": "CC0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Bilbao_-_Catedral_de_Santiago_51.JPG"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "Inspain, Arrival Guides y catedralbilbao.com (sin horario publicado); se toma el horario más restrictivo"
+      }
+    },
+    {
+      "id": "mercado-ribera",
+      "nombre": "Mercado de la Ribera",
+      "categoria": "comida",
+      "zona": "Casco Viejo",
+      "coords": [43.25555, -2.92434],
+      "resumen": "El mercado de 1929 asomado a la ría, con pescado abajo y barras de pintxos arriba.",
+      "descripcion": "Un edificio de 1929, largo y con vidrieras, construido sobre la misma orilla de la ría. Abajo están los puestos de pescado, carne, queso y verdura; arriba, una planta de barras donde se come mirando al agua.\n\nPresume de haber sido el mercado cubierto más grande de Europa según el Guinness. Se visita el martes por la mañana, con los puestos en plena faena, y se vuelve el sábado a comprar lo que uno se quiere llevar.",
+      "duracionMin": 60,
+      "horarios": {
+        "lun": [["08:00", "14:30"]],
+        "mar": [["08:00", "14:30"]],
+        "mie": [["08:00", "14:30"]],
+        "jue": [["08:00", "14:30"]],
+        "vie": [["08:00", "14:30"]],
+        "sab": [["08:00", "14:30"]]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: el mercado principal de Bilbao, en todas las guías del Casco Viejo"
+      },
+      "queMirar": [
+        {
+          "que": "Los puestos de pescado de la planta baja",
+          "porque": "Es donde más se nota que el mercado sigue siendo de compra diaria."
+        },
+        {
+          "que": "La ría desde los ventanales de arriba",
+          "porque": "Las barras están junto a las ventanas que dan al agua."
+        }
+      ],
+      "consejos": [
+        "El sábado, para llevar: un Idiazabal, bonito en conserva y una botella de txakoli.",
+        "Los puestos cierran a las 14:30. La planta de barras tiene su propio horario: una guía dice que abre de lunes a sábado y otra que cierra lunes y martes."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/mercado-ribera.jpg",
+        "credito": "PA",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Bilbao_-_Ribera.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "Guías de Do Eat Better, Barceló y Time Out; no coinciden en las tardes, así que se toma solo la mañana, que dan todas"
+      }
+    },
+    {
+      "id": "san-anton",
+      "nombre": "Iglesia y puente de San Antón",
+      "categoria": "patrimonio",
+      "zona": "Casco Viejo",
+      "coords": [43.25517, -2.92322],
+      "resumen": "La iglesia y el puente que salen en el escudo de Bilbao.",
+      "descripcion": "El escudo de la villa lleva justo esto: la iglesia de San Antón, el puente y dos lobos. Se mira desde la orilla de enfrente o desde el propio puente, con el mercado de la Ribera al lado.",
+      "duracionMin": 15,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: se ve de paso, por fuera, al salir del mercado"
+      },
+      "queMirar": [
+        {
+          "que": "La iglesia desde el centro del puente",
+          "porque": "Es el encuadre del escudo de la ciudad."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/san-anton.jpg",
+        "credito": "Zarateman",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Bilbao_-_Iglesia_de_San_Ant%C3%B3n_01.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap"
+      }
+    },
+    {
+      "id": "santa-maria-kalea",
+      "nombre": "Calle Santa María",
+      "categoria": "comida",
+      "zona": "Casco Viejo",
+      "coords": [43.25823, -2.92608],
+      "resumen": "Varias barras seguidas en una calle corta, a cinco minutos de la Plaza Nueva.",
+      "descripcion": "Una calle del Casco Viejo buena para el txikiteo, que es ir de bar en bar tomando algo en cada uno. Aquí está Irrintzi, el de la brocheta de gambas que flambean delante, y Txiriboga, uno de los clásicos.\n\nSirve igual para comer de pie a mediodía que para una cena ligera.",
+      "duracionMin": 90,
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: Irrintzi y Txiriboga salen en las guías de pintxos de 2025 y 2026"
+      },
+      "queMirar": [
+        {
+          "que": "La brocheta de gambas de Irrintzi",
+          "porque": "La flambean en la barra, y el fogonazo forma parte del pintxo."
+        },
+        {
+          "que": "Las croquetas de Txiriboga",
+          "porque": "Es un clásico de toda la vida del Casco Viejo."
+        }
+      ],
+      "consejos": [
+        "En Somera, a la vuelta, está Motrikes, otro de los que salen en las guías."
+      ],
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "Guías de pintxos de Do Eat Better y Planomato; OpenStreetMap (Irrintzi, Andra Maria kalea 8)"
+      }
+    },
+    {
+      "id": "zubizuri",
+      "nombre": "Zubizuri",
+      "categoria": "patrimonio",
+      "zona": "Uribitarte",
+      "coords": [43.26632, -2.9278],
+      "resumen": "El puente blanco de Calatrava, con el arco inclinado sobre la ría.",
+      "descripcion": "Una pasarela peatonal de 1997, del mismo año que el Guggenheim. El arco blanco se inclina hacia un lado y los cables sostienen el tablero, que hace una curva sobre el agua.\n\nCae justo de camino al museo.",
+      "duracionMin": 10,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: se cruza de paso, camino del Guggenheim"
+      },
+      "curiosidades": [
+        {
+          "titulo": "Un suelo que resbalaba",
+          "texto": "El tablero era de baldosas de vidrio, y con la lluvia de Bilbao resbalaba tanto que acabaron tapándolo con una alfombra antideslizante, que es la que se pisa hoy."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/zubizuri.jpg",
+        "credito": "Basotxerri",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Bilbao_-_Zubizuri_07.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap"
+      }
+    },
+    {
+      "id": "guggenheim",
+      "nombre": "Museo Guggenheim Bilbao",
+      "categoria": "patrimonio",
+      "zona": "Abandoibarra",
+      "coords": [43.26843, -2.93406],
+      "resumen": "El titanio de Gehry junto a la ría, con un perro de flores en la puerta y una araña gigante al lado.",
+      "descripcion": "Abrió en 1997. El edificio de Frank Gehry ya merece la visita por fuera, y conviene rodearlo antes de entrar: desde la ría y desde el puente de La Salve cambia por completo.\n\nEn enero de 2027 hay cuatro exposiciones además de la colección. La de Pipilotti Rist, «Ever Is Over All», se despide el 17 de enero; la de Steve McQueen, «66–76–26», sigue hasta el 21 de febrero; «Some Light», de Dan Flavin, hasta el 4 de abril, y «Seed Pattern», de Zadie Xa, hasta el 11 de abril.",
+      "duracionMin": 195,
+      "precio": {
+        "importe": 15,
+        "detalle": "General con audioguía. Estudiantes de 18 a 25 y mayores de 65, 7,50 €. Combinada con el Bellas Artes, 20 €"
+      },
+      "horarios": {
+        "mar": [["10:00", "19:00"]],
+        "mie": [["10:00", "19:00"]],
+        "jue": [["10:00", "19:00"]],
+        "vie": [["10:00", "19:00"]],
+        "sab": [["10:00", "19:00"]],
+        "dom": [["10:00", "19:00"]]
+      },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "puesto": "1.260.894 visitantes en 2025",
+        "fuente": "Balance anual del museo, recogido por Última Hora el 16 de diciembre de 2025"
+      },
+      "queMirar": [
+        {
+          "que": "«La materia del tiempo», de Richard Serra",
+          "porque": "Ocho esculturas de acero gigantes entre las que se camina. Al poco rato, el suelo parece inclinarse."
+        },
+        {
+          "que": "«Ever Is Over All», de Pipilotti Rist",
+          "porque": "Una mujer revienta ventanillas de coches con una flor, a cámara lenta y sonriendo. Es lo primero que hay que ver, porque se va el 17."
+        },
+        {
+          "que": "Las salas de Dan Flavin",
+          "porque": "Tubos fluorescentes de colores: la obra es la luz, y tiñe la sala entera."
+        },
+        {
+          "que": "«Puppy», de Jeff Koons, en la entrada",
+          "porque": "Un perro de doce metros cubierto de flores vivas, que se cambian según la estación."
+        },
+        {
+          "que": "«Mamá», de Louise Bourgeois, junto a la ría",
+          "porque": "Una araña de bronce enorme. Debajo, colgando, lleva una bolsa de huevos de mármol."
+        }
+      ],
+      "curiosidades": [
+        {
+          "titulo": "El «efecto Guggenheim»",
+          "texto": "Que un museo saque a una ciudad industrial de la crisis se estudia en urbanismo con el nombre de este edificio."
+        }
+      ],
+      "consejos": [
+        "Si se va a ir también al Bellas Artes, aquí se compra la combinada: 20 € en lugar de 27.",
+        "La audioguía va incluida en la entrada."
+      ],
+      "enlaces": [
+        { "texto": "Planifica tu visita", "url": "https://www.guggenheim-bilbao.eus/en/plan-your-visit" }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/guggenheim.jpg",
+        "credito": "Naotake Murayama",
+        "licencia": "CC BY 2.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Museo_Guggenheim%2C_Bilbao_(31273245344).jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "guggenheim-bilbao.eus: horario (martes a domingo de 10:00 a 19:00; cierra el 25 de diciembre y el 1 de enero), precios y fechas de las exposiciones"
+      }
+    },
+    {
+      "id": "ayuntamiento",
+      "nombre": "Ayuntamiento de Bilbao",
+      "categoria": "patrimonio",
+      "zona": "Uribarri",
+      "coords": [43.26421, -2.92348],
+      "resumen": "Aquí termina la cabalgata y los Reyes saludan desde el balcón.",
+      "descripcion": "Un palacio de finales del XIX a la orilla de la ría, con la plaza delante. El martes 5 es donde acaba la cabalgata: en 2025 y 2026 llegó hacia las 19:30.\n\nSi no se va a la cabalgata, no hace falta pararse: se ve de paso camino del Guggenheim.",
+      "duracionMin": 70,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "Evento",
+        "fuente": "Criterio: solo tiene sentido el martes 5, por la cabalgata"
+      },
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/ayuntamiento.jpg",
+        "credito": "Zarateman",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Bilbao_-_Ayuntamiento_24.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "Horario de la cabalgata de 2026 (Okdiario) y de 2025 (Newtral); el de 2027 aún no está publicado"
+      }
+    },
+    {
+      "id": "euskal-museoa",
+      "nombre": "Euskal Museoa",
+      "categoria": "patrimonio",
+      "zona": "Casco Viejo",
+      "coords": [43.25803, -2.92185],
+      "resumen": "El museo de la cultura vasca, recién reformado, dentro de un colegio jesuita del siglo XVII.",
+      "descripcion": "Reabrió en junio de 2026 después de una reforma integral. Está en el antiguo colegio de San Andrés, con un claustro en el centro, y cuenta la historia y la vida del País Vasco desde la prehistoria.\n\nQueda a cinco minutos del hotel y abre a las 10:00, así que es la manera fácil de empezar el viernes.",
+      "duracionMin": 90,
+      "horarios": {
+        "lun": [["10:00", "19:00"]],
+        "mie": [["10:00", "19:00"]],
+        "jue": [["10:00", "19:00"]],
+        "vie": [["10:00", "19:00"]],
+        "sab": [["10:00", "19:00"]],
+        "dom": [["10:00", "14:00"]]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: es el museo de referencia de la cultura vasca y acaba de reabrir"
+      },
+      "queMirar": [
+        {
+          "que": "El ídolo de Mikeldi",
+          "porque": "Una figura de piedra de la Edad del Hierro, mitad animal y mitad bloque, que nadie ha sabido explicar del todo."
+        },
+        {
+          "que": "El claustro del colegio",
+          "porque": "El edificio es del siglo XVII y el patio sigue siendo lo mejor."
+        }
+      ],
+      "consejos": [
+        "Cierra los martes. Los domingos y festivos, de 10:00 a 14:00.",
+        "El precio después de la reforma no está en la web principal: antes eran 10 €, según las guías."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/euskal-museoa.jpg",
+        "credito": "Xabier",
+        "licencia": "CC0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Euskal_Museoa_3_(cropped).jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "euskalmuseoa.eus (horario; martes cerrado) y nota de prensa de la Diputación de Bizkaia del 4 de junio de 2026"
+      }
+    },
+    {
+      "id": "bellas-artes",
+      "nombre": "Bilbao Museoa, el Bellas Artes",
+      "categoria": "patrimonio",
+      "zona": "Abando",
+      "coords": [43.26546, -2.9381],
+      "resumen": "El museo de siempre, con un edificio nuevo de Norman Foster que se estrenó en octubre de 2026.",
+      "descripcion": "Reabrió el 6 de octubre de 2026 con **Agravitas**, la ampliación de Norman Foster y Luis María Uriarte, y con un nombre nuevo, Bilbao Museoa. La colección va de El Greco y Goya a Gauguin, y está al borde del parque de Doña Casilda, a diez minutos del Guggenheim.\n\nEn enero hay tres exposiciones: «Visiones de Ultramar», con la colección Patricia Phelps de Cisneros, hasta el 24 de enero; «La línea infinita», de Balerdi, hasta el 14 de febrero, y «La búsqueda del comienzo», el homenaje a Plácido Arango.",
+      "duracionMin": 135,
+      "precio": {
+        "importe": 12,
+        "detalle": "General; reducida, 6 €. Combinada con el Guggenheim, 20 €"
+      },
+      "horarios": {
+        "lun": [["10:00", "18:00"]],
+        "mar": [["10:00", "18:00"]],
+        "mie": [["10:00", "18:00"]],
+        "jue": [["10:00", "18:00"]],
+        "vie": [["10:00", "19:00"]],
+        "sab": [["10:00", "19:00"]],
+        "dom": [["10:00", "15:00"]]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: el gran museo de arte antiguo y moderno del País Vasco, recién ampliado"
+      },
+      "queMirar": [
+        {
+          "que": "Agravitas, el edificio nuevo",
+          "porque": "Es lo que se estrenó en octubre de 2026, y el martes se queda cerrado."
+        },
+        {
+          "que": "«Visiones de Ultramar»",
+          "porque": "Se va el 24 de enero, así que es la que antes se pierde."
+        },
+        {
+          "que": "«La línea infinita», de Balerdi",
+          "porque": "Rafael Ruiz Balerdi, pintor donostiarra, en una retrospectiva que sigue hasta el 14 de febrero."
+        }
+      ],
+      "consejos": [
+        "Cierra el 6 de enero, y los martes, aunque es gratis, solo abre una parte. Por eso va el viernes.",
+        "La taquilla cierra media hora antes que el museo."
+      ],
+      "enlaces": [
+        { "texto": "Planifica tu visita", "url": "https://bilbaomuseoa.eus/visita/planifica-tu-visita" }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/bellas-artes.jpg",
+        "credito": "Xabier",
+        "licencia": "CC0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Ampliaci%C3%B3n_del_Museo_de_Bellas_Artes_de_Bilbao_(2026)_7.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "bilbaomuseoa.eus: horario, cierres del 25 de diciembre y el 1 y el 6 de enero, tarifas y exposiciones"
+      }
+    },
+    {
+      "id": "kerren",
+      "nombre": "Asador Kerren",
+      "categoria": "comida",
+      "zona": "Indautxu",
+      "coords": [43.25814, -2.93872],
+      "resumen": "Chuleta de vaca madurada a la brasa, en un asador de los de siempre.",
+      "descripcion": "Un asador tradicional de 1978 en la calle Iparraguirre, con un comedor al lado de las brasas. La chuleta de ganado mayor, madurada más de treinta días, sale a 65 € el kilo, y cada pieza pesa alrededor de 1,2 kg: da para los dos.\n\nCon esa chuleta, un entrante y el vino de la casa, la cuenta ronda los 55 € por persona. La de simmental, madurada más de 35 días, sube a 79 € el kilo y se pasa del tope.",
+      "duracionMin": 90,
+      "precio": {
+        "importe": 55,
+        "detalle": "Estimación por persona: chuleta de ganado mayor para dos, un entrante y el vino de la casa"
+      },
+      "horarios": {
+        "mar": [["12:30", "23:00"]],
+        "mie": [["12:30", "23:00"]],
+        "jue": [["12:30", "23:00"]],
+        "vie": [["12:30", "23:00"]],
+        "sab": [["12:30", "23:00"]],
+        "dom": [["12:30", "16:00"]]
+      },
+      "reserva": {
+        "necesaria": true,
+        "nota": "Por teléfono (944 220 089) o por correo (kerren@kerrenasador.com)"
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: asador clásico de Bilbao; reseña de Mule Carajonero del 3 de marzo de 2026 y opiniones de GastroRanking"
+      },
+      "consejos": [
+        "La entrada es estrecha y se pasa de largo con facilidad.",
+        "Cierra los lunes. Al reservar, preguntar si cierra por vacaciones en enero."
+      ],
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "kerrenasador.com (horario) y Mule Carajonero, 3 de marzo de 2026 (precios de la chuleta)"
+      }
+    },
+    {
+      "id": "funicular-artxanda",
+      "nombre": "Funicular de Artxanda",
+      "categoria": "transporte",
+      "zona": "Matiko",
+      "coords": [43.26916, -2.9253],
+      "resumen": "Tres minutos de subida, en servicio desde 1915, hasta el mirador de la ciudad.",
+      "descripcion": "Sale de una plaza a la orilla derecha de la ría y sube por la ladera entre casas. Pasa cada 10-15 minutos.",
+      "duracionMin": 10,
+      "precio": {
+        "importe": 3.5,
+        "detalle": "Sencillo; ida y vuelta, 6 €. Con Barik sale más barato"
+      },
+      "horarios": {
+        "lun": [["07:15", "22:00"]],
+        "mar": [["07:15", "22:00"]],
+        "mie": [["07:15", "22:00"]],
+        "jue": [["07:15", "22:00"]],
+        "vie": [["07:15", "22:00"]],
+        "sab": [["07:15", "22:00"]],
+        "dom": [["08:15", "22:00"]]
+      },
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "No es un destino",
+        "fuente": "Es el medio para subir al mirador"
+      },
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/funicular-artxanda.jpg",
+        "credito": "Xabier",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Funicular_de_Artxanda_1.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "Horario de invierno según guías turísticas (no hay tabla oficial de 2026 legible) y OpenStreetMap (railway=funicular)"
+      }
+    },
+    {
+      "id": "mirador-artxanda",
+      "nombre": "Mirador de Artxanda",
+      "categoria": "naturaleza",
+      "zona": "Artxanda",
+      "coords": [43.2742, -2.92203],
+      "resumen": "Bilbao entero a los pies, con el Guggenheim brillando en la curva de la ría.",
+      "descripcion": "Desde aquí se entiende la ciudad de un vistazo: el Casco Viejo apretado en su recodo, el Ensanche en cuadrícula, la ría haciendo eses hasta el mar y los montes cerrándolo todo.\n\nAl anochecer se van encendiendo las luces y el titanio del museo coge el último color. El viernes 8 anochece a las 17:53.",
+      "duracionMin": 80,
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: es el mirador clásico de la ciudad, en todas las guías"
+      },
+      "queMirar": [
+        {
+          "que": "El Guggenheim y el puente de La Salve",
+          "porque": "Desde arriba se ve cómo el museo se mete por debajo del puente."
+        },
+        {
+          "que": "La ría hacia el mar",
+          "porque": "Por esa curva salía el hierro de Bizkaia, y por ahí se va el jueves en metro hasta Getxo."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/mirador-artxanda.jpg",
+        "credito": "pere prlpz",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Funicular_d'Artxanda_des_del_pont_de_l'Arenal_P1270339.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap (tourism=viewpoint); anochecer según el archivo de Open-Meteo para las mismas fechas de 2026"
+      }
+    },
+    {
+      "id": "ensanche",
+      "nombre": "La Gran Vía y la plaza Moyua",
+      "categoria": "patrimonio",
+      "zona": "Ensanche",
+      "coords": [43.26335, -2.93616],
+      "resumen": "El Bilbao de los bancos y los palacetes, con la plaza elíptica en medio.",
+      "descripcion": "El Ensanche se trazó a finales del XIX, cuando la ciudad se hizo rica con el hierro y los astilleros. La Gran Vía es su calle principal: edificios señoriales, tiendas y, el sábado por la mañana, medio Bilbao paseando.\n\nEn la plaza Moyua está el palacio Chávarri, de ladrillo y con aire flamenco, que hoy es la Subdelegación del Gobierno.",
+      "duracionMin": 35,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: paseo de la última mañana, de camino a la comida"
+      },
+      "queMirar": [
+        {
+          "que": "El palacio Chávarri",
+          "porque": "Un palacio de ladrillo con tejados en punta, raro entre los edificios de piedra de alrededor."
+        },
+        {
+          "que": "Las bocas de metro de Foster",
+          "porque": "Los «fosteritos»: tubos de cristal curvo que salen del suelo."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/ensanche.jpg",
+        "credito": "josu.orbe",
+        "licencia": "CC BY-SA 2.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Txabarri_jauregia%2C_Bilbo._Euskal_Herria.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap (parada Txabarri Jauregia, plaza Moyua)"
+      }
+    },
+    {
+      "id": "azkuna-zentroa",
+      "nombre": "Azkuna Zentroa",
+      "categoria": "patrimonio",
+      "zona": "Indautxu",
+      "coords": [43.25969, -2.93712],
+      "resumen": "Un antiguo almacén de vino reconvertido por Philippe Starck, con 43 columnas distintas y una piscina de fondo de cristal en el techo.",
+      "descripcion": "Era la alhóndiga, el almacén municipal de vino, de principios del siglo XX. Philippe Starck lo vació por dentro y lo convirtió en un centro cultural. En el atrio hay 43 columnas, y no se repite ninguna: cada una tiene su material y su estilo.\n\nLa entrada al atrio es libre.",
+      "duracionMin": 40,
+      "horarios": {
+        "lun": [["09:00", "21:00"]],
+        "mar": [["09:00", "21:00"]],
+        "mie": [["09:00", "21:00"]],
+        "jue": [["09:00", "21:00"]],
+        "vie": [["09:00", "21:00"]],
+        "sab": [["09:00", "21:00"]],
+        "dom": [["09:00", "21:00"]]
+      },
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: entrada libre y de camino a la comida del sábado"
+      },
+      "queMirar": [
+        {
+          "que": "Las 43 columnas del atrio",
+          "porque": "Cada una es de un material y un estilo: ladrillo, mármol, bronce, cerámica…"
+        },
+        {
+          "que": "La piscina del techo, vista desde abajo",
+          "porque": "Tiene el fondo de cristal, y desde el vestíbulo se ve a la gente nadando por encima."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/azkuna-zentroa.jpg",
+        "credito": "Tomas Fano",
+        "licencia": "CC BY-SA 2.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Bilbao_Alhondiga-tomasfano-01.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "Turismo Euskadi (de lunes a domingo, de 9:00 a 21:00; ficha sin fecha) y OpenStreetMap"
+      }
+    },
+    {
+      "id": "la-vina-ensanche",
+      "nombre": "La Viña del Ensanche",
+      "categoria": "comida",
+      "zona": "Ensanche",
+      "coords": [43.26164, -2.93274],
+      "resumen": "Barra antigua llena de latas y jamones, con un solomillo con foie que sale en todas las guías.",
+      "descripcion": "Una tienda-bar de las de siempre en la calle Diputación, con las paredes forradas de vinos y conservas. Se come en la barra o en el comedor del fondo, y los pintxos salen a 3-5 €.\n\nEs la comida del sábado, a un paso de Moyua, antes de ir al aeropuerto.",
+      "duracionMin": 85,
+      "horarios": {
+        "lun": [["10:00", "23:00"]],
+        "mar": [["10:00", "23:00"]],
+        "mie": [["10:00", "23:00"]],
+        "jue": [["10:00", "23:00"]],
+        "vie": [["10:00", "23:00"]],
+        "sab": [["10:00", "23:00"]]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: sale en las guías de pintxos de 2025 y 2026 del Ensanche"
+      },
+      "queMirar": [
+        {
+          "que": "El solomillo con foie",
+          "porque": "Es el pintxo más conocido de la casa."
+        },
+        {
+          "que": "El jamón ibérico Joselito",
+          "porque": "Es lo otro que recomiendan las guías."
+        }
+      ],
+      "consejos": [
+        "Cierra los domingos."
+      ],
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "Guía de pintxos de Do Eat Better (horario de lunes a sábado de 10:00 a 23:00) y OpenStreetMap"
+      }
+    },
+    {
+      "id": "termibus",
+      "nombre": "Termibus",
+      "categoria": "transporte",
+      "zona": "San Mamés",
+      "coords": [43.26266, -2.95051],
+      "resumen": "La estación de autobuses de Bilbao, al lado de San Mamés.",
+      "descripcion": "De aquí salen los autobuses a Donostia. Desde el hotel se llega en metro, cuatro paradas hasta San Mamés, y la estación está a la salida.",
+      "duracionMin": 10,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "No es un destino",
+        "fuente": "Es una estación de autobuses"
+      },
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/termibus.jpg",
+        "credito": "Xabier",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Bilbao_-_Intermodal_23_retouched.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap (Termibus)"
+      }
+    },
+    {
+      "id": "estacion-donostia",
+      "nombre": "Estación de autobuses de Donostia",
+      "categoria": "transporte",
+      "zona": "Donostia",
+      "coords": [43.31694, -1.97746],
+      "resumen": "Se llega a media mañana y se vuelve a salir de aquí por la noche.",
+      "descripcion": "Está a la orilla del Urumea, junto a la estación de tren. A la Parte Vieja hay 1,2 km andando, cruzando el río.",
+      "duracionMin": 10,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "No es un destino",
+        "fuente": "Es una estación de autobuses"
+      },
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/estacion-donostia.jpg",
+        "credito": "Zarateman",
+        "licencia": "CC0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:San_Sebasti%C3%A1n_-_Estaci%C3%B3n_de_Autobuses_1.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap (amenity=bus_station)"
+      }
+    },
+    {
+      "id": "parte-vieja",
+      "nombre": "Plaza de la Constitución",
+      "categoria": "patrimonio",
+      "zona": "Parte Vieja de Donostia",
+      "coords": [43.32359, -1.98488],
+      "resumen": "La plaza de los balcones numerados, que en su día hizo de plaza de toros.",
+      "descripcion": "Es el centro de la Parte Vieja: una plaza porticada y cerrada, con las fachadas llenas de balcones. Los números que lleva cada uno vienen de cuando aquí se celebraban corridas y los balcones se alquilaban como palcos.\n\nAlrededor, en cuatro o cinco calles, se concentran casi todas las barras del día.",
+      "duracionMin": 30,
+      "nivel": "obligatorio",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: es el corazón de la Parte Vieja y el punto de partida de cualquier ruta de pintxos"
+      },
+      "queMirar": [
+        {
+          "que": "Los números de los balcones",
+          "porque": "Cada uno era un palco con su número cuando la plaza era coso taurino."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/parte-vieja.jpg",
+        "credito": "Calips",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:San_Sebastien_13.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap (place=square, Konstituzio plaza)"
+      }
+    },
+    {
+      "id": "santa-maria-donostia",
+      "nombre": "Basílica de Santa María del Coro",
+      "categoria": "patrimonio",
+      "zona": "Parte Vieja de Donostia",
+      "coords": [43.32397, -1.98672],
+      "resumen": "Una fachada barroca encajada al fondo de la calle Mayor, que mira de frente a la catedral del Buen Pastor.",
+      "descripcion": "Es del siglo XVIII y está metida entre las casas, a los pies del monte Urgull. Lo bonito es cómo aparece: se va por la calle Mayor y la fachada llena el final de la calle.\n\nSi se da la vuelta uno en la puerta, al fondo de la misma línea recta, al otro lado de la ciudad, está la torre del Buen Pastor.",
+      "duracionMin": 15,
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: el templo principal de la Parte Vieja"
+      },
+      "queMirar": [
+        {
+          "que": "La fachada vista desde el principio de la calle Mayor",
+          "porque": "Así se ve cómo cierra la calle."
+        },
+        {
+          "que": "La torre del Buen Pastor, a la espalda",
+          "porque": "Las dos iglesias están en el mismo eje, una frente a otra."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/santa-maria-donostia.jpg",
+        "credito": "User Spike",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:San_Sebastian_Basilica_of_Saint_Mary_of_Coro_002_edited.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap; se ve por fuera, así que no lleva horario"
+      }
+    },
+    {
+      "id": "monte-urgull",
+      "nombre": "Monte Urgull",
+      "categoria": "naturaleza",
+      "zona": "Parte Vieja de Donostia",
+      "coords": [43.32504, -1.98889],
+      "resumen": "El monte del castillo, entre la Parte Vieja y el mar, con la bahía entera a un lado.",
+      "descripcion": "Se sube por caminos entre árboles desde el Paseo Nuevo o desde la propia Parte Vieja. Arriba están el castillo de la Mota y la estatua del Sagrado Corazón, que se ve desde toda la ciudad.\n\nCon tres cuartos de hora basta para subir un rato, asomarse a la Concha y bajar a tiempo de apuntarse en Nestor.",
+      "duracionMin": 40,
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: el mirador gratuito de la bahía, pegado a la Parte Vieja"
+      },
+      "queMirar": [
+        {
+          "que": "La isla de Santa Clara, en medio de la bahía",
+          "porque": "Desde aquí arriba se ve cómo cierra la Concha."
+        },
+        {
+          "que": "El cementerio de los ingleses",
+          "porque": "Tumbas de soldados británicos en plena ladera, entre los árboles."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/monte-urgull.jpg",
+        "credito": "Joxemai",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:2018_04_05_donostia_005.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap (castillo de la Mota)"
+      }
+    },
+    {
+      "id": "cuchara-san-telmo",
+      "nombre": "La Cuchara de San Telmo",
+      "categoria": "comida",
+      "zona": "Parte Vieja de Donostia",
+      "coords": [43.3245, -1.9853],
+      "resumen": "Se pide de la pizarra y sale de la cocina recién hecho, empezando por el cochinillo.",
+      "descripcion": "Un bar pequeño en la calle 31 de Agosto, junto al museo San Telmo. Aquí no hay fuentes de pintxos encima de la barra; se pide de la pizarra y se cocina en el momento. El cochinillo es lo que más se pide, y la carrillera y el foie a la plancha le siguen de cerca. Cada pintxo sale a 4-8 €.",
+      "duracionMin": 25,
+      "horarios": {
+        "mar": [["12:30", "15:30"], ["19:30", "22:30"]],
+        "mie": [["12:30", "15:30"], ["19:30", "22:30"]],
+        "jue": [["12:30", "15:30"], ["19:30", "22:30"]],
+        "vie": [["12:30", "15:30"], ["19:30", "22:30"]],
+        "sab": [["12:30", "15:30"], ["19:30", "22:30"]],
+        "dom": [["12:30", "15:30"], ["19:30", "22:30"]]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: sale en todas las guías de la Parte Vieja"
+      },
+      "queMirar": [
+        {
+          "que": "El cochinillo",
+          "porque": "Es lo más pedido, y se suele acabar antes de las 21:00."
+        },
+        {
+          "que": "La carrillera de ternera",
+          "porque": "Es la otra especialidad, junto con el foie a la plancha."
+        }
+      ],
+      "consejos": [
+        "Llegar a las 12:30, cuando abre: luego no se cabe."
+      ],
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "Guía de pintxos de la Parte Vieja de Do Eat Better (sin fecha) y OpenStreetMap"
+      }
+    },
+    {
+      "id": "nestor",
+      "nombre": "Bar Nestor",
+      "categoria": "comida",
+      "zona": "Parte Vieja de Donostia",
+      "coords": [43.32388, -1.9837],
+      "resumen": "Dos tortillas al día y una lista para conseguir un trozo.",
+      "descripcion": "Un bar estrecho de la calle Arrandegi famoso por una cosa: la tortilla de patatas. Hacen dos al día, una a las 13:00 y otra a las 20:00, y los trozos se reparten por lista. Hay que apuntarse antes, hacia las 12:00 para la de mediodía.\n\nTambién son conocidos por la chuleta, pero eso ya es otra comida.",
+      "duracionMin": 40,
+      "horarios": {
+        "mar": [["13:00", "15:30"], ["20:00", "22:30"]],
+        "mie": [["13:00", "15:30"], ["20:00", "22:30"]],
+        "jue": [["13:00", "15:30"], ["20:00", "22:30"]],
+        "vie": [["13:00", "15:30"], ["20:00", "22:30"]],
+        "sab": [["13:00", "15:30"], ["20:00", "22:30"]],
+        "dom": [["13:00", "15:30"], ["20:00", "22:30"]]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: es la tortilla más famosa de la ciudad según todas las guías"
+      },
+      "queMirar": [
+        {
+          "que": "La tortilla, recién salida a las 13:00",
+          "porque": "Sale entera y se reparte en trozos entre los de la lista."
+        }
+      ],
+      "consejos": [
+        "Apuntarse a las 12:00. Si la lista ya está llena, la de la noche se pide a las 19:00."
+      ],
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "Guía de pintxos de la Parte Vieja de Do Eat Better (sin fecha) y OpenStreetMap"
+      }
+    },
+    {
+      "id": "borda-berri",
+      "nombre": "Borda Berri",
+      "categoria": "comida",
+      "zona": "Parte Vieja de Donostia",
+      "coords": [43.32348, -1.98382],
+      "resumen": "El risotto de puntalette con Idiazabal, que es la razón de entrar.",
+      "descripcion": "Otro bar de cocina al momento, en Fermín Calbetón. La pizarra es corta y cambia, pero el risotto de pasta puntalette con queso Idiazabal no falta nunca. Los pintxos salen a 4-6 €.",
+      "duracionMin": 35,
+      "horarios": {
+        "mie": [["12:30", "15:30"], ["19:30", "22:30"]],
+        "jue": [["12:30", "15:30"], ["19:30", "22:30"]],
+        "vie": [["12:30", "15:30"], ["19:30", "22:30"]],
+        "sab": [["12:30", "15:30"], ["19:30", "22:30"]],
+        "dom": [["12:30", "15:30"], ["19:30", "22:30"]]
+      },
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: sale en todas las guías de la Parte Vieja"
+      },
+      "queMirar": [
+        {
+          "que": "El risotto de puntalette",
+          "porque": "Cremoso y con el Idiazabal fundido. Es la especialidad de la casa."
+        }
+      ],
+      "consejos": [
+        "Cierra lunes y martes; el miércoles sí abre."
+      ],
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "Guía de pintxos de la Parte Vieja de Do Eat Better (sin fecha) y OpenStreetMap"
+      }
+    },
+    {
+      "id": "ganbara",
+      "nombre": "Ganbara",
+      "categoria": "comida",
+      "zona": "Parte Vieja de Donostia",
+      "coords": [43.3234, -1.98553],
+      "resumen": "Una barra cubierta de setas, con una yema cruda encima.",
+      "descripcion": "En la calle San Jerónimo. Lo suyo son las setas salteadas con ajo y una yema de huevo cruda por encima, que se mezcla en el plato. Se pide en la barra de arriba, señalando las que se quieran, y no en el restaurante de abajo.",
+      "duracionMin": 35,
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: sale en todas las guías de la Parte Vieja"
+      },
+      "queMirar": [
+        {
+          "que": "El surtido de setas con yema",
+          "porque": "Es plato de otoño: en enero, preguntar qué setas tienen."
+        }
+      ],
+      "consejos": [
+        "Cierra los lunes. Las guías no dan la hora exacta de apertura."
+      ],
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "Guía de pintxos de la Parte Vieja de Do Eat Better (abre de martes a domingo, sin horas) y OpenStreetMap"
+      }
+    },
+    {
+      "id": "txepetxa",
+      "nombre": "Bar Txepetxa",
+      "categoria": "comida",
+      "zona": "Parte Vieja de Donostia",
+      "coords": [43.32377, -1.98398],
+      "resumen": "El bar de las anchoas, con una carta entera de pintxos de anchoa.",
+      "descripcion": "En la misma calle que Nestor. Aquí todo gira en torno a la anchoa: con crema de centollo, con arándanos y de diez maneras más. Para la segunda ronda, antes del autobús de vuelta. Los pintxos salen a 3-5 €.",
+      "duracionMin": 50,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: es el clásico de la anchoa en las guías de la Parte Vieja"
+      },
+      "queMirar": [
+        {
+          "que": "La anchoa con crema de centollo",
+          "porque": "Es la que se pide primero. Después, la de arándanos."
+        }
+      ],
+      "consejos": [
+        "Cierra los lunes. Si estuviera cerrado, Bar Sport, en Fermín Calbetón, abre todos los días hasta las 23:30."
+      ],
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "Guía de pintxos de la Parte Vieja de Do Eat Better (sin horas) y OpenStreetMap"
+      }
+    },
+    {
+      "id": "la-concha",
+      "nombre": "La Concha",
+      "categoria": "naturaleza",
+      "zona": "Donostia",
+      "coords": [43.3177, -1.98637],
+      "resumen": "La bahía en forma de concha, con su barandilla blanca y la isla en medio.",
+      "descripcion": "La playa urbana de Donostia, cerrada por el monte Urgull a un lado, el Igueldo al otro y la isla de Santa Clara en el centro. Se recorre por el paseo, apoyándose en la barandilla blanca, hasta Ondarreta y el Peine del Viento.\n\nEn enero casi nadie se baña y el paseo se anda sin agobios.",
+      "duracionMin": 20,
+      "nivel": "obligatorio",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: es la imagen de Donostia y se recorre entera de camino a Igueldo"
+      },
+      "queMirar": [
+        {
+          "que": "La barandilla",
+          "porque": "Blanca, de hierro forjado y con más de un siglo; sale en todas las fotos de la ciudad."
+        },
+        {
+          "que": "La isla de Santa Clara",
+          "porque": "Cierra la bahía por el centro, con su faro en lo alto."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/la-concha.jpg",
+        "credito": "Hynek Moravec; modified by Generalpoteito",
+        "licencia": "CC BY 2.5",
+        "fuente": "https://commons.wikimedia.org/wiki/File:San_Sebastian_aerea.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap (natural=beach, Kontxa hondartza)"
+      }
+    },
+    {
+      "id": "peine-del-viento",
+      "nombre": "El Peine del Viento",
+      "categoria": "patrimonio",
+      "zona": "Ondarreta",
+      "coords": [43.32169, -2.00555],
+      "resumen": "Tres garras de acero de Chillida clavadas en las rocas, donde se acaba la ciudad.",
+      "descripcion": "Eduardo Chillida las colocó en 1977 al final de la playa de Ondarreta, sobre las rocas que bate el mar. La plaza de granito que lleva hasta ellas es de Luis Peña Ganchegui, y tiene unos agujeros en el suelo por los que el oleaje empuja aire y agua.\n\nCon mar de fondo, las olas revientan contra las rocas de debajo.",
+      "duracionMin": 20,
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: la obra más conocida de Chillida y el final del paseo de la Concha"
+      },
+      "queMirar": [
+        {
+          "que": "Los agujeros del suelo de la plaza",
+          "porque": "Con las olas, soplan. Mejor no ponerse encima."
+        },
+        {
+          "que": "La garra que queda más lejos, sola en la roca",
+          "porque": "Está sobre una roca separada de la costa, y desde la plaza no se llega."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/peine-del-viento.jpg",
+        "credito": "Alvaro Galve",
+        "licencia": "CC BY-SA 2.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Haizearen_orrazia_0006.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap (tourism=artwork, Haizearen orrazia)"
+      }
+    },
+    {
+      "id": "funicular-igueldo",
+      "nombre": "Funicular de Igueldo",
+      "categoria": "transporte",
+      "zona": "Ondarreta",
+      "coords": [43.31923, -2.0065],
+      "resumen": "Un funicular de madera de 1912 que sube en tres minutos.",
+      "descripcion": "Sale de la plaza del Funicular, al final de Ondarreta, y sube por el monte entre árboles. Pasa cada cuarto de hora, más o menos. El billete de ida y vuelta incluye la entrada al recinto de arriba.",
+      "duracionMin": 10,
+      "precio": {
+        "importe": 5.5,
+        "detalle": "Ida y vuelta, con la entrada al recinto"
+      },
+      "horarios": {
+        "lun": [["11:00", "18:00"]],
+        "mar": [["11:00", "18:00"]],
+        "mie": [["11:00", "18:00"]],
+        "jue": [["11:00", "18:00"]],
+        "vie": [["11:00", "18:00"]],
+        "sab": [["11:00", "19:00"]],
+        "dom": [["11:00", "19:00"]]
+      },
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "No es un destino",
+        "fuente": "Es el medio para subir a Igueldo"
+      },
+      "consejos": [
+        "El horario de invierno no está en la web oficial; las guías dan de 11:00 a 18:00 entre semana y hasta las 19:00 los fines de semana. Conviene subir antes de las 17:00."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/funicular-igueldo.png",
+        "credito": "Raimundo Pastor",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:San_Sebasti%C3%A1n_(RPS_14-09-2014)_Funicular_de_Igueldo.png"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "monteigueldo.es (precio) y guías turísticas (horario); OpenStreetMap (railway=funicular)"
+      }
+    },
+    {
+      "id": "igueldo",
+      "nombre": "Monte Igueldo",
+      "categoria": "naturaleza",
+      "zona": "Donostia",
+      "coords": [43.32104, -2.00965],
+      "resumen": "La foto de la Concha, desde arriba, con un parque de atracciones antiguo detrás.",
+      "descripcion": "Es la vista que sale en las postales: la bahía entera, la isla en medio y la ciudad al fondo. Arriba queda un parque de atracciones de los de antes, con una montaña rusa que bordea el monte.\n\nEl miércoles 6 anochece hacia las 17:45. Se sube un rato antes para ver cómo se van encendiendo las luces de la bahía.",
+      "duracionMin": 65,
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: el mirador clásico de la bahía"
+      },
+      "queMirar": [
+        {
+          "que": "La bahía al anochecer",
+          "porque": "Las farolas del paseo se encienden siguiendo la curva de la Concha."
+        },
+        {
+          "que": "La montaña suiza",
+          "porque": "Una montaña rusa antigua que va por el borde del monte, sobre el mar."
+        }
+      ],
+      "consejos": [
+        "Si llueve, las atracciones cierran, pero se puede subir igual a mirar."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/igueldo.jpg",
+        "credito": "José Antonio Gil Martínez from Vigo, Spain",
+        "licencia": "CC BY 2.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Camino_del_Norte_(3941774902).jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "monteigueldo.es y OpenStreetMap (tourism=viewpoint); anochecer según el archivo de Open-Meteo"
+      }
+    },
+    {
+      "id": "metro-areeta",
+      "nombre": "Metro Areeta",
+      "categoria": "transporte",
+      "zona": "Getxo",
+      "coords": [43.326, -3.00964],
+      "resumen": "La parada del metro para el Puente Colgante.",
+      "descripcion": "Línea 1, dirección Plentzia. Desde la salida, el puente queda a 1,2 km andando, por las calles de Las Arenas hasta la ría.",
+      "duracionMin": 5,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "No es un destino",
+        "fuente": "Es una estación de metro"
+      },
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/metro-areeta.jpg",
+        "credito": "Silvi88valen",
+        "licencia": "Public domain",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Metro-areeta-o-k-2-24-08-09.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap (railway=station, Areeta)"
+      }
+    },
+    {
+      "id": "puente-colgante",
+      "nombre": "Puente Colgante",
+      "categoria": "patrimonio",
+      "zona": "Getxo",
+      "coords": [43.32321, -3.01714],
+      "resumen": "El primer puente transbordador del mundo: una barquilla colgada que cruza la ría desde 1893.",
+      "descripcion": "Lo diseñó Alberto de Palacio para unir Getxo y Portugalete sin cortar el paso a los barcos. En vez de un tablero, tiene una barquilla colgada de cables que va y viene sobre el agua, y sigue cruzando día y noche. Es Patrimonio Mundial desde 2006.\n\nSe puede hacer de dos maneras, y vale la pena hacer las dos: subir en ascensor a la **pasarela de arriba**, a unos 50 metros, y cruzarla andando; y bajar a cruzar en la **barquilla**, que cuesta 0,60 €.",
+      "duracionMin": 75,
+      "precio": {
+        "importe": 11,
+        "detalle": "Pasarela, ida y vuelta (mayores de 65 o con carné de estudiante, 9 €). La barquilla, 0,60 € por persona y trayecto"
+      },
+      "horarios": {
+        "lun": [["10:00", "14:00"], ["16:00", "19:00"]],
+        "mar": [["10:00", "14:00"], ["16:00", "19:00"]],
+        "mie": [["10:00", "14:00"], ["16:00", "19:00"]],
+        "jue": [["10:00", "14:00"], ["16:00", "19:00"]],
+        "vie": [["10:00", "14:00"], ["16:00", "19:00"]],
+        "sab": [["10:00", "14:00"], ["16:00", "19:00"]],
+        "dom": [["10:00", "14:00"], ["16:00", "19:00"]]
+      },
+      "nivel": "obligatorio",
+      "valoracion": {
+        "puesto": "Patrimonio Mundial de la UNESCO desde 2006",
+        "fuente": "UNESCO, Lista del Patrimonio Mundial"
+      },
+      "queMirar": [
+        {
+          "que": "La ría desde la pasarela",
+          "porque": "A un lado, el mar abierto; al otro, la ría metiéndose hacia Bilbao."
+        },
+        {
+          "que": "La barquilla cruzando por debajo",
+          "porque": "Vista desde arriba parece de juguete, cargada de coches y de gente."
+        },
+        {
+          "que": "Portugalete, al otro lado",
+          "porque": "Se cruza en la barquilla y se vuelve; se tarda unos minutos."
+        }
+      ],
+      "consejos": [
+        "La pasarela cierra con viento fuerte, y la última subida es 20 minutos antes del cierre.",
+        "Ahora mismo el ascensor funciona con el aforo reducido a la mitad por una avería; puede tocar esperar."
+      ],
+      "enlaces": [
+        { "texto": "Horarios y tarifas", "url": "https://puente-colgante.com/en/?p=72758" }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/puente-colgante.jpg",
+        "credito": "José Ligero Loarte",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Puente%20de%20Vizcaya%20--%202021%20--%20Portugalete%2C%20Espa%C3%B1a.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "puente-colgante.com: horario de invierno de la pasarela (de noviembre a Semana Santa), tarifas y aviso del ascensor"
+      }
+    },
+    {
+      "id": "grandes-villas",
+      "nombre": "Paseo de las Grandes Villas",
+      "categoria": "patrimonio",
+      "zona": "Getxo",
+      "coords": [43.3386, -3.00987],
+      "resumen": "Los palacetes de los industriales de la ría, mirando al mar.",
+      "descripcion": "A finales del XIX, quienes se hicieron ricos con el hierro y los barcos se fueron a vivir aquí, frente al Abra. El paseo pasa por delante de sus casas, con torres y jardines, y alguna con pinta de mansión inglesa.\n\nEs el camino llano del Puente Colgante al Puerto Viejo, todo junto al mar.",
+      "duracionMin": 20,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: es el camino junto al mar entre el puente y el Puerto Viejo"
+      },
+      "queMirar": [
+        {
+          "que": "El palacio Lezama-Leguizamón",
+          "porque": "Uno de los más grandes del paseo, asomado a la playa."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/grandes-villas.jpg",
+        "credito": "Zarateman",
+        "licencia": "CC0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Lezama-Legizamon_jauregia%2C_02.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap (historic=manor, palacio Lezama-Leguizamón)"
+      }
+    },
+    {
+      "id": "puerto-viejo",
+      "nombre": "Puerto Viejo de Algorta",
+      "categoria": "pueblo",
+      "zona": "Getxo",
+      "coords": [43.35012, -3.01423],
+      "resumen": "Casas de pescadores apretadas en cuesta sobre un puerto diminuto.",
+      "descripcion": "El barrio de pescadores de Getxo, que sigue igual mientras alrededor crecían las villas. Calles en cuesta, escaleras y casas blancas apiñadas sobre un puerto diminuto.\n\nEs donde se come el jueves: hay varios bares y tabernas de pintxos y raciones en las mismas cuestas.",
+      "duracionMin": 100,
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: el rincón con más carácter de Getxo, en todas las guías de la costa"
+      },
+      "queMirar": [
+        {
+          "que": "Las escaleras que bajan al puerto",
+          "porque": "Desde arriba se ve el Abra entera y el Puente Colgante a lo lejos."
+        }
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/puerto-viejo.jpg",
+        "credito": "Zarateman",
+        "licencia": "CC0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Guecho%2C_Algorta_-_Muelle_de_Ereaga_2.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap (Portu Zaharra)"
+      }
+    },
+    {
+      "id": "aixerrota",
+      "nombre": "Molino de Aixerrota",
+      "categoria": "patrimonio",
+      "zona": "Getxo",
+      "coords": [43.35927, -3.01927],
+      "resumen": "El único molino de viento que queda en pie en Getxo, asomado al mar.",
+      "descripcion": "Un molino de piedra en lo alto del acantilado, sobre la playa de Arrigunaga. De los que hubo en Getxo es el único que sigue en pie. Desde aquí empieza el tramo bonito del paseo por el borde del acantilado.",
+      "duracionMin": 15,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: punto de paso del camino de los acantilados"
+      },
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/aixerrota.png",
+        "credito": "Getxoinfo",
+        "licencia": "CC BY-SA 2.5 es",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Aixerrota.png"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap (man_made=windmill) y hoteles.net (es el único que sigue en pie)"
+      }
+    },
+    {
+      "id": "punta-galea",
+      "nombre": "Fuerte de La Galea y los acantilados",
+      "categoria": "naturaleza",
+      "zona": "Getxo",
+      "coords": [43.36716, -3.03107],
+      "resumen": "Acantilados de capas de roca en vertical y un fuerte del XVIII vigilando la entrada de la ría.",
+      "descripcion": "El fuerte se levantó en el siglo XVIII para proteger la entrada del Abra, y hoy es una ruina con vistas. Lo que lo rodea es lo mejor: acantilados donde la roca se ve en capas, como las páginas de un libro, cayendo hasta el mar.\n\nAbajo, hacia el este, está la playa de Gorrondatxe, y un poco más allá la de Barinatxe, a la que llaman «La Salvaje».",
+      "duracionMin": 50,
+      "nivel": "recomendable",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: es el tramo de acantilados del GR 123 al que se llega en metro, en menos de una hora"
+      },
+      "queMirar": [
+        {
+          "que": "Las capas del flysch de Gorrondatxe",
+          "porque": "Ahí está la referencia mundial que los geólogos usan para marcar el comienzo del Luteciense, hace unos 48 millones de años."
+        },
+        {
+          "que": "El faro de Punta Galea",
+          "porque": "Al borde del cabo, marcando la boca del Abra."
+        }
+      ],
+      "consejos": [
+        "Los caminos del borde del acantilado se embarran con la lluvia: calzado que agarre."
+      ],
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/punta-galea.jpg",
+        "credito": "Janfri",
+        "licencia": "CC BY-SA 3.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Galeakofortea.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap (historic=castle, Fuerte de La Galea) y Guía Repsol (flysch de Getxo)"
+      }
+    },
+    {
+      "id": "metro-bidezabal",
+      "nombre": "Metro Bidezabal",
+      "categoria": "transporte",
+      "zona": "Getxo",
+      "coords": [43.35644, -3.01127],
+      "resumen": "La parada de metro más cerca de los acantilados para volver.",
+      "descripcion": "Línea 1. Desde aquí se sigue hasta Plentzia o se vuelve al Casco Viejo, en unos 30 minutos.",
+      "duracionMin": 5,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "No es un destino",
+        "fuente": "Es una estación de metro"
+      },
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/metro-bidezabal.jpg",
+        "credito": "Xabier",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Estaci%C3%B3n_de_Bidezabal.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap (railway=station, Bidezabal)"
+      }
+    },
+    {
+      "id": "metro-plentzia",
+      "nombre": "Metro Plentzia",
+      "categoria": "transporte",
+      "zona": "Plentzia",
+      "coords": [43.40122, -2.94635],
+      "resumen": "El final de la línea 1, a unos 45 minutos del Casco Viejo.",
+      "descripcion": "La última parada del metro. Al pueblo y a la ría se llega en cinco minutos andando.",
+      "duracionMin": 5,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "No es un destino",
+        "fuente": "Es una estación de metro"
+      },
+      "imagen": {
+        "archivo": "data/viajes/bilbao-2027-01/fotos/metro-plentzia.jpg",
+        "credito": "Xabier",
+        "licencia": "CC BY-SA 4.0",
+        "fuente": "https://commons.wikimedia.org/wiki/File:Estaci%C3%B3n_de_Plentzia.jpg"
+      },
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap (railway=station, Plentzia); el viaje de punta a punta de la línea tarda 50 minutos según Transit"
+      }
+    },
+    {
+      "id": "plentzia",
+      "nombre": "Plentzia",
+      "categoria": "pueblo",
+      "zona": "Plentzia",
+      "coords": [43.40444, -2.95028],
+      "resumen": "Un pueblo marinero en la desembocadura de la ría, con barcas en el agua y el mar al fondo.",
+      "descripcion": "Un casco antiguo pequeño, de calles en cuesta, junto a una ría que se abre en una playa. Al atardecer, con las barcas quietas en la ría, se está muy tranquilo.\n\nEs opcional: si el jueves ya pesa en las piernas, desde Bidezabal se vuelve directo a Bilbao.",
+      "duracionMin": 50,
+      "nivel": "opcional",
+      "valoracion": {
+        "puesto": "Sin cifra",
+        "fuente": "Criterio: final opcional del día de la costa, al final de la línea de metro"
+      },
+      "curiosidades": [
+        {
+          "titulo": "Vino criado en el fondo del mar",
+          "texto": "En la bahía de Plentzia hay una bodega submarina: las botellas pasan meses sumergidas en el fondo antes de venderse."
+        }
+      ],
+      "verificado": {
+        "fecha": "2026-11-14",
+        "fuente": "OpenStreetMap (ayuntamiento de Plentzia)"
+      }
+    }
+  ],
+  "dias": [
+    {
+      "fecha": "2027-01-04",
+      "titulo": "Llegada al Arenal",
+      "intensidad": "llegada",
+      "resumen": "Se aterriza hacia las 21:00. Bus al centro, maletas en el hotel y, si queda hambre, unos pintxos en la Plaza Nueva, a cinco minutos.",
+      "bloques": [
+        {
+          "tipo": "hito",
+          "inicio": "19:50",
+          "titulo": "Despega el vuelo",
+          "detalle": "Llega a Loiu hacia las 21:00."
+        },
+        {
+          "inicio": "21:00",
+          "fin": "21:20",
+          "lugar": "aeropuerto-bio",
+          "nota": "Recoger la maleta y salir por llegadas: el A3247 para en la misma puerta."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "21:20",
+          "fin": "21:45",
+          "modo": "bus",
+          "desde": "aeropuerto-bio",
+          "hasta": "moyua",
+          "detalle": "Bizkaibus A3247, cada 15-20 minutos. 5 € por persona en efectivo, al conductor. En taxi directo al hotel, unos 18 minutos."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "21:45",
+          "fin": "21:55",
+          "modo": "tren",
+          "desde": "moyua",
+          "hasta": "metro-casco-viejo",
+          "detalle": "Metro, dos paradas. En la máquina de Moyua se compra la Barik que vale para los dos el resto del viaje."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "21:55",
+          "fin": "22:00",
+          "modo": "a-pie",
+          "desde": "metro-casco-viejo",
+          "hasta": "hotel-bilbao",
+          "detalle": "130 m"
+        },
+        {
+          "inicio": "22:00",
+          "fin": "22:20",
+          "lugar": "hotel-bilbao",
+          "nota": "Check-in."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "22:20",
+          "fin": "22:25",
+          "modo": "a-pie",
+          "desde": "hotel-bilbao",
+          "hasta": "plaza-nueva",
+          "detalle": "230 m"
+        },
+        {
+          "inicio": "22:25",
+          "fin": "23:00",
+          "lugar": "plaza-nueva",
+          "opcional": true,
+          "nota": "Cena ligera, si apetece. Gure Toki cierra a las 23:00 de lunes a jueves."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "23:00",
+          "fin": "23:05",
+          "modo": "a-pie",
+          "desde": "plaza-nueva",
+          "hasta": "hotel-bilbao",
+          "detalle": "230 m"
+        }
+      ]
+    },
+    {
+      "fecha": "2027-01-05",
+      "titulo": "El Casco Viejo y el Guggenheim",
+      "intensidad": "media",
+      "resumen": "Por la mañana, las Siete Calles, la catedral y el mercado de la Ribera con los puestos abiertos. Pintxos para comer en la calle Santa María y paseo por la ría hasta el Guggenheim, que ocupa la tarde. Es víspera de Reyes: la cabalgata acaba hacia las 19:30 en el Ayuntamiento y queda como opcional antes de cenar en la Plaza Nueva.",
+      "bloques": [
+        {
+          "tipo": "traslado",
+          "inicio": "09:30",
+          "fin": "09:35",
+          "modo": "a-pie",
+          "desde": "hotel-bilbao",
+          "hasta": "siete-calles",
+          "detalle": "210 m"
+        },
+        {
+          "inicio": "09:35",
+          "fin": "10:20",
+          "lugar": "siete-calles",
+          "nota": "A esta hora, con las tiendas abriendo."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "10:20",
+          "fin": "10:25",
+          "modo": "a-pie",
+          "desde": "siete-calles",
+          "hasta": "catedral-santiago",
+          "detalle": "260 m"
+        },
+        {
+          "inicio": "10:25",
+          "fin": "11:05",
+          "lugar": "catedral-santiago"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "11:05",
+          "fin": "11:10",
+          "modo": "a-pie",
+          "desde": "catedral-santiago",
+          "hasta": "mercado-ribera",
+          "detalle": "230 m"
+        },
+        {
+          "inicio": "11:10",
+          "fin": "12:10",
+          "lugar": "mercado-ribera",
+          "nota": "Los puestos cierran a las 14:30: hoy toca verlos en marcha."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "12:10",
+          "fin": "12:12",
+          "modo": "a-pie",
+          "desde": "mercado-ribera",
+          "hasta": "san-anton",
+          "detalle": "90 m"
+        },
+        {
+          "inicio": "12:12",
+          "fin": "12:30",
+          "lugar": "san-anton",
+          "exterior": true
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "12:30",
+          "fin": "12:40",
+          "modo": "a-pie",
+          "desde": "san-anton",
+          "hasta": "santa-maria-kalea",
+          "detalle": "480 m"
+        },
+        {
+          "inicio": "12:40",
+          "fin": "14:10",
+          "lugar": "santa-maria-kalea",
+          "nota": "Comida de pintxos."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "14:10",
+          "fin": "14:35",
+          "modo": "a-pie",
+          "desde": "santa-maria-kalea",
+          "hasta": "zubizuri",
+          "detalle": "1,6 km por el Arenal y la orilla de la ría, pasando por delante del Ayuntamiento"
+        },
+        {
+          "inicio": "14:35",
+          "fin": "14:45",
+          "lugar": "zubizuri"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "14:45",
+          "fin": "15:00",
+          "modo": "a-pie",
+          "desde": "zubizuri",
+          "hasta": "guggenheim",
+          "detalle": "800 m por el paseo de la ría"
+        },
+        {
+          "inicio": "15:00",
+          "fin": "18:15",
+          "lugar": "guggenheim",
+          "nota": "Cierra a las 19:00. Lo primero, Pipilotti Rist, que se va el 17. Si se piensa ir al Bellas Artes, comprar la combinada."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "18:15",
+          "fin": "18:35",
+          "modo": "a-pie",
+          "desde": "guggenheim",
+          "hasta": "ayuntamiento",
+          "detalle": "1,4 km por la ría. Sin cabalgata, directos a la Plaza Nueva, otros 700 m"
+        },
+        {
+          "inicio": "18:35",
+          "fin": "19:45",
+          "lugar": "ayuntamiento",
+          "opcional": true,
+          "nota": "Cabalgata. En 2026 llegó hacia las 19:30 y los Reyes saludaron desde el balcón."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "19:45",
+          "fin": "19:55",
+          "modo": "a-pie",
+          "desde": "ayuntamiento",
+          "hasta": "plaza-nueva",
+          "detalle": "700 m"
+        },
+        {
+          "inicio": "20:00",
+          "fin": "21:30",
+          "lugar": "plaza-nueva",
+          "nota": "Cena de pintxos."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "21:30",
+          "fin": "21:35",
+          "modo": "a-pie",
+          "desde": "plaza-nueva",
+          "hasta": "hotel-bilbao",
+          "detalle": "230 m"
+        }
+      ]
+    },
+    {
+      "fecha": "2027-01-06",
+      "titulo": "Donostia de barra en barra",
+      "intensidad": "fuerte",
+      "resumen": "Festivo. Autobús a Donostia a primera hora, un paseo por la Parte Vieja y Urgull, y a las 12:00, apuntarse en la lista de la tortilla de Nestor. La comida es una ruta por cuatro barras. Por la tarde, la Concha hasta el Peine del Viento y el funicular de Igueldo para ver anochecer sobre la bahía. Segunda ronda de pintxos y vuelta en el autobús de las 19:45, más o menos.",
+      "bloques": [
+        {
+          "tipo": "traslado",
+          "inicio": "08:00",
+          "fin": "08:05",
+          "modo": "a-pie",
+          "desde": "hotel-bilbao",
+          "hasta": "metro-casco-viejo",
+          "detalle": "130 m"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "08:05",
+          "fin": "08:20",
+          "modo": "tren",
+          "desde": "metro-casco-viejo",
+          "hasta": "termibus",
+          "detalle": "Metro hasta San Mamés, cuatro paradas. Termibus está a la salida."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "08:30",
+          "fin": "09:45",
+          "modo": "bus",
+          "desde": "termibus",
+          "hasta": "estacion-donostia",
+          "detalle": "Autobús directo. El más rápido tarda 1 h 10 y el normal 1 h 20. 13,65 € el sencillo, según el precio de abril de 2026. La hora es orientativa: es festivo, y hay que mirar las salidas de ese día."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "09:45",
+          "fin": "10:05",
+          "modo": "a-pie",
+          "desde": "estacion-donostia",
+          "hasta": "parte-vieja",
+          "detalle": "1,2 km cruzando el Urumea"
+        },
+        {
+          "inicio": "10:05",
+          "fin": "10:35",
+          "lugar": "parte-vieja"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "10:35",
+          "fin": "10:38",
+          "modo": "a-pie",
+          "desde": "parte-vieja",
+          "hasta": "santa-maria-donostia",
+          "detalle": "250 m por la calle Mayor"
+        },
+        {
+          "inicio": "10:38",
+          "fin": "10:55",
+          "lugar": "santa-maria-donostia",
+          "exterior": true
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "10:55",
+          "fin": "11:05",
+          "modo": "a-pie",
+          "desde": "santa-maria-donostia",
+          "hasta": "monte-urgull",
+          "detalle": "700 m, subiendo"
+        },
+        {
+          "inicio": "11:05",
+          "fin": "11:45",
+          "lugar": "monte-urgull"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "11:45",
+          "fin": "11:58",
+          "modo": "a-pie",
+          "desde": "monte-urgull",
+          "hasta": "nestor",
+          "detalle": "900 m, bajando a la Parte Vieja"
+        },
+        {
+          "tipo": "hito",
+          "inicio": "12:00",
+          "titulo": "Apuntarse en la lista de la tortilla",
+          "detalle": "En Nestor hacen dos tortillas al día, a las 13:00 y a las 20:00, y los trozos se reparten por lista. Si a las 12:00 ya está llena, la de la noche se pide a las 19:00."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "12:05",
+          "fin": "12:10",
+          "modo": "a-pie",
+          "desde": "nestor",
+          "hasta": "cuchara-san-telmo",
+          "detalle": "250 m"
+        },
+        {
+          "inicio": "12:30",
+          "fin": "12:55",
+          "lugar": "cuchara-san-telmo",
+          "nota": "Abre a las 12:30: estar en la puerta. El cochinillo primero."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "12:55",
+          "fin": "13:00",
+          "modo": "a-pie",
+          "desde": "cuchara-san-telmo",
+          "hasta": "nestor",
+          "detalle": "250 m"
+        },
+        {
+          "inicio": "13:00",
+          "fin": "13:40",
+          "lugar": "nestor",
+          "nota": "La tortilla sale a las 13:00 en punto."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "13:40",
+          "fin": "13:42",
+          "modo": "a-pie",
+          "desde": "nestor",
+          "hasta": "borda-berri",
+          "detalle": "110 m"
+        },
+        {
+          "inicio": "13:42",
+          "fin": "14:20",
+          "lugar": "borda-berri"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "14:20",
+          "fin": "14:23",
+          "modo": "a-pie",
+          "desde": "borda-berri",
+          "hasta": "ganbara",
+          "detalle": "170 m"
+        },
+        {
+          "inicio": "14:23",
+          "fin": "15:00",
+          "lugar": "ganbara"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "15:00",
+          "fin": "15:12",
+          "modo": "a-pie",
+          "desde": "ganbara",
+          "hasta": "la-concha",
+          "detalle": "800 m"
+        },
+        {
+          "inicio": "15:12",
+          "fin": "15:30",
+          "lugar": "la-concha"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "15:30",
+          "fin": "16:00",
+          "modo": "a-pie",
+          "desde": "la-concha",
+          "hasta": "peine-del-viento",
+          "detalle": "2,3 km por el paseo de la Concha y Ondarreta"
+        },
+        {
+          "inicio": "16:00",
+          "fin": "16:20",
+          "lugar": "peine-del-viento"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "16:20",
+          "fin": "16:30",
+          "modo": "a-pie",
+          "desde": "peine-del-viento",
+          "hasta": "funicular-igueldo",
+          "detalle": "750 m"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "16:30",
+          "fin": "16:40",
+          "modo": "tren",
+          "desde": "funicular-igueldo",
+          "hasta": "igueldo",
+          "detalle": "Funicular, tres minutos de subida. 5,50 € ida y vuelta, con la entrada al recinto."
+        },
+        {
+          "inicio": "16:40",
+          "fin": "17:45",
+          "lugar": "igueldo",
+          "nota": "Anochece hacia las 17:45."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "17:45",
+          "fin": "17:55",
+          "modo": "tren",
+          "desde": "igueldo",
+          "hasta": "funicular-igueldo",
+          "detalle": "Bajada en el funicular"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "17:55",
+          "fin": "18:20",
+          "modo": "bus",
+          "desde": "funicular-igueldo",
+          "hasta": "txepetxa",
+          "detalle": "Dbus 16 hasta la plaza Gipuzkoa, junto a la Parte Vieja (cada media hora, según un directorio de líneas), o taxi. Andando son unos 3 km por la Concha."
+        },
+        {
+          "inicio": "18:20",
+          "fin": "19:20",
+          "lugar": "txepetxa",
+          "nota": "Segunda ronda, de anchoas. Si está cerrado, Bar Sport, en Fermín Calbetón."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "19:20",
+          "fin": "19:35",
+          "modo": "a-pie",
+          "desde": "txepetxa",
+          "hasta": "estacion-donostia",
+          "detalle": "1,2 km"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "19:45",
+          "fin": "21:00",
+          "modo": "bus",
+          "desde": "estacion-donostia",
+          "hasta": "termibus",
+          "detalle": "Vuelta. Lo mismo que a la ida: mirar las salidas del festivo."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "21:00",
+          "fin": "21:15",
+          "modo": "tren",
+          "desde": "termibus",
+          "hasta": "metro-casco-viejo",
+          "detalle": "Metro desde San Mamés"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "21:15",
+          "fin": "21:20",
+          "modo": "a-pie",
+          "desde": "metro-casco-viejo",
+          "hasta": "hotel-bilbao",
+          "detalle": "130 m"
+        }
+      ]
+    },
+    {
+      "fecha": "2027-01-07",
+      "titulo": "La costa en metro: el Puente Colgante y los acantilados",
+      "intensidad": "media",
+      "resumen": "Metro hasta Areeta y la pasarela del Puente Colgante, a 50 metros sobre la ría. Después, paseo junto al mar por las grandes villas hasta el Puerto Viejo de Algorta, donde se come. Por la tarde, el molino de Aixerrota y los acantilados de La Galea. Si quedan ganas, metro hasta Plentzia para ver anochecer en la ría. Si llueve, se cambia con el viernes.",
+      "bloques": [
+        {
+          "tipo": "traslado",
+          "inicio": "09:15",
+          "fin": "09:20",
+          "modo": "a-pie",
+          "desde": "hotel-bilbao",
+          "hasta": "metro-casco-viejo",
+          "detalle": "130 m"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "09:20",
+          "fin": "09:45",
+          "modo": "tren",
+          "desde": "metro-casco-viejo",
+          "hasta": "metro-areeta",
+          "detalle": "Línea 1, dirección Plentzia"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "09:45",
+          "fin": "10:00",
+          "modo": "a-pie",
+          "desde": "metro-areeta",
+          "hasta": "puente-colgante",
+          "detalle": "1,2 km por Las Arenas"
+        },
+        {
+          "inicio": "10:00",
+          "fin": "11:15",
+          "lugar": "puente-colgante",
+          "nota": "La pasarela abre a las 10:00. Después, ida y vuelta a Portugalete en la barquilla."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "11:15",
+          "fin": "11:50",
+          "modo": "a-pie",
+          "desde": "puente-colgante",
+          "hasta": "grandes-villas",
+          "detalle": "2,5 km por el muelle de Las Arenas y el paseo de la playa"
+        },
+        {
+          "inicio": "11:50",
+          "fin": "12:10",
+          "lugar": "grandes-villas"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "12:10",
+          "fin": "12:35",
+          "modo": "a-pie",
+          "desde": "grandes-villas",
+          "hasta": "puerto-viejo",
+          "detalle": "1,7 km por la playa de Ereaga"
+        },
+        {
+          "inicio": "12:35",
+          "fin": "14:15",
+          "lugar": "puerto-viejo",
+          "nota": "Paseo por las cuestas y comida."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "14:15",
+          "fin": "14:35",
+          "modo": "a-pie",
+          "desde": "puerto-viejo",
+          "hasta": "aixerrota",
+          "detalle": "1,4 km, cuesta arriba por la playa de Arrigunaga"
+        },
+        {
+          "inicio": "14:35",
+          "fin": "14:50",
+          "lugar": "aixerrota"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "14:50",
+          "fin": "15:10",
+          "modo": "a-pie",
+          "desde": "aixerrota",
+          "hasta": "punta-galea",
+          "detalle": "1,3 km por el borde del acantilado"
+        },
+        {
+          "inicio": "15:10",
+          "fin": "16:00",
+          "lugar": "punta-galea"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "16:00",
+          "fin": "16:30",
+          "modo": "a-pie",
+          "desde": "punta-galea",
+          "hasta": "metro-bidezabal",
+          "detalle": "2,1 km. Sin Plentzia, desde aquí al Casco Viejo son unos 30 minutos de metro."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "16:35",
+          "fin": "16:55",
+          "modo": "tren",
+          "desde": "metro-bidezabal",
+          "hasta": "metro-plentzia",
+          "opcional": true,
+          "detalle": "Línea 1, hasta el final"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "16:55",
+          "fin": "17:00",
+          "modo": "a-pie",
+          "desde": "metro-plentzia",
+          "hasta": "plentzia",
+          "opcional": true,
+          "detalle": "450 m"
+        },
+        {
+          "inicio": "17:00",
+          "fin": "17:50",
+          "lugar": "plentzia",
+          "opcional": true,
+          "nota": "Anochece a las 17:52."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "17:50",
+          "fin": "17:55",
+          "modo": "a-pie",
+          "desde": "plentzia",
+          "hasta": "metro-plentzia",
+          "opcional": true,
+          "detalle": "450 m"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "18:00",
+          "fin": "18:45",
+          "modo": "tren",
+          "desde": "metro-plentzia",
+          "hasta": "metro-casco-viejo",
+          "detalle": "Línea 1, unos 45 minutos"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "18:45",
+          "fin": "18:50",
+          "modo": "a-pie",
+          "desde": "metro-casco-viejo",
+          "hasta": "hotel-bilbao",
+          "detalle": "130 m"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "20:25",
+          "fin": "20:30",
+          "modo": "a-pie",
+          "desde": "hotel-bilbao",
+          "hasta": "plaza-nueva",
+          "detalle": "230 m"
+        },
+        {
+          "inicio": "20:30",
+          "fin": "22:00",
+          "lugar": "plaza-nueva",
+          "nota": "Cena. Las barras que no dio tiempo a probar el martes."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "22:00",
+          "fin": "22:05",
+          "modo": "a-pie",
+          "desde": "plaza-nueva",
+          "hasta": "hotel-bilbao",
+          "detalle": "230 m"
+        }
+      ]
+    },
+    {
+      "fecha": "2027-01-08",
+      "titulo": "Dos museos, un chuletón y Artxanda",
+      "intensidad": "media",
+      "resumen": "El Euskal Museoa, recién reformado, a cinco minutos del hotel. Paseo hasta el Bellas Artes y su edificio nuevo, chuletón en Kerren y funicular de Artxanda para ver anochecer sobre la ciudad. Esa noche toca Fito en el Euskalduna, por si se quiere acabar con un concierto.",
+      "bloques": [
+        {
+          "tipo": "traslado",
+          "inicio": "09:55",
+          "fin": "10:00",
+          "modo": "a-pie",
+          "desde": "hotel-bilbao",
+          "hasta": "euskal-museoa",
+          "detalle": "400 m"
+        },
+        {
+          "inicio": "10:00",
+          "fin": "11:30",
+          "lugar": "euskal-museoa"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "11:30",
+          "fin": "12:00",
+          "modo": "a-pie",
+          "desde": "euskal-museoa",
+          "hasta": "bellas-artes",
+          "detalle": "2 km por el Arenal, la Gran Vía y el parque de Doña Casilda. En metro, del Casco Viejo a Moyua"
+        },
+        {
+          "inicio": "12:00",
+          "fin": "14:15",
+          "lugar": "bellas-artes",
+          "nota": "Si el martes se compró la combinada, aquí ya está pagado. Lo primero, Agravitas."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "14:15",
+          "fin": "14:30",
+          "modo": "a-pie",
+          "desde": "bellas-artes",
+          "hasta": "kerren",
+          "detalle": "1 km"
+        },
+        {
+          "inicio": "14:30",
+          "fin": "16:00",
+          "lugar": "kerren",
+          "nota": "Con reserva. Una chuleta para los dos, un entrante y el vino de la casa: así se queda en unos 55 € por persona."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "16:00",
+          "fin": "16:30",
+          "modo": "a-pie",
+          "desde": "kerren",
+          "hasta": "funicular-artxanda",
+          "detalle": "2,1 km cruzando el Ensanche y la ría"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "16:30",
+          "fin": "16:40",
+          "modo": "tren",
+          "desde": "funicular-artxanda",
+          "hasta": "mirador-artxanda",
+          "detalle": "Tres minutos de subida"
+        },
+        {
+          "inicio": "16:40",
+          "fin": "18:00",
+          "lugar": "mirador-artxanda",
+          "nota": "Anochece a las 17:53."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "18:00",
+          "fin": "18:10",
+          "modo": "tren",
+          "desde": "mirador-artxanda",
+          "hasta": "funicular-artxanda",
+          "detalle": "Bajada en el funicular"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "18:10",
+          "fin": "18:30",
+          "modo": "a-pie",
+          "desde": "funicular-artxanda",
+          "hasta": "hotel-bilbao",
+          "detalle": "1,3 km por la orilla de la ría hasta el Arenal"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "20:25",
+          "fin": "20:30",
+          "modo": "a-pie",
+          "desde": "hotel-bilbao",
+          "hasta": "santa-maria-kalea",
+          "detalle": "300 m"
+        },
+        {
+          "inicio": "20:30",
+          "fin": "21:45",
+          "lugar": "santa-maria-kalea",
+          "nota": "Cena ligera, que la comida ha sido fuerte."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "21:45",
+          "fin": "21:50",
+          "modo": "a-pie",
+          "desde": "santa-maria-kalea",
+          "hasta": "hotel-bilbao",
+          "detalle": "300 m"
+        }
+      ]
+    },
+    {
+      "fecha": "2027-01-09",
+      "titulo": "La Ribera, el Ensanche y vuelta",
+      "intensidad": "salida",
+      "resumen": "Última mañana. El mercado de la Ribera para llevarse queso y conservas, check-out y paseo por la Gran Vía hasta Azkuna Zentroa. Comida en La Viña del Ensanche, recoger las maletas y al aeropuerto: el vuelo sale a las 17:30.",
+      "bloques": [
+        {
+          "tipo": "traslado",
+          "inicio": "09:55",
+          "fin": "10:00",
+          "modo": "a-pie",
+          "desde": "hotel-bilbao",
+          "hasta": "mercado-ribera",
+          "detalle": "500 m"
+        },
+        {
+          "inicio": "10:00",
+          "fin": "11:00",
+          "lugar": "mercado-ribera",
+          "nota": "Para llevar: un Idiazabal, bonito en conserva y una botella de txakoli."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "11:00",
+          "fin": "11:07",
+          "modo": "a-pie",
+          "desde": "mercado-ribera",
+          "hasta": "hotel-bilbao",
+          "detalle": "500 m"
+        },
+        {
+          "inicio": "11:07",
+          "fin": "11:30",
+          "lugar": "hotel-bilbao",
+          "nota": "Check-out. Las maletas se quedan en recepción hasta la tarde."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "11:30",
+          "fin": "11:55",
+          "modo": "a-pie",
+          "desde": "hotel-bilbao",
+          "hasta": "ensanche",
+          "detalle": "1,2 km cruzando el puente del Arenal y subiendo por la Gran Vía"
+        },
+        {
+          "inicio": "11:55",
+          "fin": "12:30",
+          "lugar": "ensanche"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "12:30",
+          "fin": "12:40",
+          "modo": "a-pie",
+          "desde": "ensanche",
+          "hasta": "azkuna-zentroa",
+          "detalle": "600 m"
+        },
+        {
+          "inicio": "12:40",
+          "fin": "13:20",
+          "lugar": "azkuna-zentroa"
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "13:20",
+          "fin": "13:32",
+          "modo": "a-pie",
+          "desde": "azkuna-zentroa",
+          "hasta": "la-vina-ensanche",
+          "detalle": "800 m"
+        },
+        {
+          "inicio": "13:35",
+          "fin": "15:00",
+          "lugar": "la-vina-ensanche",
+          "nota": "Comida."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "15:00",
+          "fin": "15:13",
+          "modo": "a-pie",
+          "desde": "la-vina-ensanche",
+          "hasta": "hotel-bilbao",
+          "detalle": "1 km"
+        },
+        {
+          "inicio": "15:13",
+          "fin": "15:20",
+          "lugar": "hotel-bilbao",
+          "nota": "Recoger las maletas."
+        },
+        {
+          "tipo": "traslado",
+          "inicio": "15:20",
+          "fin": "15:40",
+          "modo": "taxi",
+          "desde": "hotel-bilbao",
+          "hasta": "aeropuerto-bio",
+          "detalle": "Unos 18 minutos. En transporte público, metro hasta Moyua y el A3247 desde allí: unos 40 minutos en total."
+        },
+        {
+          "inicio": "15:40",
+          "fin": "17:15",
+          "lugar": "aeropuerto-bio",
+          "nota": "Facturar, control y a la puerta."
+        },
+        {
+          "tipo": "hito",
+          "inicio": "17:30",
+          "titulo": "Despega el vuelo de vuelta"
+        }
+      ]
+    }
+  ],
+  "transporte": [
+    {
+      "tramo": "Vuelos",
+      "modo": "avion",
+      "servicio": "Ida el lunes 4 a las 19:50, llegada hacia las 21:00. Vuelta el sábado 9 a las 17:30",
+      "duracion": "—",
+      "frecuencia": "Ya comprados",
+      "precio": "—",
+      "nota": "El localizador va a «Datos privados», no aquí."
+    },
+    {
+      "tramo": "Aeropuerto ↔ centro",
+      "modo": "bus",
+      "servicio": "Bizkaibus A3247: aeropuerto, Termibus, Gran Vía, plaza Moyua y Alameda Recalde",
+      "duracion": "20-30 min",
+      "frecuencia": "Cada 15-20 minutos",
+      "precio": "5 € en efectivo, al conductor; con Barik, menos",
+      "nota": "Desde el aeropuerto hay servicio hasta pasadas las 23:00, según las guías, así que a las 21:00 no hay problema. El taxi entre el hotel y el aeropuerto tarda unos 18 minutos."
+    },
+    {
+      "tramo": "Bilbao ↔ Donostia",
+      "modo": "bus",
+      "servicio": "Autobús directo de Termibus a la estación de autobuses de Donostia",
+      "duracion": "1 h 10 el más rápido; 1 h 20 el normal",
+      "frecuencia": "Una docena al día",
+      "precio": "13,65 € el sencillo (abril de 2026)",
+      "nota": "No admite la Barik, según la prensa de abril de 2026. El 6 es festivo: mirar las salidas de ese día antes de ir."
+    },
+    {
+      "tramo": "Metro, Euskotren, Bizkaibus y funicular de Artxanda",
+      "modo": "tren",
+      "servicio": "Barik anónima, compartida por los dos",
+      "duracion": "—",
+      "frecuencia": "—",
+      "precio": "Metro, alrededor de 1 € por viaje con Barik (estimación de una guía; el billete suelto, 1,60 €). Funicular de Artxanda, 3,50 € el sencillo sin Barik",
+      "nota": "Se compra en las máquinas del metro. Se pasa por el lector una vez por persona, en menos de tres minutos. En el metro, también al salir."
+    }
+  ],
+  "listas": [
+    {
+      "titulo": "Antes de salir",
+      "momento": "pre",
+      "items": [
+        {
+          "id": "reserva-kerren",
+          "texto": "Reservar en Kerren para el viernes 8 a las 14:30",
+          "detalle": "Por teléfono (944 220 089) o por correo (kerren@kerrenasador.com). Cierra los lunes. De paso, preguntar si cierra por vacaciones en enero."
+        },
+        {
+          "id": "billetes-donostia",
+          "texto": "Sacar los billetes del autobús a Donostia para el miércoles 6",
+          "detalle": "Ida hacia las 8:30 desde Termibus y vuelta hacia las 19:45. Es festivo: elegir entre las salidas de ese día."
+        },
+        {
+          "id": "avisar-hotel",
+          "texto": "Avisar al hotel de que se llega hacia las 22:00",
+          "detalle": "Y preguntar hasta qué hora se puede dejar la habitación el sábado y si guardan las maletas."
+        },
+        {
+          "id": "efectivo-bus",
+          "texto": "Llevar 10 € en efectivo para el bus del aeropuerto",
+          "detalle": "5 € por persona, al conductor del A3247."
+        },
+        {
+          "id": "datos-privados",
+          "texto": "Meter el hotel en «Datos privados» de la aplicación",
+          "detalle": "La portada del viaje → Datos privados. Se guarda solo en el móvil y no sale del navegador."
+        },
+        {
+          "id": "abrir-guia",
+          "texto": "Abrir la guía el día antes y descargar los mapas sin conexión",
+          "detalle": "Botón de descarga en cada día. Así el mapa funciona aunque no haya datos, y la nube se despierta a tiempo."
+        },
+        {
+          "id": "entradas-fito",
+          "texto": "Opcional: mirar las entradas de Fito para el viernes 8",
+          "detalle": "21:00, Palacio Euskalduna."
+        },
+        {
+          "id": "cabalgata-2027",
+          "texto": "Opcional: mirar el recorrido de la cabalgata de 2027",
+          "detalle": "Cuando lo publique el Ayuntamiento de Bilbao. En 2026 salió a las 18:00 de la Gran Vía."
+        }
+      ]
+    },
+    {
+      "titulo": "Qué llevar",
+      "items": [
+        {
+          "id": "paraguas",
+          "texto": "Paraguas o chubasquero",
+          "detalle": "En los mismos días de enero de 2026 llovió en Bilbao tres de los seis."
+        },
+        {
+          "id": "abrigo",
+          "texto": "Abrigo de invierno",
+          "detalle": "Esas mismas fechas de 2026 fueron de 0 a 13 °C."
+        },
+        {
+          "id": "calzado",
+          "texto": "Calzado cómodo que aguante el agua",
+          "detalle": "El jueves son unos 10 km a pie, parte por caminos de acantilado."
+        },
+        {
+          "id": "bolsa-ribera",
+          "texto": "Una bolsa para la compra del sábado en la Ribera",
+          "detalle": "Si se viaja solo con equipaje de mano, cuidado con la botella de txakoli: los líquidos tienen límite en el control."
+        },
+        {
+          "id": "bateria",
+          "texto": "Batería externa",
+          "detalle": "El móvil hace de mapa, de guía y de cámara todo el día."
+        }
+      ]
+    },
+    {
+      "titulo": "Al volver",
+      "momento": "post",
+      "items": [
+        {
+          "id": "exportar-recuerdos",
+          "texto": "Exportar lo visitado, las notas y las fotos",
+          "detalle": "En «Tus datos». Viven en el navegador y se pierden si se limpia."
+        }
+      ]
+    }
+  ],
+  "presupuesto": {
+    "nota": "Estimación para dos personas, sin vuelos ni hotel. Las entradas y los billetes son precios consultados el 14 de noviembre de 2026; las comidas son una estimación con el tope de 60 € por persona y comida.",
+    "partidas": [
+      {
+        "concepto": "Transporte × 2 (bus del aeropuerto, metro, funiculares, barquilla y taxi del sábado)",
+        "importe": "≈75-95 €"
+      },
+      {
+        "concepto": "Autobús a Donostia × 2, ida y vuelta",
+        "importe": "54,60 €"
+      },
+      {
+        "concepto": "Entradas × 2 (combinada Guggenheim y Bellas Artes, Euskal Museoa, catedral y pasarela del Puente Colgante)",
+        "importe": "≈90 €"
+      },
+      {
+        "concepto": "Comida en Kerren × 2",
+        "importe": "≈110 €"
+      },
+      {
+        "concepto": "Pintxos: nueve comidas y cenas × 2",
+        "importe": "≈450-700 €"
+      },
+      {
+        "concepto": "Desayunos y cafés, 5 días × 2",
+        "importe": "≈50-80 €"
+      },
+      {
+        "concepto": "Total estimado",
+        "importe": "≈830-1.130 €",
+        "destacado": true
+      }
+    ]
+  },
+  "fuentes": [
+    { "texto": "Museo Guggenheim Bilbao · horario y precios", "url": "https://www.guggenheim-bilbao.eus/en/plan-your-visit" },
+    { "texto": "Museo Guggenheim Bilbao · exposiciones", "url": "https://www.guggenheim-bilbao.eus/en/exhibitions" },
+    { "texto": "Bilbao Museoa · planifica tu visita", "url": "https://bilbaomuseoa.eus/visita/planifica-tu-visita" },
+    { "texto": "Euskal Museoa", "url": "https://www.euskalmuseoa.eus/" },
+    { "texto": "Puente Colgante · horarios y tarifas", "url": "https://puente-colgante.com/en/?p=72758" },
+    { "texto": "Asador Kerren · contacto y horario", "url": "https://www.kerrenasador.com/contacto-asador-kerren/" },
+    { "texto": "Mule Carajonero · Kerren, precios de la chuleta (marzo de 2026)", "url": "https://mulecarajonero.com/kerren-el-asador-mas-tradicional-de-bilbao/" },
+    { "texto": "Bizkaibus · tarifas", "url": "https://www.bizkaia.eus/es/web/bizkaibus/tarifas" },
+    { "texto": "Orain · precio del autobús Bilbao–Donostia (abril de 2026)", "url": "https://orain.eus/en/current-events/economics/2026/04/10/the-guipuzcoans-have-the-bilbaodonostia-bus-service-cheaper-than-the-biscayans-facua-calls-for-equality/" },
+    { "texto": "Monte Igueldo · organiza tu visita", "url": "https://monteigueldo.es/organize-your-visit" },
+    { "texto": "Do Eat Better · pintxos de la Parte Vieja de Donostia", "url": "https://doeatbetterexperience.com/es/blog/pintxos-san-sebastian-guia-parte-vieja/" },
+    { "texto": "Do Eat Better · pintxos de Bilbao", "url": "https://doeatbetterexperience.com/es/blog/pintxos-bilbao-guia/" },
+    { "texto": "La Ganzúa · conciertos en Bilbao en 2027", "url": "https://www.laganzua.net/conciertos/bilbao/2027" },
+    { "texto": "Santana 27 · programación", "url": "https://santana27.com/" },
+    { "texto": "Okdiario · cabalgata de Reyes de Bilbao en 2026", "url": "https://okdiario.com/pais-vasco/cabalgata-reyes-bilbao-2026-horariorecorrido-calles-cortadas-alternativas-transporte-publico-16008895" },
+    { "texto": "Última Hora · visitantes del Guggenheim en 2025", "url": "https://www.ultimahora.es/noticias/comunidades/2025/12/16/2533257/museo-guggenheim-bilbao-recibe-1260894-visitantes-mas-2024.html" },
+    { "texto": "Turismo Euskadi · Azkuna Zentroa", "url": "https://turismo.euskadi.eus/es/museos/azkuna-zentroa/webtur00-content/es/" },
+    { "texto": "Euskaltel · tarjeta Barik compartida", "url": "https://blog.euskaltel.com/tarjeta-barik/" },
+    { "texto": "Open-Meteo · archivo histórico (amanecer, anochecer y temperaturas de enero de 2026)", "url": "https://open-meteo.com/en/docs/historical-weather-api" },
+    { "texto": "OSRM y FOSSGIS · tiempos en coche y distancias a pie", "url": "https://routing.openstreetmap.de/" }
+  ]
+}
